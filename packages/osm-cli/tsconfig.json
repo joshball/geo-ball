@@ -9,7 +9,13 @@
 	],
 	"references": [
 		{
+			"path": "../geo-core"
+		},
+		{
 			"path": "../osm-data"
+		},
+		{
+			"path": "../ucsd-core",
 		}
 	]
 	// "compilerOptions": {

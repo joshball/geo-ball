@@ -1,5 +1,5 @@
-import { LatLngBounds } from '../utils/LatLngBounds';
-import { OSMFeatureKeyValuePair, OSMOutputFormat,OSMFeatureKey } from './OpenStreetmapFeatures';
+import { LatLngBounds } from '@ball-maps/geo-core';
+import { OSMFeatureKeyValuePair, OSMOutputFormat, OSMFeatureKey } from './OpenStreetmapFeatures';
 
 export class OpenStreetmapQuery {
 	latLngBounds: LatLngBounds;

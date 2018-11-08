@@ -1,3 +1,5 @@
+import { LatLngBounds, LatLng } from '@ball-maps/geo-core';
+
 /**
  * THe RoadSegementLine is used for parsing a RoadSegments file which
  */

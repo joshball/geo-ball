@@ -29,7 +29,6 @@
     "url": "https://github.com/joshball/ball-maps/issues"
   },
   "dependencies": {
-    "axios": "^0.18.0"
   },
   "ava": {
     "snapshotDir": "./snapshots",

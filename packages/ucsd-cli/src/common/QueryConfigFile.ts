@@ -1,4 +1,5 @@
-import { LatLngBounds, OpenStreetmapQuery, OpenStreetmapFile } from '@ball-maps/osm-data';
+import { LatLngBounds } from '@ball-maps/geo-core';
+import { OpenStreetmapQuery, OpenStreetmapFile } from '@ball-maps/osm-data';
 import { resolve, join } from 'path';
 import { readFileSync } from 'fs';
 

@@ -1,8 +1,8 @@
 import test from 'ava';
 
 import { OpenStreetmapQuery } from './OpenStreetmapQuery';
-import { LatLng } from '../utils/LatLng';
-import { LatLngBounds } from '../utils/LatLngBounds';
+import { LatLngBounds, LatLng } from '@ball-maps/geo-core';
+
 
 // 40.71490728626142, -111.8545264005661, 40.71946109443547, -111.84929072856903
 const sw = new LatLng(40.71490728626142, -111.8545264005661);
