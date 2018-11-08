@@ -1,5 +1,6 @@
 import { Command, flags } from '@oclif/command'
-import { OpenStreetmapDownloader, LatLngBounds, LatLng, OpenStreetmapQuery, IFetchAndSaveResult } from '@ball-maps/osm-data';
+import { LatLngBounds, LatLng } from '@ball-maps/geo-core';
+import { OpenStreetmapDownloader, OpenStreetmapQuery, IFetchAndSaveResult } from '@ball-maps/osm-data';
 import { resolve } from 'path';
 import { readFileSync } from 'fs';
 import { QueryConfigFile } from '../common/QueryConfigFile';

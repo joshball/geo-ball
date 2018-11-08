@@ -17,32 +17,32 @@ OpenStreetMaps CLI
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g osm-cli
-$ osm-cli COMMAND
+$ npm install -g ucsd-cli
+$ ucsd-cli COMMAND
 running command...
-$ osm-cli (-v|--version|version)
-osm-cli/1.0.0 win32-x64 node-v10.13.0
-$ osm-cli --help [COMMAND]
+$ ucsd-cli (-v|--version|version)
+ucsd-cli/1.0.0 win32-x64 node-v10.13.0
+$ ucsd-cli --help [COMMAND]
 USAGE
-  $ osm-cli COMMAND
+  $ ucsd-cli COMMAND
 ...
 ```
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`osm-cli commands`](#osm-cli-commands)
-* [`osm-cli download QUERYFILE`](#osm-cli-download-queryfile)
-* [`osm-cli help [COMMAND]`](#osm-cli-help-command)
-* [`osm-cli stats`](#osm-cli-stats)
-* [`osm-cli which COMMAND`](#osm-cli-which-command)
+* [`ucsd-cli commands`](#ucsd-cli-commands)
+* [`ucsd-cli help [COMMAND]`](#ucsd-cli-help-command)
+* [`ucsd-cli stats`](#ucsd-cli-stats)
+* [`ucsd-cli transform OSMDATAFILE [ROADSEGEMENTSFILE]`](#ucsd-cli-transform-osmdatafile-roadsegementsfile)
+* [`ucsd-cli which COMMAND`](#ucsd-cli-which-command)
 
-## `osm-cli commands`
+## `ucsd-cli commands`
 
 list all the commands
 
 ```
 USAGE
-  $ osm-cli commands
+  $ ucsd-cli commands
 
 OPTIONS
   -h, --help  show CLI help
@@ -52,34 +52,13 @@ OPTIONS
 
 _See code: [@oclif/plugin-commands](https://github.com/oclif/plugin-commands/blob/v1.2.2/src\commands\commands.ts)_
 
-## `osm-cli download QUERYFILE`
+## `ucsd-cli help [COMMAND]`
 
-download data files
-
-```
-USAGE
-  $ osm-cli download QUERYFILE
-
-ARGUMENTS
-  QUERYFILE  Query file used for OSM query
-
-OPTIONS
-  -h, --help  show CLI help
-
-EXAMPLES
-  $ cli download queryFile
-  $ cli download --bounds 40.690856387926516,-111.86356544494627,40.72683597647796,-111.78271293640137
-```
-
-_See code: [build\commands\download.ts](https://github.com/joshball/ball-maps/blob/v1.0.0/build\commands\download.ts)_
-
-## `osm-cli help [COMMAND]`
-
-display help for osm-cli
+display help for ucsd-cli
 
 ```
 USAGE
-  $ osm-cli help [COMMAND]
+  $ ucsd-cli help [COMMAND]
 
 ARGUMENTS
   COMMAND  command to show help for
@@ -90,13 +69,13 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.1.3/src\commands\help.ts)_
 
-## `osm-cli stats`
+## `ucsd-cli stats`
 
 Get stats for a data file
 
 ```
 USAGE
-  $ osm-cli stats
+  $ ucsd-cli stats
 
 OPTIONS
   -h, --help                     show CLI help
@@ -108,13 +87,36 @@ EXAMPLE
 
 _See code: [build\commands\stats.ts](https://github.com/joshball/ball-maps/blob/v1.0.0/build\commands\stats.ts)_
 
-## `osm-cli which COMMAND`
+## `ucsd-cli transform OSMDATAFILE [ROADSEGEMENTSFILE]`
+
+Transforms OSM files to Road Segment Files
+
+```
+USAGE
+  $ ucsd-cli transform OSMDATAFILE [ROADSEGEMENTSFILE]
+
+ARGUMENTS
+  OSMDATAFILE        OSM Data file from download
+  ROADSEGEMENTSFILE  Road Line file for UCSD Graph
+
+OPTIONS
+  -h, --help       show CLI help
+  -o, --overwrite
+
+EXAMPLES
+  $ cli transform osmDataFile
+  $ cli transform osmDataFile roadSegmentFile
+```
+
+_See code: [build\commands\transform.ts](https://github.com/joshball/ball-maps/blob/v1.0.0/build\commands\transform.ts)_
+
+## `ucsd-cli which COMMAND`
 
 show which plugin a command is in
 
 ```
 USAGE
-  $ osm-cli which COMMAND
+  $ ucsd-cli which COMMAND
 ```
 
 _See code: [@oclif/plugin-which](https://github.com/oclif/plugin-which/blob/v1.0.3/src\commands\which.ts)_

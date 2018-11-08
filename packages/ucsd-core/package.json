@@ -1,0 +1,48 @@
+{
+  "name": "@ball-maps/ucsd-core",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Open Street Maps data library",
+  "author": "Joshua Ball <jball@highseas.com>",
+  "homepage": "https://github.com/joshball/ball-maps#readme",
+  "license": "ISC",
+  "main": "build/index.js",
+  "directories": {
+    "lib": "build",
+    "test": "tests"
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "clean": "rimraf build",
+    "build": "tsc -p tsconfig.json",
+    "build:watch": "tsc -p tsconfig.json --watch",
+    "test": "yarn run build && yarn run nyc ava --verbose",
+    "test:watch": "yarn run build && yarn run ava --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshball/ball-maps.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joshball/ball-maps/issues"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
+  },
+  "ava": {
+    "snapshotDir": "./snapshots",
+    "failFast": true,
+    "files": [
+      "build/**/*.spec.js"
+    ],
+    "sources": [
+      "build/**/*.js"
+    ]
+  },
+  "devDependencies": {
+    "ava": "^0.25.0",
+    "nyc": "^13.1.0"
+  }
+}

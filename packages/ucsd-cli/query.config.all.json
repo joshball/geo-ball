@@ -1,0 +1,25 @@
+{
+	"query":{
+		"bounds": {
+			"sw": {
+				"lat": 40.690856387926516,
+				"lon": -111.86356544494627
+			},
+			"ne": {
+				"lat": 40.72683597647796,
+				"lon": -111.78271293640137
+			}
+		},
+		"features": [
+			"highway",
+			"addr"
+		],
+		"osmEndpoint": ""
+	},
+	"results": {
+		"queryName": "sugarhouse",
+		"dataDir": "",
+		"overwrite": false,
+		"timestamp": true
+	}
+}

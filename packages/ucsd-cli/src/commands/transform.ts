@@ -1,7 +1,8 @@
 // import { join, resolve } from 'path';
 import { Command, flags } from '@oclif/command'
 import { findFilePath } from '../common/fileHelpers';
-import { OverpassHighwayFile, ConvertToRoadSegmentsMap, RoadSegmentsFile, OpenStreetmapFile } from '@ball-maps/osm-data';
+// import { OverpassHighwayFile, ConvertToRoadSegmentsMap, RoadSegmentsFile, OpenStreetmapFile } from '@ball-maps/osm-data';
+// import { OverpassHighwayFile, ConvertToRoadSegmentsMap, RoadSegmentsFile, OpenStreetmapFile } from '@ball-maps/ucsd-core';
 import { resolve, join, basename, dirname } from 'path';
 import { existsSync } from 'fs';
 // import { writeFileSync, readFileSync, existsSync } from 'fs';
@@ -30,18 +31,18 @@ class Transform extends Command {
 	async run() {
 		const { osmDataFilePath, roadSegementsFilePath } = this.getFilePaths();
 
-		const osmFile = OpenStreetmapFile.Load(osmDataFilePath);
-		const osmElements = osmFile.getElements();
-		const osmStats = osmElements.getStats();
-		console.log('osmStats', JSON.stringify(osmStats, undefined, 4));
+		// const osmFile = OpenStreetmapFile.Load(osmDataFilePath);
+		// const osmElements = osmFile.getElements();
+		// const osmStats = osmElements.getStats();
+		// console.log('osmStats', JSON.stringify(osmStats, undefined, 4));
 
-		console.log('osmFile bounds:', osmFile.osmQuery.latLngBounds.toString());
+		// console.log('osmFile bounds:', osmFile.osmQuery.latLngBounds.toString());
 
-		const results = ConvertToRoadSegmentsMap(highwayFile.data, highwayFile.bounds);
-		const rsf = new RoadSegmentsFile(highwayFile.bounds, highwayFile.timestamp, results);
-		console.log('RSF lines:', rsf.data.length);
-		RoadSegmentsFile.saveJsonFile(roadLinesJsonFilePath, rsf)
-		RoadSegmentsFile.saveTextFile(roadLinesTextFilePath, rsf)
+		// const results = ConvertToRoadSegmentsMap(highwayFile.data, highwayFile.bounds);
+		// const rsf = new RoadSegmentsFile(highwayFile.bounds, highwayFile.timestamp, results);
+		// console.log('RSF lines:', rsf.data.length);
+		// RoadSegmentsFile.saveJsonFile(roadLinesJsonFilePath, rsf)
+		// RoadSegmentsFile.saveTextFile(roadLinesTextFilePath, rsf)
 	}
 
 	getFilePaths() {

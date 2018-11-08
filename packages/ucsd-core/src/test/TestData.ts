@@ -1,6 +1,4 @@
-import { OpenStreetmapQuery } from "..";
-import { LatLngBounds, LatLng } from '@ball-maps/geo-core';
-
+import { OpenStreetmapQuery, LatLngBounds, LatLng } from "..";
 import { IOpenStreetmapQueryResponse } from "../api/IOpenStreetmapQueryResponse";
 
 export interface ILatLngObj {
