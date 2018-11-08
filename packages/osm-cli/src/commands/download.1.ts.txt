@@ -1,0 +1,143 @@
+import { Command, flags } from '@oclif/command'
+import { OpenStreetmapDownloader, LatLngBounds, LatLng, OpenStreetmapQuery, IFetchAndSaveResult } from '@ball-maps/osm-data';
+import { resolve } from 'path';
+import { readFileSync } from 'fs';
+
+// interface OsmDownloadArgs { osmQuery: any; osmEndpoint: any; dataDir: any; }
+interface OsmCliQueryFile {
+	dataDir?: string;
+	queryName: string;
+	bounds: LatLngBounds;
+	osmEndpoint?: string;
+	features: Array<string>;
+}
+
+interface OsmDownloadArgs extends OsmCliQueryFile {
+	osmQuery: OpenStreetmapQuery;
+	dataDir: string;
+}
+
+class Download extends Command {
+	static description = 'download data files'
+
+	static examples = [
+		'$ cli download queryFile',
+		'$ cli download --bounds 40.690856387926516,-111.86356544494627,40.72683597647796,-111.78271293640137'
+	]
+
+	static flags = {
+		help: flags.help({ char: 'h' }),
+		// bounds: flags.string({ description: 'bounds string (swLat,swLon,neLat,neLon)', required: false }),
+		// dataDir: flags.string({ char: 'd', description: 'Directory to save query results in', default: process.cwd(), required: true }),
+		// osmEndpoint: flags.string({ char: 'e', description: 'OSM Server Endpoint to query', required: false }),
+		// queryName: flags.string({ char: 'n', description: 'The name of the query (for creating results file)', required: false }),
+		// features: flags.string({ char: 'f', description: 'The features to query for (default: highway,addr)', default: 'highway,addr', required: false }),
+	}
+
+	static args = [
+		{
+			name: 'queryFile',               // name of arg to show in help and reference with args[name]
+			required: true,            // make the arg required with `required: true`
+			description: 'Query file used for OSM query', // help description
+			hidden: false,               // hide this arg from help
+			// parse: input => 'output',   // instead of the user input, return a different value
+			// default: 'world',           // default value if no arg input
+			// options: ['a', 'b'],        // only allow input to be from a discrete set
+		}
+	]
+
+	async run() {
+		const {
+			osmEndpoint,
+			osmQuery,
+			dataDir,
+		} = this.getOsmDownloadArgs();
+
+		// console.log('osmQuery', osmQuery);
+		// const fileName = OpenStreetmapFile.CreateFileName(fileQueryName, now);
+		// const filePath = join(this.dataDir, fileName);
+
+		const downloader = new OpenStreetmapDownloader(dataDir, osmEndpoint);
+		downloader.fetchAndSave(osmQuery, dataDir)
+			.then((results: IFetchAndSaveResult) => {
+				console.log('Download Complete:');
+				console.log('  SERVER:', results.osmDataFile.osmServer);
+				console.log('    DATE:', results.osmDataFile.queryDate);
+				console.log('    FILE:', results.filePath);
+			})
+			.catch(error => {
+				console.error('###################################################################################')
+				console.error('DOWNLOAD FAILED:')
+				console.error(error)
+				console.error('###################################################################################')
+				throw error;
+			});
+	}
+
+	private getBounds(): LatLngBounds {
+		// tslint:disable-next-line:no-shadowed-variable
+		const { flags } = this.parse(Download)
+
+		if (!flags.neLat || !flags.neLon || !flags.swLat || !flags.swLon) {
+			throw new Error('need all lat/lons for ne and sw')
+		}
+		const swLat = parseFloat(flags.swLat);
+		const swLon = parseFloat(flags.swLon);
+		// console.log('swLat:', swLat)
+		// console.log('swLon:', swLon)
+		const sw = new LatLng(swLat, swLon);
+		const ne = new LatLng(parseFloat(flags.neLat), parseFloat(flags.neLon));
+		const latLngBounds = new LatLngBounds(sw, ne);
+		console.log('latLngBounds:', latLngBounds.toString());
+		console.log('latLngBounds is valid?', latLngBounds.valid());
+		return latLngBounds;
+	}
+
+	getOsmDownloadArgs(): OsmDownloadArgs {
+		// tslint:disable-next-line:no-shadowed-variable
+		const { args } = this.parse(Download);
+		if (args.queryFile) {
+			return this.getDataFromConfig();
+		}
+		return this.getDataFromFlags();
+	}
+
+	getDataFromFlags(): OsmDownloadArgs {
+		// tslint:disable-next-line:no-shadowed-variable
+		const { flags } = this.parse(Download);
+		const latLngBounds = this.getBounds();
+		const dataDir = resolve(flags.dataDir);
+		const osmEndpoint = flags.osmEndpoint;
+		const queryName = 'SET_ME';
+		const osmQuery = new OpenStreetmapQuery(latLngBounds);
+		return {
+			osmQuery,
+			queryName,
+			osmEndpoint,
+			dataDir,
+		}
+	}
+	readOsmCliQueryFile(filePath: string): OsmCliQueryFile {
+		const path = resolve(filePath);
+		const qfStr = readFileSync(path, 'UTF8');
+		return JSON.parse(qfStr) as OsmCliQueryFile;
+	}
+	getDataFromConfig(): OsmDownloadArgs {
+		const { args } = this.parse(Download);
+		const qf = this.readOsmCliQueryFile(args.queryFile);
+
+		const latLngBounds = LatLngBounds.FromBounds(qf.bounds);
+		const dataDir = resolve(qf.dataDir || process.cwd());
+		const osmEndpoint = qf.osmEndpoint;
+		const osmQuery = new OpenStreetmapQuery(latLngBounds);
+		return {
+			osmQuery,
+			osmEndpoint,
+			dataDir,
+		}
+	}
+
+
+}
+export default Download;
+

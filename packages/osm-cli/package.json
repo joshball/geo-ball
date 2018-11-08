@@ -1,28 +1,74 @@
 {
-  "name": "@ball-maps/osm-cli",
+  "name": "osm-cli",
+  "private": true,
+  "description": "OpenStreetMaps CLI",
+  "license": "MIT",
+  "author": "Joshua Ball",
+  "homepage": "https://github.com/joshball/ball-maps",
+  "repository": "https://github.com/joshball/ball-maps",
+  "bugs": "https://github.com/joshball/ball-maps/issues",
   "version": "1.0.0",
-  "description": "> TODO: description",
-  "author": "Joshua Ball <jball@highseas.com>",
-  "homepage": "https://github.com/joshball/ball-maps#readme",
-  "license": "ISC",
   "main": "build/index.js",
-  "directories": {
-    "lib": "build",
-    "test": "tests"
+  "bin": {
+    "osm-cli": "./bin/run"
   },
   "files": [
-    "build"
+    "/bin",
+    "/build",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
   ],
   "scripts": {
-    "clean": "rimraf build",
-    "build": "tsc -p tsconfig.json",
-    "watch": "tsc -p tsconfig.json --watch"
+    "clean": "rimraf build oclif.manifest.json",
+    "build": "yarn clean && tsc -b && yarn oclif-stuff",
+    "build:watch": "yarn build && tsc -b --watch",
+    "oclif-stuff": "oclif-dev manifest && oclif-dev readme",
+    "prepack": "rimraf build && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "postpack": "rimraf oclif.manifest.json",
+    "test": "echo NO TESTS",
+    "posttest": "tslint -p . -t stylish",
+    "version": "oclif-dev readme && git add README.md"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/joshball/ball-maps.git"
+  "dependencies": {
+    "@ball-maps/osm-data": "^1.0.0",
+    "@oclif/command": "^1",
+    "@oclif/config": "^1",
+    "@oclif/plugin-commands": "^1.2.2",
+    "@oclif/plugin-help": "^2",
+    "@oclif/plugin-not-found": "^1.2.2",
+    "@oclif/plugin-which": "^1.0.3",
+    "tslib": "^1"
   },
-  "bugs": {
-    "url": "https://github.com/joshball/ball-maps/issues"
+  "devDependencies": {
+    "@oclif/dev-cli": "^1",
+    "@oclif/tslint": "^3",
+    "@types/chai": "^4",
+    "@types/mocha": "^5",
+    "@types/node": "^10",
+    "globby": "^8",
+    "rimraf": "^2.6.2",
+    "ts-node": "^7.0.1",
+    "tslint": "^5",
+    "typescript": "^3.0"
+  },
+  "keywords": [
+    "oclif"
+  ],
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "oclif": {
+    "commands": "./build/commands",
+    "bin": "osm-cli",
+    "plugins": [
+      "@oclif/plugin-commands",
+      "@oclif/plugin-help",
+      "@oclif/plugin-not-found",
+      "@oclif/plugin-which"
+    ]
+  },
+  "types": "build/index.d.ts",
+  "peerDependencies": {
+    "axios": "^0.18.0"
   }
 }

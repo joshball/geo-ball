@@ -5,11 +5,28 @@
   "author": "Joshua Ball <joshua.g.s.ball@gmail.com>",
   "license": "MIT",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "clean": "lerna run clean",
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build",
+    "build:watch": "lerna run --parallel build:watch",
+    "test": "lerna run test"
+  },
   "devDependencies": {
     "@types/node": "^10.12.2",
+    "ava": "^0.25.0",
+    "ava-ts": "^0.25.2",
+    "axios": "^0.18.0",
+    "axios-mock-adapter": "^1.15.0",
     "lerna": "^3.4.3",
+    "nyc": "^13.1.0",
+    "prettier-package-json": "^2.0.1",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
     "typescript": "^3.1.6"
   }
 }

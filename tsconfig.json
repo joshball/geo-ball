@@ -3,6 +3,13 @@
 		"target": "es2017",
 		// "outDir": "./build",
 		// "rootDir": "./src",
+		"baseUrl": "./packages",
+		"paths": {
+			"@ball-maps/*": [
+				"./*/src"
+			]
+		},
+		"composite": true,
 		"moduleResolution": "node",
 		"module": "commonjs",
 		"declaration": true,
@@ -42,9 +49,9 @@
 			"test/types",
 		]
 	},
-	"include": [
-		"src/**/*.ts"
-	],
+	// "include": [
+	// 	"./src/**/*.ts"
+	// ],
 	"exclude": [
 		"node_modules/**"
 	],

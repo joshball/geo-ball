@@ -1,1 +1,1 @@
-console.log('OSM CLI');
+export {run} from '@oclif/command'
