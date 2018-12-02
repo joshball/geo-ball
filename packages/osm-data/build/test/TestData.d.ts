@@ -1,4 +1,4 @@
-import { OpenStreetmapQuery } from "..";
+import { OpenStreetmapQuery, OpenStreetmapFileMetaData } from "..";
 import { LatLngBounds, LatLng } from '@ball-maps/geo-core';
 import { IOpenStreetmapQueryResponse } from "../api/IOpenStreetmapQueryResponse";
 export interface ILatLngObj {
@@ -20,6 +20,7 @@ export interface IOsmQuery {
     latLngBoundsTestData: ILatLngBoundsTestData;
 }
 export declare const createNewBounds: () => ILatLngBoundsTestData;
+export declare const createNewOpenStreetmapFileMetaData: () => OpenStreetmapFileMetaData;
 export declare const createNewOpenStreetmapQuery: (latLngBoundsTestData?: ILatLngBoundsTestData | undefined) => {
     query: OpenStreetmapQuery;
     latLngBoundsTestData: ILatLngBoundsTestData;

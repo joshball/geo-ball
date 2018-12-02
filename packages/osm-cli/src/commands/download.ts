@@ -37,8 +37,8 @@ class Download extends Command {
 		downloader.fetchAndSave(osmArgs.osmQuery, osmArgs.resultsFileName, osmArgs.overwrite)
 			.then((results: IFetchAndSaveResult) => {
 				console.log('Download Complete:');
-				console.log('  SERVER:', results.osmDataFile.osmServer);
-				console.log('    DATE:', results.osmDataFile.queryDate);
+				console.log('  SERVER:', results.osmDataFile.osmMetaData.osmServer);
+				console.log('    DATE:', results.osmDataFile.osmMetaData.queryDate);
 				console.log('    FILE:', results.osmDataFilePath);
 			})
 			.catch(error => {

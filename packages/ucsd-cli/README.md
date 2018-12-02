@@ -30,11 +30,35 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`ucsd-cli OsmToRoadSeg OSMDATAFILE [ROADSEGEMENTSFILE]`](#ucsd-cli-osm-to-road-seg-osmdatafile-roadsegementsfile)
 * [`ucsd-cli commands`](#ucsd-cli-commands)
 * [`ucsd-cli help [COMMAND]`](#ucsd-cli-help-command)
 * [`ucsd-cli stats`](#ucsd-cli-stats)
-* [`ucsd-cli transform OSMDATAFILE [ROADSEGEMENTSFILE]`](#ucsd-cli-transform-osmdatafile-roadsegementsfile)
 * [`ucsd-cli which COMMAND`](#ucsd-cli-which-command)
+
+## `ucsd-cli OsmToRoadSeg OSMDATAFILE [ROADSEGEMENTSFILE]`
+
+Converts OSM files to Road Segment Files
+
+```
+USAGE
+  $ ucsd-cli OsmToRoadSeg OSMDATAFILE [ROADSEGEMENTSFILE]
+
+ARGUMENTS
+  OSMDATAFILE        OSM Data file
+  ROADSEGEMENTSFILE  Road Segments file for UCSD Graph
+
+OPTIONS
+  -f, --format=json|text|both  [default: json] Output format (json,text,both)
+  -h, --help                   show CLI help
+  -o, --overwrite
+
+EXAMPLES
+  $ cli convert osmDataFile
+  $ cli convert osmDataFile roadSegmentFile
+```
+
+_See code: [build\commands\OsmToRoadSeg.ts](https://github.com/joshball/ball-maps/blob/v1.0.0/build\commands\OsmToRoadSeg.ts)_
 
 ## `ucsd-cli commands`
 
@@ -86,29 +110,6 @@ EXAMPLE
 ```
 
 _See code: [build\commands\stats.ts](https://github.com/joshball/ball-maps/blob/v1.0.0/build\commands\stats.ts)_
-
-## `ucsd-cli transform OSMDATAFILE [ROADSEGEMENTSFILE]`
-
-Transforms OSM files to Road Segment Files
-
-```
-USAGE
-  $ ucsd-cli transform OSMDATAFILE [ROADSEGEMENTSFILE]
-
-ARGUMENTS
-  OSMDATAFILE        OSM Data file from download
-  ROADSEGEMENTSFILE  Road Line file for UCSD Graph
-
-OPTIONS
-  -h, --help       show CLI help
-  -o, --overwrite
-
-EXAMPLES
-  $ cli transform osmDataFile
-  $ cli transform osmDataFile roadSegmentFile
-```
-
-_See code: [build\commands\transform.ts](https://github.com/joshball/ball-maps/blob/v1.0.0/build\commands\transform.ts)_
 
 ## `ucsd-cli which COMMAND`
 

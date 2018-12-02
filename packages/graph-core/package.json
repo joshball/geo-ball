@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "@ball-maps/osm-data",
-  "description": "Open Street Maps data library",
+  "name": "@ball-maps/graph-core",
+  "description": "Graphing Library",
   "license": "ISC",
   "author": "Joshua Ball <jball@highseas.com>",
   "homepage": "https://github.com/joshball/ball-maps#readme",
@@ -29,10 +29,7 @@
     "test": "yarn run build && yarn run nyc ava --verbose",
     "test:watch": "yarn run build && yarn run ava --watch"
   },
-  "dependencies": {
-    "@ball-maps/geo-core": "^1.0.0",
-    "axios": "^0.18.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^10.12.2",
     "ava": "^0.25.0",

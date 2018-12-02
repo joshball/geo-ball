@@ -1,18 +1,19 @@
 {
-  "name": "ball-maps",
-  "version": "1.0.0",
-  "repository": "git@github.com:joshball/ball-maps.git",
-  "author": "Joshua Ball <joshua.g.s.ball@gmail.com>",
-  "license": "MIT",
   "private": true,
+  "name": "ball-maps",
+  "license": "MIT",
+  "author": "Joshua Ball <joshua.g.s.ball@gmail.com>",
+  "repository": "git@github.com:joshball/ball-maps.git",
+  "version": "1.0.0",
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
-    "clean": "lerna run clean",
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
     "build:watch": "lerna run --parallel build:watch",
+    "clean": "lerna run clean",
+    "cleanup:packages": "yarn run prettier-package-json --write && lerna run cleanup:packages",
     "test": "lerna run test"
   },
   "devDependencies": {

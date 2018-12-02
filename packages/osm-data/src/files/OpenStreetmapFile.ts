@@ -13,17 +13,26 @@ import { IOpenStreetMapElementsStats } from '../data/IOpenStreetMapElementsStats
 // - OSM Query Response
 // - Date
 
-export class OpenStreetmapFile {
+export class OpenStreetmapFileMetaData {
 
 	osmServer: string;
 	osmQuery: OpenStreetmapQuery;
 	queryDate: string;
-	osmQueryResp: IOpenStreetmapQueryResponse;
 
-	constructor(osmServer: string, osmQuery: OpenStreetmapQuery, queryDate: string, osmQueryResp: IOpenStreetmapQueryResponse) {
+	constructor(osmServer: string, osmQuery: OpenStreetmapQuery, queryDate: string = new Date().toISOString()) {
 		this.osmServer = osmServer;
 		this.osmQuery = osmQuery;
 		this.queryDate = queryDate;
+	}
+}
+
+export class OpenStreetmapFile {
+
+	osmMetaData: OpenStreetmapFileMetaData;
+	osmQueryResp: IOpenStreetmapQueryResponse;
+
+	constructor(osmMetaData: OpenStreetmapFileMetaData, osmQueryResp: IOpenStreetmapQueryResponse) {
+		this.osmMetaData = osmMetaData;
 		this.osmQueryResp = osmQueryResp;
 	}
 
@@ -41,11 +50,12 @@ export class OpenStreetmapFile {
 
 	static GetFileType(fileData: string): OpenStreetmapFile {
 		const osmData = JSON.parse(fileData) as OpenStreetmapFile;
-		if (osmData.osmServer
-			&& osmData.osmQuery
-			&& osmData.queryDate
+		if (osmData.osmMetaData
+			&& osmData.osmMetaData.osmServer
+			&& osmData.osmMetaData.osmQuery
+			&& osmData.osmMetaData.queryDate
 			&& osmData.osmQueryResp) {
-			return new OpenStreetmapFile(osmData.osmServer, osmData.osmQuery, osmData.queryDate, osmData.osmQueryResp);
+			return new OpenStreetmapFile(osmData.osmMetaData, osmData.osmQueryResp);
 		}
 		throw new Error('Not an OSM File')
 	}

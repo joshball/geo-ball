@@ -1,4 +1,4 @@
-import { OpenStreetmapQuery } from "..";
+import { OpenStreetmapQuery, OpenStreetmapFileMetaData } from "..";
 import { LatLngBounds, LatLng } from '@ball-maps/geo-core';
 
 import { IOpenStreetmapQueryResponse } from "../api/IOpenStreetmapQueryResponse";
@@ -45,6 +45,11 @@ export const createNewBounds = (): ILatLngBoundsTestData => {
 		latLngBounds
 	};
 }
+
+export const createNewOpenStreetmapFileMetaData = (): OpenStreetmapFileMetaData => {
+	const { query } = createNewOpenStreetmapQuery();
+	return new OpenStreetmapFileMetaData('osm-endpoint', query);
+};
 
 export const createNewOpenStreetmapQuery = (latLngBoundsTestData?: ILatLngBoundsTestData) => {
 	latLngBoundsTestData = latLngBoundsTestData || createNewBounds();

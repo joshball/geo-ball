@@ -1,12 +1,16 @@
 import { OpenStreetmapQuery } from '../api/OpenStreetmapQuery';
 import { IOpenStreetmapQueryResponse } from '../api/IOpenStreetmapQueryResponse';
 import { OpenStreetMapElements } from '../data/OpenStreetMapElements';
-export declare class OpenStreetmapFile {
+export declare class OpenStreetmapFileMetaData {
     osmServer: string;
     osmQuery: OpenStreetmapQuery;
     queryDate: string;
+    constructor(osmServer: string, osmQuery: OpenStreetmapQuery, queryDate?: string);
+}
+export declare class OpenStreetmapFile {
+    osmMetaData: OpenStreetmapFileMetaData;
     osmQueryResp: IOpenStreetmapQueryResponse;
-    constructor(osmServer: string, osmQuery: OpenStreetmapQuery, queryDate: string, osmQueryResp: IOpenStreetmapQueryResponse);
+    constructor(osmMetaData: OpenStreetmapFileMetaData, osmQueryResp: IOpenStreetmapQueryResponse);
     getElements(): OpenStreetMapElements;
     static Load(path: string): OpenStreetmapFile;
     static GetFileType(fileData: string): OpenStreetmapFile;

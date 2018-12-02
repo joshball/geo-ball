@@ -2,5 +2,5 @@
 // import "core-js/fn/array.find"
 // ...
 
-export * from './data/RoadSegmentLine';
-export * from './files/RoadSegmentsFile';
+export * from './core/LatLng';
+export * from './core/LatLngBounds';

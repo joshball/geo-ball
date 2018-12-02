@@ -2,7 +2,7 @@ import axios from 'axios';
 import { resolve } from 'path';
 import { writeFileSync, existsSync } from 'fs';
 import { OpenStreetmapQuery } from './OpenStreetmapQuery';
-import { OpenStreetmapFile } from '../files/OpenStreetmapFile';
+import { OpenStreetmapFile, OpenStreetmapFileMetaData } from '../files/OpenStreetmapFile';
 import { IOpenStreetmapQueryResponse } from './IOpenStreetmapQueryResponse';
 
 // https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances
@@ -45,14 +45,14 @@ export class OpenStreetmapDownloader {
 		});
 	}
 
-	public fetchAndSave(query: OpenStreetmapQuery, osmDataFilePath: string, overwriteFile: boolean = false): Promise<IFetchAndSaveResult> {
+	public fetchAndSave(osmQuery: OpenStreetmapQuery, osmDataFilePath: string, overwriteFile: boolean = false): Promise<IFetchAndSaveResult> {
 		osmDataFilePath = resolve(osmDataFilePath);
 		if (!overwriteFile && existsSync(osmDataFilePath)) {
 			throw new Error(`File exists [${osmDataFilePath}]`);
 		}
-		const now = new Date();
-		return this.fetch(query).then(data => {
-			const osmDataFile = new OpenStreetmapFile(this.endpoint, query, now.toISOString(), data);
+		const osmMetaData = new OpenStreetmapFileMetaData(this.endpoint, osmQuery);
+		return this.fetch(osmQuery).then((osmQueryResp: IOpenStreetmapQueryResponse) => {
+			const osmDataFile = new OpenStreetmapFile(osmMetaData, osmQueryResp);
 			writeFileSync(osmDataFilePath, JSON.stringify(osmDataFile, undefined, 4));
 			return {
 				osmDataFile,
