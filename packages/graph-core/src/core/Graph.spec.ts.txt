@@ -1,0 +1,174 @@
+// tslint:disable:no-expression-statement
+import test from 'ava';
+import { join, resolve } from 'path';
+// import test, { Macro } from 'ava';
+import { GraphAdjMatrix } from './GraphAdjMatrix';
+import { GraphAdjList } from './GraphAdjList';
+// import { GraphSpec, getGraphData, getRoutesData, getUcsdData } from '../../tests/modOneTestData';
+import { getTestDataFuncs, GraphSpec } from '../../tests/modOneTestData';
+import { loadModOneTestData, loadRoadSegmentData } from '../loaders';
+
+// const gradersPath = resolve(join(__dirname, '../../../../data/graders'));
+const gradersPath = resolve(join(process.cwd(), 'data/graders'));
+// console.error('Graph.spec.ts: gradersPath:', gradersPath)
+
+const { getGraphData, getUcsdData } = getTestDataFuncs(gradersPath);
+
+// const loadGraderGraph = ()
+const getGraphs = (graphData: GraphSpec) => {
+    const graphs = {
+        list: new GraphAdjList(),
+        matrix: new GraphAdjMatrix(),
+    }
+    loadModOneTestData(graphData, graphs.list);
+    loadModOneTestData(graphData, graphs.matrix);
+    return graphs;
+}
+
+const runTest = (t: any, num: number, checkDistance: boolean = false, dump: boolean = false): void => {
+    const graphData = getGraphData(num);
+    const graphs = getGraphs(graphData.data);
+
+    if (dump) {
+        console.log('Test ', num);
+        console.log(`  Graph has ${graphData.data.verticies} verticies and ${graphData.data.edges.length} edges.`);
+    }
+
+    const listResults = graphs.list.degreeSequence();
+    const matrixResults = graphs.matrix.degreeSequence();
+
+    if (dump) {
+        if (listResults.length > 25) {
+            t.log('degress:', JSON.stringify(listResults, undefined, 4));
+        }
+        else {
+            t.log(`degress: ${listResults.join(',')}`);
+        }
+    }
+    t.deepEqual(listResults, graphData.deg);
+    t.deepEqual(matrixResults, graphData.deg);
+
+    if (checkDistance && graphData.two) {
+        graphData.two.forEach(ta => {
+            t.log(`Checking two away [${ta.start}] => [${ta.twoAways}]`);
+            const listDistance = graphs.list.getDistance2(ta.start).sort();
+            const matrixDistance = graphs.matrix.getDistance2(ta.start).sort();
+            if (dump) {
+                t.log(`LIST twoaways: [${ta.start}] => [${listDistance}]`);
+                t.log(`MATRIX twoaways: [${ta.start}] => [${matrixDistance}]`);
+                // if (listDistance.length > 25) {
+                //     t.log('  Two Away Dist:', JSON.stringify(listDistance, undefined, 4));
+                // }
+                // else {
+                //     t.log('  Two Away Dist:', listDistance);
+                // }
+            }
+            t.deepEqual(listDistance, ta.twoAways);
+            t.deepEqual(matrixDistance, ta.twoAways);
+
+        })
+    }
+}
+
+test('graph1.txt: Straight line (0->1->2->3->...)', t => {
+    runTest(t, 1, true, true);
+});
+
+// test('graph2.txt: Undirected straight line (0<->1<->2<->3<->...)', t => {
+//     runTest(t, 2, true, true);
+// });
+
+// test('graph3.txt: Star graph - 0 is connected in both directions to all nodes except itself (starting at 0)', t => {
+//     runTest(t, 3, true, true);
+// });
+
+// test('graph4.txt: Star graph - Each "arm" consists of two undirected edges leading away from 0 (starting at 0)', t => {
+//     runTest(t, 4, true, true);
+// });
+
+// test('graph5.txt: Star graph - Each "arm" consists of two undirected edges leading away from 0 (starting at 0)', t => {
+//     runTest(t, 5, true, true);
+// });
+
+// test('graph6.txt: Star graph - Each "arm" consists of two undirected edges leading away from 0 (starting at 0)', t => {
+//     runTest(t, 6, true, true);
+// });
+
+test.skip('ucsd.map: UCSD MAP: Intersections around UCSD', t => {
+    const graphData = getUcsdData();
+    const graphs = {
+        list: new GraphAdjList(),
+        matrix: new GraphAdjMatrix(),
+    }
+
+    loadRoadSegmentData(graphData.data.edges, graphs.list);
+    loadRoadSegmentData(graphData.data.edges, graphs.matrix);
+
+
+    const listResults = graphs.list.degreeSequence();
+    const matrixResults = graphs.matrix.degreeSequence();
+
+    // console.log('listResults', listResults)
+    t.deepEqual(listResults, graphData.deg);
+    t.deepEqual(matrixResults, graphData.deg);
+
+    if (graphData.two) {
+        const START = 3;
+        t.log(`Checking two away [${START}] => [${graphData.two.join(',')}]`);
+
+        const listTwoAways = graphs.list.getDistance2(START).sort();
+        const matrixTwoAways = graphs.list.getDistance2(START).sort();
+        t.log(`LIST twoaways: [${START}] => [${listTwoAways}]`);
+        t.log(`MATRIX twoaways: [${START}] => [${matrixTwoAways}]`);
+
+        t.deepEqual(listTwoAways, graphData.two);
+        t.deepEqual(matrixTwoAways, graphData.two);
+    }
+});
+
+// test('routesUA.dat: AIRLINE MAP: Routes of airplanes around the world', t => {
+//     const graphData = getRoutesData();
+//     const graphs = {
+//         list: new GraphAdjList(),
+//         matrix: new GraphAdjMatrix(),
+//     }
+
+//     loadFlightRouteData(graphData.data, graphs.list);
+//     loadFlightRouteData(graphData.data, graphs.matrix);
+
+
+//     const listResults = graphs.list.degreeSequence();
+//     const matrixResults = graphs.matrix.degreeSequence();
+//     // console.log('listResults', listResults)
+//     t.deepEqual(matrixResults, graphData.deg);
+//     t.deepEqual(listResults, graphData.deg);
+// });
+
+// test('routesUA.dat: AIRLINE MAP: Routes of airplanes around the world', t => {
+//     const graphData = getGraphData(1);
+//     const graphs = getGraphs(graphData.data);
+//     const listResults = graphs.list.degreeSequence();
+//     const matrixResults = graphs.matrix.degreeSequence();
+//     t.deepEqual(listResults, graphData.deg);
+//     t.deepEqual(matrixResults, graphData.deg);
+// });
+
+// const loadGraphs = (graphs: any) => {
+//     loadRoadSegmentDataFromFile(graphs.list;
+//     graphs.matrix;
+// }
+
+// const hash: Macro = (t, input: string, expected: string) => {
+//     t.is(GraphAdjMatrix(input), expected);
+//     t.is(GraphAdjList(input), expected);
+// };
+
+// hash.title = (providedTitle: string, input: string, expected: string) =>
+//     `${providedTitle}: ${input} => ${expected}`;
+
+// test(
+//     'sha256',
+//     hash,
+//     'test',
+//     '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08'
+// );

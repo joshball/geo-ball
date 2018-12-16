@@ -14,8 +14,10 @@
 		"no-console": false,
 		"no-internal-module": false,
 		"no-namespace": false,
-		"object-literal-sort-keys": false,
-		"ordered-imports": false,
+        "object-literal-sort-keys": false,
+        "one-variable-per-declaration":false,
+        "ordered-imports": false,
+        "prefer-for-of":false,
 		"variable-name": false,
 		// TODO: allow devDependencies only in **/*.spec.ts files:
 		// waiting on https://github.com/palantir/tslint/pull/3708
