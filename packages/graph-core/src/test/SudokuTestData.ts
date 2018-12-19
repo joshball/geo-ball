@@ -1,112 +1,80 @@
-import { flatten, flattenOneLevel } from '../utils/array';
-import { SudokuUnit, SudokuSquare, SudokuSquareUnits, SudokuSquarePeers } from '../sudoku/SudokuCore';
+import { flatten } from '../utils/array';
+import { SudokuUnit, SudokuSquareUnits, SudokuSquarePeers } from '../sudoku/SudokuCore';
+import { SudokuNineSquare } from '../sudoku/SudokuNineCore';
+
+import * as FourByFour from './SudokuTestData.fourbyfour';
+import { norvig, INorvigTestBoards } from './SudokuTestData.norvig';
+import { SudokuBoardStrings } from '../sudoku/SudokuBoardStrings';
+
+
+export const dumpBoards = (lhs: Array<any>, rhs: Array<any>) => {
+    console.log('--------------------------------------------------------------------------------');
+    console.log('A:');
+    console.log(SudokuBoardStrings.ArrayToPrettyString(lhs));
+    console.log('--------------------------------------------------------------------------------');
+    console.log('B:');
+    console.log(SudokuBoardStrings.ArrayToPrettyString(rhs));
+    console.log('--------------------------------------------------------------------------------');
+    // console.log('expectedFinishedBoardArray:');
+    // console.log(SudokuBoardStrings.ArrayToPrettyString(expectedFinishedBoardArray));
+    // console.log('--------------------------------------------------------------------------------');
+    console.log('A:', SudokuBoardStrings.ArrayToString(lhs));
+    console.log('B:', SudokuBoardStrings.ArrayToString(rhs));
+    // console.log('expec:', SudokuBoard.ArrayToString(expectedFinishedBoardArray));
+    // console.log('badSq:', badSquares);
+    console.log('--------------------------------------------------------------------------------');
+}
+
+export const dumpBoard = (board: Array<any>) => {
+    console.log('--------------------------------------------------------------------------------');
+    console.log(SudokuBoardStrings.ArrayToPrettyString(board));
+    console.log('--------------------------------------------------------------------------------');
+    console.log(SudokuBoardStrings.ArrayToString(board));
+    console.log('--------------------------------------------------------------------------------');
+}
+
+export const dumpValues = (bsv: any) => {
+    console.log('--------------------------------------------------------------------------------');
+    console.log('Dumping Solver Values:')
+    console.log('--------------------------------------------------------------------------------');
+    // const bsv = solver.getSquareValues();
+    console.log('Raw Square Values');
+    console.log(bsv);
+    const aa = bsv.map((v: any) => v.vals);
+    console.log('--------------------------------------------------------------------------------');
+    console.log('Array of Array of Square Values');
+    console.log(aa);
+
+    const ps = SudokuBoardStrings.ArrayOfValuesToPrettyString(aa);
+    console.log('--------------------------------------------------------------------------------');
+    console.log('Pretty Square Values:');
+    console.log(ps);
+    console.log('--------------------------------------------------------------------------------');
+}
+
 
 export interface ITestBoardStrings {
     string: string
     pretty: string
 }
-export interface ITestBoards {
+export interface ITestBoard {
     beg: ITestBoardStrings
     end: ITestBoardStrings
 }
-
-export interface INorvigTestBoards {
-    easy: ITestBoards
-    hard: ITestBoards
+export interface IEmptyBoard {
+    empty: ITestBoardStrings
+    emptyValues: string
 }
+
+
+export const cleanLeadingSpaces = (str: string): string => str.replace(/^\s*/gm, '');
+export const stringifyCleaner = (_key: string, value: any): string => typeof value === 'string' ? cleanLeadingSpaces(value).trim() : value;
 
 
 export const getBoards = () => {
 
-    const fourByFour:ITestBoards = {
-        beg: {
-            string: '1234............',
-            pretty: `
-                1 2 | 3 4
-                0 0 | 0 0
-                ----+----
-                0 0 | 0 0
-                0 0 | 0 0
-            `
-        },
-        end: {
-            string: '1234341221434321',
-            pretty: `
-                1 2 | 3 4
-                3 4 | 1 2
-                ----+----
-                2 1 | 4 3
-                4 3 | 2 1
-            `
-        }
-    }
-    const norvig: INorvigTestBoards = {
-        easy: {
-            beg: {
-                string: '..392165796.34582125.876493548132976729564138136798245372689514814253769695417382',
-                pretty: `
-                        0 0 3 |9 2 1 |6 5 7
-                        9 6 0 |3 4 5 |8 2 1
-                        2 5 0 |8 7 6 |4 9 3
-                        ------+------+------
-                        5 4 8 |1 3 2 |9 7 6
-                        7 2 9 |5 6 4 |1 3 8
-                        1 3 6 |7 9 8 |2 4 5
-                        ------+------+------
-                        3 7 2 |6 8 9 |5 1 4
-                        8 1 4 |2 5 3 |7 6 9
-                        6 9 5 |4 1 7 |3 8 2`
-            },
-            end: {
-                string: '483921657967345821251876493548132976729564138136798245372689514814253769695417382',
-                pretty: `
-                        4 8 3 |9 2 1 |6 5 7
-                        9 6 7 |3 4 5 |8 2 1
-                        2 5 1 |8 7 6 |4 9 3
-                        ------+------+------
-                        5 4 8 |1 3 2 |9 7 6
-                        7 2 9 |5 6 4 |1 3 8
-                        1 3 6 |7 9 8 |2 4 5
-                        ------+------+------
-                        3 7 2 |6 8 9 |5 1 4
-                        8 1 4 |2 5 3 |7 6 9
-                        6 9 5 |4 1 7 |3 8 2`
-            }
-        },
-        hard: {
-            beg: {
-                string: '4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......',
-                pretty: `
-                      4 . . |. . . |8 . 5
-                      . 3 . |. . . |. . .
-                      . . . |7 . . |. . .
-                      ------+------+------
-                      . 2 . |. . . |. 6 .
-                      . . . |. 8 . |4 . .
-                      . . . |. 1 . |. . .
-                      ------+------+------
-                      . . . |6 . 3 |. 7 .
-                      5 . . |2 . . |. . .
-                      1 . 4 |. . . |. . .`,
-            },
-            end: {
-                string: '483921657967345821251876493548132976729564138136798245372689514814253769695417382',
-                pretty: `4 1 7 |3 6 9 |8 2 5
-                      6 3 2 |1 5 8 |9 4 7
-                      9 5 8 |7 2 4 |3 1 6
-                      ------+------+------
-                      8 2 5 |4 3 7 |1 6 9
-                      7 9 1 |5 8 6 |4 3 2
-                      3 4 6 |9 1 2 |7 5 8
-                      ------+------+------
-                      2 8 9 |6 4 3 |5 7 1
-                      5 7 3 |2 9 1 |6 8 4
-                      1 6 4 |8 7 5 |2 9 3`,
-            }
-        }
-    }
 
-    const aOneMissing: ITestBoards = {
+    const aOneMissing: ITestBoard = {
         beg: {
             string: `.83921657967345821251876493548132976729564138136798245372689514814253769695417382`,
             pretty: `
@@ -155,16 +123,19 @@ export const getBoards = () => {
     };
 
     return {
-        fourByFour: JSON.parse(JSON.stringify(fourByFour)) as ITestBoards,
-        aOneMissing: JSON.parse(JSON.stringify(aOneMissing)) as ITestBoards,
-        boardOne: JSON.parse(JSON.stringify(boardOne)),
-        norvig: JSON.parse(JSON.stringify(norvig)) as INorvigTestBoards,
+        fourByFour: {
+            board: JSON.parse(JSON.stringify(FourByFour.testBoard, stringifyCleaner)) as ITestBoard,
+            empty: JSON.parse(JSON.stringify(FourByFour.emptyBoard, stringifyCleaner)) as IEmptyBoard,
+        },
+        aOneMissing: JSON.parse(JSON.stringify(aOneMissing, stringifyCleaner)) as ITestBoard,
+        boardOne: JSON.parse(JSON.stringify(boardOne, stringifyCleaner)),
+        norvig: JSON.parse(JSON.stringify(norvig, stringifyCleaner)) as INorvigTestBoards,
     }
 }
 
 
 export const getExpectedData = () => {
-    const expectedBoxes: Array<SudokuUnit> = [
+    const expectedBoxes: Array<SudokuUnit<SudokuNineSquare>> = [
         ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"],
         ["A4", "A5", "A6", "B4", "B5", "B6", "C4", "C5", "C6"],
         ["A7", "A8", "A9", "B7", "B8", "B9", "C7", "C8", "C9"],
@@ -176,7 +147,7 @@ export const getExpectedData = () => {
         ["G7", "G8", "G9", "H7", "H8", "H9", "I7", "I8", "I9"]
     ];
 
-    const expectedSquares: Array<SudokuSquare> = flatten([
+    const expectedSquares: Array<SudokuNineSquare> = flatten([
         ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9"],
         ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9"],
         ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9"],
@@ -188,7 +159,7 @@ export const getExpectedData = () => {
         ["I1", "I2", "I3", "I4", "I5", "I6", "I7", "I8", "I9"]
     ]);
 
-    const expectedUnitLists: Array<SudokuUnit> = [
+    const expectedUnitLists: Array<SudokuUnit<SudokuNineSquare>> = [
         ["A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "I1"],
         ["A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2", "I2"],
         ["A3", "B3", "C3", "D3", "E3", "F3", "G3", "H3", "I3"],
@@ -218,7 +189,7 @@ export const getExpectedData = () => {
         ["G7", "G8", "G9", "H7", "H8", "H9", "I7", "I8", "I9"]
     ];
 
-    const expectedUnits: SudokuSquareUnits = {
+    const expectedUnits: SudokuSquareUnits<SudokuNineSquare> = {
         "I6": [["A6", "B6", "C6", "D6", "E6", "F6", "G6", "H6", "I6"], ["I1", "I2", "I3", "I4", "I5", "I6", "I7", "I8", "I9"], ["G4", "G5", "G6", "H4", "H5", "H6", "I4", "I5", "I6"]],
         "H9": [["A9", "B9", "C9", "D9", "E9", "F9", "G9", "H9", "I9"], ["H1", "H2", "H3", "H4", "H5", "H6", "H7", "H8", "H9"], ["G7", "G8", "G9", "H7", "H8", "H9", "I7", "I8", "I9"]],
         "I2": [["A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2", "I2"], ["I1", "I2", "I3", "I4", "I5", "I6", "I7", "I8", "I9"], ["G1", "G2", "G3", "H1", "H2", "H3", "I1", "I2", "I3"]],
@@ -278,7 +249,7 @@ export const getExpectedData = () => {
         "F5": [["A5", "B5", "C5", "D5", "E5", "F5", "G5", "H5", "I5"], ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"], ["D4", "D5", "D6", "E4", "E5", "E6", "F4", "F5", "F6"]], "E2": [["A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2", "I2"], ["E1", "E2", "E3", "E4", "E5", "E6", "E7", "E8", "E9"], ["D1", "D2", "D3", "E1", "E2", "E3", "F1", "F2", "F3"]], "F7": [["A7", "B7", "C7", "D7", "E7", "F7", "G7", "H7", "I7"], ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"], ["D7", "D8", "D9", "E7", "E8", "E9", "F7", "F8", "F9"]], "F8": [["A8", "B8", "C8", "D8", "E8", "F8", "G8", "H8", "I8"], ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"], ["D7", "D8", "D9", "E7", "E8", "E9", "F7", "F8", "F9"]], "D2": [["A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2", "I2"], ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9"], ["D1", "D2", "D3", "E1", "E2", "E3", "F1", "F2", "F3"]], "H1": [["A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "I1"], ["H1", "H2", "H3", "H4", "H5", "H6", "H7", "H8", "H9"], ["G1", "G2", "G3", "H1", "H2", "H3", "I1", "I2", "I3"]], "H6": [["A6", "B6", "C6", "D6", "E6", "F6", "G6", "H6", "I6"], ["H1", "H2", "H3", "H4", "H5", "H6", "H7", "H8", "H9"], ["G4", "G5", "G6", "H4", "H5", "H6", "I4", "I5", "I6"]], "H2": [["A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2", "I2"], ["H1", "H2", "H3", "H4", "H5", "H6", "H7", "H8", "H9"], ["G1", "G2", "G3", "H1", "H2", "H3", "I1", "I2", "I3"]], "H4": [["A4", "B4", "C4", "D4", "E4", "F4", "G4", "H4", "I4"], ["H1", "H2", "H3", "H4", "H5", "H6", "H7", "H8", "H9"], ["G4", "G5", "G6", "H4", "H5", "H6", "I4", "I5", "I6"]], "D3": [["A3", "B3", "C3", "D3", "E3", "F3", "G3", "H3", "I3"], ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9"], ["D1", "D2", "D3", "E1", "E2", "E3", "F1", "F2", "F3"]], "B4": [["A4", "B4", "C4", "D4", "E4", "F4", "G4", "H4", "I4"], ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9"], ["A4", "A5", "A6", "B4", "B5", "B6", "C4", "C5", "C6"]], "B5": [["A5", "B5", "C5", "D5", "E5", "F5", "G5", "H5", "I5"], ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9"], ["A4", "A5", "A6", "B4", "B5", "B6", "C4", "C5", "C6"]], "B6": [["A6", "B6", "C6", "D6", "E6", "F6", "G6", "H6", "I6"], ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9"], ["A4", "A5", "A6", "B4", "B5", "B6", "C4", "C5", "C6"]], "B7": [["A7", "B7", "C7", "D7", "E7", "F7", "G7", "H7", "I7"], ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9"], ["A7", "A8", "A9", "B7", "B8", "B9", "C7", "C8", "C9"]], "E9": [["A9", "B9", "C9", "D9", "E9", "F9", "G9", "H9", "I9"], ["E1", "E2", "E3", "E4", "E5", "E6", "E7", "E8", "E9"], ["D7", "D8", "D9", "E7", "E8", "E9", "F7", "F8", "F9"]], "B1": [["A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "I1"], ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9"], ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]], "B2": [["A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2", "I2"], ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9"], ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]], "B3": [["A3", "B3", "C3", "D3", "E3", "F3", "G3", "H3", "I3"], ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9"], ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]], "D6": [["A6", "B6", "C6", "D6", "E6", "F6", "G6", "H6", "I6"], ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9"], ["D4", "D5", "D6", "E4", "E5", "E6", "F4", "F5", "F6"]], "D7": [["A7", "B7", "C7", "D7", "E7", "F7", "G7", "H7", "I7"], ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9"], ["D7", "D8", "D9", "E7", "E8", "E9", "F7", "F8", "F9"]], "D4": [["A4", "B4", "C4", "D4", "E4", "F4", "G4", "H4", "I4"], ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9"], ["D4", "D5", "D6", "E4", "E5", "E6", "F4", "F5", "F6"]], "D5": [["A5", "B5", "C5", "D5", "E5", "F5", "G5", "H5", "I5"], ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9"], ["D4", "D5", "D6", "E4", "E5", "E6", "F4", "F5", "F6"]], "B8": [["A8", "B8", "C8", "D8", "E8", "F8", "G8", "H8", "I8"], ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9"], ["A7", "A8", "A9", "B7", "B8", "B9", "C7", "C8", "C9"]], "B9": [["A9", "B9", "C9", "D9", "E9", "F9", "G9", "H9", "I9"], ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9"], ["A7", "A8", "A9", "B7", "B8", "B9", "C7", "C8", "C9"]], "D1": [["A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "I1"], ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9"], ["D1", "D2", "D3", "E1", "E2", "E3", "F1", "F2", "F3"]]
     }
 
-    const expectedPeers: SudokuSquarePeers = {
+    const expectedPeers: SudokuSquarePeers<SudokuNineSquare> = {
         "I6": ["I9", "G6", "G5", "G4", "F6", "I8", "I1", "H6", "I3", "I2", "I5", "I4", "I7", "H5", "B6", "H4", "A6", "D6", "E6", "C6"],
         "H9": ["I9", "G7", "H8", "D9", "I8", "H2", "F9", "H1", "H6", "H7", "I7", "H5", "C9", "E9", "G9", "H3", "A9", "G8", "B9", "H4"],
         "I2": ["I9", "I8", "F2", "G3", "G2", "G1", "H2", "H3", "I3", "H1", "I5", "I4", "I7", "I6", "I1", "A2", "B2", "C2", "D2", "E2"],

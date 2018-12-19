@@ -2,6 +2,8 @@ import * as SudokuCore from './SudokuCore';
 import test from 'ava';
 import { flattenOneLevel, cross } from '../utils/array';
 import { getExpectedData } from '../test/SudokuTestData';
+import { SudokuFourCore } from './SudokuFourCore';
+import { SudokuNineCore, SudokuNineCellValue } from './SudokuNineCore';
 // import { dumpBothArrays } from '../test/TestUtils';
 
 
@@ -15,44 +17,109 @@ test('[internal] test to create boxes from Two arrays of strings', t => {
 
 
 test('[internal] cross of all rows and columns is produces 81 squares [A1...I9]', t => {
-    const actualCross = cross(SudokuCore.Rows, SudokuCore.Cols);
+    const core = new SudokuNineCore();
+    const actualCross = cross(core.Rows, core.Cols);
     const expectedSquares = getExpectedData().squares;
     t.deepEqual(actualCross, expectedSquares);
 });
 
 
 test('SudokuCore.Squares is the 81 squares [A1...I9]', t => {
+    const core = new SudokuNineCore();
     const expectedSquares = getExpectedData().squares;
-    t.deepEqual(SudokuCore.Squares, expectedSquares);
+    t.deepEqual(core.Squares, expectedSquares);
 });
 
 test('Sudoku CreateUnitLists returns list of all units', t => {
+    const core = new SudokuNineCore();
     const expectedUnitLists = getExpectedData().unitLists;
-    t.deepEqual(SudokuCore.AllUnits, expectedUnitLists);
+    t.deepEqual(core.AllUnits, expectedUnitLists);
 });
 
 
 
 test('SudokuCore.SquareUnits returns correct unit squares', t => {
+    const core = new SudokuNineCore();
     // const unitLists = SudokuCore.CreateUnits();
-    const actualUntis = JSON.parse(JSON.stringify(SudokuCore.SquareUnits))
+    const actualUntis = JSON.parse(JSON.stringify(core.SquareUnits))
     const expectedUnits = getExpectedData().units;
     t.deepEqual(actualUntis, expectedUnits);
 });
 
 
 test('SudokuCore.Peers.C2 is as expected', t => {
+    const core = new SudokuNineCore();
     const expectedC2 = getExpectedData().peers.C2.sort();
-    const actualC2 = SudokuCore.SquarePeers.C2.sort();
+    const actualC2 = core.SquarePeers.C2.sort();
     t.deepEqual(actualC2, expectedC2);
 });
 
 test('SudokuCore.Peers is as expected', t => {
+    const core = new SudokuNineCore();
     const expectedPeersSorted = getExpectedData().peersSorted;
-    const actualPeers = JSON.parse(JSON.stringify(SudokuCore.SquarePeers))
+    const actualPeers = JSON.parse(JSON.stringify(core.SquarePeers))
     t.deepEqual(actualPeers, expectedPeersSorted);
 });
 
+test('SudokuBoard.IsValidBoardArray throws on empty', t => {
+    const core = new SudokuNineCore();
+    const undefinedBoardArray = undefined;
+    t.throws(() => core.isValidBoardArray(undefinedBoardArray as unknown as Array<SudokuNineCellValue>), "Undefined boardArray");
+});
+
+test('SudokuBoard.IsValidBoardArray throws on short array', t => {
+    const core = new SudokuNineCore();
+    const shortBoardArray = [1, 2, 3, 4];
+    t.throws(() => core.isValidBoardArray(shortBoardArray as unknown as Array<SudokuNineCellValue>), "boardArray length must be 81");
+});
+
+test('SudokuBoard.IsValidBoardArray throws on long array', t => {
+    const core = new SudokuNineCore();
+    const longBoardArray: Array<SudokuNineCellValue> = [
+        0, 0, 0, 4, 0, 8, 0, 2, 9,
+        0, 0, 0, 0, 0, 0, 0, 0, 4,
+        8, 5, 0, 0, 2, 0, 0, 0, 7,
+        0, 0, 8, 3, 7, 4, 2, 0, 0,
+        0, 2, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 3, 2, 6, 1, 7, 0, 0,
+        0, 0, 0, 0, 9, 3, 6, 1, 2,
+        2, 0, 0, 0, 0, 0, 4, 0, 3,
+        1, 3, 0, 6, 4, 2, 0, 7, 0, 0
+    ];
+    t.throws(() => core.isValidBoardArray(longBoardArray), "boardArray length must be 81");
+});
+
+test('SudokuBoard.IsValidBoardArray throws on number greater than 9', t => {
+    const core = new SudokuNineCore();
+    const longBoardArray = [
+        0, 0, 0, 4, 0, 8, 0, 2, 9,
+        0, 0, 0, 0, 0, 0, 0, 0, 4,
+        8, 5, 0, 0, 2, 0, 0, 0, 7,
+        0, 0, 8, 3, 7, 4, 2, 0, 0,
+        0, 2, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 3, 2, 6, 1, 7, 0, 0,
+        0, 0, 0, 0, 9, 3, 6, 1, 2,
+        2, 0, 0, 0, 0, 0, 4, 0, 3,
+        1, 3, 0, 6, 4, 2, 0, 7, 10,
+    ];
+    t.throws(() => core.isValidBoardArray(longBoardArray as unknown as Array<SudokuNineCellValue>), "Invalid digit [10] at pos 80 sould be 0-9");
+});
+
+test('SudokuBoard.IsValidBoardArray throws on invalid char "."', t => {
+    const core = new SudokuNineCore();
+    const longBoardArray = [
+        0, 0, 0, 4, 0, 8, 0, 2, '.',
+        0, 0, 0, 0, 0, 0, 0, 0, 4,
+        8, 5, 0, 0, 2, 0, 0, 0, 7,
+        0, 0, 8, 3, 7, 4, 2, 0, 0,
+        0, 2, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 3, 2, 6, 1, 7, 0, 0,
+        0, 0, 0, 0, 9, 3, 6, 1, 2,
+        2, 0, 0, 0, 0, 0, 4, 0, 3,
+        1, 3, 0, 6, 4, 2, 0, 7, 0,
+    ];
+    t.throws(() => core.isValidBoardArray(longBoardArray as unknown as Array<SudokuNineCellValue>), 'Invalid char [.] at pos 8 should be a number');
+});
 
 
 // // const expected = [

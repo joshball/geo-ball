@@ -38,3 +38,8 @@ export const arraysAreEqual = (lhs: Array<any>, rhs: Array<any>) => {
     }
     return false;
 }
+
+export const getMaxLenOfSubItem = (items: Array<any>): number => items.reduce((prevSize, currSquare) => {
+    const currSize = currSquare.length;
+    return prevSize < currSize ? currSize : prevSize;
+}, 0);

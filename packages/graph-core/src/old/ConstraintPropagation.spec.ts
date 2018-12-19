@@ -1,6 +1,6 @@
 // import { eliminate, eliminateDigitFromPeer, eliminatePeersForAbsoluteValues } from './SquareValues';
 import test from 'ava';
-import { getBoards, ITestBoards, INorvigTestBoards } from '../test/SudokuTestData';
+import { getBoards, ITestBoard, INorvigTestBoards } from '../test/SudokuTestData';
 import { SudokuBoard } from './SudokuBoard';
 import { assign } from './ConstraintPropagation';
 import { SudokuCellValue, SudokuSquare } from './SudokuCore';

@@ -23,19 +23,6 @@ import { flatten, removeElem } from "../utils/array";
 // }
 
 
-export type Logger = (level: number, s: string) => void;
-
-export const nullLogger: Logger = (_level: number, _s: string) => undefined;
-
-export const consoleLogger: Logger = (level: number, s: string) => {
-    // return;
-    let space = ''
-    for (let i = 0; i < level; i++) {
-        space += ' ';
-    }
-    console.log(`${space}${s}`);
-}
-
 
 // export const eliminatePeers = (bsv: BoardSquareValuesMap, square: SudokuSquare, digit: SudokuDigit, log: Logger, level: number) => {
 export const eliminatePeers = (bsv: BoardSquareValuesMap, square: string, digit: number, log: Logger, level: number) => {
