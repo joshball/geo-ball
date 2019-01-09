@@ -204,7 +204,7 @@ test('SudokuSolve._findAndRemoveDigitFromSquareValues() removes single value fro
 
 
 
-test.skip('Sudoku Solver 4x4 ensure solved board meets constraints', t => {
+test.only('Sudoku Solver 4x4 ensure solved board meets constraints', t => {
     // 1 2 | 3 4
     // 3 4 | 1 2
     // ----+----
@@ -225,8 +225,8 @@ test.skip('Sudoku Solver 4x4 ensure solved board meets constraints', t => {
 
 
 
-    const BOARD = getBoards().fourByFour.board;
-    const sb = SudokuBoard.CreateFromString(BOARD.end.pretty);
+    const BOARD = getBoards().norvig.hard;
+    const sb = SudokuBoard.CreateFromString(BOARD.beg.pretty);
 
     t.log('sb.toPrettyString()');
     t.log(sb.toPrettyString());
@@ -239,6 +239,10 @@ test.skip('Sudoku Solver 4x4 ensure solved board meets constraints', t => {
     const solvedBoardValuesArray = solver.getBoardValuesArray();
     t.log(SudokuBoardStrings.ArrayToPrettyString(solvedBoardArray));
     t.log(SudokuBoardStrings.ArrayOfValuesToPrettyString(solvedBoardValuesArray));
+    // solver.assign('H7', 9);
+    // t.log(SudokuBoardStrings.ArrayToPrettyString(solver.getBoardArray()));
+    // t.log(SudokuBoardStrings.ArrayOfValuesToPrettyString(solver.getBoardValuesArray()));
+    // solver.assign('H8', 9);
     // const actualFinishedBoard = solver.getBoardArray();
     // t.log('sb.toPrettyString().FIN');
     // t.log(sb.toPrettyString());
@@ -250,6 +254,56 @@ test.skip('Sudoku Solver 4x4 ensure solved board meets constraints', t => {
     // dumpBoard(expected);
     // dumpBoards(actualFinishedBoard, expected);
     // t.deepEqual(actualFinishedBoard, expected);
+
+    // const sudoku = [
+    //     [1, 0, 3, 0, 0, 0, 0, 8, 4],
+    //     [0, 0, 6, 0, 4, 8, 0, 0, 0],
+    //     [0, 4, 0, 0, 0, 0, 0, 0, 0],
+    //     [2, 0, 0, 0, 9, 6, 1, 0, 0],
+    //     [0, 9, 0, 8, 0, 1, 0, 4, 0],
+    //     [0, 0, 4, 3, 2, 0, 0, 0, 8],
+    //     [0, 0, 0, 0, 0, 0, 0, 7, 0],
+    //     [0, 0, 0, 1, 5, 0, 4, 0, 0],
+    //     [0, 6, 0, 0, 0, 0, 2, 0, 3]
+    // ];
+    // const flatten = (b: Array<any>): Array<any> => b.reduce((p, c) => p.concat(Array.isArray(c) ? flatten(c) : c), []);
+
+    // const dump = (b: Array<any>) => console.log(flatten(b).join(''));
+    // // 'board' is a 2D array (a sudoku board) and 'c' is the cell [0,81) at which we start solving
+    // const solve = (board: Array<any>, c: number = 0): any => {
+    //     console.log('solve', c);
+    //     let x = 0;
+    //     let y = 0;
+    //     // tslint:disable-next-line:no-bitwise
+    //     const val = (c === 81) ? board : ((board[x = c / 9 | 0][y = c % 9] !== 0)
+    //         ? solve(board, c + 1)
+    //         : undefined); // Base case, where we're at a filled cell or all 81 cells filled
+
+    //     if (val) { return val; }
+    //     const box = (j: number) => {
+    //         return board[x - (x % 3) + (j - (j % 3)) / 3][y - (y % 3) + (j % 3)];      // jth cell in sub 3x3 box containing x,y
+    //     };
+    //     const good = (g: number) => {
+    //         return [0, 1, 2, 3, 4, 5, 6, 7, 8].every(i => {
+    //             return g !== board[x][i] && g !== board[i][y] && g !== box(i); // returns true if and only if board[x][y] when set to g breaks sudoku rules due to collision
+    //         });
+    //     };
+    //     const guesses = [1, 2, 3, 4, 5, 6, 7, 8, 9].filter(good); // choose non-conflicting guesses for position (x, y)
+
+    //     const prod_sol = (prodGuess: number): any => {  // returns true if and only if a guess actually produces a solution at (x, y)
+    //         console.log('prod_sol', x, y, prodGuess);
+    //         board[x][y] = prodGuess;
+    //         return solve(board, c + 1);
+    //     };
+
+    //     // tslint:disable-next-line:no-conditional-assignment
+    //     if ((guesses.some(prod_sol)) || (board[x][y] = 0)) {
+    //         dump(board);
+    //         return board;
+    //     }; // return the solved board if a solution can be produced!
+    // };
+
+    // console.log(solve(sudoku));
 });
 
 

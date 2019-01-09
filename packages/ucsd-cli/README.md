@@ -21,7 +21,7 @@ $ npm install -g ucsd-cli
 $ ucsd-cli COMMAND
 running command...
 $ ucsd-cli (-v|--version|version)
-ucsd-cli/1.0.0 win32-x64 node-v10.13.0
+ucsd-cli/1.0.0 win32-x64 node-v11.5.0
 $ ucsd-cli --help [COMMAND]
 USAGE
   $ ucsd-cli COMMAND
@@ -91,7 +91,7 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.1.3/src\commands\help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.1.4/src\commands\help.ts)_
 
 ## `ucsd-cli stats`
 

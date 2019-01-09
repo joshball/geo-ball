@@ -5,9 +5,9 @@ def cross(A, B):
     return [a+b for a in A for b in B]
 
 def crossP(A, B):
-    print("cross(%s,%s)" % (A, B))
+    # print("cross(%s,%s)" % (A, B))
     x = [a+b for a in A for b in B]
-    print("  cross()", x)
+    # print("  cross()", x)
     return x
 
 digits   = '123456789'
@@ -35,9 +35,9 @@ def parse_grid(grid):
     return False if a contradiction is detected."""
     ## To start, every square can be any digit; then assign values from the grid.
     values = dict((s, digits) for s in squares)
-    print("grid", grid)
+    # print("grid", grid)
     for s,d in grid_values(grid).items():
-        print("  gv()", s, d)
+        # print("  gv()", s, d)
         if d in digits and not assign(values, s, d):
             return False ## (Fail if we can't assign d to square s.)
     return values
@@ -45,15 +45,15 @@ def parse_grid(grid):
 def grid_values(grid):
     "Convert grid into a dict of {square: char} with '0' or '.' for empties."
     chars = [c for c in grid if c in digits or c in '0.']
-    print("  squares", squares)
-    print("  chars", chars)
+    # print("  squares", squares)
+    # print("  chars", chars)
     assert len(chars) == 81
     return dict(zip(squares, chars))
 
 def assign(values, s, d):
     """Eliminate all the other values (except d) from values[s] and propagate.
     Return values, except return False if a contradiction is detected."""
-    print("   assign()", s, d)
+    # print("   assign()", s, d)
     other_values = values[s].replace(d, '')
     if all(eliminate(values, s, d2) for d2 in other_values):
         return values
@@ -152,5 +152,7 @@ class SetEncoder(json.JSONEncoder):
 grid1 = '003020600900305001001806400008102900700000008006708200002609500800203009005010300'
 display(parse_grid(grid1))
 
-
+grid2 = '4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......'
+grid2 = '4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2..9..1.4......'
+display(parse_grid(grid2))
 

@@ -51,6 +51,34 @@ export class SudokuSolver<TSudokuSquare, TSudokuCellValue, TSudokuDigit> {
         }
     }
 
+    search() {
+        const minSquare = this._getSquareWithLeastValuesGreaterThanOne();
+        if (minSquare.values.length === 1) {
+            return;
+        }
+        minSquare.values.forEach((digit: TSudokuDigit) => {
+            this.assign(minSquare.square, digit);
+        })
+    }
+
+    _getSquareWithLeastValuesGreaterThanOne(): any {
+
+        let currMinLen = this._core.Size;
+        const currMin: any = {
+        };
+        for (const square of this._core.Squares) {
+            const values = this._ssv.get(square)!;
+            if (values.length === 2) {
+                return { square, sv: values };
+            }
+            if (values.length < currMinLen) {
+                currMinLen = values.length;
+                currMin.square = square;
+                currMin.values = values;
+            }
+        }
+        return currMin;
+    }
     /**
      * Assign takes a square and a digit.
      * It grabs all the possible values for that square (from the SSV), and removes each one
@@ -167,20 +195,20 @@ export class SudokuSolver<TSudokuSquare, TSudokuCellValue, TSudokuDigit> {
     }
 
 
-    _assignDigitToUnitSquareIfOnlySquareInUnitWithDigitInIt(square:TSudokuSquare, unitSquares: TSudokuSquare[], digit: TSudokuDigit, level:number): void {
-            this.log(level, `   elim.SUS(${digit} from ${square}) [${unitSquares}]`);
-            // const unitSquares = ["A1", "B1", "C1", "D1"];
+    _assignDigitToUnitSquareIfOnlySquareInUnitWithDigitInIt(square: TSudokuSquare, unitSquares: TSudokuSquare[], digit: TSudokuDigit, level: number): void {
+        this.log(level, `   elim.SUS(${digit} from ${square}) [${unitSquares}]`);
+        // const unitSquares = ["A1", "B1", "C1", "D1"];
 
-            const unitSquaresWithDigitInThem = this._getSquaresWithDigitInThem(unitSquares, digit);
-            // const unitSquaresWithDigit (digiti:2) InThem = ["B1", "C1", "D1"] (note, we removed it from A1 above)
-            this.log(level, `   elim.SUS(${digit} from ${square}) unitSquares with digit in them [${unitSquaresWithDigitInThem}]`);
-            if (unitSquaresWithDigitInThem.length === 0) {
-                throw new Error(`square[${square}] has zero len possibleValues`);
-            }
-            if (unitSquaresWithDigitInThem.length === 1) {
-                this.log(level, `   elim.SUS(${digit} from ${square}) ASSIGNING(${unitSquaresWithDigitInThem[0]}, ${digit}) as ONLY ONE unitSquare with digit in it [${unitSquaresWithDigitInThem[0]}]`);
-                this.assign(unitSquaresWithDigitInThem[0], digit, level + 1);
-            }
+        const unitSquaresWithDigitInThem = this._getSquaresWithDigitInThem(unitSquares, digit);
+        // const unitSquaresWithDigit (digiti:2) InThem = ["B1", "C1", "D1"] (note, we removed it from A1 above)
+        this.log(level, `   elim.SUS(${digit} from ${square}) unitSquares with digit in them [${unitSquaresWithDigitInThem}]`);
+        if (unitSquaresWithDigitInThem.length === 0) {
+            throw new Error(`square[${square}] has zero len possibleValues`);
+        }
+        if (unitSquaresWithDigitInThem.length === 1) {
+            this.log(level, `   elim.SUS(${digit} from ${square}) ASSIGNING(${unitSquaresWithDigitInThem[0]}, ${digit}) as ONLY ONE unitSquare with digit in it [${unitSquaresWithDigitInThem[0]}]`);
+            this.assign(unitSquaresWithDigitInThem[0], digit, level + 1);
+        }
     }
 
     _getSquaresWithDigitInThem(unitSquares: TSudokuSquare[], digit: TSudokuDigit): TSudokuSquare[] {

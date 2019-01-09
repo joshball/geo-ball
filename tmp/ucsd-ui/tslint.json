@@ -1,0 +1,31 @@
+{
+    // "rulesDirectory": [
+    //     "tslint-plugin-prettier"
+    // ],
+    "extends": [
+        // "tslint-microsoft-contrib",
+        "tslint-sane",
+        "tslint-react",
+        "tslint-config-prettier"
+    ],
+    "linterOptions": {
+        "exclude": [
+            "config/**/*.js",
+            "node_modules/**/*.ts",
+            "coverage/lcov-report/*.js"
+        ]
+    },
+    "rules": {
+        "no-relative-imports": false,
+        "prettier": true,
+        "typedef": false,
+        "import-name": false,
+        "ordered-imports": false,
+        "semicolon": [
+            true,
+            "always"
+        ],
+        "quotemark": [true, "single", "jsx-double"],
+        "missing-jsdoc": false
+    }
+}

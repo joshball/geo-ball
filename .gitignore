@@ -39,6 +39,10 @@ build/Release
 node_modules/
 jspm_packages/
 
+# Fusebox cache
+.fusebox/cache
+
+
 # Typescript v1 declaration files
 typings/
 

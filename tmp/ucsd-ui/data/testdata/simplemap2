@@ -1,0 +1,32 @@
+0: 1.0 1.0
+1: 4.0 1.0
+2: 4.0 2.0
+3: 4.0 0.0
+4: 5.0 1.0
+5: 7.0 3.0
+6: 4.0 -1.0
+7: 8.0 -1.0
+8: 6.5 0.0
+
+0 1 "main" "city street"
+1 2 "state" "city street"
+1 3 "state" "city street"
+1 4 "main" "city street"
+1 5 "front" "city street"
+3 6 "state" "city street"
+3 4 "short" "connector"
+5 7 "high" "residential"
+7 6 "south" "residential"
+4 8 "first" "residential"
+8 7 "next" "residential"
+2 1 "main" "city street"
+2 1 "state" "city street"
+3 1 "state" "city street"
+4 1 "main" "city street"
+5 1 "front" "city street"
+7 5 "high" "residential"
+6 7 "south" "residential"
+8 4 "first" "residential"
+7 8 "next" "residential"
+6 3 "state" "city street"
+4 3 "short" "connector"
