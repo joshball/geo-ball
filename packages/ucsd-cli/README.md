@@ -17,11 +17,11 @@ OpenStreetMaps CLI
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g ucsd-cli
+$ npm install -g @ball-maps/ucsd-cli
 $ ucsd-cli COMMAND
 running command...
 $ ucsd-cli (-v|--version|version)
-ucsd-cli/1.0.0 win32-x64 node-v11.5.0
+@ball-maps/ucsd-cli/1.0.0 win32-x64 node-v11.5.0
 $ ucsd-cli --help [COMMAND]
 USAGE
   $ ucsd-cli COMMAND

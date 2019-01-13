@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "osm-cli",
+  "name": "@ball-maps/osm-cli",
   "description": "OpenStreetMaps CLI",
   "license": "MIT",
   "author": "Joshua Ball",

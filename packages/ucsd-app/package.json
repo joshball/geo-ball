@@ -1,41 +1,49 @@
 {
-  "name": "typescript-with-electron-react-kit",
-  "productName": "Sweet Sweet App",
+  "name": "@ball-maps/ucsd-app",
+  "productName": "UCSD Map App",
   "main": "out/main.js",
   "version": "2.0.0",
+  "homepage": "homepage",
   "description": "An electron starter project.",
   "license": "MIT",
   "private": true,
-  "author": {
-    "email": "steve@kellock.ca",
-    "name": "Steve Kellock"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/skellock/typescript-with-electron-react-kit.git"
-  },
-  "homepage": "https://github.com/skellock/typescript-with-electron-react-kit",
   "build": {
-    "appId": "com.example.typescript-with-electron-react-kit",
-    "files": ["!src", "!docs", "!tsconfig.json", "!fuse.js", "!dev-app-update.yml", "!README.md", "!LICENSE", "!globals.d.ts"],
+    "appId": "com.joshuaball.ball-maps",
+    "files": [
+      "!src",
+      "!docs",
+      "!tsconfig.json",
+      "!fuse.js",
+      "!dev-app-update.yml",
+      "!README.md",
+      "!LICENSE",
+      "!globals.d.ts"
+    ],
     "linux": {
-      "target": ["tar.gz"]
+      "target": [
+        "tar.gz"
+      ]
     },
     "mac": {
       "category": "public.app-category.developer-tools"
     },
     "publish": {
-      "owner": "skellock",
+      "owner": "joshball",
       "provider": "github",
-      "repo": "typescript-with-electron-react-kit"
+      "repo": "ball-maps"
     },
     "win": {
-      "target": ["zip", "nsis"]
+      "target": [
+        "zip",
+        "nsis"
+      ]
     }
   },
   "scripts": {
     "build-storybook": "build-storybook",
     "clean": "rm -rf .fusebox out dist coverage",
+    "clean:node_modules": "rimraf node_modules",
+    "cleanup:packages": "yarn run prettier-package-json --write",
     "compile": "NODE_ENV=production ts-node fuse",
     "coverage:upload": "cat ./coverage/lcov.info | coveralls",
     "coverage": "yarn test --coverage --no-cache",
@@ -43,6 +51,7 @@
     "draft": "electron-builder -p always --draft --mac --win --linux --ia32 --x64",
     "format": "prettier --write **/*.ts && tslint -p . --fix",
     "lint": "tslint --project .",
+    "build": "electron-builder --dir",
     "pack": "electron-builder --dir",
     "postinstall": "electron-builder install-app-deps",
     "precommit": "lint-staged",
@@ -52,15 +61,25 @@
     "storybook": "start-storybook -p 6006",
     "test": "jest",
     "typecheck": "tsc -p . --noEmit --pretty",
-    "update:packages": "node wipe-dependencies.js && rm -rf node_modules && npm update --save-dev && npm update --save"
+    "update:packages": "node wipe-dependencies.js && rm -rf node_modules && npm update --save-dev && npm update --save",
+    "Xprebuild": "copyfiles -u 2 \"../crale-react/build/**/*\" static/ && ./scripts/fixElectronBug.sh",
+    "Xbuild": "electron-webpack",
+    "electron": "electron dist/main/main.js",
+    "Xprepackage": "./scripts/revertElectronBug.sh",
+    "package": "electron-builder",
+    "Xstart:wp": "cross-env ELECTRON_START_URL=http://localhost:3000 electron-webpack dev"
   },
   "dependencies": {
+    "@ball-maps/geo-core": "file:../geo-core",
+    "@ball-maps/osm-data": "file:../osm-data",
+    "@ball-maps/ucsd-core": "file:../ucsd-core",
     "electron-is-dev": "^1.0.1",
     "electron-log": "^2.2.17",
     "electron-store": "^2.0.0",
     "electron-updater": "^4.0.6",
     "electron-window-state-manager": "^0.3.2",
     "glamor": "^2.20.40",
+    "leaflet": "^1.4.0",
     "mousetrap": "^1.6.2",
     "popmotion": "^8.5.5",
     "popmotion-react": "^2.1.1",
@@ -68,6 +87,7 @@
     "ramda": "^0.26.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-leaflet": "^2.1.4",
     "react-transition-group": "^2.5.2"
   },
   "devDependencies": {
@@ -104,7 +124,9 @@
     "typescript": "^3.2.2"
   },
   "jest": {
-    "setupFiles": ["./test/setup.ts"],
+    "setupFiles": [
+      "./test/setup.ts"
+    ],
     "transform": {
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
@@ -113,8 +135,21 @@
       "\\.(css|less)$": "<rootDir>/test/mock-style.ts"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": ["ts", "tsx", "js", "json"],
-    "coveragePathIgnorePatterns": ["./node_modules", "./out", "./build", "./dist", "./test", "./docs", "\\.story.tsx$"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
+    "coveragePathIgnorePatterns": [
+      "./node_modules",
+      "./out",
+      "./build",
+      "./dist",
+      "./test",
+      "./docs",
+      "\\.story.tsx$"
+    ],
     "coverageThreshold": {
       "global": {
         "branches": 90,
@@ -127,6 +162,10 @@
     "mapCoverage": true
   },
   "lint-staged": {
-    "*.{ts,tsx}": ["prettier --write", "tslint --fix", "git add"]
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "tslint --fix",
+      "git add"
+    ]
   }
 }

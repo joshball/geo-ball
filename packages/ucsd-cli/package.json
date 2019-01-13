@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "ucsd-cli",
+  "name": "@ball-maps/ucsd-cli",
   "description": "OpenStreetMaps CLI",
   "license": "MIT",
   "author": "Joshua Ball",

@@ -43,4 +43,6 @@ document.addEventListener("dragover", event => event.preventDefault())
 document.addEventListener("drop", event => event.preventDefault())
 
 // mount the root component
+// console.log('RootComponent:', RootComponent);
 ReactDOM.render(<RootComponent />, document.getElementById("root"))
+// ReactDOM.render(<div>hey</div>, document.getElementById("root"))

@@ -70,7 +70,7 @@ Sparky.task("default", ["copy-html"], () => {
         stdio: "inherit",
       }).on("exit", code => {
         console.log(`electron process exited with code ${code}`)
-        process.exit(code)
+        process.exit(code||0)
       })
     }
   })

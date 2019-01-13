@@ -17,11 +17,11 @@ OpenStreetMaps CLI
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g osm-cli
+$ npm install -g @ball-maps/osm-cli
 $ osm-cli COMMAND
 running command...
 $ osm-cli (-v|--version|version)
-osm-cli/1.0.0 win32-x64 node-v11.5.0
+@ball-maps/osm-cli/1.0.0 win32-x64 node-v11.5.0
 $ osm-cli --help [COMMAND]
 USAGE
   $ osm-cli COMMAND

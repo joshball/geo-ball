@@ -38,11 +38,19 @@ export class WelcomeScreen extends React.Component<{}, WelcomeScreenState> {
 
   render() {
     return (
-      <div id="WelcomeScreen" {...css(styles.column, styles.flex1)}>
-        <SampleTabs tab={this.state.tab} onChangeTab={this.setTab} />
-        <DogTab style={this.state.tab !== "one" && HIDDEN} />
-        <LongTab style={this.state.tab !== "two" && HIDDEN} />
+      <div id="WelcomeScreen"  {...css(styles.column, styles.flex1)}>
+      <h1>HOLA</h1>
+      {/* <DogTab style={this.state.tab !== "one" && HIDDEN} /> */}
       </div>
     )
   }
+//   render() {
+//     return (
+//       <div id="WelcomeScreen" {...css(styles.column, styles.flex1)}>
+//         <SampleTabs tab={this.state.tab} onChangeTab={this.setTab} />
+//         <DogTab style={this.state.tab !== "one" && HIDDEN} />
+//         <LongTab style={this.state.tab !== "two" && HIDDEN} />
+//       </div>
+//     )
+//   }
 }

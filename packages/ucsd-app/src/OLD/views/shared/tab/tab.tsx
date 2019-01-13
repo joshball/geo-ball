@@ -1,4 +1,5 @@
 import * as React from "react"
+// tslint:disable-next-line:no-duplicate-imports
 import { CSSProperties } from "react"
 import { colors, spacing, fontSizes, styles, cssProps } from "../../theme"
 import { EnterAnimation } from "../enter-animation"

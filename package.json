@@ -5,16 +5,30 @@
   "author": "Joshua Ball <joshua.g.s.ball@gmail.com>",
   "repository": "git@github.com:joshball/ball-maps.git",
   "version": "1.0.0",
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": ["packages/*"],
+    "nohoist": [
+      "**/electron",
+      "**/electron/**",
+      "**/electron-builder",
+      "**/electron-builder/**",
+      "**/electron-webpack",
+      "**/electron-webpack/**"
+    ]
+  },
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "build": "lerna run build",
+    "build:stream": "lerna run build --stream",
     "build:watch": "lerna run --parallel build:watch",
-    "clean": "lerna run clean",
+    "build": "lerna run build",
     "clean:node_modules": "lerna run clean:node_modules",
+    "clean": "lerna run clean",
     "cleanup:packages": "yarn run prettier-package-json --write && lerna run cleanup:packages",
+    "electron": "lerna run electron --scope ucsd-app",
+    "package": "lerna run package --scope ucsd-app --stream",
+    "preelectron": "yarn build",
+    "prepackage": "yarn build",
+    "start": "lerna exec --parallel --stream yarn start",
     "test": "lerna run test"
   },
   "devDependencies": {
@@ -43,7 +57,6 @@
     "axios-mock-adapter": "^1.15.0",
     "babel-preset-react": "^6.24.1",
     "coveralls": "^3.0.2",
-    "electron": "^4.0.0",
     "electron-builder": "^20.38.4",
     "fuse-box": "^3.6.0",
     "globby": "^8",
@@ -72,10 +85,10 @@
   "dependencies": {
     "@ball-maps/geo-core": "file:packages\\geo-core",
     "@ball-maps/graph-core": "file:packages\\graph-core",
+    "@ball-maps/osm-cli": "file:packages\\osm-cli",
     "@ball-maps/osm-data": "file:packages\\osm-data",
-    "@ball-maps/ucsd-core": "file:packages\\ucsd-core",
-    "osm-cli": "file:packages\\osm-cli",
-    "ucsd-app": "file:packages\\ucsd-app",
-    "ucsd-cli": "file:packages\\ucsd-cli"
+    "@ball-maps/ucsd-app": "file:packages\\ucsd-app",
+    "@ball-maps/ucsd-cli": "file:packages\\ucsd-cli",
+    "@ball-maps/ucsd-core": "file:packages\\ucsd-core"
   }
 }
