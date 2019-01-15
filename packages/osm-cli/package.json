@@ -32,8 +32,8 @@
     "version": "oclif-dev readme && git add README.md"
   },
   "dependencies": {
-    "@ball-maps/geo-core": "file:../geo-core",
-    "@ball-maps/osm-data": "file:../osm-data",
+    "@ball-maps/geo-core": "^1.0.0",
+    "@ball-maps/osm-data": "^1.0.0",
     "@oclif/command": "^1",
     "@oclif/config": "^1",
     "@oclif/plugin-commands": "^1.2.2",

@@ -1,5 +1,5 @@
 import { LatLngBounds } from '@ball-maps/geo-core';
-import { OpenStreetmapQuery, OpenStreetmapFile } from '@ball-maps/osm-data';
+import { OpenStreetmapQuery, OpenStreetmapFile, IOpenStreetmapQuery, OSMFeatureKeyValuePair, OSMFeatureKey } from '@ball-maps/osm-data';
 import { resolve, join } from 'path';
 import { readFileSync } from 'fs';
 
@@ -37,7 +37,8 @@ export class QueryConfigFile implements IQueryConfigFile {
 
 	constructor(obj: IQueryConfigFile) {
 		this.query = JSON.parse(JSON.stringify(obj.query));
-		this.results = JSON.parse(JSON.stringify(obj.results));
+        this.results = JSON.parse(JSON.stringify(obj.results));
+        console.log(obj.query);
 	}
 
 	// constructor(bounds: LatLngBounds, queryName: string, features?: Array<string>, osmEndpoint: string = '', dataDir: string = '', timestamp: boolean = false, overwrite?: boolean = false) {
@@ -60,14 +61,20 @@ export class QueryConfigFile implements IQueryConfigFile {
 
 	static ReadAndParseQueryConfigFile(queryCfgFilePath: string) {
 		queryCfgFilePath = resolve(queryCfgFilePath);
-		const qfStr = readFileSync(queryCfgFilePath, 'UTF8');
-		return JSON.parse(qfStr) as QueryConfigFile;
+        const qfStr = readFileSync(queryCfgFilePath, 'UTF8');
+        console.log('qfstr', qfStr)
+		const qf = JSON.parse(qfStr) as QueryConfigFile;
+		return new QueryConfigFile(qf);
 	}
 
 
 	getOsmDownloadArgs(): IOsmDownloadArgs {
-		const latLngBounds = LatLngBounds.FromBounds(this.query.bounds);
-		const osmQuery = new OpenStreetmapQuery(latLngBounds);
+        // const latLngBounds = LatLngBounds.FromBounds(this.query.bounds);
+        const osmQueryObj:IOpenStreetmapQuery = {
+            latLngBounds: this.query.bounds,
+            features: this.query.features.map(f => new OSMFeatureKeyValuePair(f as OSMFeatureKey))
+        }
+		const osmQuery = new OpenStreetmapQuery(osmQueryObj);
 
 		const now = this.results.timestamp ? new Date() : undefined;
 		const fileName = OpenStreetmapFile.CreateFileName(this.results.queryName, now);

@@ -83,12 +83,12 @@
     "typescript": "^3.2.2"
   },
   "dependencies": {
-    "@ball-maps/geo-core": "file:packages\\geo-core",
-    "@ball-maps/graph-core": "file:packages\\graph-core",
-    "@ball-maps/osm-cli": "file:packages\\osm-cli",
-    "@ball-maps/osm-data": "file:packages\\osm-data",
-    "@ball-maps/ucsd-app": "file:packages\\ucsd-app",
-    "@ball-maps/ucsd-cli": "file:packages\\ucsd-cli",
-    "@ball-maps/ucsd-core": "file:packages\\ucsd-core"
+    "@ball-maps/geo-core": "^1.0.0",
+    "@ball-maps/graph-core": "^1.0.0",
+    "@ball-maps/osm-cli": "^1.0.0",
+    "@ball-maps/osm-data": "^1.0.0",
+    "@ball-maps/ucsd-cli": "^1.0.0",
+    "@ball-maps/ucsd-core": "^1.0.0",
+    "@ball-maps/ucsd-app": "^1.0.0"
   }
 }

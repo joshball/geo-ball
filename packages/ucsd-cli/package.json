@@ -23,8 +23,9 @@
     "build:watch": "yarn build && tsc -b --watch",
     "clean": "rimraf build oclif.manifest.json",
     "cleanup:packages": "yarn run prettier-package-json --write",
-    "oclif-stuff": "oclif-dev manifest && oclif-dev readme",
+    "oclif-stuff": "oclif-dev manifest",
     "tscv": "tsc --version && which tsc",
+    "prepublishOnly": "yarn run build && oclif-dev manifest && oclif-dev readme",
     "prepack": "rimraf build && tsc -b && oclif-dev manifest && oclif-dev readme",
     "postpack": "rimraf oclif.manifest.json",
     "test": "echo NO TESTS",
@@ -32,9 +33,9 @@
     "version": "oclif-dev readme && git add README.md"
   },
   "dependencies": {
-    "@ball-maps/geo-core": "file:../geo-core",
-    "@ball-maps/osm-data": "file:../osm-data",
-    "@ball-maps/ucsd-core": "file:../ucsd-core",
+    "@ball-maps/geo-core": "^1.0.0",
+    "@ball-maps/osm-data": "^1.0.0",
+    "@ball-maps/ucsd-core": "^1.0.0",
     "@oclif/command": "^1",
     "@oclif/config": "^1",
     "@oclif/parser": "^3.7.2",
@@ -60,10 +61,7 @@
     "commands": "./build/commands",
     "bin": "ucsd-cli",
     "plugins": [
-      "@oclif/plugin-commands",
-      "@oclif/plugin-help",
-      "@oclif/plugin-not-found",
-      "@oclif/plugin-which"
+      "@oclif/plugin-help"
     ]
   },
   "types": "build/index.d.ts"

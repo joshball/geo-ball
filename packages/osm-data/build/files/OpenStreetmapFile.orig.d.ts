@@ -14,3 +14,4 @@ export declare class OpenStreetmapFile {
     static TryTextType(path: string, fileData: string): Maybe<OpenStreetmapFile>;
 }
 export {};
+//# sourceMappingURL=OpenStreetmapFile.orig.d.ts.map

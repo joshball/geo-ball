@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import { OpenStreetmapQuery } from './OpenStreetmapQuery';
+import { OpenStreetmapQuery, IOpenStreetmapQuery } from './OpenStreetmapQuery';
 import { LatLngBounds, LatLng } from '@ball-maps/geo-core';
 
 
@@ -12,13 +12,14 @@ const ne = new LatLng(40.71946109443547, -111.84929072856903);
 // const sw = new LatLng(32.859375, -117.27233)
 // const ne = new LatLng(32.902622, -117.20367)
 const latLngBounds = new LatLngBounds(sw, ne);
+const osmQuery:IOpenStreetmapQuery = { latLngBounds };
 
 // test('OpenStreetmapQuery is instantiable', t => {
 //     t.is(new OpenStreetmapQuery(latLngBounds)).toBeInstanceOf(OpenStreetmapQuery)
 // })
 
 test('OpenStreetmapQuery is of type json by default', t => {
-    const query = new OpenStreetmapQuery(latLngBounds);
+    const query = new OpenStreetmapQuery(osmQuery);
     t.truthy(query.outFormat);
 });
 
@@ -36,7 +37,7 @@ out body;
 >;
 out skel qt;`;
 
-    const query = new OpenStreetmapQuery(latLngBounds);
+    const query = new OpenStreetmapQuery(osmQuery);
     t.is(query.toString(), queryString);
     // console.log('queyr.features', query.features);
     // t.is(query.features).toMatchObject(['highways', 'addr'])

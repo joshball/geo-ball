@@ -1,11 +1,12 @@
 import * as React from 'react'
 import { css } from 'glamor'
 
-import MapContainer from './MapContainer';
+import { MapComponent } from './MapComponent';
 // import LocationSelector from './LocationSelector';
-import { MapLocation } from '../services/MapLocation';
-import { getIntersections } from '../services/MapService';
-import { map } from 'leaflet';
+import { getRoadSegmentsFiles, getIntersectionFiles } from '../services/MapService';
+import { LatLngTuple } from 'leaflet';
+import { RoadSegmentsFile, IntersectionsFile } from '@ball-maps/ucsd-core';
+import { LatLng } from '@ball-maps/geo-core';
 
 const mainLayout = css({
     display: 'grid',
@@ -16,8 +17,9 @@ const mainLayout = css({
 });
 
 interface MapPageState {
-    // intersections: Array<GeographicPoint>;
-    intersections: Array<MapLocation>;
+    // intersections: Array<LatLng>;
+    rsdFiles: Array<RoadSegmentsFile>;
+    intFiles: Array<IntersectionsFile>;
 }
 
 // tslint:disable-next-line:no-empty-interface
@@ -30,26 +32,41 @@ export class MapPage extends React.Component<MapPageProps, MapPageState> {
     constructor(props: MapPageProps) {
         super(props);
         this.state = {
-            intersections: [],
+            rsdFiles: [],
+            intFiles: [],
         };
     }
 
     public componentDidMount() {
-        getIntersections()
-            .then(intersections => {
-                this.setState({ intersections });
+        getRoadSegmentsFiles()
+            .then(rsdFiles => {
+                this.setState({ rsdFiles });
+                console.log('CDM.calling getIntersectionFiles', rsdFiles);
+                return getIntersectionFiles();
+            })
+            .then(intFiles => {
+                console.log('CDM.intFiles', intFiles);
+                this.setState({ intFiles });
             });
     }
 
     public render() {
         // const { mapLocation } = this.props;
         // console.log('mapLocation', mapLocation);
-        const { intersections } = this.state;
-        console.log('intersections', intersections);
+        const { intFiles, rsdFiles } = this.state;
+        console.log('intFiles', intFiles);
+        console.log('rsdFiles', rsdFiles);
+        if (rsdFiles.length < 1 || intFiles.length < 1) {
+            return <div>No rsdFiles</div>;
+        }
+
+        const mapLocation = rsdFiles[0];
+        const intersections = intFiles[0].intersections;
+        const center = mapLocation.metaData.bounds.center().toArray() as LatLngTuple;
+        console.log('center', center);
         return (
-            <div>
-                <h1>HEY  HEY</h1>
-                <h1>{intersections.length}</h1>
+            <div className={`${mainLayout}`}>
+                <MapComponent position={center} intersections={intersections} />
             </div>
         );
         // <MapComponent position={mapLocation.center} intersections={this.state.intersections} />

@@ -1,10 +1,20 @@
-import { LatLng } from './LatLng';
+import { LatLng, ILatLng } from './LatLng';
 
+export interface ILatLngBounds {
+    sw: ILatLng;
+    ne: ILatLng;
+}
 export class LatLngBounds {
     sw: LatLng;
     ne: LatLng;
 
     constructor(southwest: LatLng, northeast: LatLng) {
+        if (!(southwest instanceof LatLng)) {
+            throw new Error(`southwest is not instance of LatLng`);
+        }
+        if (!(northeast instanceof LatLng)) {
+            throw new Error(`northeast is not instance of LatLng`);
+        }
         // console.log(`LatLngBounds(): ${southwest} ${northeast}`)
         const getError = (error: string) => `LatLngBounds() ${error} (maybe mixed up your ne/sw?)`;
         if (northeast.lat < southwest.lat) {
@@ -19,6 +29,14 @@ export class LatLngBounds {
 
     toString = (): string => `[SW:${this.sw}],[NE:${this.ne}]`;
 
+    center = (): LatLng => {
+        const latDelta = Math.abs(this.ne.lat - this.sw.lat) / 2;
+        const centerLat = this.ne.lat - latDelta;
+        const lonDelta = Math.abs(this.ne.lon - this.sw.lon) / 2;
+        const centerLon = this.ne.lon - lonDelta;
+        return new LatLng(centerLat, centerLon);
+    };
+
     grow(by: number): any {
         this.ne.lat += by;
         this.sw.lat -= by;
@@ -26,11 +44,13 @@ export class LatLngBounds {
         this.ne.lon += by;
         this.sw.lon -= by;
     }
-    static FromBounds(bounds: LatLngBounds, growth: number = 0) {
+
+    static FromBounds(bounds: ILatLngBounds, growth: number = 0) {
         const sw = new LatLng(bounds.sw.lat - growth, bounds.sw.lon - growth);
         const ne = new LatLng(bounds.ne.lat + growth, bounds.ne.lon + growth);
         return new LatLngBounds(sw, ne);
     }
+
     static FromArray(bounds: Array<number>) {
         if (bounds.length !== 4) {
             throw new Error(
@@ -58,4 +78,18 @@ export class LatLngBounds {
     }
 
     valid = (): boolean => this.sw.valid() && this.ne.valid();
+
+    equals(rhs: ILatLngBounds): boolean {
+        if (!rhs) {
+            return false;
+        }
+        return this.sw === rhs.sw && this.ne === rhs.ne;
+    }
+
+    hashCode(): number {
+        return Array.from(JSON.stringify(this))
+            // tslint:disable-next-line:no-bitwise
+            .reduce((s, c) => Math.imul(31, s) + c.charCodeAt(0) | 0, 0);
+        // return fieldsHashCode(this.latitude, this.longitude);
+    }
 }

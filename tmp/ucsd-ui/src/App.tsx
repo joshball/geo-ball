@@ -7,7 +7,7 @@ import * as React from 'react';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import { LatLngTuple } from 'leaflet';
 // tslint:disable-next-line:no-implicit-dependencies
-import { GeographicPoint } from '@ball-maps/geo-core';
+import { LatLng } from '@ball-maps/geo-core';
 
 
 // async function loadRoadSegmentMetaData(): Promise<RoadSegmentMetaData> {
@@ -63,7 +63,7 @@ const position: LatLngTuple = [32.8741164, -117.2382689];
 
 // const intersections = loadIntersections();
 interface State {
-    intersections: Array<GeographicPoint>;
+    intersections: Array<LatLng>;
     // rsls: Array<RoadSegmentLine>;
     // rsmd: RoadSegmentMetaData | undefined;
 }
@@ -104,7 +104,7 @@ class App extends React.Component<any, State> {
     public render() {
         // const accessToken = 'pk.eyJ1Ijoiam9zaHVhYmFsbCIsImEiOiJOa3lEeXVzIn0.3vrOo9qtFz-dJhgZfvJOYw';
         // const points = '';
-        // let intersections: Array<GeographicPoint> = [];
+        // let intersections: Array<LatLng> = [];
         // if (this.state.intersections) {
         //     intersections = this.state.rsmd.intersections;
         // }
@@ -112,8 +112,8 @@ class App extends React.Component<any, State> {
         //     intersections = this.state.rsmd.intersections;
         // }
         console.log('intersections', this.state.intersections);
-        const points = this.state.intersections.map((latLng: GeographicPoint, index) => {
-            const p = new GeographicPoint(latLng.latitude, latLng.longitude);
+        const points = this.state.intersections.map((latLng: LatLng, index) => {
+            const p = new LatLng(latLng.latitude, latLng.longitude);
             console.log('g/p', index, p.toString());
             return (
                 <Marker key={index} position={[p.latitude, p.longitude] as LatLngTuple}>

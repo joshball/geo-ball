@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Map, Marker, Popup, TileLayer, MapControl } from 'react-leaflet';
 import { css } from 'glamor'
-import { GeographicPoint } from '@ball-maps/geo-core';
+import { LatLng } from '@ball-maps/geo-core';
 import { LatLngTuple } from 'leaflet';
 // import LocationSelector from './LocationSelector';
 import { MapLocation } from '../services/MapLocation';
@@ -14,7 +14,7 @@ const mapCss = css({
 
 export class MapProps {
     position!: LatLngTuple;
-    intersections!: Array<GeographicPoint>;
+    intersections!: Array<LatLng>;
 }
 
 const mapLocations = [
@@ -33,16 +33,18 @@ const onSubmit = (locationName: string) => {
 export const MapComponent: React.SFC<MapProps> = (props: MapProps) => {
     const { position, intersections } = props;
 
-    const markers = intersections.map((latLng: GeographicPoint, index: number) => {
-        const p = new GeographicPoint(latLng.latitude, latLng.longitude);
+    const markers = intersections.map((latLng: LatLng, index: number) => {
+        const p = new LatLng(latLng.lat, latLng.lon);
         // console.log('g/p', index, p.toString());
         return (
-            <Marker key={index} position={[p.latitude, p.longitude] as LatLngTuple}>
+            <Marker key={index} position={[p.lat, p.lon] as LatLngTuple}>
                 <Popup>{p.toString()}</Popup>
             </Marker>
         );
     });
     console.log(`Created ${markers.length} markers`)
+    console.log('MapComponent position:', position);
+    console.log('MapComponent intersections:', intersections.length);
     return (
         <Map className={`${mapCss}`} center={position} zoom={17}>
             {/* <MapControl>

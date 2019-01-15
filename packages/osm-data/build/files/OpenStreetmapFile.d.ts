@@ -1,16 +1,21 @@
-import { OpenStreetmapQuery } from '../api/OpenStreetmapQuery';
+import { OpenStreetmapQuery, IOpenStreetmapQuery } from '../api/OpenStreetmapQuery';
 import { IOpenStreetmapQueryResponse } from '../api/IOpenStreetmapQueryResponse';
 import { OpenStreetMapElements } from '../data/OpenStreetMapElements';
+export interface IOpenStreetmapFileMetaData {
+    osmServer: string;
+    osmQuery: OpenStreetmapQuery;
+    queryDate: string;
+}
 export declare class OpenStreetmapFileMetaData {
     osmServer: string;
     osmQuery: OpenStreetmapQuery;
     queryDate: string;
-    constructor(osmServer: string, osmQuery: OpenStreetmapQuery, queryDate?: string);
+    constructor(osmServer: string, osmQuery: IOpenStreetmapQuery, queryDate?: string);
 }
 export declare class OpenStreetmapFile {
     osmMetaData: OpenStreetmapFileMetaData;
     osmQueryResp: IOpenStreetmapQueryResponse;
-    constructor(osmMetaData: OpenStreetmapFileMetaData, osmQueryResp: IOpenStreetmapQueryResponse);
+    constructor(osmMetaData: IOpenStreetmapFileMetaData, osmQueryResp: IOpenStreetmapQueryResponse);
     getElements(): OpenStreetMapElements;
     static Load(path: string): OpenStreetmapFile;
     static GetFileType(fileData: string): OpenStreetmapFile;
@@ -18,3 +23,4 @@ export declare class OpenStreetmapFile {
     static CreateFileName(fileQueryName: string, date: Date | undefined): string;
     static CreateFilenameTimestamp(date?: Date): string;
 }
+//# sourceMappingURL=OpenStreetmapFile.d.ts.map

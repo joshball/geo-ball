@@ -11,3 +11,4 @@ export declare class OpenStreetmapDownloader {
     fetch(query: OpenStreetmapQuery): Promise<IOpenStreetmapQueryResponse>;
     fetchAndSave(osmQuery: OpenStreetmapQuery, osmDataFilePath: string, overwriteFile?: boolean): Promise<IFetchAndSaveResult>;
 }
+//# sourceMappingURL=OpenStreetmapDownloader.d.ts.map

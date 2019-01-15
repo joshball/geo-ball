@@ -1,14 +1,36 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const geo_core_1 = require("@ball-maps/geo-core");
 const OpenStreetmapFeatures_1 = require("./OpenStreetmapFeatures");
 class OpenStreetmapQuery {
-    constructor(latLngBounds, osmFeatures = ['highway', 'addr'], outFormat = 'json', timeoutInSec = 180) {
-        this.latLngBounds = latLngBounds;
-        this.outFormat = outFormat;
-        this.timeoutInSec = timeoutInSec;
-        this.features = osmFeatures.map(f => new OpenStreetmapFeatures_1.OSMFeatureKeyValuePair(f));
-        this.bds = ['node', 'way', 'relation'];
+    constructor(osmQueryObj) {
+        if (!osmQueryObj.latLngBounds) {
+            throw new Error(`osmQueryObj does not have latLngBounds!`);
+        }
+        // console.log('osmQueryObj', osmQueryObj);
+        // LatLngBounds, osmFeatures: Array<OSMFeatureKey> = ['highway', 'addr'], outFormat: OSMOutputFormat = 'json', timeoutInSec: number = 180;
+        this.latLngBounds = geo_core_1.LatLngBounds.FromBounds(osmQueryObj.latLngBounds);
+        this.outFormat = osmQueryObj.outFormat || 'json';
+        this.timeoutInSec = osmQueryObj.timeoutInSec || 180;
+        this.bds = osmQueryObj.bds || ['node', 'way', 'relation'];
+        if (osmQueryObj.features) {
+            this.features = osmQueryObj.features.map((kvp) => new OpenStreetmapFeatures_1.OSMFeatureKeyValuePair(kvp.key, kvp.values));
+        }
+        else {
+            const defaultFeatureKeys = ['highway', 'addr'];
+            this.features = defaultFeatureKeys.map(key => new OpenStreetmapFeatures_1.OSMFeatureKeyValuePair(key));
+        }
     }
+    // constructor(latLngBounds: LatLngBounds, osmFeatures: Array<OSMFeatureKey> = ['highway', 'addr'], outFormat: OSMOutputFormat = 'json', timeoutInSec: number = 180) {
+    //     if (!(latLngBounds instanceof LatLngBounds)){
+    //         throw new Error(`latLngBounds is not instance of LaLatLngBoundsLng`);
+    //     }
+    // 	this.latLngBounds = new LatLngBounds(latLngBounds.sw, latLngBounds.ne);
+    // 	this.outFormat = outFormat;
+    // 	this.timeoutInSec = timeoutInSec;
+    // 	this.features = osmFeatures.map(f => new OSMFeatureKeyValuePair(f));
+    // 	this.bds = ['node', 'way', 'relation'];
+    // }
     // https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL#Standalone_queries
     // It is almost always used in any Overpass QL query
     toString() {
@@ -56,4 +78,4 @@ class OpenStreetmapQuery {
     }
 }
 exports.OpenStreetmapQuery = OpenStreetmapQuery;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiT3BlblN0cmVldG1hcFF1ZXJ5LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vc3JjL2FwaS9PcGVuU3RyZWV0bWFwUXVlcnkudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFDQSxtRUFBaUc7QUFFakcsTUFBYSxrQkFBa0I7SUFPOUIsWUFBWSxZQUEwQixFQUFFLGNBQW9DLENBQUMsU0FBUyxFQUFFLE1BQU0sQ0FBQyxFQUFFLFlBQTZCLE1BQU0sRUFBRSxlQUF1QixHQUFHO1FBQy9KLElBQUksQ0FBQyxZQUFZLEdBQUcsWUFBWSxDQUFDO1FBQ2pDLElBQUksQ0FBQyxTQUFTLEdBQUcsU0FBUyxDQUFDO1FBQzNCLElBQUksQ0FBQyxZQUFZLEdBQUcsWUFBWSxDQUFDO1FBQ2pDLElBQUksQ0FBQyxRQUFRLEdBQUcsV0FBVyxDQUFDLEdBQUcsQ0FBQyxDQUFDLENBQUMsRUFBRSxDQUFDLElBQUksOENBQXNCLENBQUMsQ0FBQyxDQUFDLENBQUMsQ0FBQztRQUNwRSxJQUFJLENBQUMsR0FBRyxHQUFHLENBQUMsTUFBTSxFQUFFLEtBQUssRUFBRSxVQUFVLENBQUMsQ0FBQztJQUN4QyxDQUFDO0lBRUQsa0ZBQWtGO0lBQ2xGLG9EQUFvRDtJQUM3QyxRQUFRO1FBQ2QsTUFBTSxNQUFNLEdBQUcsUUFBUSxJQUFJLENBQUMsU0FBUyxhQUFhLElBQUksQ0FBQyxZQUFZLElBQUksQ0FBQztRQUN4RSxNQUFNLGFBQWEsR0FBRyxJQUFJLENBQUMsZ0JBQWdCLEVBQUUsQ0FBQztRQUM5QyxNQUFNLGNBQWMsR0FBRyxJQUFJLENBQUMsaUJBQWlCLEVBQUUsQ0FBQztRQUNoRCxPQUFPLEdBQUcsTUFBTSxRQUFRLGNBQWMsU0FBUyxhQUFhLEVBQUUsQ0FBQztJQUNoRSxDQUFDO0lBR0Qsc0dBQXNHO0lBQzlGLGdCQUFnQjtRQUN2QixPQUFPLENBQ04sYUFBYTtZQUNiLE1BQU07WUFDTixnQkFBZ0I7WUFDaEIsY0FBYyxDQUNkLENBQUM7SUFDSCxDQUFDO0lBQ0QsMEJBQTBCO0lBQzFCLG9CQUFvQjtJQUNwQixJQUFJO0lBQ0osaUNBQWlDO0lBQ2pDLGlHQUFpRztJQUNqRyxnR0FBZ0c7SUFDaEcscUdBQXFHO0lBQ3JHLHVDQUF1QztJQUN2Qyw4RkFBOEY7SUFDOUYsNkZBQTZGO0lBQzdGLGtHQUFrRztJQUNsRyxLQUFLO0lBQ0wsbUJBQW1CO0lBQ25CLFlBQVk7SUFDWixLQUFLO0lBQ0wsZUFBZTtJQUNmLGdCQUFnQjtJQUVSLGlCQUFpQjtRQUN4QixNQUFNLFlBQVksR0FBRyxJQUFJLElBQUksQ0FBQyxZQUFZLENBQUMsT0FBTyxFQUFFLENBQUMsSUFBSSxDQUFDLEdBQUcsQ0FBQyxHQUFHLENBQUM7UUFDbEUsTUFBTSxlQUFlLEdBQWtCLEVBQUUsQ0FBQztRQUMxQyxJQUFJLENBQUMsR0FBRyxDQUFDLE9BQU8sQ0FBQyxHQUFHLENBQUMsRUFBRTtZQUN0QixJQUFJLENBQUMsUUFBUSxDQUFDLE9BQU8sQ0FBQyxHQUFHLENBQUMsRUFBRTtnQkFDM0IsR0FBRyxDQUFDLE1BQU0sQ0FBQyxPQUFPLENBQUMsS0FBSyxDQUFDLEVBQUU7b0JBQzFCLE1BQU0sSUFBSSxHQUFHLEtBQUssS0FBSyxHQUFHLENBQUMsQ0FBQyxDQUFDLEVBQUUsQ0FBQyxDQUFDLENBQUMsS0FBSyxLQUFLLEdBQUcsQ0FBQztvQkFDaEQsZUFBZSxDQUFDLElBQUksQ0FBQyxPQUFPLEdBQUcsS0FBSyxHQUFHLENBQUMsR0FBRyxHQUFHLElBQUksS0FBSyxZQUFZLEdBQUcsQ0FBQyxDQUFDO2dCQUN6RSxDQUFDLENBQUMsQ0FBQztZQUNKLENBQUMsQ0FBQyxDQUFDO1FBQ0osQ0FBQyxDQUFDLENBQUM7UUFDSCxPQUFPLGVBQWUsQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLENBQUM7SUFDbkMsQ0FBQztDQUVEO0FBbEVELGdEQWtFQyJ9
+//# sourceMappingURL=OpenStreetmapQuery.js.map

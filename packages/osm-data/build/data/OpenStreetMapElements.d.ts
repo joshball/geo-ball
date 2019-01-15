@@ -7,3 +7,4 @@ export declare class OpenStreetMapElements {
     constructor(elements: OpenStreetMapsElementsArray);
     getStats(): IOpenStreetMapElementsStats;
 }
+//# sourceMappingURL=OpenStreetMapElements.d.ts.map

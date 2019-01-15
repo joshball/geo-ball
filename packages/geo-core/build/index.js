@@ -8,5 +8,5 @@ function __export(m) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./core/LatLng"));
 __export(require("./core/LatLngBounds"));
-__export(require("./core/GeographicPoint"));
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUFBLDBFQUEwRTtBQUMxRSxpQ0FBaUM7QUFDakMsTUFBTTs7Ozs7QUFFTixtQ0FBOEI7QUFDOUIseUNBQW9DO0FBQ3BDLDRDQUF1QyJ9
+__export(require("./core/LatLngHelpers"));
+//# sourceMappingURL=index.js.map

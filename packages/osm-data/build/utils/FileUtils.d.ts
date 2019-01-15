@@ -41,3 +41,4 @@ export declare const trimRepeated: (str: string, repStr: string) => string;
 export declare const stripOuter: (input: string, subStr: string) => string;
 export declare const fileNamify: (str: string, options?: any) => string;
 export declare const pathNamify: (path: string, options: any) => string;
+//# sourceMappingURL=FileUtils.d.ts.map

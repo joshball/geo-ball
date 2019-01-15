@@ -3,17 +3,17 @@
 // import { OpenStreetmapQuery, LatLngBounds, LatLng } from "..";
 // import { IOpenStreetmapQueryResponse } from "../api/IOpenStreetmapQueryResponse";
 
-// export interface ILatLngObj {
+// export interface ILatLng {
 // 	lat: number;
 // 	lon: number;
 // };
-// export interface ILatLngBoundsObj {
-// 	sw: ILatLngObj;
-// 	ne: ILatLngObj;
+// export interface ILatLngBound {
+// 	sw: ILatLng;
+// 	ne: ILatLng;
 // };
 
 // export interface ILatLngBoundsTestData {
-// 	objBounds: ILatLngBoundsObj;
+// 	objBounds: ILatLngBound;
 // 	sw: LatLng;
 // 	ne: LatLng;
 // 	latLngBounds: LatLngBounds;

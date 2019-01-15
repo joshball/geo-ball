@@ -1,13 +1,13 @@
 import * as React from 'react';
 
 // tslint:disable-next-line:no-implicit-dependencies
-import { GeographicPoint } from '@ball-maps/geo-core';
+import { LatLng } from '@ball-maps/geo-core';
 import { MapComponent } from './MapComponent';
 import { MapLocation } from '../services/MapLocation';
 
 
 interface MapContainerState {
-    intersections: Array<GeographicPoint>;
+    intersections: Array<LatLng>;
 }
 
 interface MapContainerProps {

@@ -1,0 +1,1 @@
+{"version":3,"file":"GeoFileMetaData.d.ts","sourceRoot":"","sources":["../../src/files/GeoFileMetaData.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAU,MAAM,qBAAqB,CAAC;AAE3D,qBAAa,eAAe;IACxB,MAAM,EAAE,YAAY,CAAC;IACrB,SAAS,EAAE,IAAI,CAAC;gBACJ,MAAM,EAAE,YAAY,EAAE,SAAS,EAAE,IAAI;IAMjD,MAAM,CAAC,WAAW,IAAI,eAAe;CAIxC"}

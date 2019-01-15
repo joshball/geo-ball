@@ -6,8 +6,8 @@ import { Command, flags } from '@oclif/command'
 // import { OverpassHighways, LatLngBounds, LatLng, IHighwayElement } from '@ball-maps/osm-data';
 // import { RoadSegmentsFile, OverpassHighwayFile } from '@ball-maps/osm-data';
 import { OpenStreetmapFile } from '@ball-maps/osm-data';
+import { findFilePath } from '@ball-maps/ucsd-core';
 // import { BaseDataPath, RelDownloadDir } from '../common/defaults';
-import { findFilePath } from '../common/fileHelpers';
 
 
 class Stats extends Command {

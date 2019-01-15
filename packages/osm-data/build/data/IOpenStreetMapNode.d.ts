@@ -6,3 +6,4 @@ export interface IOpenStreetMapNode {
     lon: number;
     tags?: OpenStreetMapTagObject;
 }
+//# sourceMappingURL=IOpenStreetMapNode.d.ts.map

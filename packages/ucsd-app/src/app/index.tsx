@@ -7,28 +7,30 @@ import { RootComponent } from "./root-component"
 import { webFrame } from "electron"
 import { css } from "glamor"
 
+
 /**
  * CSS reset
  */
-import "glamor/reset"
+// import "glamor/reset"
 
-/**
- * Electron-focused CSS resets
- */
-css.global("html, body", {
-  // turn off text highlighting
-  userSelect: "none",
+// /**
+//  * Electron-focused CSS resets
+//  */
+// css.global("html, body", {
+//   // turn off text highlighting
+//   userSelect: "none",
 
-  // reset the cursor pointer
-  cursor: "default",
+//   // reset the cursor pointer
+//   cursor: "default",
 
-  // font
-  font: "caption",
+//   // font
+//   font: "caption",
 
-  // text rendering
-  WebkitFontSmoothing: "subpixel-antialiased",
-  textRendering: "optimizeLegibility",
-})
+//   // text rendering
+//   WebkitFontSmoothing: "subpixel-antialiased",
+//   textRendering: "optimizeLegibility",
+// })
+
 
 /**
  * Zooming resets

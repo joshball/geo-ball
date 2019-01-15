@@ -2,7 +2,7 @@
   "name": "@ball-maps/ucsd-app",
   "productName": "UCSD Map App",
   "main": "out/main.js",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "homepage": "homepage",
   "description": "An electron starter project.",
   "license": "MIT",
@@ -70,9 +70,9 @@
     "Xstart:wp": "cross-env ELECTRON_START_URL=http://localhost:3000 electron-webpack dev"
   },
   "dependencies": {
-    "@ball-maps/geo-core": "file:../geo-core",
-    "@ball-maps/osm-data": "file:../osm-data",
-    "@ball-maps/ucsd-core": "file:../ucsd-core",
+    "@ball-maps/geo-core": "^1.0.0",
+    "@ball-maps/osm-data": "^1.0.0",
+    "@ball-maps/ucsd-core": "^1.0.0",
     "electron-is-dev": "^1.0.1",
     "electron-log": "^2.2.17",
     "electron-store": "^2.0.0",

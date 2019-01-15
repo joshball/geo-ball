@@ -8,3 +8,4 @@ export interface IOpenStreetmapQueryResponse {
     };
     elements: OpenStreetMapsElementsArray;
 }
+//# sourceMappingURL=IOpenStreetmapQueryResponse.d.ts.map

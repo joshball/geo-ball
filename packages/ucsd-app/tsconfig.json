@@ -1,5 +1,14 @@
 {
-    "extends": "../../tsconfig.json",
+    "extends": "../../tsconfig.common.json",
+    "references": [
+        { "path": "../geo-core" },
+        // { "path": "../graph-core" },
+        // { "path": "../osm-cli" },
+        { "path": "../osm-data" },
+        // { "path": "../ucsd-app" },
+        // { "path": "../ucsd-cli" },
+        { "path": "../ucsd-core" },
+    ],
     "compilerOptions": {
         // "rootDir": "src",
 		"target": "es2015",
@@ -9,20 +18,6 @@
     },
     "include": ["src", "typings", "fuse.ts", "./storybook/views"],
     // "include": [        "./src"    ],
-    "references": [
-        {
-            "path": "../geo-core"
-        },
-        {
-            "path": "../graph-core"
-        },
-        {
-            "path": "../osm-data"
-        },
-        {
-            "path": "../ucsd-core",
-        }
-    ]
 //     "compilerOptions": {
 //         "target": "es2015",
 //         "module": "commonjs",

@@ -14,6 +14,29 @@ class LatLng {
     toArray() {
         return [this.lat, this.lon];
     }
+    equals(rhs) {
+        if (!rhs) {
+            return false;
+        }
+        // return areEqual(this.latitude, rhs.latitude) && areEqual(this.longitude, rhs.longitude);
+        return this.lat === rhs.lat && this.lon === rhs.lon;
+    }
+    hashCode() {
+        return Array.from(JSON.stringify(this))
+            // tslint:disable-next-line:no-bitwise
+            .reduce((s, c) => Math.imul(31, s) + c.charCodeAt(0) | 0, 0);
+        // return fieldsHashCode(this.latitude, this.longitude);
+    }
+    /** Convenience methods for mapping later */
+    static Serialize(latLngObj) {
+        return JSON.stringify(latLngObj);
+    }
+    /** Convenience methods for mapping later */
+    static DeSerialize(serializedLatLng) {
+        // const serObj: SerializedGeographicPoint = JSON.parse(serializedGeoPoint);
+        const serObj = JSON.parse(serializedLatLng);
+        return new LatLng(serObj.lat, serObj.lon);
+    }
 }
 exports.LatLng = LatLng;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTGF0TG5nLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vc3JjL2NvcmUvTGF0TG5nLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsTUFBYSxNQUFNO0lBR2YsWUFBWSxHQUFXLEVBQUUsR0FBVztRQVdwQyxhQUFRLEdBQUcsR0FBVyxFQUFFLENBQUMsT0FBTyxJQUFJLENBQUMsR0FBRyxTQUFTLElBQUksQ0FBQyxHQUFHLEVBQUUsQ0FBQztRQUM1RCxVQUFLLEdBQUcsR0FBWSxFQUFFLENBQUMsSUFBSSxDQUFDLEdBQUcsSUFBSSxDQUFDLEVBQUUsSUFBSSxJQUFJLENBQUMsR0FBRyxJQUFJLEVBQUUsSUFBSSxJQUFJLENBQUMsR0FBRyxJQUFJLENBQUMsR0FBRyxJQUFJLElBQUksQ0FBQyxHQUFHLElBQUksR0FBRyxDQUFDO1FBWDVGLG1DQUFtQztRQUNuQyxJQUFJLENBQUMsR0FBRyxHQUFHLEdBQUcsQ0FBQztRQUNmLElBQUksQ0FBQyxHQUFHLEdBQUcsR0FBRyxDQUFDO0lBQ25CLENBQUM7SUFDRCxNQUFNLENBQUMsU0FBUyxDQUFDLFdBQTBCO1FBQ3ZDLE9BQU8sSUFBSSxNQUFNLENBQUMsV0FBVyxDQUFDLENBQUMsQ0FBQyxFQUFFLFdBQVcsQ0FBQyxDQUFDLENBQUMsQ0FBQyxDQUFDO0lBQ3RELENBQUM7SUFDRCxPQUFPO1FBQ0gsT0FBTyxDQUFDLElBQUksQ0FBQyxHQUFHLEVBQUUsSUFBSSxDQUFDLEdBQUcsQ0FBQyxDQUFDO0lBQ2hDLENBQUM7Q0FHSjtBQWhCRCx3QkFnQkMifQ==
+//# sourceMappingURL=LatLng.js.map
