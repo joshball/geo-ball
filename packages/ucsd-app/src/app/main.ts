@@ -3,12 +3,15 @@
 //
 // It is responsible for launching a renderer window.
 
+// https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&client=YOUR_CLIENT_ID&signature=SIGNATURE
+
 import { app, dialog, ipcMain } from "electron"
 import { createMainWindow, loadURL } from "../main-window"
 import * as log from "electron-log"
 import * as isDev from "electron-is-dev"
 import { createUpdater } from "../lib/updater"
 import { createMenu } from "../menu"
+
 
 // set proper logging level
 log.transports.file.level = isDev ? false : "info"

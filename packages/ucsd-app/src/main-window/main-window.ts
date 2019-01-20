@@ -4,7 +4,7 @@ import { loadURL } from "./load-url"
 
 // default dimensions
 // export const DIMENSIONS = { width: 1800, height: 1500, minWidth: 200, minHeight: 200 }
-export const DIMENSIONS = { width: 1200, height: 1200, minWidth: 200, minHeight: 200 }
+export const DIMENSIONS = { width: 1200, height: 900, minWidth: 1200, minHeight: 900 }
 
 /**
  * Creates the main window.
@@ -24,10 +24,10 @@ export function createMainWindow(appPath: string, showDelay: number = 100) {
     const window = new BrowserWindow({
         minWidth: DIMENSIONS.minWidth,
         minHeight: DIMENSIONS.minHeight,
-        width: windowState.width,
-        height: windowState.height,
-        // width: DIMENSIONS.width,
-        // height: DIMENSIONS.height,
+        // width: windowState.width,
+        // height: windowState.height,
+        width: DIMENSIONS.width,
+        height: DIMENSIONS.height,
         x: windowState.x,
         y: windowState.y,
         show: false,

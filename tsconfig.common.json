@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
-        "target": "es2015",
         // "outDir": "./build",
         // "rootDir": "./src",
+        "target": "es2015",
         "baseUrl": "./packages",
         "paths": {
             "@ball-maps/*": [
@@ -42,6 +42,7 @@
         "noUnusedParameters": true /* Report errors on unused parameters. */ ,
         "noImplicitReturns": true /* Report error when not all code paths in function return a value. */ ,
         "noFallthroughCasesInSwitch": true /* Report errors for fallthrough cases in switch statement. */ ,
+
         /* Debugging Options */
         "resolveJsonModule": true,
         "traceResolution": false /* Report module resolution log messages. */ ,
@@ -52,10 +53,7 @@
         // "experimentalDecorators": true /* Enables experimental support for ES7 decorators. */,
         // "emitDecoratorMetadata": true /* Enables experimental support for emitting type metadata for decorators. */,
         "lib": [
-            "es2015"
-        ],
-        "types": [
-            "node"
+            "es2015","es2018","es2018.promise", "esnext"
         ],
         "typeRoots": [
             "node_modules/@types",
