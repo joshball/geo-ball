@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { css, StyleAttribute } from 'glamor'
-import { LatLng, LatLngBounds } from 'leaflet';
+import { LatLng, LatLngBounds, LatLngLiteral } from 'leaflet';
 
 const outerBoxCss = css({
     // height: '100%',
@@ -28,12 +28,12 @@ const outerBoxCss = css({
 export type LatLngTxtStyle = 'array' | 'shortLng' | 'shortLon' | 'long';
 
 export interface LatLngTxtProps {
-    llt?: LatLng;
+    llt?: LatLngLiteral;
     lltStyle?: LatLngTxtStyle;
 }
 export const pl = (num: number): string => num.toFixed(6);
 
-export const LatLonShortTxt = (latLng: LatLng, spanCss: StyleAttribute) => {
+export const LatLonShortTxt = (latLng: LatLngLiteral, spanCss: StyleAttribute) => {
     const { lat, lng } = latLng;
     return (
         <span className={`${spanCss}`}>
@@ -41,7 +41,7 @@ export const LatLonShortTxt = (latLng: LatLng, spanCss: StyleAttribute) => {
         </span>
     );
 }
-export const LatLngShortTxt = (latLng: LatLng, spanCss: StyleAttribute) => {
+export const LatLngShortTxt = (latLng: LatLngLiteral, spanCss: StyleAttribute) => {
     const { lat, lng } = latLng;
     return (
         <span className={`${spanCss}`}>
@@ -49,7 +49,7 @@ export const LatLngShortTxt = (latLng: LatLng, spanCss: StyleAttribute) => {
         </span>
     );
 }
-export const LatLngLongTxt = (latLng: LatLng, spanCss: StyleAttribute) => {
+export const LatLngLongTxt = (latLng: LatLngLiteral, spanCss: StyleAttribute) => {
     const { lat, lng } = latLng;
     return (
         <span className={`${spanCss}`}>
@@ -58,7 +58,7 @@ export const LatLngLongTxt = (latLng: LatLng, spanCss: StyleAttribute) => {
     );
 }
 
-export const LatLngArrayTxt = (latLng: LatLng, spanCss: StyleAttribute) => {
+export const LatLngArrayTxt = (latLng: LatLngLiteral, spanCss: StyleAttribute) => {
     const { lat, lng } = latLng;
     return (
         <span className={`${spanCss}`}><code>{pl(lat)}</code>,&nbsp;<code>{pl(lng)}</code></span>

@@ -2,10 +2,11 @@ import * as React from 'react'
 import { css } from 'glamor'
 import { observer, inject } from 'mobx-react';
 import { LatLng, LatLngBounds } from 'leaflet';
-import { DownloadMapComponent } from './DownloadMapComponent';
-import { AddressSearchComponent } from './AddressSearchComponent';
-import { MapDataDisplay } from './MapDataDisplay';
-import { MapState } from '../../stores/MapState';
+import { MapComponent } from './MapData/MapComponent';
+import { AddressSearchComponent } from './MapData/AddressSearchComponent';
+import { MapDataDisplay } from './MapData/MapDataDisplay';
+import { MapState } from '../stores/MapState';
+import { ChangeMapTilesComponent } from './MapData/ChangeMapTilesComponent';
 
 const mainLayout = css({
     display: 'grid',
@@ -33,6 +34,7 @@ export interface MapProps {
 }
 
 @inject("mapState")
+@inject("stores")
 @observer
 export class MapDownloadPage extends React.Component<MapProps> {
 
@@ -44,11 +46,12 @@ export class MapDownloadPage extends React.Component<MapProps> {
         return (
             <div className={`${mainLayout}`}>
                 <main className="main">
-                    <DownloadMapComponent />
+                    <MapComponent />
                 </main>
                 <aside className="sidebar">
                     <div className={`${sideLayout}`}>
                         <MapDataDisplay />
+                        <ChangeMapTilesComponent />
                         <AddressSearchComponent />
                         {/* <LocationSelector locations={mapLocations} selectedName={selectedMapLocation.name} onSubmit={onSubmit} /> */}
                     </div>

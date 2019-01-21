@@ -2,12 +2,16 @@
 import * as React from "react"
 import { compose } from "glamor"
 import { styles, colors } from "../pages/theme"
-import { MapDownloadPage } from "../pages/MapData/MapDownloadPage";
-import { WelcomePage } from "../pages/WelcomePage";
+import { MapDownloadPage } from "../pages/MapDownloadPage";
+import { HomePage } from '../pages/HomePage';
 // import rootStore, { MapStore, MapState } from "../stores";
 import { MapState } from "../stores/MapState";
+// import createStore from "../stores";
+import { RootStore } from "../stores/RootStore";
+import state from "../state/State";
 import { Provider, observer } from "mobx-react";
 import DevTools from 'mobx-react-devtools';
+import { autorun } from "mobx";
 // import { WelcomeScreen } from "../views/example/welcome-screen"
 // import { WelcomeScreen } from '../views/example/welcome-screen/welcome-screen';
 // tslint:disable-next-line:no-var-requires
@@ -20,6 +24,18 @@ const ROOT = compose(styles.fullScreen, {
     "& ::-webkit-scrollbar-thumb": { backgroundColor: colors.scrollbar.thumb, borderRadius: 4 },
 })
 
+const PAGES: any = {
+    '/': HomePage,
+    '/maps': MapDownloadPage,
+    '/files': MapDownloadPage,
+    '/routes': MapDownloadPage,
+};
+
+// const rootStore = createStore(state);
+const rootStore = new RootStore(state);
+// autorun(stores)
+
+
 const mapState = new MapState();
 // const mapStore = new MapStore(rootStore);
 // console.log('mapStore', mapStore)
@@ -28,11 +44,8 @@ export class RootComponent extends React.Component<{}, {}> {
     render() {
         return (
             <div  {...ROOT}>
-                <Provider mapState={mapState}>
-                    <div>
-                        <MapDownloadPage />
-                        <DevTools />
-                    </div>
+                <Provider stores={rootStore} mapState={mapState}>
+                    <MapDownloadPage />
                 </Provider>
             </div>
         )

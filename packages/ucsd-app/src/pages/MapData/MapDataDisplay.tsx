@@ -4,6 +4,7 @@ import { LatLngTxt } from '../common/LatLngTxt';
 import { LatLngBoundsTxt } from '../common/LatLngBoundsTxt';
 import { observer, inject } from 'mobx-react';
 import { MapState } from '../../stores/MapState';
+import { DownloadOsmDataComponent } from './DownloadOsmDataComponent';
 
 const outerBoxCss = css({
     flex: '0 0 auto',
@@ -52,9 +53,11 @@ export class MapDataDisplay extends React.Component<MapDataDisplayProps> {
         const boundsElem = bounds ?
             <div className={`${rowCss}`}>
                 <fieldset>
-                    <legend>&nbsp;Map Bounds&nbsp;</legend>
+                    <legend>&nbsp;<b>Map Bounds</b>&nbsp;</legend>
                     <LatLngBoundsTxt bounds={bounds} llbStyle={llbStyle} />
                     <div>Copy as array or string</div>
+                    {/* <DownloadOsmDataComponent /> */}
+                    <button type="button" className="bp3-button bp3-icon-add .modifier" >Download OSM</button>
                 </fieldset>
             </div>
             : null;

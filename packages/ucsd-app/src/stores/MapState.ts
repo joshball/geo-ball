@@ -1,17 +1,10 @@
 
 import { action, extendObservable } from 'mobx'
-import { LatLng, LatLngBounds } from 'leaflet';
+import { LatLng, LatLngBounds, LatLngLiteral } from 'leaflet';
 import { IGeoSearchResult } from '../pages/MapData/AddressSearchComponent';
 // import { RootStore } from './index';
+import { IMapState } from '../state/IMapState';
 
-export interface IMapState {
-    address: IGeoSearchResult | undefined;
-    updatingAddress: IGeoSearchResult | undefined;
-    zoom: number;
-    mousePos: LatLng | undefined;
-    center: LatLng | undefined;
-    bounds: LatLngBounds | undefined;
-}
 
 export class MapState {
     // @observable address!: string;
@@ -20,9 +13,9 @@ export class MapState {
     // @observable bounds!: LatLngBounds;
     address!: IGeoSearchResult;
     zoom!: number;
-    mousePos!: LatLng;
-    clickPos!: LatLng;
-    center!: LatLng;
+    mousePos!: LatLngLiteral;
+    clickPos!: LatLngLiteral;
+    center!: LatLngLiteral;
     bounds!: LatLngBounds;
 
     constructor(state?: IMapState|undefined) {

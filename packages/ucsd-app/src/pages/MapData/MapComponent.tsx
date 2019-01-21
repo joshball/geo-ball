@@ -24,7 +24,7 @@ export interface MapProps {
 
 @inject("mapState")
 @observer
-export class DownloadMapComponent extends React.Component<MapProps> {
+export class MapComponent extends React.Component<MapProps> {
 
     mapRef = React.createRef<Map>()
 
@@ -108,8 +108,8 @@ export class DownloadMapComponent extends React.Component<MapProps> {
 
         // console.log('DMC.render mapState.center:', mapState.center);
         // mapState.changeIt();
-        // console.log('DownloadMapComponent mapState.center:', mapState.center);
-        // // console.log('DownloadMapComponent location:', location);
+        // console.log('MapComponent mapState.center:', mapState.center);
+        // // console.log('MapComponent location:', location);
         // var Esri_WorldStreetMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
         //     attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
         // });
