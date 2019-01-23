@@ -3,22 +3,16 @@ import { css } from 'glamor'
 import { LatLng } from 'leaflet';
 import { LatLngTxt } from '../common/LatLngTxt';
 import { observer, inject } from 'mobx-react';
-import { MapState } from '../../stores/MapState';
 import { geocodeAddress } from '../../services/MapService';
-import {  colors, fontSizes, fonts } from "../../pages/theme"
+import {  colors, fontSizes, fonts } from "../../config/theme"
+import { IGeoSearchResult } from '../../services/IGeoSearchResult';
+import { RootStore } from '../../stores/RootStore';
 
 
 export interface AddressSearchComponentProps {
-    mapState?: MapState;
+    stores?: RootStore;
 }
 
-export interface IGeoSearchResult {
-    label: string;
-    raw: any;
-    x: string;
-    y: string;
-    bounds: Array<Array<number>>;
-}
 
 const singleResultCss = css({
     border: '1px solid grey',
@@ -56,7 +50,7 @@ const searchChadwickResults = [{"x":"-111.8504945","y":"40.71684685","label":"25
 const searchChadwickAddress = '2516 Chadwick St, Salt Lake City, UT';
 
 // [40.7563038, -111.8781928]
-@inject("mapState")
+@inject("stores")
 @observer
 export class AddressSearchComponent extends React.Component<AddressSearchComponentProps> {
     state = {
@@ -108,20 +102,20 @@ export class AddressSearchComponent extends React.Component<AddressSearchCompone
         // console.log('getClickHandler result', result)
         return () => {
             // console.log('clickHandler func result', result)
-            this.props.mapState!.updateAddress(result);
+            this.props.stores!.mapLocation.updateSelectedAddress(result);
             this.setState({
                 selectedResult: result,
             });
         }
     }
 
-    getSingleResultMarkup(result: IGeoSearchResult) {
+    getSingleResultMarkup(result: IGeoSearchResult, index:number) {
         // console.log('getSingleResultMarkup',result)
         if (result) {
             const latLng = result.x && result.y ? new LatLng(parseFloat(result.x), parseFloat(result.y)) : undefined;
             const clickHandler = this.getClickHandler(result);
             return (
-                <div onClick={clickHandler} key={result.x + result.y + result.label} className={`${singleResultCss}`}>
+                <div onClick={clickHandler} key={index} className={`${singleResultCss}`}>
                     <div className={`${labelCss}`}>{result.label}</div>
                     <div className={`${llCss}`}><LatLngTxt llt={latLng} lltStyle={'shortLng'} /></div>
                 </div>
@@ -133,7 +127,7 @@ export class AddressSearchComponent extends React.Component<AddressSearchCompone
         if (this.state.results) {
             const results = this.state.results as unknown as Array<IGeoSearchResult>;
             // console.log('getResults.good')
-            return results.map((r: IGeoSearchResult) => this.getSingleResultMarkup(r));
+            return results.map((r: IGeoSearchResult, i:number) => this.getSingleResultMarkup(r, i));
         }
         return [];
     }

@@ -47,5 +47,6 @@ app.on("ready", () => {
 // fires when all windows are closed
 app.on("window-all-closed", app.quit)
 
+
 // setup the auto-updater
 createUpdater(app)

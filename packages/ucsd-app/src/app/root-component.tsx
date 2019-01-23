@@ -1,19 +1,24 @@
 // This is the top-most component in the app.
 import * as React from "react"
+import { Route, Switch } from "react-router";
+import { HashRouter, MemoryRouter, Link } from 'react-router-dom';
 import { compose } from "glamor"
-import { styles, colors } from "../pages/theme"
-import { MapDownloadPage } from "../pages/MapDownloadPage";
+import { styles, colors } from "../config/theme"
+import { MapExplorerPage } from "../pages/MapExplorerPage";
+import { RoutingPage } from "../pages/RoutingPage";
+import { MapDataFilesPage } from "../pages/MapDataFilesPage";
 import { HomePage } from '../pages/HomePage';
-// import rootStore, { MapStore, MapState } from "../stores";
-import { MapState } from "../stores/MapState";
-// import createStore from "../stores";
+import { Provider, observer } from "mobx-react";
+// import DevTools from 'mobx-react-devtools';
+// import { autorun } from "mobx";
+
+
 import { RootStore } from "../stores/RootStore";
 import state from "../state/State";
-import { Provider, observer } from "mobx-react";
-import DevTools from 'mobx-react-devtools';
-import { autorun } from "mobx";
-// import { WelcomeScreen } from "../views/example/welcome-screen"
-// import { WelcomeScreen } from '../views/example/welcome-screen/welcome-screen';
+import { Navbar, Alignment, Button, Intent } from "@blueprintjs/core";
+const rootStore = new RootStore(state);
+// autorun(() => rootStore);
+
 // tslint:disable-next-line:no-var-requires
 // require("normalize.css/normalize.css");
 
@@ -24,30 +29,72 @@ const ROOT = compose(styles.fullScreen, {
     "& ::-webkit-scrollbar-thumb": { backgroundColor: colors.scrollbar.thumb, borderRadius: 4 },
 })
 
-const PAGES: any = {
-    '/': HomePage,
-    '/maps': MapDownloadPage,
-    '/files': MapDownloadPage,
-    '/routes': MapDownloadPage,
-};
+const ROUTES = [
+    {
+        path: '/',
+        exact: true,
+        component: HomePage
+    },
+    {
+        path: '/maps',
+        component: MapExplorerPage
+    },
+    {
+        path: '/files',
+        component: MapDataFilesPage
+    },
+    {
+        path: '/routes',
+        component: RoutingPage
+    },
+];
 
-// const rootStore = createStore(state);
-const rootStore = new RootStore(state);
-// autorun(stores)
+// {ROUTES.map((route, i) => {
+//     // console.log(`route ${i}, ${route.path}`, route.component)
+//     return <Route key={i} exact={route.exact} path={route.path} component={route.component} />
+// })}
+// {/* <Route component={HomePage} /> */}
 
 
-const mapState = new MapState();
-// const mapStore = new MapStore(rootStore);
-// console.log('mapStore', mapStore)
+const navBar = <Navbar className="bp3-dark">
+    <Navbar.Group align={Alignment.LEFT}>
+        <Navbar.Heading>UCSD</Navbar.Heading>
+        <Navbar.Divider />
+        <Link to="/" className="bp3-minimal" >
+            <Button icon="home" text="Home" />
+        </Link>
+        <Link to="/maps">
+            <Button text="Explore and Download Maps" />
+        </Link>
+        <Link to="/files">
+            <Button text="Manage Files" />
+        </Link>
+        <Link to="/routes">
+            <Button text="Routing" />
+        </Link>
+    </Navbar.Group>
+</Navbar>;
+
+const routes = <Switch>
+    {/* <Route path='/' component={HomePage} exact /> */}
+    <Route path='/' component={MapExplorerPage} exact />
+    <Route path='/maps' component={MapExplorerPage} />
+    <Route path='/routes' component={RoutingPage} />
+    <Route path='/files' component={MapDataFilesPage} />
+</Switch>;
 @observer
 export class RootComponent extends React.Component<{}, {}> {
     render() {
+        console.log('location.pathname:', location.pathname)
         return (
-            <div  {...ROOT}>
-                <Provider stores={rootStore} mapState={mapState}>
-                    <MapDownloadPage />
+            <MemoryRouter {...ROOT} >
+                <Provider stores={rootStore}>
+                    <div>
+                        {navBar}
+                        {routes}
+                    </div>
                 </Provider>
-            </div>
+            </MemoryRouter>
         )
     }
 }

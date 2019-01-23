@@ -2,11 +2,11 @@ import * as React from 'react'
 import { css } from 'glamor'
 import { observer, inject } from 'mobx-react';
 import { LatLng, LatLngBounds } from 'leaflet';
-import { MapComponent } from './MapData/MapComponent';
-import { AddressSearchComponent } from './MapData/AddressSearchComponent';
-import { MapDataDisplay } from './MapData/MapDataDisplay';
-import { MapState } from '../stores/MapState';
-import { ChangeMapTilesComponent } from './MapData/ChangeMapTilesComponent';
+import { MapComponent } from '../components/map/MapComponent';
+import { AddressSearchComponent } from '../components/map/AddressSearchComponent';
+import { MapDataDisplay } from '../components/map/MapDataDisplay';
+import { ChangeMapTilesComponent } from '../components/map/ChangeMapTilesComponent';
+import { RootStore } from '../stores/RootStore';
 
 const mainLayout = css({
     display: 'grid',
@@ -27,22 +27,14 @@ const startingCenter: LatLng = new LatLng(40.7563038, -111.8781928);
 const startingBounds: LatLngBounds = new LatLngBounds(swBound, neBound);
 
 export interface MapProps {
-    // location!: MapLocation;
-    // position!: LatLng;
-    // mapState: MapState;
-    mapState?: MapState;
+    stores?: RootStore;
 }
 
-@inject("mapState")
 @inject("stores")
 @observer
-export class MapDownloadPage extends React.Component<MapProps> {
+export class MapExplorerPage extends React.Component<MapProps> {
 
     render() {
-        // console.log('MapDownloadPage.props:', this.props);
-        const mapState = this.props.mapState!;
-        // mapState.changeIt();
-        // console.log('MapDownloadPage.mapState:', mapState);
         return (
             <div className={`${mainLayout}`}>
                 <main className="main">

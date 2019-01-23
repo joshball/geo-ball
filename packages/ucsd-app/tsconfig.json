@@ -10,6 +10,8 @@
         { "path": "../ucsd-core" },
     ],
     "compilerOptions": {
+        "baseUrl": ".",
+        "paths": { "*": ["types/*"] },
         // "rootDir": "src",
         // "target": "es2015",
         "module": "commonjs",

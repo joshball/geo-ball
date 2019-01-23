@@ -1,6 +1,13 @@
 const { app, BrowserWindow } = require("electron")
 const WindowStateManager = require("electron-window-state-manager")
 import { loadURL } from "./load-url"
+require('electron-context-menu')({
+	prepend: (params, browserWindow) => [{
+		label: 'Rainbow',
+		// Only show it when right-clicking images
+		visible: params.mediaType === 'image'
+	}]
+});
 
 // default dimensions
 // export const DIMENSIONS = { width: 1800, height: 1500, minWidth: 200, minHeight: 200 }
@@ -66,7 +73,14 @@ export function createMainWindow(appPath: string, showDelay: number = 100) {
     window.on("close", () => windowState.saveState(window))
     window.on("move", () => windowState.saveState(window))
     window.on("resize", () => windowState.saveState(window))
-
+    window.on('app-command', (e, cmd) => {
+        console.log('app-command', cmd);
+        console.log('app-window.webContents.canGoBack()', window.webContents.canGoBack());
+        // Navigate the window back when the user hits their mouse back button
+        if (cmd === 'browser-backward' && window.webContents.canGoBack()) {
+          window.webContents.goBack()
+        }
+      })
     // load entry html page in the renderer.
     loadURL(window, appPath)
 

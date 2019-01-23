@@ -1,14 +1,14 @@
 import { autorun, observable } from "mobx";
 import { IState } from '../state/State';
 import { CommonStore } from "./CommonStore";
-import { MapStore } from "./MapStore";
+import { MapLocationStore } from "./MapLocationStore";
 
 export class RootStore {
     common: CommonStore;
-    map: MapStore;
+    mapLocation: MapLocationStore;
 
     constructor(state: IState) {
         this.common = new CommonStore(state);
-        this.map = new MapStore(state);
+        this.mapLocation = new MapLocationStore(state);
     }
 }

@@ -1,11 +1,12 @@
 import * as React from 'react'
 import { css } from 'glamor'
-import { colors, fonts, fontSizes, cssProps } from "./theme"
+import { colors, fonts, fontSizes, cssProps } from "../config/theme"
 import { Button, Intent } from "@blueprintjs/core";
-import { MapDownloadPage } from './MapDownloadPage';
-import { CenteredContent } from './common/CenteredContent';
-import { Text } from './common/Text';
+import { MapExplorerPage } from './MapExplorerPage';
+import { CenteredContent } from '../components/common/CenteredContent';
+import { Text } from '../components/common/Text';
 import { WelcomeScreen } from '../OLD/views/example/welcome-screen/welcome-screen';
+import { MapDataFilesComponent } from '../components/files/MapDataFilesComponent';
 
 const mainLayout = css({
     // display: 'grid',
@@ -29,18 +30,13 @@ const buttonBarCss = cssProps({
 })
 
 export const MapDataFilesPage: React.SFC<any> = (props: any) => {
-
+    console.log('MapDataFilesPage', props.location, props.match)
     return (
         <CenteredContent style={mainLayout}>
             <Text style={STYLE}>
-                Welcome
+                MAP DATA FILES
             </Text>
-            <div style={buttonBarCss}>
-                <a href="/maps">Explore and Download Maps</a>&nbsp;&nbsp;
-                <Button intent={Intent.PRIMARY} text="Explore and Download Maps" />&nbsp;&nbsp;
-                <Button intent={Intent.PRIMARY} text="Map Data Files" />&nbsp;&nbsp;
-                <Button intent={Intent.PRIMARY} text="Routing Fun" />
-            </div>
+            <MapDataFilesComponent/>
         </CenteredContent>
     )
 }

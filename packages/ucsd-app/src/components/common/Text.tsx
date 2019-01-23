@@ -1,7 +1,7 @@
 import * as React from "react"
 // tslint:disable-next-line:no-duplicate-imports
 import { CSSProperties } from "react"
-import { colors, fonts, fontSizes, cssProps } from "../theme"
+import { colors, fonts, fontSizes, cssProps } from "../../config/theme"
 import { css } from "glamor"
 
 export interface TextProps {

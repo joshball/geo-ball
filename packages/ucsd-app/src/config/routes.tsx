@@ -1,5 +1,5 @@
 import { HomePage } from '../pages/HomePage'
-import { MapDownloadPage } from '../pages/MapDownloadPage'
+import { MapExplorerPage } from '../pages/MapExplorerPage'
 import { MapDataFilesPage } from '../pages/MapDataFilesPage'
 import { RoutingPage } from '../pages/RoutingPage'
 
@@ -10,7 +10,7 @@ export default [
     },
     {
         path: '/page/map-download',
-        component: MapDownloadPage
+        component: MapExplorerPage
     },
     {
         path: '/page/map-data-files',

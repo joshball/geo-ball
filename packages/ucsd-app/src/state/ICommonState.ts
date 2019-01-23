@@ -1,5 +1,5 @@
 import { extendObservable, toJS, action } from 'mobx';
-import { IMapState } from './IMapState';
+import { IMapLocationState } from './IMapLocationState';
 
 export interface ICommonState {
     title: string

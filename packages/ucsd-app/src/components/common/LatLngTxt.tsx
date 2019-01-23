@@ -28,7 +28,7 @@ const outerBoxCss = css({
 export type LatLngTxtStyle = 'array' | 'shortLng' | 'shortLon' | 'long';
 
 export interface LatLngTxtProps {
-    llt?: LatLngLiteral;
+    llt?: LatLngLiteral | null;
     lltStyle?: LatLngTxtStyle;
 }
 export const pl = (num: number): string => num.toFixed(6);

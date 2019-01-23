@@ -77,6 +77,8 @@
     "@blueprintjs/core": "^3.11.0",
     "@blueprintjs/icons": "^3.5.0",
     "@blueprintjs/select": "^3.5.0",
+    "date-fns": "^2.0.0-alpha.27",
+    "electron-context-menu": "^0.10.1",
     "electron-is-dev": "^1.0.1",
     "electron-log": "^2.2.17",
     "electron-store": "^2.0.0",
@@ -98,6 +100,7 @@
     "react-dom": "^16.7.0",
     "react-leaflet": "^2.1.4",
     "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
     "react-transition-group": "^2.5.2"
   },
   "devDependencies": {

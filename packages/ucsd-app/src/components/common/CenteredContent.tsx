@@ -1,6 +1,6 @@
 import * as React from "react"
 import { compose, css } from "glamor"
-import { cssProps, styles } from "../theme"
+import { cssProps, styles } from "../../config/theme"
 
 export interface CenteredContentProps {
     children: React.ReactNode

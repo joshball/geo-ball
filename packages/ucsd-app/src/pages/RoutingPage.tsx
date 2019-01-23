@@ -1,48 +1,55 @@
 import * as React from 'react'
 import { css } from 'glamor'
-import { colors, fonts, fontSizes, cssProps } from "./theme"
-import { Button, Intent } from "@blueprintjs/core";
-import { MapDownloadPage } from './MapDownloadPage';
-import { CenteredContent } from './common/CenteredContent';
-import { Text } from './common/Text';
-import { WelcomeScreen } from '../OLD/views/example/welcome-screen/welcome-screen';
+import { observer, inject } from 'mobx-react';
+import { LatLng, LatLngBounds } from 'leaflet';
+import { MapComponent } from '../components/map/MapComponent';
+import { RootStore } from '../stores/RootStore';
+import { MapDataDisplay } from '../components/map/MapDataDisplay';
+import { ChangeMapTilesComponent } from '../components/map/ChangeMapTilesComponent';
+import { AddressSearchComponent } from '../components/map/AddressSearchComponent';
 
 const mainLayout = css({
-    // display: 'grid',
-    minHeight: '100vh',
-    // gridTemplateRows: '100%',
-    // gridTemplateColumns: '1fr 400px',
-    // gridTemplateAreas: 'main sidebar',
+    display: 'grid',
+    minHeight: '100%',
+    gridTemplateRows: '100%',
+    gridTemplateColumns: '1fr 400px',
+    gridTemplateAreas: 'main sidebar',
 });
 
-const STYLE = cssProps({
-    color: colors.text,
-    fontSize: fontSizes.large,
-    fontFamily: fonts.default,
-    padding: 0,
-    margin: 0,
-})
+const sideLayout = css({
+    marginLeft: '10px',
+});
 
-const buttonBarCss = cssProps({
-    // padding: 0,
-    margin: '20px',
-})
+const swBound: LatLng = new LatLng(40.7, -111.7);
+const neBound: LatLng = new LatLng(40.8, -111.8);
+// const startingCenter: LatLngTuple = [40.7563038, -111.8781928];
+const startingCenter: LatLng = new LatLng(40.7563038, -111.8781928);
+const startingBounds: LatLngBounds = new LatLngBounds(swBound, neBound);
 
-export const RoutingPage: React.SFC<any> = (props: any) => {
-
-    return (
-        <CenteredContent style={mainLayout}>
-            <Text style={STYLE}>
-                Welcome
-            </Text>
-            <div style={buttonBarCss}>
-                <a href="/maps">Explore and Download Maps</a>&nbsp;&nbsp;
-                <Button intent={Intent.PRIMARY} text="Explore and Download Maps" />&nbsp;&nbsp;
-                <Button intent={Intent.PRIMARY} text="Map Data Files" />&nbsp;&nbsp;
-                <Button intent={Intent.PRIMARY} text="Routing Fun" />
-            </div>
-        </CenteredContent>
-    )
+export interface MapProps {
+    stores?: RootStore;
 }
 
+@inject("stores")
+@observer
+export class RoutingPage extends React.Component<MapProps> {
 
+    render() {
+        console.log('RoutingPage.render():', this.props);
+        return (
+            <div className={`${mainLayout}`}>
+                <main className="main">
+                    <MapComponent />
+                </main>
+                <aside className="sidebar">
+                    <div className={`${sideLayout}`}>
+                        <MapDataDisplay />
+                        <ChangeMapTilesComponent />
+                        <AddressSearchComponent />
+                    </div>
+                </aside>
+            </div>
+        )
+    }
+
+}

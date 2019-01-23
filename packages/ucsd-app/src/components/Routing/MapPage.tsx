@@ -1,12 +1,9 @@
 import * as React from 'react'
 import { css } from 'glamor'
 
-import { MapComponent } from './MapComponent';
-// import LocationSelector from './LocationSelector';
 import { getRoadSegmentsFiles, getIntersectionFiles } from '../../services/MapService';
 import { LatLngTuple } from 'leaflet';
 import { RoadSegmentsFile, IntersectionsFile } from '@ball-maps/ucsd-core';
-import { LatLng } from '@ball-maps/geo-core';
 import BoundsExample from '../common/BoundsExample';
 import EventsExample from './../common/EventsExample';
 import TooltipExample from '../common/Tooltip';

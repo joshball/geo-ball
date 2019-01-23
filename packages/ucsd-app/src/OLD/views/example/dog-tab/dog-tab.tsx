@@ -1,4 +1,5 @@
 import * as React from "react"
+// tslint:disable-next-line:no-duplicate-imports
 import { CSSProperties } from "react"
 import { spacing, cssProps } from "../../theme"
 import { Text } from "../../shared/text"
