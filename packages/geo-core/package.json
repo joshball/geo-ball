@@ -28,7 +28,7 @@
     "clean:node_modules": "rimraf node_modules",
     "cleanup:packages": "yarn run prettier-package-json --write",
     "test": "yarn run build && yarn run nyc ava --verbose",
-    "test:watch": "yarn run build && yarn run ava --watch"
+    "test:watch": "yarn run ava-ts --watch --verbose src/**/*.spec.ts"
   },
   "ava": {
     "snapshotDir": "./snapshots",
@@ -39,5 +39,13 @@
     "sources": [
       "build/**/*.js"
     ]
+  },
+  "devDependencies": {
+    "ava": "^1.1.0",
+    "ava-ts": "^0.25.2",
+    "nyc": "^13.1.0"
+  },
+  "dependencies": {
+    "@turf/turf": "^5.1.6"
   }
 }

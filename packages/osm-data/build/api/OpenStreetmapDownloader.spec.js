@@ -69,7 +69,7 @@ ava_1.default('OpenStreetmapDownloader should throw if API post fails', (t) => _
     const d = new OpenStreetmapDownloader_1.OpenStreetmapDownloader();
     t.plan(1);
     try {
-        yield d.fetch(query); //.then(r => console.log('rrrr', r)).catch(e => console.log('EEEEE:', e));
+        yield d.fetch(query); // .then(r => console.log('rrrr', r)).catch(e => console.log('EEEEE:', e));
         console.log('GOT HREERERERE');
     }
     catch (e) {

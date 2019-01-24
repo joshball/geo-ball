@@ -64,7 +64,7 @@ test('OpenStreetmapDownloader should throw if API post fails', async t => {
     const d = new OpenStreetmapDownloader();
     t.plan(1);
     try {
-        await d.fetch(query); //.then(r => console.log('rrrr', r)).catch(e => console.log('EEEEE:', e));
+        await d.fetch(query); // .then(r => console.log('rrrr', r)).catch(e => console.log('EEEEE:', e));
         console.log('GOT HREERERERE')
     } catch (e) {
         t.is(e.message, 'Network Error');

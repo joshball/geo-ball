@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Map, Marker, Popup, TileLayer, MapControl } from 'react-leaflet';
 import { css } from 'glamor'
 import { LatLng } from '@ball-maps/geo-core';
-import { LatLngTuple } from 'leaflet';
+import { LatLngTuple as LeafLatLngTuple } from 'leaflet';
 // import LocationSelector from './LocationSelector';
 import { MapLocation } from '../../services/MapLocation';
 
@@ -13,7 +13,7 @@ const mapCss = css({
 })
 
 export class MapProps {
-    position!: LatLngTuple;
+    position!: LeafLatLngTuple;
     intersections!: Array<LatLng>;
 }
 

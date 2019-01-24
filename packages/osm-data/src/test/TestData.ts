@@ -3,17 +3,9 @@ import { LatLngBounds, LatLng, ILatLngBounds } from '@ball-maps/geo-core';
 
 import { IOpenStreetmapQueryResponse } from "../api/IOpenStreetmapQueryResponse";
 
-export interface ILatLng {
-	lat: number;
-	lon: number;
-};
-export interface ILatLngBound {
-	sw: ILatLng;
-	ne: ILatLng;
-};
 
 export interface ILatLngBoundsTestData {
-	objBounds: ILatLngBound;
+	objBounds: ILatLngBounds;
 	sw: LatLng;
 	ne: LatLng;
 	latLngBounds: LatLngBounds;
@@ -28,15 +20,15 @@ export const createNewBounds = (): ILatLngBoundsTestData => {
 	const objBounds:ILatLngBounds = {
 		sw: {
 			lat: 32.859375,
-			lon: -117.27233,
+			lng: -117.27233,
 		},
 		ne: {
 			lat: 32.902622,
-			lon: -117.20367,
+			lng: -117.20367,
 		}
 	}
-	const sw = new LatLng(objBounds.sw.lat, objBounds.sw.lon);
-	const ne = new LatLng(objBounds.ne.lat, objBounds.ne.lon);
+	const sw = new LatLng(objBounds.sw.lat, objBounds.sw.lng);
+	const ne = new LatLng(objBounds.ne.lat, objBounds.ne.lng);
 	const latLngBounds = new LatLngBounds(sw, ne);
 	return {
 		objBounds,

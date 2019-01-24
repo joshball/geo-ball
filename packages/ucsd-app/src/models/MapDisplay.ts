@@ -1,7 +1,7 @@
 
 // import { action, computed, observable } from 'mobx'
 // import { LatLng, LatLngBounds, LatLngLiteral, Map as LeafletMap } from 'leaflet';
-// import { IGeoSearchResult } from '../services/IGeoSearchResult';
+// import { IGeocodeResponse } from '../services/GeocodingService';
 // import { MapLocationStore } from '../stores/MapLocationStore';
 
 
@@ -31,7 +31,7 @@
 //         return this.mapStore.clickPos;
 //     }
 
-//     @computed get selectedAddress(): IGeoSearchResult | undefined {
+//     @computed get selectedAddress(): IGeocodeResponse | undefined {
 //         return this.mapStore.selectedAddress;
 //     }
 
@@ -51,7 +51,7 @@
 //     }
 
 //     @action
-//     updateSelectedAddress = (newAddress: IGeoSearchResult) => {
+//     updateSelectedAddress = (newAddress: IGeocodeResponse) => {
 //         this.mapStore.updateSelectedAddress(newAddress);
 //     }
 

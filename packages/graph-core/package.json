@@ -39,5 +39,10 @@
     "sources": [
       "build/**/*.js"
     ]
+  },
+  "devDependencies": {
+    "ava": "^1.1.0",
+    "ava-ts": "^0.25.2",
+    "nyc": "^13.1.0"
   }
 }

@@ -80,8 +80,8 @@ export class PointMapsFile {
 
     // static SaveTextFile(filePath: string, roadSegmentsFile: PointMapsFile): void {
     //     const lines = roadSegmentsFile.data.map(rs => {
-    //         const start = rs.start.lat + ' ' + rs.start.lon;
-    //         const end = rs.end.lat + ' ' + rs.end.lon;
+    //         const start = rs.start.lat + ' ' + rs.start.lng;
+    //         const end = rs.end.lat + ' ' + rs.end.lng;
     //         return `${start} ${end} "${rs.name}" ${rs.type}`
     //     })
     //     return writeFileSync(filePath, lines.join('\r\n'));

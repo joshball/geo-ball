@@ -5,9 +5,8 @@ import * as React from 'react';
 // import logo from './logo.svg';
 
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
-import { LatLngTuple } from 'leaflet';
+import { LatLngTuple as LeafLatLngTuple, LatLng as LeafLatLng } from 'leaflet';
 // tslint:disable-next-line:no-implicit-dependencies
-import { LatLng } from '@ball-maps/geo-core';
 
 
 // async function loadRoadSegmentMetaData(): Promise<RoadSegmentMetaData> {
@@ -23,9 +22,9 @@ import { LatLng } from '@ball-maps/geo-core';
 // console.log('rsmd.intersections', rsmd.intersections);
 // const UCSD = require('./data/maps/ucsd.json');
 
-// const position: LatLngTuple = [51.505, -0.09];
-// const position: LatLngTuple = [32.881, -117.238];
-const position: LatLngTuple = [32.8741164, -117.2382689];
+// const position: LeafLatLngTuple = [51.505, -0.09];
+// const position: LeafLatLngTuple = [32.881, -117.238];
+const position: LeafLatLngTuple = [32.8741164, -117.2382689];
 
 // [
 //     32.8770264,
@@ -112,11 +111,11 @@ class App extends React.Component<any, State> {
         //     intersections = this.state.rsmd.intersections;
         // }
         console.log('intersections', this.state.intersections);
-        const points = this.state.intersections.map((latLng: LatLng, index) => {
-            const p = new LatLng(latLng.latitude, latLng.longitude);
+        const points = this.state.intersections.map((latLng: LeafLatLng, index) => {
+            const p = new LeafLatLng(latLng.lat, latLng.lng);
             console.log('g/p', index, p.toString());
             return (
-                <Marker key={index} position={[p.latitude, p.longitude] as LatLngTuple}>
+                <Marker key={index} position={[p.lat, p.lng] as LeafLatLngTuple}>
                     <Popup>{p.toString()}</Popup>
                 </Marker>
             );

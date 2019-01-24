@@ -65,7 +65,7 @@ export class OpenStreetmapFile {
 			&& jsonData.osm3s
 			&& jsonData.elements
 			&& jsonData.elements.length) {
-			new OpenStreetmapFile(path, 'OsmDataJson', jsonData);
+			return new OpenStreetmapFile(path, 'OsmDataJson', jsonData);
 		}
 	}
 
@@ -73,7 +73,7 @@ export class OpenStreetmapFile {
 		if (jsonData.type === 'FeatureCollection'
 			&& jsonData.features
 			&& jsonData.features.length) {
-			new OpenStreetmapFile(path, 'OsmDataGeoJson', jsonData);
+			return new OpenStreetmapFile(path, 'OsmDataGeoJson', jsonData);
 		}
 	}
 

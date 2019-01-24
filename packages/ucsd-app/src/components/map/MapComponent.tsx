@@ -1,11 +1,13 @@
 import * as React from 'react'
 import { Map, Marker, Popup, TileLayer, MapControl } from 'react-leaflet';
 import { css } from 'glamor'
-import { LeafletMouseEvent, LeafletEvent } from 'leaflet';
+import { LeafletMouseEvent, LeafletEvent, LatLng as LeafLatLng, LatLngBounds as LeafLatLngBounds } from 'leaflet';
 import { action } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { RootStore } from '../../stores/RootStore';
 import { MapLocationStore } from '../../stores/MapLocationStore';
+import { distance } from '@turf/turf';
+import { getDist } from '@ball-maps/geo-core';
 
 const mapCss = css({
     height: '100%',
@@ -57,7 +59,7 @@ export class MapComponent extends React.Component<MapProps> {
 
     @action
     updateMapState = (map: Map) => {
-        console.log('DMC.updateMapState')
+        console.log('DMC.updateMapState', map)
         const center = map.leafletElement.getCenter();
         const zoom = map.leafletElement.getZoom();
         const bounds = map.leafletElement.getBounds();
@@ -66,8 +68,70 @@ export class MapComponent extends React.Component<MapProps> {
         // mapState.setBounds(bounds);
         // mapState.setCenter(center);
         // mapState.setZoom(zoom);
+
     }
 
+    getBoundsData(bounds: LeafLatLngBounds) {
+        const southWest = bounds.getSouthWest();
+        const northEast = bounds.getNorthEast();
+        const northWest = new LeafLatLng(northEast.lat, southWest.lng);
+        const latDistMeters = distance([northWest.lng, northWest.lat], [southWest.lng, southWest.lat], { units: 'meters' });
+        const lngDistMeters = distance([northWest.lng, northWest.lat], [northEast.lng, northEast.lat], { units: 'meters' });
+        const latDistYards = distance([northWest.lng, northWest.lat], [southWest.lng, southWest.lat], { units: 'yards' });
+        const lngDistYards = distance([northWest.lng, northWest.lat], [northEast.lng, northEast.lat], { units: 'yards' });
+        // const latDist = distance([northWest.lat, northWest.lng], [southWest.lat, southWest.lng], { units: 'meters' });
+        // const lngDist = distance([northWest.lat, northWest.lng], [northEast.lat, northEast.lng], { units: 'meters' });
+        // const latDist = distance (northWest, southWest);
+        // const lngDist = distance( northWest, northEast);
+        const latDelta = northWest.lat - southWest.lat;
+        const lngDelta = northWest.lng - northEast.lng;
+        // const a = new LatLng(40.715192, -111.852676);
+        // const b = new LatLng(40.718445, -111.848384);
+        // const turfDist = distance([a.lat, a.lng], [b.lat, b.lng], { units: 'meters' });
+        const mylatDist = getDist(northWest.lat, northWest.lng, southWest.lat, southWest.lng) * 1000;
+        const mylngDist = getDist(northWest.lat, northWest.lng, northEast.lat, northEast.lng) * 1000;
+        // console.log('myDist: ', myDist)
+        // console.log('turfDist: ', turfDist)
+        const area = latDistMeters * lngDistMeters;
+        console.log('bounds.southWest: ', southWest)
+        console.log('bounds.northEast: ', northEast)
+        console.log('bounds.northWest: ', northWest)
+        console.log('latDelta,lngDelta ', latDelta, lngDelta)
+        console.log('latDist(nw-sw): ', latDistMeters)
+        console.log('     mylatDist: ', mylatDist)
+        console.log('lngDist(nw-ne): ', lngDistMeters)
+        console.log('     mylngDist: ', mylngDist)
+        console.log('area: ', area)
+        return {
+            southWest,
+            northEast,
+            northWest,
+            latDist: latDistMeters,
+            lngDist: lngDistMeters,
+            latDistYards,
+            lngDistYards,
+            latDelta,
+            lngDelta,
+            area
+        }
+    }
+
+    createMarkers() {
+        if (this.mapLocationStore.bounds) {
+            const d = this.getBoundsData(this.mapLocationStore.bounds);
+            const markers = [
+                { name: 'SW', pos: d.southWest, txt: `North is ${d.latDist} [${d.latDelta}]` },
+                { name: 'NE', pos: d.northEast, txt: `just NE` },
+                { name: 'NW', pos: d.northWest, txt: `West is ${d.lngDist} [${d.lngDelta}]` },
+            ]
+            return markers.map((m, i) => (
+                <Marker key={i} position={m.pos}>
+                    <Popup>[${m.name}]:${m.txt}</Popup>
+                </Marker>
+            ));
+        }
+        return null;
+    }
     @action
     handleMoveEnd = (e: LeafletEvent) => {
         // console.log('DMC.handleMoveEnd', e);
@@ -97,6 +161,10 @@ export class MapComponent extends React.Component<MapProps> {
         // console.log('XMapComponent.render() this.mapDisplay', this.mapLocationStore);
         // console.log('XMapComponent.render() this.mapRef', this.mapRef);
         // const mapStore = this.props.stores!.map;
+        // const markers = this.createMarkers();
+        // console.log('oldMarkers BEF', oldMarkers)
+        // oldMarkers = oldMarkers == null ? markers : oldMarkers;
+        // console.log('oldMarkers aFT', oldMarkers)
         return (
             <Map
                 className={`${mapCss}`}
@@ -122,9 +190,62 @@ export class MapComponent extends React.Component<MapProps> {
                     // url={`https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png`}
                     attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                 />
+                {/* <Marker position={this.mapLocationStore.center}>
+                    <Popup>A pretty CSS3 popup.<br />Easily customizable.</Popup>
+                </Marker>
+                {oldMarkers}
+                {markers} */}
             </Map>)
 
     }
 }
+// let oldMarkers: any = null;
 
+// var
+//   _firstLatLng,
+//   _firstPoint,
+//   _secondLatLng,
+//   _secondPoint,
+//   _distance,
+//   _length,
+//   _polyline
+// _map = L.map('map').setView([51.505, -0.09], 13);
+
+// L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+//   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+// }).addTo(_map);
+
+// // add listeners to click, for recording two points
+// _map.on('click', function(e) {
+
+//   if (!_firstLatLng) {
+//     _firstLatLng = e.latlng;
+//     _firstPoint = e.layerPoint;
+//     L.marker(_firstLatLng).addTo(_map).bindPopup('Point A<br/>' + e.latlng + '<br/>' + e.layerPoint).openPopup();
+//   } else {
+//     _secondLatLng = e.latlng;
+//     _secondPoint = e.layerPoint;
+//     L.marker(_secondLatLng).addTo(_map).bindPopup('Point B<br/>' + e.latlng + '<br/>' + e.layerPoint).openPopup();
+//   }
+
+//   if (_firstLatLng && _secondLatLng) {
+//     // draw the line between points
+//     L.polyline([_firstLatLng, _secondLatLng], {
+//       color: 'red'
+//     }).addTo(_map);
+
+//     refreshDistanceAndLength();
+//   }
+// })
+
+// _map.on('zoomend', function(e) {
+//   refreshDistanceAndLength();
+// })
+
+// function refreshDistanceAndLength() {
+//   _distance = L.GeometryUtil.distance(_map, _firstLatLng, _secondLatLng);
+//   _length = L.GeometryUtil.length([_firstPoint, _secondPoint]);
+//   document.getElementById('distance').innerHTML = _distance;
+//   document.getElementById('length').innerHTML = _length;
+// }
 

@@ -1,9 +1,17 @@
 import { LatLng, ILatLng } from './LatLng';
+import distance from '@turf/distance';
 
 export interface ILatLngBounds {
     sw: ILatLng;
     ne: ILatLng;
 }
+export interface ILatLngBoundsArea extends ILatLngBounds {
+    latDistMeters: number;
+    lngDistMeters: number;
+    areaInMeters: number
+}
+
+
 export class LatLngBounds {
     sw: LatLng;
     ne: LatLng;
@@ -20,11 +28,11 @@ export class LatLngBounds {
         if (northeast.lat < southwest.lat) {
             throw new Error(getError(`ne.lat[${northeast.lat}] < sw.lat[${southwest.lat}]`));
         }
-        if (northeast.lon < southwest.lon) {
-            throw new Error(getError(`ne.lon[${northeast.lon}] < sw.lon[${southwest.lon}]`));
+        if (northeast.lng < southwest.lng) {
+            throw new Error(getError(`ne.lng[${northeast.lng}] < sw.lng[${southwest.lng}]`));
         }
-        this.ne = new LatLng(northeast.lat, northeast.lon);
-        this.sw = new LatLng(southwest.lat, southwest.lon);
+        this.ne = new LatLng(northeast.lat, northeast.lng);
+        this.sw = new LatLng(southwest.lat, southwest.lng);
     }
 
     toString = (): string => `[SW:${this.sw}],[NE:${this.ne}]`;
@@ -32,8 +40,8 @@ export class LatLngBounds {
     center = (): LatLng => {
         const latDelta = Math.abs(this.ne.lat - this.sw.lat) / 2;
         const centerLat = this.ne.lat - latDelta;
-        const lonDelta = Math.abs(this.ne.lon - this.sw.lon) / 2;
-        const centerLon = this.ne.lon - lonDelta;
+        const lonDelta = Math.abs(this.ne.lng - this.sw.lng) / 2;
+        const centerLon = this.ne.lng - lonDelta;
         return new LatLng(centerLat, centerLon);
     };
 
@@ -41,13 +49,27 @@ export class LatLngBounds {
         this.ne.lat += by;
         this.sw.lat -= by;
 
-        this.ne.lon += by;
-        this.sw.lon -= by;
+        this.ne.lng += by;
+        this.sw.lng -= by;
+    }
+
+    getArea(): ILatLngBoundsArea {
+        const northWest = new LatLng(this.ne.lat, this.sw.lng);
+        const latDistMeters = distance([northWest.lng, northWest.lat], [this.sw.lng, this.sw.lat], { units: 'meters' });
+        const lngDistMeters = distance([northWest.lng, northWest.lat], [this.ne.lng, this.ne.lat], { units: 'meters' });
+        const areaInMeters = latDistMeters * lngDistMeters;
+        return {
+            ne: this.ne,
+            sw: this.sw,
+            latDistMeters,
+            lngDistMeters,
+            areaInMeters,
+        };
     }
 
     static FromBounds(bounds: ILatLngBounds, growth: number = 0) {
-        const sw = new LatLng(bounds.sw.lat - growth, bounds.sw.lon - growth);
-        const ne = new LatLng(bounds.ne.lat + growth, bounds.ne.lon + growth);
+        const sw = new LatLng(bounds.sw.lat - growth, bounds.sw.lng - growth);
+        const ne = new LatLng(bounds.ne.lat + growth, bounds.ne.lng + growth);
         return new LatLngBounds(sw, ne);
     }
 

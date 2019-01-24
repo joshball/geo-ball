@@ -1,14 +1,6 @@
-import { LatLngBounds, LatLng } from "..";
-export interface ILatLng {
-    lat: number;
-    lon: number;
-}
-export interface ILatLngBound {
-    sw: ILatLng;
-    ne: ILatLng;
-}
+import { LatLngBounds, LatLng, ILatLngBounds } from "..";
 export interface ILatLngBoundsTestData {
-    objBounds: ILatLngBound;
+    objBounds: ILatLngBounds;
     sw: LatLng;
     ne: LatLng;
     latLngBounds: LatLngBounds;

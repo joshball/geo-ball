@@ -98,8 +98,8 @@ export class RoadSegmentsFile {
 
     static SaveTextFile(filePath: string, roadSegmentsFile: RoadSegmentsFile): void {
         const lines = roadSegmentsFile.segmentsData.map(rs => {
-            const start = rs.start.lat + ' ' + rs.start.lon;
-            const end = rs.end.lat + ' ' + rs.end.lon;
+            const start = rs.start.lat + ' ' + rs.start.lng;
+            const end = rs.end.lat + ' ' + rs.end.lng;
             return `${start} ${end} "${rs.name}" ${rs.type}`
         })
         return writeFileSync(filePath, lines.join('\r\n'));

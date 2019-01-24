@@ -3,9 +3,10 @@ import { CSSProperties } from "react"
 /**
  * Typecast objects as CSSProperties.  ¯\\_(ツ)_/¯
  */
-export function cssProps(props?: CSSProperties): CSSProperties {
-  return props as CSSProperties
-}
+// export function cssProps(props?: CSSProperties): CSSProperties {
+//   return props as CSSProperties
+// }
+export const cssProps = (props?: CSSProperties):CSSProperties => props as CSSProperties;
 
 const flexbox = {
   /** Flex the children vertically. */

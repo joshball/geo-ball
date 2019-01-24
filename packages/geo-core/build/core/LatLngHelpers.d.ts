@@ -1,5 +1,4 @@
 import { LatLng } from './LatLng';
-export declare const deg2rad: (degrees: number) => number;
 export declare const degreesToRadians: (degrees: number) => number;
 export declare const RADIUS_OF_EARTH = 6373;
 /**
@@ -10,4 +9,7 @@ export declare const RADIUS_OF_EARTH = 6373;
  */
 export declare const distance: (lhs: LatLng, rhs: LatLng) => number;
 export declare const getDist: (lat1: number, lon1: number, lat2: number, lon2: number) => number;
+/**
+ * Unit of measurement factors using a spherical (non-ellipsoid) earth radius.
+ */
 //# sourceMappingURL=LatLngHelpers.d.ts.map

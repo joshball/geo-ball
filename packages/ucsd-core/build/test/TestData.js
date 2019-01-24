@@ -31,8 +31,8 @@
 // 			lon: -117.20367,
 // 		}
 // 	}
-// 	const sw = new LatLng(objBounds.sw.lat, objBounds.sw.lon);
-// 	const ne = new LatLng(objBounds.ne.lat, objBounds.ne.lon);
+// 	const sw = new LatLng(objBounds.sw.lat, objBounds.sw.lng);
+// 	const ne = new LatLng(objBounds.ne.lat, objBounds.ne.lng);
 // 	const latLngBounds = new LatLngBounds(sw, ne);
 // 	return {
 // 		objBounds,

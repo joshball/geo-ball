@@ -1,4 +1,4 @@
-import { FuseBox, CSSPlugin, Sparky, CopyPlugin, ReplacePlugin } from "fuse-box"
+import { FuseBox, CSSModules, CSSPlugin, SassPlugin , Sparky, CopyPlugin, ReplacePlugin } from "fuse-box"
 import { spawn } from "child_process"
 import * as pjson from "./package.json"
 
@@ -53,6 +53,8 @@ Sparky.task("default", ["copy-html"], () => {
   const rendererBundle = fuse
     .bundle("renderer")
     .instructions("> [app/index.tsx] +fuse-box-css")
+    .plugin(SassPlugin())
+    .plugin(CSSModules())
     .plugin(CSSPlugin())
     .plugin(CopyPlugin({ useDefault: false, files: ASSETS, dest: "assets", resolve: "assets/" }))
 

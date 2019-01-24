@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { css } from 'glamor'
+
 import { LatLngTxt } from '../common/LatLngTxt';
-import { LatLngBoundsTxt, DownloadLatLngBoundsBox } from '../common/LatLngBoundsTxt';
 import { observer, inject } from 'mobx-react';
 import { RootStore } from '../../stores/RootStore';
-import { LatLngBounds } from '../../../../geo-core/src/core/LatLngBounds';
-import { downloadOsmFile } from '../../services/OsmService';
+import { downloadOsmFile, DownloadOsmParams } from '../../services/OsmService';
+import { DownloadLatLngBoundsBox } from '../common/DownloadLatLngBoundsBox';
 
 const outerBoxCss = css({
     flex: '0 0 auto',
@@ -36,50 +36,42 @@ export class MapDataDisplay extends React.Component<MapDataDisplayProps> {
     constructor(props: MapDataDisplayProps) {
         super(props)
     }
-    downloadOsm(info: any) {
-        console.log('MapDataDisplay.downloadOsm', info)
-        downloadOsmFile(info);
+    downloadOsmFile(osmParams: DownloadOsmParams) {
+        console.log('MapDataDisplay.downloadOsm', osmParams);
+        const mapStore = this.props.stores!.mapLocation;
+        const { bounds, zoom, mousePos, clickPos, center, selectedAddress } = mapStore;
+        downloadOsmFile(osmParams);
     }
     render() {
-        const llbStyle = 'shortLng';
-        const lltStyle = 'shortLng';
+        const latLngQuickFmt = 'htmlShort';
         const mapStore = this.props.stores!.mapLocation;
         const { bounds, zoom, mousePos, clickPos, center, selectedAddress } = mapStore;
         // console.log('XMapDataDisplay.render() mousePos', this.props.stores!.mapLocation.mousePos, mousePos);
         // console.log('XMapDataDisplay.render() clickPos', this.props.stores!.mapLocation.clickPos, clickPos);
         // console.log('XMapDataDisplay.render() bounds', this.props.stores!.mapLocation.bounds, bounds);
+        // console.log('XMapDataDisplay.render() bounds', bounds);
+        // console.log('XMapDataDisplay.render() center', center);
         const addrStr = selectedAddress ? selectedAddress.label : '';
-        // console.log('MapDataDisplay.bounds', bounds);
-        // console.log('MapDataDisplay.center', center);
-        // const boundsElem = bounds ?
-        //     <div className={`${rowCss}`}>
-        //         <fieldset>
-        //             <legend>&nbsp;<b>Map Bounds</b>&nbsp;</legend>
-        //             <LatLngBoundsTxt bounds={bounds} llbStyle={llbStyle} />
-        //             <div>Copy as array or string</div>
-        //             {/* <DownloadOsmDataComponent /> */}
-        //             <button type="button" className="bp3-button bp3-icon-add .modifier" onClick={this.downloadOsm}>Download OSM</button>
-        //         </fieldset>
-        //     </div>
-        //     : null;
+
         return (
-            <div className={`${outerBoxCss}`}>
+            <div {...outerBoxCss}>
                 <h3 className={`${headingCss}`}>Current Map Data</h3>
                 <div className={`${rowCss}`}>
-                    <b>Center</b>: <LatLngTxt llt={center} lltStyle={lltStyle} />
+                    <b>Center</b>: <LatLngTxt llt={center} latLngQuickFmt={latLngQuickFmt} />
                     <div>Copy as array or string</div>
                 </div>
                 <div className={`${rowCss}`}><b>Addr</b>: {addrStr}</div>
                 <div className={`${rowCss}`}><b>Zoom</b>: {zoom}</div>
-                <div className={`${rowCss}`}><DownloadLatLngBoundsBox bounds={bounds} llbStyle={llbStyle} downloadOsm={this.downloadOsm}/></div>
-                {/* {boundsElem} */}
+                <div className={`${rowCss}`}>
+                    <DownloadLatLngBoundsBox bounds={bounds} center={center} latLngQuickFmt={latLngQuickFmt} downloadOsmFile={this.downloadOsmFile} />
+                </div>
                 <h3 className={`${headingCss}`}>Current Mouse Location</h3>
                 <div className={`${rowCss}`}>
-                    <b>Mouse</b>: <LatLngTxt llt={mousePos} lltStyle={lltStyle} />
+                    <b>Mouse</b>: <LatLngTxt llt={mousePos} latLngQuickFmt={latLngQuickFmt} />
                     <div>Copy as array or string</div>
                 </div>
                 <div className={`${rowCss}`}>
-                    <b>Click</b>: <LatLngTxt llt={clickPos} lltStyle={lltStyle} />
+                    <b>Click</b>: <LatLngTxt llt={clickPos} latLngQuickFmt={latLngQuickFmt} />
                     <div>Copy as array or string</div>
                 </div>
             </div>

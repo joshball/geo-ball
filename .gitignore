@@ -75,3 +75,4 @@ yarn.lock
 packages/**/lib
 config/**/lib
 .lerna_backup
+/.project

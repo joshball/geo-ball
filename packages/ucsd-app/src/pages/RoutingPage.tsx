@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { css } from 'glamor'
 import { observer, inject } from 'mobx-react';
-import { LatLng, LatLngBounds } from 'leaflet';
+import { LatLng as LeafLatLng, LatLngBounds as LeafLatLngBounds } from 'leaflet';
 import { MapComponent } from '../components/map/MapComponent';
 import { RootStore } from '../stores/RootStore';
 import { MapDataDisplay } from '../components/map/MapDataDisplay';
@@ -20,11 +20,11 @@ const sideLayout = css({
     marginLeft: '10px',
 });
 
-const swBound: LatLng = new LatLng(40.7, -111.7);
-const neBound: LatLng = new LatLng(40.8, -111.8);
-// const startingCenter: LatLngTuple = [40.7563038, -111.8781928];
-const startingCenter: LatLng = new LatLng(40.7563038, -111.8781928);
-const startingBounds: LatLngBounds = new LatLngBounds(swBound, neBound);
+// const swBound = new LeafLatLng(40.7, -111.7);
+// const neBound = new LeafLatLng(40.8, -111.8);
+// // const startingCenter: LatLngTuple = [40.7563038, -111.8781928];
+// const startingCenter = new LeafLatLng(40.7563038, -111.8781928);
+// const startingBounds = new LeafLatLngBounds(swBound, neBound);
 
 export interface MapProps {
     stores?: RootStore;

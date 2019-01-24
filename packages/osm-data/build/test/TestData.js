@@ -4,21 +4,19 @@ const __1 = require("..");
 const geo_core_1 = require("@ball-maps/geo-core");
 ;
 ;
-;
-;
 exports.createNewBounds = () => {
     const objBounds = {
         sw: {
             lat: 32.859375,
-            lon: -117.27233,
+            lng: -117.27233,
         },
         ne: {
             lat: 32.902622,
-            lon: -117.20367,
+            lng: -117.20367,
         }
     };
-    const sw = new geo_core_1.LatLng(objBounds.sw.lat, objBounds.sw.lon);
-    const ne = new geo_core_1.LatLng(objBounds.ne.lat, objBounds.ne.lon);
+    const sw = new geo_core_1.LatLng(objBounds.sw.lat, objBounds.sw.lng);
+    const ne = new geo_core_1.LatLng(objBounds.ne.lat, objBounds.ne.lng);
     const latLngBounds = new geo_core_1.LatLngBounds(sw, ne);
     return {
         objBounds,

@@ -7,6 +7,7 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./core/LatLng"));
+__export(require("./core/LatLngFmt"));
 __export(require("./core/LatLngBounds"));
 __export(require("./core/LatLngHelpers"));
 //# sourceMappingURL=index.js.map

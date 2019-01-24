@@ -11,9 +11,9 @@ test('LatLng is instantiable', t => {
     t.true(latLngBounds.valid());
 
     t.is(latLngBounds.sw.lat, 32.859375);
-    t.is(latLngBounds.sw.lon, -117.27233);
+    t.is(latLngBounds.sw.lng, -117.27233);
     t.is(latLngBounds.ne.lat, 32.902622);
-    t.is(latLngBounds.ne.lon, -117.20367);
+    t.is(latLngBounds.ne.lng, -117.20367);
 });
 
 test('LatLng is checks lat bounds', t => {
@@ -35,7 +35,7 @@ test('LatLng is checks lat bounds', t => {
     // console.log('CCC')
 
     // expect(latLngBounds.sw.lat).toEqual(-1)
-    // expect(latLngBounds.sw.lon).toEqual(-1)
+    // expect(latLngBounds.sw.lng).toEqual(-1)
     // expect(latLngBounds.ne.lat).toEqual(1)
-    // expect(latLngBounds.ne.lon).toEqual(1)
+    // expect(latLngBounds.ne.lng).toEqual(1)
 });

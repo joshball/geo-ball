@@ -1,16 +1,8 @@
 import { OpenStreetmapQuery, OpenStreetmapFileMetaData } from "..";
-import { LatLngBounds, LatLng } from '@ball-maps/geo-core';
+import { LatLngBounds, LatLng, ILatLngBounds } from '@ball-maps/geo-core';
 import { IOpenStreetmapQueryResponse } from "../api/IOpenStreetmapQueryResponse";
-export interface ILatLng {
-    lat: number;
-    lon: number;
-}
-export interface ILatLngBound {
-    sw: ILatLng;
-    ne: ILatLng;
-}
 export interface ILatLngBoundsTestData {
-    objBounds: ILatLngBound;
+    objBounds: ILatLngBounds;
     sw: LatLng;
     ne: LatLng;
     latLngBounds: LatLngBounds;

@@ -1,8 +1,10 @@
 // This is the top-most component in the app.
 import * as React from "react"
 import { Route, Switch } from "react-router";
-import { HashRouter, MemoryRouter, Link } from 'react-router-dom';
+import { MemoryRouter, Link } from 'react-router-dom';
+import "glamor/reset";
 import { compose } from "glamor"
+
 import { styles, colors } from "../config/theme"
 import { MapExplorerPage } from "../pages/MapExplorerPage";
 import { RoutingPage } from "../pages/RoutingPage";
@@ -22,6 +24,8 @@ const rootStore = new RootStore(state);
 // tslint:disable-next-line:no-var-requires
 // require("normalize.css/normalize.css");
 
+
+
 const ROOT = compose(styles.fullScreen, {
     background: colors.window.background,
     "& ::-webkit-scrollbar": { backgroundColor: colors.scrollbar.base, width: 12, height: 12 },
@@ -29,25 +33,25 @@ const ROOT = compose(styles.fullScreen, {
     "& ::-webkit-scrollbar-thumb": { backgroundColor: colors.scrollbar.thumb, borderRadius: 4 },
 })
 
-const ROUTES = [
-    {
-        path: '/',
-        exact: true,
-        component: HomePage
-    },
-    {
-        path: '/maps',
-        component: MapExplorerPage
-    },
-    {
-        path: '/files',
-        component: MapDataFilesPage
-    },
-    {
-        path: '/routes',
-        component: RoutingPage
-    },
-];
+// const ROUTES = [
+//     {
+//         path: '/',
+//         exact: true,
+//         component: HomePage
+//     },
+//     {
+//         path: '/maps',
+//         component: MapExplorerPage
+//     },
+//     {
+//         path: '/files',
+//         component: MapDataFilesPage
+//     },
+//     {
+//         path: '/routes',
+//         component: RoutingPage
+//     },
+// ];
 
 // {ROUTES.map((route, i) => {
 //     // console.log(`route ${i}, ${route.path}`, route.component)

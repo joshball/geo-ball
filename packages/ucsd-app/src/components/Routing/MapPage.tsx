@@ -2,7 +2,7 @@ import * as React from 'react'
 import { css } from 'glamor'
 
 import { getRoadSegmentsFiles, getIntersectionFiles } from '../../services/MapService';
-import { LatLngTuple } from 'leaflet';
+import { LatLngTuple as LeafLatLngTuple } from 'leaflet';
 import { RoadSegmentsFile, IntersectionsFile } from '@ball-maps/ucsd-core';
 import BoundsExample from '../common/BoundsExample';
 import EventsExample from './../common/EventsExample';
@@ -63,7 +63,7 @@ export class MapPage extends React.Component<MapPageProps, MapPageState> {
 
         const mapLocation = rsdFiles[0];
         const intersections = intFiles[0].intersections;
-        const center = mapLocation.metaData.bounds.center().toArray() as LatLngTuple;
+        const center = mapLocation.metaData.bounds.center().toArray() as LeafLatLngTuple;
         console.log('center', center);
         return (
             <div className={`${mainLayout}`}>

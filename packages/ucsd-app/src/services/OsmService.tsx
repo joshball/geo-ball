@@ -1,8 +1,9 @@
 import { IOpenStreetmapQuery, OSMFeatureKeyValuePair, OSMFeatureKey, OpenStreetmapQuery, OpenStreetmapDownloader, IFetchAndSaveResult } from "@ball-maps/osm-data";
-import { LatLngBounds } from "@ball-maps/geo-core";
+import { LatLng as LeafLatLng, LatLngBounds as LeafLatLngBounds } from "leaflet";
+import { reverseGeocodeLocation } from "./GeocodingService";
 
 
-const getOsmQuery = (latLngBounds: LatLngBounds): OpenStreetmapQuery => {
+const getOsmQuery = (latLngBounds: LeafLatLngBounds): OpenStreetmapQuery => {
     const features = [
         "highway",
         "addr"
@@ -28,28 +29,35 @@ const getOsmQuery = (latLngBounds: LatLngBounds): OpenStreetmapQuery => {
     // }
 }
 
-export const downloadOsmFile = async (info: any): Promise<void> => {
-    console.log('downloadOsmFile(bounds)', info);
-    return;
-    const osmQuery = getOsmQuery(info.bounds)
+export interface DownloadOsmParams {
+    bounds: LeafLatLngBounds;
+    center: LeafLatLng;
+    name: string;
+    desc: string;
+    area: string;
+}
+
+export const downloadOsmFile = async (osmParams: DownloadOsmParams): Promise<void> => {
+    console.log('downloadOsmFile(bounds)', osmParams);
+    const osmQuery = getOsmQuery(osmParams.bounds)
     const overwrite = true;
-    const osmDownloadFilePath = ''; //info.name
+    const osmDownloadFilePath = osmParams.name || 'map-query';
     const downloader = new OpenStreetmapDownloader();
 
-    downloader.fetchAndSave(osmQuery, osmDownloadFilePath, overwrite)
-        .then((results: IFetchAndSaveResult) => {
-            console.log('Download Complete:');
-            console.log('  SERVER:', results.osmDataFile.osmMetaData.osmServer);
-            console.log('    DATE:', results.osmDataFile.osmMetaData.queryDate);
-            console.log('    FILE:', results.osmDataFilePath);
-        })
-        .catch(error => {
-            console.error('###################################################################################')
-            console.error('DOWNLOAD FAILED:')
-            console.error(error)
-            console.error('###################################################################################')
-            throw error;
-        });
+    // downloader.fetchAndSave(osmQuery, osmDownloadFilePath, overwrite)
+    //     .then((results: IFetchAndSaveResult) => {
+    //         console.log('Download Complete:');
+    //         console.log('  SERVER:', results.osmDataFile.osmMetaData.osmServer);
+    //         console.log('    DATE:', results.osmDataFile.osmMetaData.queryDate);
+    //         console.log('    FILE:', results.osmDataFilePath);
+    //     })
+    //     .catch(error => {
+    //         console.error('###################################################################################')
+    //         console.error('DOWNLOAD FAILED:')
+    //         console.error(error)
+    //         console.error('###################################################################################')
+    //         throw error;
+    //     });
 
 
 }

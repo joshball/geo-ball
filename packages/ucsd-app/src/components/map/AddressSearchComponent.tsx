@@ -1,11 +1,10 @@
 import * as React from 'react'
 import { css } from 'glamor'
-import { LatLng } from 'leaflet';
+import { LatLng as LeafLatLng } from 'leaflet';
 import { LatLngTxt } from '../common/LatLngTxt';
 import { observer, inject } from 'mobx-react';
-import { geocodeAddress } from '../../services/MapService';
 import {  colors, fontSizes, fonts } from "../../config/theme"
-import { IGeoSearchResult } from '../../services/IGeoSearchResult';
+import { IGeocodeResponse, geocodeAddress } from '../../services/GeocodingService';
 import { RootStore } from '../../stores/RootStore';
 
 
@@ -85,7 +84,7 @@ export class AddressSearchComponent extends React.Component<AddressSearchCompone
 
         console.log('handleSearch calling geocodeAddress (address):', address);
         geocodeAddress(address)
-            .then((results: Array<IGeoSearchResult>) => {
+            .then((results: Array<IGeocodeResponse>) => {
                 console.log('handleSearch calling results:', results);
                 this.setState({ results, address });
             })
@@ -98,7 +97,7 @@ export class AddressSearchComponent extends React.Component<AddressSearchCompone
             })
     }
 
-    getClickHandler(result: IGeoSearchResult) {
+    getClickHandler(result: IGeocodeResponse) {
         // console.log('getClickHandler result', result)
         return () => {
             // console.log('clickHandler func result', result)
@@ -109,10 +108,10 @@ export class AddressSearchComponent extends React.Component<AddressSearchCompone
         }
     }
 
-    getSingleResultMarkup(result: IGeoSearchResult, index:number) {
+    getSingleResultMarkup(result: IGeocodeResponse, index:number) {
         // console.log('getSingleResultMarkup',result)
         if (result) {
-            const latLng = result.x && result.y ? new LatLng(parseFloat(result.x), parseFloat(result.y)) : undefined;
+            const latLng = result.x && result.y ? new LeafLatLng(parseFloat(result.x), parseFloat(result.y)) : undefined;
             const clickHandler = this.getClickHandler(result);
             return (
                 <div onClick={clickHandler} key={index} className={`${singleResultCss}`}>
@@ -125,9 +124,9 @@ export class AddressSearchComponent extends React.Component<AddressSearchCompone
     getResults() {
         // console.log('getResults',this.state.results)
         if (this.state.results) {
-            const results = this.state.results as unknown as Array<IGeoSearchResult>;
+            const results = this.state.results as unknown as Array<IGeocodeResponse>;
             // console.log('getResults.good')
-            return results.map((r: IGeoSearchResult, i:number) => this.getSingleResultMarkup(r, i));
+            return results.map((r: IGeocodeResponse, i:number) => this.getSingleResultMarkup(r, i));
         }
         return [];
     }

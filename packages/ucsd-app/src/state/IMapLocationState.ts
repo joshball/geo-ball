@@ -1,12 +1,12 @@
 
-import { LatLngLiteral, LatLngBounds } from 'leaflet';
-import { IGeoSearchResult } from '../services/IGeoSearchResult';
+import { LatLngLiteral as LeafLatLngLiteral, LatLngBounds as LeafLatLngBounds } from 'leaflet';
+import { IGeocodeResponse } from '../services/GeocodingService';
 
 export interface IMapLocationState {
     zoom: number;
-    center: LatLngLiteral;
-    clickPos: LatLngLiteral | undefined;
-    selectedAddress: IGeoSearchResult | undefined;
+    center: LeafLatLngLiteral;
+    clickPos: LeafLatLngLiteral | undefined;
+    selectedAddress: IGeocodeResponse | undefined;
 }
 
 
@@ -19,16 +19,16 @@ export interface IMapExplorerState {
 
 export interface IMapLocState {
     zoom: number;
-    center: LatLngLiteral;
+    center: LeafLatLngLiteral;
 }
 
 export interface IMapAddressState {
-    selectedAddress: IGeoSearchResult | null;
-    geoSearchResults: Array<IGeoSearchResult>;
+    selectedAddress: IGeocodeResponse | null;
+    geoSearchResults: Array<IGeocodeResponse>;
 }
 
 export interface IMapDisplayState {
-    bounds: LatLngBounds | null;
-    clickPos: LatLngLiteral | null;
-    mousePos: LatLngLiteral | null;
+    bounds: LeafLatLngBounds | null;
+    clickPos: LeafLatLngLiteral | null;
+    mousePos: LeafLatLngLiteral | null;
 }

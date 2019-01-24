@@ -1,14 +1,18 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const LatLng_1 = require("./LatLng");
+const distance_1 = __importDefault(require("@turf/distance"));
 class LatLngBounds {
     constructor(southwest, northeast) {
         this.toString = () => `[SW:${this.sw}],[NE:${this.ne}]`;
         this.center = () => {
             const latDelta = Math.abs(this.ne.lat - this.sw.lat) / 2;
             const centerLat = this.ne.lat - latDelta;
-            const lonDelta = Math.abs(this.ne.lon - this.sw.lon) / 2;
-            const centerLon = this.ne.lon - lonDelta;
+            const lonDelta = Math.abs(this.ne.lng - this.sw.lng) / 2;
+            const centerLon = this.ne.lng - lonDelta;
             return new LatLng_1.LatLng(centerLat, centerLon);
         };
         this.valid = () => this.sw.valid() && this.ne.valid();
@@ -23,21 +27,34 @@ class LatLngBounds {
         if (northeast.lat < southwest.lat) {
             throw new Error(getError(`ne.lat[${northeast.lat}] < sw.lat[${southwest.lat}]`));
         }
-        if (northeast.lon < southwest.lon) {
-            throw new Error(getError(`ne.lon[${northeast.lon}] < sw.lon[${southwest.lon}]`));
+        if (northeast.lng < southwest.lng) {
+            throw new Error(getError(`ne.lng[${northeast.lng}] < sw.lng[${southwest.lng}]`));
         }
-        this.ne = new LatLng_1.LatLng(northeast.lat, northeast.lon);
-        this.sw = new LatLng_1.LatLng(southwest.lat, southwest.lon);
+        this.ne = new LatLng_1.LatLng(northeast.lat, northeast.lng);
+        this.sw = new LatLng_1.LatLng(southwest.lat, southwest.lng);
     }
     grow(by) {
         this.ne.lat += by;
         this.sw.lat -= by;
-        this.ne.lon += by;
-        this.sw.lon -= by;
+        this.ne.lng += by;
+        this.sw.lng -= by;
+    }
+    getArea() {
+        const northWest = new LatLng_1.LatLng(this.ne.lat, this.sw.lng);
+        const latDistMeters = distance_1.default([northWest.lng, northWest.lat], [this.sw.lng, this.sw.lat], { units: 'meters' });
+        const lngDistMeters = distance_1.default([northWest.lng, northWest.lat], [this.ne.lng, this.ne.lat], { units: 'meters' });
+        const areaInMeters = latDistMeters * lngDistMeters;
+        return {
+            ne: this.ne,
+            sw: this.sw,
+            latDistMeters,
+            lngDistMeters,
+            areaInMeters,
+        };
     }
     static FromBounds(bounds, growth = 0) {
-        const sw = new LatLng_1.LatLng(bounds.sw.lat - growth, bounds.sw.lon - growth);
-        const ne = new LatLng_1.LatLng(bounds.ne.lat + growth, bounds.ne.lon + growth);
+        const sw = new LatLng_1.LatLng(bounds.sw.lat - growth, bounds.sw.lng - growth);
+        const ne = new LatLng_1.LatLng(bounds.ne.lat + growth, bounds.ne.lng + growth);
         return new LatLngBounds(sw, ne);
     }
     static FromArray(bounds) {

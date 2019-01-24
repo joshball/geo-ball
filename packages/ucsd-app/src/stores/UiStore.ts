@@ -1,5 +1,4 @@
 // import { observable, computed } from 'mobx'
-// import { LatLng, LatLngBounds } from 'leaflet';
 // import {RootStore} from './index';
 
 // export class AddressSearch {

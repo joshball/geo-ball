@@ -3,6 +3,11 @@ export interface ILatLngBounds {
     sw: ILatLng;
     ne: ILatLng;
 }
+export interface ILatLngBoundsArea extends ILatLngBounds {
+    latDistMeters: number;
+    lngDistMeters: number;
+    areaInMeters: number;
+}
 export declare class LatLngBounds {
     sw: LatLng;
     ne: LatLng;
@@ -10,6 +15,7 @@ export declare class LatLngBounds {
     toString: () => string;
     center: () => LatLng;
     grow(by: number): any;
+    getArea(): ILatLngBoundsArea;
     static FromBounds(bounds: ILatLngBounds, growth?: number): LatLngBounds;
     static FromArray(bounds: Array<number>): LatLngBounds;
     static FromNumbers(southLat: number, westLon: number, northLat: number, eastLon: number): LatLngBounds;
