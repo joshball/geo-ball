@@ -19,6 +19,7 @@
         "ordered-imports": false,
         "prefer-for-of":false,
 		"variable-name": false,
+		"no-bitwise": false,
 		// TODO: allow devDependencies only in **/*.spec.ts files:
 		// waiting on https://github.com/palantir/tslint/pull/3708
 		"no-implicit-dependencies": [

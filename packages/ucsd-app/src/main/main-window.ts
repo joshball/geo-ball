@@ -1,8 +1,10 @@
-const { app, BrowserWindow } = require("electron")
-const WindowStateManager = require("electron-window-state-manager")
+import { app, BrowserWindow } from "electron";
+// tslint:disable-next-line:no-var-requires
+const WindowStateManager = require("electron-window-state-manager");
 import { loadURL } from "./load-url"
+// tslint:disable-next-line:no-var-requires
 require('electron-context-menu')({
-	prepend: (params, browserWindow) => [{
+	prepend: (params:any, _browserWindow:any) => [{
 		label: 'Rainbow',
 		// Only show it when right-clicking images
 		visible: params.mediaType === 'image'

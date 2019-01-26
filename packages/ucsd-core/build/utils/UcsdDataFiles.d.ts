@@ -20,10 +20,6 @@ export interface IOsmBasedFilePaths {
 export declare class UcsdDataFiles {
     mapDataRoot: string;
     osmDir: string;
-    osmDataDir: string;
-    osmQueryDir: string;
-    rsdDir: string;
-    intDir: string;
     osmJsonExt: string;
     rsdJsonExt: string;
     rsdTextExt: string;
@@ -31,10 +27,9 @@ export declare class UcsdDataFiles {
     intJsonExt: string;
     intTextExt: string;
     readonly osmPath: string;
-    readonly rsdPath: string;
-    readonly intPath: string;
     constructor(mapDataRoot?: string | undefined);
-    ensurePathSync(path: string): void;
+    static EnsurePathSync(path: string): void;
+    static EnsurePath(path: string): Promise<string>;
     getOpenStreetMapDataFiles(): string[];
     getRoadSegmentDataJsonFiles(): string[];
     getRsdPathFromOsmPath(osmPath: string, text?: boolean): string;

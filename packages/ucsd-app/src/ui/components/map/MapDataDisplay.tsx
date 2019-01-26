@@ -35,6 +35,7 @@ export interface MapDataDisplayProps {
 export class MapDataDisplay extends React.Component<MapDataDisplayProps> {
     constructor(props: MapDataDisplayProps) {
         super(props)
+        this.downloadOsmFile = this.downloadOsmFile.bind(this);
     }
     downloadOsmFile(osmParams: DownloadOsmParams) {
         console.log('MapDataDisplay.downloadOsm', osmParams);

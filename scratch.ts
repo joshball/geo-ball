@@ -70,3 +70,26 @@
 // sample = Direction.North; // Okay
 // sample = 'North'; // Okay
 // // sample = 'AnythingElse'; // ERROR!
+import { join, resolve, basename } from 'path';
+import { promises, constants } from 'fs';
+
+const doIt = async () => {
+    const tmpPath = resolve(join("c:\\tmp\\foobar"))
+    const winPath = resolve(join("c:\\Windows\\System32\\foo"))
+    const path = tmpPath;
+    console.log('checking path:', path)
+    // try {
+    //     const result = await promises.access(path, constants.F_OK | constants.W_OK)
+    //     console.log('result:', result)
+    // }
+    // catch (e) {
+    //     console.error('cannot access', path, e);
+    // }
+    return promises.access(path, constants.F_OK | constants.W_OK)
+        .then(() => path)
+        .catch(() => promises.mkdir(path, { recursive: true }))
+        .then(() => path)
+        .catch((e) => console.error('cannot mkdir', path, e));
+}
+
+doIt();

@@ -121,6 +121,7 @@
     "@types/storybook__react": "^4.0.0",
     "babel-preset-react": "^6.24.1",
     "coveralls": "^3.0.2",
+    "devtron": "^1.4.0",
     "electron": "^4.0.0",
     "electron-builder": "^20.38.4",
     "fuse-box": "^3.6.0",

@@ -2,14 +2,6 @@
 import { LatLngLiteral as LeafLatLngLiteral, LatLngBounds as LeafLatLngBounds } from 'leaflet';
 import { IGeocodeResponse } from '../services/GeocodingService';
 
-export interface IMapLocationState {
-    zoom: number;
-    center: LeafLatLngLiteral;
-    clickPos: LeafLatLngLiteral | undefined;
-    selectedAddress: IGeocodeResponse | undefined;
-}
-
-
 export interface IMapExplorerState {
     location: IMapLocState;
     display: IMapDisplayState;
