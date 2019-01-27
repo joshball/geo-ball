@@ -6,11 +6,13 @@
 // https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&client=YOUR_CLIENT_ID&signature=SIGNATURE
 
 import { app, dialog, ipcMain } from "electron"
-import { createMainWindow, loadURL } from "."
+import { createUiWindow } from "./ui-renderer-window"
+import { createBackgroundWindow } from "./background-renderer-window"
+import { loadURL } from "./load-url"
 import * as log from "electron-log"
 import * as isDev from "electron-is-dev"
-import { createUpdater } from "../ui/lib/updater"
-import { createMenu } from "../ui/menu"
+import { createUpdater } from ".//updater"
+import { createMenu } from "./menu"
 // import { promisify } from "util"
 // import fs from "fs"
 import { resolve, join } from "path";
@@ -23,7 +25,8 @@ import { UcsdDataFiles } from "@ball-maps/ucsd-core";
 log.transports.file.level = isDev ? false : "info"
 log.transports.console.level = isDev ? "debug" : false
 
-let window: Electron.BrowserWindow
+let uiWindow: Electron.BrowserWindow
+let backgroundWindow: Electron.BrowserWindow
 let showStorybook = false
 
 // usually we'd just use __dirname here, however, the FuseBox
@@ -32,11 +35,13 @@ const appPath = app.getAppPath()
 
 // fires when Electron is ready to start
 app.on("ready", () => {
-    window = createMainWindow(appPath)
-    createMenu(window)
+    uiWindow = createUiWindow(appPath)
+    backgroundWindow = createBackgroundWindow(appPath);
+
+    createMenu(uiWindow)
 
     if (isDev) {
-        window.webContents.on("did-fail-load", () => {
+        uiWindow.webContents.on("did-fail-load", () => {
             dialog.showErrorBox(
                 "Error opening storybook",
                 'Storybook failed to open. Please ensure the storybook server is running by executing "npm run storybook"',
@@ -45,39 +50,10 @@ app.on("ready", () => {
 
         ipcMain.on("storybook-toggle", () => {
             showStorybook = !showStorybook
-            loadURL(window, appPath, showStorybook)
+            loadURL(uiWindow, appPath, "ui-renderer.html", showStorybook)
         })
     }
-
-    // listen for files event by browser process
-    ipcMain.on('createDirectory', async (_event: any, managedPath: string) => {
-        try {
-            console.log('managedPath:', managedPath);
-            const home = resolve(app.getPath('home'));
-            const userData = resolve(app.getPath('userData'));
-            const managed = resolve(join(home, '.ucsd'));
-            const managedOsm = resolve(join(managed, 'osm'));
-
-            UcsdDataFiles.EnsurePathSync(managed);
-            UcsdDataFiles.EnsurePathSync(managedOsm);
-            const ucsdDataFiles = new UcsdDataFiles(managed);
-
-            // // asynchronously get the data for all the files
-            // const data = await Promise.all(
-            //     filesArr.map(async ({ name, pathName }) => ({
-            //         ...await stat(pathName),
-            //         name,
-            //         pathName
-            //     }))
-            // )
-
-            window.webContents.send('directoryCreated', ucsdDataFiles)
-        } catch (error) {
-            // send an error event if something goes wrong
-            window.webContents.send('directoryCreated:error', error)
-        }
-    })
-})
+});
 
 // fires when all windows are closed
 app.on("window-all-closed", app.quit)

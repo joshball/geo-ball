@@ -22,7 +22,7 @@ export const DIMENSIONS = { width: 1200, height: 900, minWidth: 1200, minHeight:
  * @param showDelay How long in ms before showing the window after the renderer is ready.
  * @return The main BrowserWindow.
  */
-export function createMainWindow(appPath: string, showDelay: number = 100) {
+export function createUiWindow(appPath: string, showDelay: number = 100) {
     // persistent window state manager
     const windowState = new WindowStateManager("main", {
         defaultWidth: DIMENSIONS.width,
@@ -84,7 +84,7 @@ export function createMainWindow(appPath: string, showDelay: number = 100) {
         }
       })
     // load entry html page in the renderer.
-    loadURL(window, appPath)
+    loadURL(window, appPath, "ui-renderer.html")
 
     // only appear once we've loaded
     window.webContents.on("did-finish-load", () => {

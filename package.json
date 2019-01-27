@@ -8,6 +8,8 @@
   "workspaces": {
     "packages": ["packages/*"],
     "nohoist": [
+      "**/@storybook",
+      "**/@storybook/**",
       "**/electron",
       "**/electron/**",
       "**/electron-builder",

@@ -16,17 +16,17 @@ export class CommonStore {
         const userData = resolve(app.getPath('userData'));
         const managed = resolve(join(home, '.ucsd'));
         // const ucsdDataFiles = new UcsdDataFiles(managed);
-        ipcRenderer.send('createDirectory', managed);
-        ipcRenderer.on('directoryCreated', (_event:any, ucsdDataFiles:UcsdDataFiles) => {
-            console.log('directoryCreated success!')
-            console.log('ucsdDataFiles',ucsdDataFiles)
-        })
+        // ipcRenderer.send('createDirectory', managed);
+        // ipcRenderer.on('directoryCreated', (_event:any, ucsdDataFiles:UcsdDataFiles) => {
+        //     console.log('directoryCreated success!')
+        //     console.log('ucsdDataFiles',ucsdDataFiles)
+        // })
 
-        // error event from catch block in main process
-        ipcRenderer.on('directoryCreated:error', (_event:any, error:any) => {
-            console.error('directoryCreated:error')
-            console.error(error)
-        })
+        // // error event from catch block in main process
+        // ipcRenderer.on('directoryCreated:error', (_event:any, error:any) => {
+        //     console.error('directoryCreated:error')
+        //     console.error(error)
+        // })
 
         this.state.common.dir = {
             managed,
