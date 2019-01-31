@@ -22,7 +22,7 @@ export const DIMENSIONS = { width: 1200, height: 900, minWidth: 1200, minHeight:
  * @param showDelay How long in ms before showing the window after the renderer is ready.
  * @return The main BrowserWindow.
  */
-export function createUiWindow(appPath: string, showDelay: number = 100) {
+export function createUiWindow(appPath: string, showDelay: number = 100):BrowserWindow {
     // persistent window state manager
     const windowState = new WindowStateManager("main", {
         defaultWidth: DIMENSIONS.width,

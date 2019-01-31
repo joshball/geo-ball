@@ -61,7 +61,7 @@ Sparky.task("default", ["copy-html"], () => {
 
     const backgroundBundle = fuse
         .bundle("background-renderer")
-        .instructions("> [background/index.tsx]");
+        .instructions("> [background/index.ts]");
 
 
     // and watch & hot reload unless we're bundling for production

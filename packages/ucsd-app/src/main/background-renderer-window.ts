@@ -9,7 +9,7 @@ import { loadURL } from "./load-url"
  * @param showDelay How long in ms before showing the window after the renderer is ready.
  * @return The main BrowserWindow.
  */
-export function createBackgroundWindow(appPath: string, showDelay: number = 100) {
+export function createBackgroundWindow(appPath: string, showDelay: number = 100):BrowserWindow {
     // create our main window
     const window = new BrowserWindow({
         show: false,

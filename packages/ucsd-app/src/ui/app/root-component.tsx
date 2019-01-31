@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router";
 import { MemoryRouter, Link } from 'react-router-dom';
 import "glamor/reset";
 import { compose } from "glamor"
+// require('devtron').install()
 
 import { styles, colors } from "../config/theme"
 import { MapExplorerPage } from "../pages/MapExplorerPage";
@@ -18,6 +19,7 @@ import { Provider, observer } from "mobx-react";
 import { RootStore } from "../stores/RootStore";
 import state from "../state/State";
 import { Navbar, Alignment, Button, Intent } from "@blueprintjs/core";
+// import BackgroundTask from '../../background/BackgroundTask';
 const rootStore = new RootStore(state);
 // autorun(() => rootStore);
 
@@ -32,32 +34,6 @@ const ROOT = compose(styles.fullScreen, {
     "& ::-webkit-scrollbar-track": { backgroundColor: colors.scrollbar.track },
     "& ::-webkit-scrollbar-thumb": { backgroundColor: colors.scrollbar.thumb, borderRadius: 4 },
 })
-
-// const ROUTES = [
-//     {
-//         path: '/',
-//         exact: true,
-//         component: HomePage
-//     },
-//     {
-//         path: '/maps',
-//         component: MapExplorerPage
-//     },
-//     {
-//         path: '/files',
-//         component: MapDataFilesPage
-//     },
-//     {
-//         path: '/routes',
-//         component: RoutingPage
-//     },
-// ];
-
-// {ROUTES.map((route, i) => {
-//     // console.log(`route ${i}, ${route.path}`, route.component)
-//     return <Route key={i} exact={route.exact} path={route.path} component={route.component} />
-// })}
-// {/* <Route component={HomePage} /> */}
 
 
 const navBar = <Navbar className="bp3-dark">
@@ -81,11 +57,14 @@ const navBar = <Navbar className="bp3-dark">
 
 const routes = <Switch>
     {/* <Route path='/' component={HomePage} exact /> */}
+    {/* <Route path='/' component={BackgroundTask} exact /> */}
     <Route path='/' component={MapExplorerPage} exact />
     <Route path='/maps' component={MapExplorerPage} />
     <Route path='/routes' component={RoutingPage} />
     <Route path='/files' component={MapDataFilesPage} />
 </Switch>;
+
+
 @observer
 export class RootComponent extends React.Component<{}, {}> {
     render() {

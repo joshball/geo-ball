@@ -53,10 +53,11 @@
         // "experimentalDecorators": true /* Enables experimental support for ES7 decorators. */,
         // "emitDecoratorMetadata": true /* Enables experimental support for emitting type metadata for decorators. */,
         "lib": [
-            "es2015","es2018","es2018.promise", "esnext", "dom"
+            "es6", "es2015","es2018","es2018.promise", "esnext", "dom"
         ],
         "typeRoots": [
             "node_modules/@types",
+            "src/typings",
             "src/types",
             "test/types",
         ]
