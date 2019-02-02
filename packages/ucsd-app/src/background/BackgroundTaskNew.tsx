@@ -55,9 +55,9 @@ class BackgroundTaskNew extends React.Component<{}, State> {
         console.time('UI.NEW.compute');
 
 
-        console.log('UI.NEW About to call BG.ipcRenderer(%s, %s, package.json)', backgroundWindow.id, CHANNELS.NEW.lstat);
+        console.log('UI.NEW About to call BG.ipcRenderer(%s, %s, package.json)', backgroundWindow.id, CHANNELS.lstat);
 
-        const stat = await ipc.callRender(backgroundWindow, CHANNELS.NEW.lstat, 'package.json');
+        const stat = await ipc.callRender(backgroundWindow, CHANNELS.lstat, 'package.json');
         console.log('UI.NEW.ipcRenderer.stat', stat);
 
         // const d = await bg.compute();

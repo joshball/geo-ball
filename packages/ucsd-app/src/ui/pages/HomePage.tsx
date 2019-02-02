@@ -7,6 +7,7 @@ import { MapExplorerPage } from './MapExplorerPage';
 import { CenteredContent } from '../components/common/CenteredContent';
 import { Text } from '../components/common/Text';
 import { WelcomeScreen } from '../OLD/views/example/welcome-screen/welcome-screen';
+import { UcsdManagedDirComponent } from '../components/files/UcsdManagedDirComponent';
 
 const mainLayout = css({
     // display: 'grid',
@@ -38,6 +39,7 @@ export const HomePage: React.SFC<any> = (props: any) => {
             <Text style={STYLE}>
                 <Link to="/files">Welcome </Link>
             </Text>
+            <UcsdManagedDirComponent />
             <div style={buttonBarCss}>
                 <Link to="/maps">
                     <Button intent={Intent.PRIMARY} text="Explore and Download Maps" />

@@ -15,7 +15,3 @@ export const getRendererResponseChannels = (_windowId: number, channel: string) 
 //     errorChannel: `%better-ipc-response-error-channel-${windowId}-${channel}`
 // });
 
-
-import { promisify } from 'util';
-import { lstat as lstatx, Stats } from 'fs';
-export const lstat = promisify(lstatx);

@@ -56,9 +56,9 @@ const navBar = <Navbar className="bp3-dark">
 </Navbar>;
 
 const routes = <Switch>
-    {/* <Route path='/' component={HomePage} exact /> */}
+    <Route path='/' component={HomePage} exact />
     {/* <Route path='/' component={BackgroundTask} exact /> */}
-    <Route path='/' component={MapExplorerPage} exact />
+    {/* <Route path='/' component={MapExplorerPage} exact /> */}
     <Route path='/maps' component={MapExplorerPage} />
     <Route path='/routes' component={RoutingPage} />
     <Route path='/files' component={MapDataFilesPage} />

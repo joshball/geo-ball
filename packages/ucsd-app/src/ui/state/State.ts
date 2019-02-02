@@ -1,22 +1,22 @@
-import { extendObservable, toJS, action } from 'mobx';
+import { extendObservable } from 'mobx';
 import { IMapExplorerState } from './IMapExplorerState';
 import { ICommonState } from './ICommonState';
+import { IDataState } from './IDataState';
 
 export interface IState {
     common: ICommonState
+    data: IDataState
     mapExplorer: IMapExplorerState
 }
 
 export const defaultState: IState = {
     common: {
         title: 'Home',
+    },
+    data: {
         dir: {
             managed: '',
-            home: '',
-            userData: '',
-            ucsdDataFiles: null!
         }
-
     },
     mapExplorer: {
         location: {
@@ -45,6 +45,7 @@ export const defaultState: IState = {
  */
 class State implements IState {
     common!: ICommonState;
+    data!: IDataState;
     mapExplorer!: IMapExplorerState;
     constructor(state?: IState | undefined) {
         const newState = { ...defaultState, ...state };

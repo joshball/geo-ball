@@ -49,24 +49,24 @@ let showStorybook = false
 
 // fires when Electron is ready to start
 app.on("ready", () => {
-    // tslint:disable-next-line:no-unused-expression
-    new BrowserWindow({ show: false, });
-    // tslint:disable-next-line:no-unused-expression
-    new BrowserWindow({ show: false, });
+    // // tslint:disable-next-line:no-unused-expression
+    // new BrowserWindow({ show: false, });
+    // // tslint:disable-next-line:no-unused-expression
+    // new BrowserWindow({ show: false, });
     global.uiWindow = createUiWindow(appPath)
 
-    // tslint:disable-next-line:no-unused-expression
-    new BrowserWindow({ show: false, });
-    // tslint:disable-next-line:no-unused-expression
-    new BrowserWindow({ show: false, });
-    // tslint:disable-next-line:no-unused-expression
-    new BrowserWindow({ show: false, });
-    // tslint:disable-next-line:no-unused-expression
-    new BrowserWindow({ show: false, });
-    // tslint:disable-next-line:no-unused-expression
-    new BrowserWindow({ show: false, });
-    // tslint:disable-next-line:no-unused-expression
-    new BrowserWindow({ show: false, });
+    // // tslint:disable-next-line:no-unused-expression
+    // new BrowserWindow({ show: false, });
+    // // tslint:disable-next-line:no-unused-expression
+    // new BrowserWindow({ show: false, });
+    // // tslint:disable-next-line:no-unused-expression
+    // new BrowserWindow({ show: false, });
+    // // tslint:disable-next-line:no-unused-expression
+    // new BrowserWindow({ show: false, });
+    // // tslint:disable-next-line:no-unused-expression
+    // new BrowserWindow({ show: false, });
+    // // tslint:disable-next-line:no-unused-expression
+    // new BrowserWindow({ show: false, });
     global.backgroundWindow = createBackgroundWindow(appPath);
 
     createMenu(global.uiWindow)

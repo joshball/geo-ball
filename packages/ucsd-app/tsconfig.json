@@ -15,6 +15,7 @@
         // "rootDir": "src",
         // "target": "es2015",
         "module": "commonjs",
+        "experimentalDecorators": true,
         "lib": ["dom", "es2017", "es2018", "es2018.promise"],
         // "outDir": "./build",
         "jsx": "react",
