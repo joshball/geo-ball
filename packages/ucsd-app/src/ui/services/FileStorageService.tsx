@@ -2,7 +2,10 @@ import { remote, BrowserWindow } from "electron";
 import { resolve, join } from "path";
 import ipc from "../../background/better-ipc";
 import { CHANNELS } from '../../background/index.new';
-import { ensureExistsCallback } from '../../background/bg-fs';
+import { ensureExistsCallback, IReaddirParams, IReaddirOptions, isBufferType } from '../../background/bg-fs';
+import { PointMapsFile, RoadSegmentsFile, IntersectionsFile } from "@ball-maps/ucsd-core";
+import { OpenStreetmapFile } from "@ball-maps/osm-data";
+import { Dirent, writeFileSync } from 'fs';
 
 const backgroundWindow = remote.getGlobal('backgroundWindow') as BrowserWindow;
 console.log('backgroundWindow:', backgroundWindow);
@@ -10,21 +13,44 @@ if (!backgroundWindow) {
     throw new Error('backgroundWindow global not set!');
 }
 
+export interface IMapDataFileSet {
+    osm: OpenStreetmapFile;
+    rsf: RoadSegmentsFile;
+    pmf: PointMapsFile;
+    int: IntersectionsFile;
+}
+
+// export interface IFileStorageService {
+//     // getMapDataFileSets: () => Promise<Array<IMapDataFileSet>>
+// }
+
 export class FileStorageService {
-    managedDir: string;
 
-    constructor(managedDir?: string | undefined) {
-        this.managedDir = managedDir || FileStorageService.GetDefaultManagedDir();
-    }
-
-    static GetDefaultManagedDir(rootDir?: string | undefined): string {
-        const newRootDir = resolve(rootDir || remote.app.getPath('home') || remote.app.getPath('userData'));
-        const managedDir = resolve(join(newRootDir, '.ucsd'));
-        return managedDir;
-    }
 
     static async EnsureDirectoryStructure(dirToEnsure: string): Promise<void> {
         await ipc.callRender(backgroundWindow, CHANNELS.ensureExists, dirToEnsure);
+    }
+
+    static async ReadDir(path: string, options?: IReaddirOptions | undefined): Promise<Array<string | Dirent | Buffer[]>> {
+        const params: IReaddirParams = { path, options };
+        if (options && options.withFileTypes) {
+            return ipc.callRender(backgroundWindow, CHANNELS.readdir, params) as Promise<Array<Dirent>>;
+        }
+        if (options && options.encoding && isBufferType(options.encoding)) {
+            return ipc.callRender(backgroundWindow, CHANNELS.readdir, params) as Promise<Array<Buffer[]>>;
+        }
+        return ipc.callRender(backgroundWindow, CHANNELS.readdir, params) as Promise<Array<string>>;
+    }
+
+    static async ReadDirWithFullPaths(path: string, options?: IReaddirOptions | undefined): Promise<Array<string | Dirent | Buffer[]>> {
+        if (options && options.withFileTypes) {
+            return FileStorageService.ReadDir(path) as Promise<Array<Dirent>>;
+        }
+        if (options && options.encoding && isBufferType(options.encoding)) {
+            return FileStorageService.ReadDir(path) as Promise<Array<Buffer[]>>;
+        }
+        return (FileStorageService.ReadDir(path) as Promise<Array<string>>)
+            .then(files => files.map((f: string) => resolve(join(path, f))));
     }
 }
 

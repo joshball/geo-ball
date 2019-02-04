@@ -13,7 +13,7 @@ export class DataDirectory {
     dirName: string;
 
     get fullPath(): string {
-        return `${join(this.rootPath, this.dirName)}`;
+        return `${resolve(join(this.rootPath, this.dirName))}`;
     }
 
     set fullPath(path: string) {
@@ -21,6 +21,15 @@ export class DataDirectory {
         this.rootPath = rootPath;
         this.dirName = dirName;
     }
+
+    get ucsdPath(): string {
+        return `${join(this.fullPath, DataDirectory.UCSD_DIRNAME)}`;
+    }
+
+    get ucsdOsmPath(): string {
+        return `${join(this.ucsdPath, DataDirectory.UCSD_OSM_DIRNAME)}`;
+    }
+
 
     constructor(...pathArgs: Array<string>) {
         const { rootPath, dirName } = DataDirectory.GetDataDirectoryFromPath(...pathArgs);
@@ -40,8 +49,14 @@ export class DataDirectory {
         return Promise.resolve(true);
     }
 
+
+
+    static BALLMAPS_DIRNAME = '.ballmaps';
+    static UCSD_DIRNAME = 'ucsd';
+    static UCSD_OSM_DIRNAME = 'osm';
+
+    static GetDefaultDataDirName = () => DataDirectory.BALLMAPS_DIRNAME;
     static GetDefaultDataRootPath = () => resolve(remote.app.getPath('home'))
-    static GetDefaultDataDirName = () => '.ucsd';
     static GetDefaultDataDirPath = () => join(DataDirectory.GetDefaultDataRootPath(), DataDirectory.GetDefaultDataDirName());
 
     static GetDataDirectoryFromPath(...pathArgs: Array<string>): IDataDirectory {

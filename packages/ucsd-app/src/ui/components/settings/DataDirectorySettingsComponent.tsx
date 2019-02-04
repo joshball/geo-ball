@@ -119,17 +119,6 @@ export class DataDirectorySettingsComponent extends React.Component<DataDirector
     // ================================================================================
 
 
-    // async submitNewFolder(event: React.FormEvent): Promise<IValidateFolder> {
-    //     event.preventDefault();
-    //     console.log('submitNewFolder', event)
-    //     return Promise.resolve({ error: false, reason: '' });
-    //     // if (!this.state.managedDir) {
-    //     //     console.log('BUGBUG: warn the user!')
-    //     //     return;
-    //     // }
-    //     // this.props.stores!.data.setManagedDirectory(this.state.managedDir);
-    // }
-
     async clickCancel(event: React.MouseEvent<HTMLElement>) {
         event.preventDefault();
         console.log('clickCancel', event)
@@ -149,8 +138,8 @@ export class DataDirectorySettingsComponent extends React.Component<DataDirector
         console.log('this.originalDataDirectory.fullPath', this.originalDataDirectory.fullPath);
         console.log('this.originalDataDirectory.dirName', this.originalDataDirectory.dirName);
         console.log('this.originalDataDirectory.rootPath', this.originalDataDirectory.rootPath);
-        console.log('  this.state.ucsdDirName', this.state.dirName);
-        console.log('  this.state.ucsdDirRootPath', this.state.rootPath);
+        console.log('  this.state.dirName', this.state.dirName);
+        console.log('  this.state.rootPath', this.state.rootPath);
         return this.originalDataDirectory.dirName !== this.state.dirName || this.originalDataDirectory.rootPath !== this.state.rootPath;
     }
 
@@ -173,9 +162,9 @@ export class DataDirectorySettingsComponent extends React.Component<DataDirector
         // const managedRootDirTxt = selectedFolder ? dirname(selectedFolder) : 'NONE SELECTED';
         // const managedDataDirTxt = selectedFolder || 'NONE SELECTED';
         const props: DataDirectorySettingsBoxProps = {
-            ucsdDirName,
-            ucsdDirRootPath,
-            ucsdDirPath: join(ucsdDirRootPath, ucsdDirName),
+            ballmapsDirName: ucsdDirName,
+            ballmapsDirRootPath: ucsdDirRootPath,
+            ballmapsDirPath: join(ucsdDirRootPath, ucsdDirName),
             setFolderBrowse: this.setFolderBrowse,
             setFolderHome: this.setRootPathToUsersHomeDir,
             setFolderAppUserData: this.setRootPathToAppUsersDir,

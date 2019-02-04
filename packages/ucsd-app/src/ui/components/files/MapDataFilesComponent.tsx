@@ -4,6 +4,9 @@ import { observer, inject } from 'mobx-react';
 import { colors, fontSizes, fonts } from "../../config/theme"
 import { RootStore } from '../../stores/RootStore';
 import { FileListComponent } from './FileListComponent';
+import { storiesOf } from '@storybook/react';
+import { FileStorageService } from '../../services/FileStorageService';
+import { join } from 'path';
 
 
 export interface MapDataFilesComponentProps {
@@ -59,17 +62,29 @@ const mainLayout = css({
 @observer
 export class MapDataFilesComponent extends React.Component<MapDataFilesComponentProps, MapDataFilesComponentState> {
 
+
     state: MapDataFilesComponentState = {
         osmFiles: ['sugarhouse.osm', 'slc.osm'],
         rsdFiles: ['sugarhouse.rsd', 'slc.rsd'],
         intFiles: ['sugarhouse.int', 'slc.int'],
     }
 
+    constructor(props: MapDataFilesComponentProps) {
+        super(props);
+        const dataPath = props.stores!.settings.dataDirectory.fullPath;
+        const x = {
+            osmFiles: FileStorageService.ReadDirWithFullPaths(join(dataPath, 'osm')),
+            rsdFiles: FileStorageService.ReadDirWithFullPaths(join(dataPath, 'rsd')),
+            intFiles: FileStorageService.ReadDirWithFullPaths(join(dataPath, 'int')),
+        }
+
+    }
     handleSearch = (e: any) => {
         e.preventDefault()
     }
 
     render() {
+
         const { osmFiles, rsdFiles, intFiles } = this.state;
         // console.log('render. results', this.state.results)
         return (

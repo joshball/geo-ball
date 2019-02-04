@@ -62,9 +62,9 @@ const buttonSpaceCss = css({
 
 export interface DataDirectorySettingsBoxProps {
 
-    ucsdDirName: string;
-    ucsdDirRootPath: string;
-    ucsdDirPath: string;
+    ballmapsDirName: string;
+    ballmapsDirRootPath: string;
+    ballmapsDirPath: string;
 
 
     setFolderBrowse: (event: any) => void;
@@ -104,7 +104,7 @@ export const DataDirectorySettingsBoxComponent: React.SFC<DataDirectorySettingsB
                     allow us to move it through its different stages.
                 </p>
                 <p className={'bp3-running-text'}>
-                    By default, we also store the data in a directory named <code>.ucsd</code>.
+                    By default, we also store the data in a directory named <code>.ballmaps</code>.
                     You can adjust that here as well, but note that any path you select will
                     append that value to that directory.
                 </p>
@@ -112,13 +112,13 @@ export const DataDirectorySettingsBoxComponent: React.SFC<DataDirectorySettingsB
             <div {...settingsSubHeaderRowCss}>
                 <H5>UCSD Directory Name</H5>
                 <p className={'bp3-running-text'}>
-                    By default, we also store the data in a directory named <code>.ucsd</code>.
+                    By default, we also store the data in a directory named <code>.ballmaps</code>.
                     We don't recommend you change this, but if you need to, here you go.
                 </p>
                 <p {...settingsDynamicValueCss}>
                     <Button style={{ marginRight: '20px' }} intent={Intent.PRIMARY}>Edit</Button>
                     <code>
-                        {props.ucsdDirName}
+                        {props.ballmapsDirName}
                     </code>
                 </p>
             </div>
@@ -130,7 +130,7 @@ export const DataDirectorySettingsBoxComponent: React.SFC<DataDirectorySettingsB
                 </p>
                 <p {...settingsDynamicValueCss}>
                     <code>
-                        {props.ucsdDirRootPath}
+                        {props.ballmapsDirRootPath}
                     </code>
                 </p>
             </div>
@@ -149,7 +149,7 @@ export const DataDirectorySettingsBoxComponent: React.SFC<DataDirectorySettingsB
                 </p>
                 <p  {...settingsStaticValueCss}>
                     <code>
-                        {props.ucsdDirPath}
+                        {props.ballmapsDirPath}
                     </code>
                 </p>
             </div>

@@ -9,6 +9,7 @@ export class RootStore {
     data: DataStore;
     settings: SettingsStore;
     mapLocation: MapLocationStore;
+    services: IServices;
 
     constructor(state: IState) {
         this.common = new CommonStore(state);

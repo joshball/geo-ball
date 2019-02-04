@@ -111,7 +111,7 @@
 
 
 //     decorateSelectedFolder(path: string): string {
-//         return join(path, '.ucsd');
+//         return join(path, '.ucsdXXX');
 //     }
 
 //     async validateFolder(path: string): Promise<IValidateFolder> {

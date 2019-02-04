@@ -52,7 +52,7 @@ export function compute() {
 //         console.log('managedPath:', managedPath);
 //         const home = resolve(app.getPath('home'));
 //         const userData = resolve(app.getPath('userData'));
-//         const managed = resolve(join(home, '.ucsd'));
+//         const managed = resolve(join(home, '.ucsdXXX'));
 //         const managedOsm = resolve(join(managed, 'osm'));
 
 //         UcsdDataFiles.EnsurePathSync(managed);

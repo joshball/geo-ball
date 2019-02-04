@@ -131,7 +131,7 @@ export class DataDirectory {
     }
 
     static GetDefaultDataRootPath = () => 'c:\\users\\joshua'
-    static GetDefaultDataDirName = () => '.ucsd';
+    static GetDefaultDataDirName = () => '.ballmaps';
 
     static GetDataDirectoryFromPath(...pathArgs: Array<string>): IDataDirectory {
         if (!pathArgs || pathArgs.length === 0) {
@@ -171,4 +171,12 @@ const x = dd.getComponents();
 x.dirName = 'fooooo';
 dump('Original dd after manip', dd)
 dump('X', x);
+
+import { readdirSync } from 'fs';
+
+console.log('readdir:', __dirname);
+const result = readdirSync("/", { withFileTypes: true });
+const f = result[0];
+console.log(f.isDirectory())
+console.log(JSON.stringify(result, undefined, 4));
 
