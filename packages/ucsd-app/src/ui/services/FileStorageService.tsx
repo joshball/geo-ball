@@ -17,13 +17,6 @@ export class FileStorageService {
         this.managedDir = managedDir || FileStorageService.GetDefaultManagedDir();
     }
 
-
-    static async CreateFileStorageService(rootDir?: string | undefined): Promise<FileStorageService> {
-        const managedDir = FileStorageService.GetDefaultManagedDir(rootDir);
-        // FileStorageService.EnsureDirectoryStructure(managedDir);
-        return new FileStorageService(managedDir);
-    }
-
     static GetDefaultManagedDir(rootDir?: string | undefined): string {
         const newRootDir = resolve(rootDir || remote.app.getPath('home') || remote.app.getPath('userData'));
         const managedDir = resolve(join(newRootDir, '.ucsd'));

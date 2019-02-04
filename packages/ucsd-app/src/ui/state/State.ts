@@ -1,7 +1,7 @@
 import { extendObservable } from 'mobx';
 import { IMapExplorerState } from './IMapExplorerState';
 import { ICommonState } from './ICommonState';
-import { IDataState } from './IDataState';
+import { IDataState, DataState } from './IDataState';
 
 export interface IState {
     common: ICommonState
@@ -13,11 +13,12 @@ export const defaultState: IState = {
     common: {
         title: 'Home',
     },
-    data: {
-        dir: {
-            managed: '',
-        }
-    },
+    data: new DataState(),
+    // data: {
+    //     dataDirectory: {
+    //         path: '',
+    //     }
+    // },
     mapExplorer: {
         location: {
             zoom: 19,

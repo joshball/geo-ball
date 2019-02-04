@@ -7,6 +7,7 @@ import { CenteredContent } from '../components/common/CenteredContent';
 import { Text } from '../components/common/Text';
 import { WelcomeScreen } from '../OLD/views/example/welcome-screen/welcome-screen';
 import { MapDataFilesComponent } from '../components/files/MapDataFilesComponent';
+import { Redirect } from 'react-router';
 
 const mainLayout = css({
     // display: 'grid',
@@ -36,7 +37,7 @@ export const MapDataFilesPage: React.SFC<any> = (props: any) => {
             <Text style={STYLE}>
                 MAP DATA FILES
             </Text>
-            <MapDataFilesComponent/>
+            <MapDataFilesComponent />
         </CenteredContent>
     )
 }

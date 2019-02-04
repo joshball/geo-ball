@@ -1,3 +1,5 @@
+import { join, dirname, basename, resolve } from "path";
+
 // // let date = new Date();
 // // const dateString = date.toISOString();
 // // const split = dateString.split('T');
@@ -70,26 +72,103 @@
 // sample = Direction.North; // Okay
 // sample = 'North'; // Okay
 // // sample = 'AnythingElse'; // ERROR!
-import { join, resolve, basename } from 'path';
-import { promises, constants } from 'fs';
+// import { join, resolve, basename } from 'path';
+// import { promises, constants } from 'fs';
 
-const doIt = async () => {
-    const tmpPath = resolve(join("c:\\tmp\\foobar"))
-    const winPath = resolve(join("c:\\Windows\\System32\\foo"))
-    const path = tmpPath;
-    console.log('checking path:', path)
-    // try {
-    //     const result = await promises.access(path, constants.F_OK | constants.W_OK)
-    //     console.log('result:', result)
-    // }
-    // catch (e) {
-    //     console.error('cannot access', path, e);
-    // }
-    return promises.access(path, constants.F_OK | constants.W_OK)
-        .then(() => path)
-        .catch(() => promises.mkdir(path, { recursive: true }))
-        .then(() => path)
-        .catch((e) => console.error('cannot mkdir', path, e));
+// const doIt = async () => {
+//     const tmpPath = resolve(join("c:\\tmp\\foobar"))
+//     const winPath = resolve(join("c:\\Windows\\System32\\foo"))
+//     const path = tmpPath;
+//     console.log('checking path:', path)
+//     // try {
+//     //     const result = await promises.access(path, constants.F_OK | constants.W_OK)
+//     //     console.log('result:', result)
+//     // }
+//     // catch (e) {
+//     //     console.error('cannot access', path, e);
+//     // }
+//     return promises.access(path, constants.F_OK | constants.W_OK)
+//         .then(() => path)
+//         .catch(() => promises.mkdir(path, { recursive: true }))
+//         .then(() => path)
+//         .catch((e) => console.error('cannot mkdir', path, e));
+// }
+
+// doIt();
+
+export interface IDataDirectory {
+    rootPath: string;
+    dirName: string;
+    fullPath: string;
+}
+export class DataDirectory {
+    rootPath: string;
+    dirName: string;
+
+    get fullPath(): string {
+        console.log('running fullPath', this.rootPath, this.dirName)
+        return `${join(this.rootPath, this.dirName)}`;
+    }
+
+    set fullPath(path: string) {
+        const { rootPath, dirName } = DataDirectory.GetDataDirectoryFromPath(path);
+        this.rootPath = rootPath;
+        this.dirName = dirName;
+    }
+
+    constructor(...pathArgs: Array<string>) {
+        const { rootPath, dirName } = DataDirectory.GetDataDirectoryFromPath(...pathArgs);
+        this.rootPath = rootPath;
+        this.dirName = dirName;
+    }
+
+    getComponents(): IDataDirectory {
+        return {
+            rootPath: this.rootPath,
+            dirName: this.dirName,
+            fullPath: this.fullPath,
+        }
+    }
+
+    static GetDefaultDataRootPath = () => 'c:\\users\\joshua'
+    static GetDefaultDataDirName = () => '.ucsd';
+
+    static GetDataDirectoryFromPath(...pathArgs: Array<string>): IDataDirectory {
+        if (!pathArgs || pathArgs.length === 0) {
+            const rootPath = DataDirectory.GetDefaultDataRootPath();
+            const dirName = DataDirectory.GetDefaultDataDirName();
+            return {
+                rootPath,
+                dirName,
+                fullPath: join(rootPath, dirName),
+            }
+        }
+        const fullPath = resolve(join(...pathArgs));
+        return {
+            rootPath: dirname(fullPath),
+            dirName: basename(fullPath),
+            fullPath
+        }
+    }
 }
 
-doIt();
+
+
+const dump = (name: string, dataDir: IDataDirectory) => {
+    console.log('')
+    console.log('Dumping', name);
+    console.log('dd.dirName:', dataDir.dirName);
+    console.log('dd.rootPath:', dataDir.rootPath);
+    console.log('dd.fullPath:', dataDir.fullPath);
+    console.log('--------------------------------------------------------------')
+}
+
+const dd = new DataDirectory();
+dump('Original dd', dd)
+
+const x = dd.getComponents();
+
+x.dirName = 'fooooo';
+dump('Original dd after manip', dd)
+dump('X', x);
+
