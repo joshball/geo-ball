@@ -1,0 +1,1 @@
+{"version":3,"file":"OpenStreetmapFeatures.js","sourceRoot":"","sources":["../../src/api/OpenStreetmapFeatures.ts"],"names":[],"mappings":";;AAKA,MAAa,sBAAsB;IAG/B,YAAY,GAAkB,EAAE,SAAwB,CAAC,GAAG,CAAC;QACzD,IAAI,CAAC,GAAG,GAAG,GAAG,CAAC;QACf,IAAI,CAAC,MAAM,GAAG,MAAM,CAAC;IACzB,CAAC;CACJ;AAPD,wDAOC"}

@@ -39,6 +39,10 @@ build/Release
 node_modules/
 jspm_packages/
 
+# Fusebox cache
+.fusebox/cache
+
+
 # Typescript v1 declaration files
 typings/
 
@@ -71,3 +75,4 @@ yarn.lock
 packages/**/lib
 config/**/lib
 .lerna_backup
+/.project

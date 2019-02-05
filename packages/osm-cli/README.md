@@ -17,11 +17,11 @@ OpenStreetMaps CLI
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g osm-cli
+$ npm install -g @ball-maps/osm-cli
 $ osm-cli COMMAND
 running command...
 $ osm-cli (-v|--version|version)
-osm-cli/1.0.0 win32-x64 node-v10.13.0
+@ball-maps/osm-cli/1.0.0 win32-x64 node-v11.5.0
 $ osm-cli --help [COMMAND]
 USAGE
   $ osm-cli COMMAND
@@ -88,7 +88,7 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.1.3/src\commands\help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.1.4/src\commands\help.ts)_
 
 ## `osm-cli stats`
 

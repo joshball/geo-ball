@@ -17,11 +17,11 @@ OpenStreetMaps CLI
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g ucsd-cli
+$ npm install -g @ball-maps/ucsd-cli
 $ ucsd-cli COMMAND
 running command...
 $ ucsd-cli (-v|--version|version)
-ucsd-cli/1.0.0 win32-x64 node-v10.13.0
+@ball-maps/ucsd-cli/1.0.0 win32-x64 node-v11.5.0
 $ ucsd-cli --help [COMMAND]
 USAGE
   $ ucsd-cli COMMAND
@@ -30,51 +30,86 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`ucsd-cli OsmToRoadSeg OSMDATAFILE [ROADSEGEMENTSFILE]`](#ucsd-cli-osm-to-road-seg-osmdatafile-roadsegementsfile)
-* [`ucsd-cli commands`](#ucsd-cli-commands)
+* [`ucsd-cli generate:int [ROADSEGEMENTSFILE]`](#ucsd-cli-generateint-roadsegementsfile)
+* [`ucsd-cli generate:osm [OSMQUERYFILE]`](#ucsd-cli-generateosm-osmqueryfile)
+* [`ucsd-cli generate:rsd [OSMDATAFILE]`](#ucsd-cli-generatersd-osmdatafile)
 * [`ucsd-cli help [COMMAND]`](#ucsd-cli-help-command)
 * [`ucsd-cli stats`](#ucsd-cli-stats)
-* [`ucsd-cli which COMMAND`](#ucsd-cli-which-command)
 
-## `ucsd-cli OsmToRoadSeg OSMDATAFILE [ROADSEGEMENTSFILE]`
+## `ucsd-cli generate:int [ROADSEGEMENTSFILE]`
 
-Converts OSM files to Road Segment Files
+Generates INT (intersections) files from RSD (Road Segment Data) Files
 
 ```
 USAGE
-  $ ucsd-cli OsmToRoadSeg OSMDATAFILE [ROADSEGEMENTSFILE]
+  $ ucsd-cli generate:int [ROADSEGEMENTSFILE]
 
 ARGUMENTS
-  OSMDATAFILE        OSM Data file
   ROADSEGEMENTSFILE  Road Segments file for UCSD Graph
 
 OPTIONS
+  -d, --dataDir=dataDir  Map Data Directory
+  -h, --help             show CLI help
+  -o, --out=out          Alternative path to int file to generate
+  -o, --overwrite
+
+EXAMPLES
+  $ ucsd-cli generate:int --all
+  $ ucsd-cli generate:int roadSegmentsFile
+  $ ucsd-cli generate:int roadSegmentsFile --out alternative-int-file-path
+```
+
+_See code: [build\commands\generate\int.ts](https://github.com/joshball/ball-maps/blob/v1.0.0/build\commands\generate\int.ts)_
+
+## `ucsd-cli generate:osm [OSMQUERYFILE]`
+
+Generates an OSM (OpenStreetMap) data files by sending an OSM query to an OSM server
+
+```
+USAGE
+  $ ucsd-cli generate:osm [OSMQUERYFILE]
+
+ARGUMENTS
+  OSMQUERYFILE  OSM Query file
+
+OPTIONS
+  -d, --dataDir=dataDir        Data Directory
   -f, --format=json|text|both  [default: json] Output format (json,text,both)
   -h, --help                   show CLI help
   -o, --overwrite
 
 EXAMPLES
-  $ cli convert osmDataFile
-  $ cli convert osmDataFile roadSegmentFile
+  $ ucsd-cli generate:osm --all
+  $ ucsd-cli generate:osm osmQueryFile
+  $ ucsd-cli generate:osm osmQueryFile --out alternative-osm-data-path
 ```
 
-_See code: [build\commands\OsmToRoadSeg.ts](https://github.com/joshball/ball-maps/blob/v1.0.0/build\commands\OsmToRoadSeg.ts)_
+_See code: [build\commands\generate\osm.ts](https://github.com/joshball/ball-maps/blob/v1.0.0/build\commands\generate\osm.ts)_
 
-## `ucsd-cli commands`
+## `ucsd-cli generate:rsd [OSMDATAFILE]`
 
-list all the commands
+Generates RSD (Road Segment Data) Files from OSM (OpenStreetMap) data files
 
 ```
 USAGE
-  $ ucsd-cli commands
+  $ ucsd-cli generate:rsd [OSMDATAFILE]
+
+ARGUMENTS
+  OSMDATAFILE  OSM Data file
 
 OPTIONS
-  -h, --help  show CLI help
-  -j, --json  output in json format
-  --hidden    also show hidden commands
+  -d, --dataDir=dataDir        Data Directory
+  -f, --format=json|text|both  [default: json] Output format (json,text,both)
+  -h, --help                   show CLI help
+  -o, --overwrite
+
+EXAMPLES
+  $ ucsd-cli generate:rsd --all
+  $ ucsd-cli generate:rsd osmDataFile
+  $ ucsd-cli generate:rsd osmDataFile --out alternative-rsd-path
 ```
 
-_See code: [@oclif/plugin-commands](https://github.com/oclif/plugin-commands/blob/v1.2.2/src\commands\commands.ts)_
+_See code: [build\commands\generate\rsd.ts](https://github.com/joshball/ball-maps/blob/v1.0.0/build\commands\generate\rsd.ts)_
 
 ## `ucsd-cli help [COMMAND]`
 
@@ -91,7 +126,7 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.1.3/src\commands\help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.1.4/src\commands\help.ts)_
 
 ## `ucsd-cli stats`
 
@@ -110,15 +145,4 @@ EXAMPLE
 ```
 
 _See code: [build\commands\stats.ts](https://github.com/joshball/ball-maps/blob/v1.0.0/build\commands\stats.ts)_
-
-## `ucsd-cli which COMMAND`
-
-show which plugin a command is in
-
-```
-USAGE
-  $ ucsd-cli which COMMAND
-```
-
-_See code: [@oclif/plugin-which](https://github.com/oclif/plugin-which/blob/v1.0.3/src\commands\which.ts)_
 <!-- commandsstop -->

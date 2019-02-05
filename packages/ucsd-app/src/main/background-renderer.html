@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/normalize.css@7.0.0/normalize.css" />
+    <link rel="stylesheet" href="https://unpkg.com/@blueprintjs/core@3.11.0/lib/css/blueprint.css" />
+    <link rel="stylesheet" href="https://unpkg.com/@blueprintjs/icons@3.5.0/lib/css/blueprint-icons.css" />
+    <link href="https://fonts.googleapis.com/css?family=Concert+One|Lato|Montserrat|Open+Sans|Oswald|Roboto" rel="stylesheet">
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'none'"> -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:">
+    <meta http-equiv="Content-Security-Policy" content="style-src 'unsafe-inline'">
+    <meta http-equiv="Content-Security-Policy" content="font-src 'self';"> -->
+    <style>
+        .leaflet-pane {
+            z-index: 10;
+        };
+        .foo {
+            color: aliceblue
+        }
+    </style>
+</head>
+
+<body>
+    <div id='root'></div>
+    <script type="text/javascript" src="background-renderer.js"></script>
+</body>
+
+</html>

@@ -1,30 +1,60 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const LatLng_1 = require("./LatLng");
+const distance_1 = __importDefault(require("@turf/distance"));
 class LatLngBounds {
     constructor(southwest, northeast) {
         this.toString = () => `[SW:${this.sw}],[NE:${this.ne}]`;
+        this.center = () => {
+            const latDelta = Math.abs(this.ne.lat - this.sw.lat) / 2;
+            const centerLat = this.ne.lat - latDelta;
+            const lonDelta = Math.abs(this.ne.lng - this.sw.lng) / 2;
+            const centerLon = this.ne.lng - lonDelta;
+            return new LatLng_1.LatLng(centerLat, centerLon);
+        };
         this.valid = () => this.sw.valid() && this.ne.valid();
+        if (!(southwest instanceof LatLng_1.LatLng)) {
+            throw new Error(`southwest is not instance of LatLng`);
+        }
+        if (!(northeast instanceof LatLng_1.LatLng)) {
+            throw new Error(`northeast is not instance of LatLng`);
+        }
         // console.log(`LatLngBounds(): ${southwest} ${northeast}`)
         const getError = (error) => `LatLngBounds() ${error} (maybe mixed up your ne/sw?)`;
         if (northeast.lat < southwest.lat) {
             throw new Error(getError(`ne.lat[${northeast.lat}] < sw.lat[${southwest.lat}]`));
         }
-        if (northeast.lon < southwest.lon) {
-            throw new Error(getError(`ne.lon[${northeast.lon}] < sw.lon[${southwest.lon}]`));
+        if (northeast.lng < southwest.lng) {
+            throw new Error(getError(`ne.lng[${northeast.lng}] < sw.lng[${southwest.lng}]`));
         }
-        this.ne = new LatLng_1.LatLng(northeast.lat, northeast.lon);
-        this.sw = new LatLng_1.LatLng(southwest.lat, southwest.lon);
+        this.ne = new LatLng_1.LatLng(northeast.lat, northeast.lng);
+        this.sw = new LatLng_1.LatLng(southwest.lat, southwest.lng);
     }
     grow(by) {
         this.ne.lat += by;
         this.sw.lat -= by;
-        this.ne.lon += by;
-        this.sw.lon -= by;
+        this.ne.lng += by;
+        this.sw.lng -= by;
+    }
+    getArea() {
+        const northWest = new LatLng_1.LatLng(this.ne.lat, this.sw.lng);
+        const latDistMeters = distance_1.default([northWest.lng, northWest.lat], [this.sw.lng, this.sw.lat], { units: 'meters' });
+        const lngDistMeters = distance_1.default([northWest.lng, northWest.lat], [this.ne.lng, this.ne.lat], { units: 'meters' });
+        const areaInMeters = latDistMeters * lngDistMeters;
+        return {
+            ne: this.ne,
+            sw: this.sw,
+            latDistMeters,
+            lngDistMeters,
+            areaInMeters,
+        };
     }
     static FromBounds(bounds, growth = 0) {
-        const sw = new LatLng_1.LatLng(bounds.sw.lat - growth, bounds.sw.lon - growth);
-        const ne = new LatLng_1.LatLng(bounds.ne.lat + growth, bounds.ne.lon + growth);
+        const sw = new LatLng_1.LatLng(bounds.sw.lat - growth, bounds.sw.lng - growth);
+        const ne = new LatLng_1.LatLng(bounds.ne.lat + growth, bounds.ne.lng + growth);
         return new LatLngBounds(sw, ne);
     }
     static FromArray(bounds) {
@@ -47,6 +77,18 @@ class LatLngBounds {
     toArray() {
         return this.sw.toArray().concat(this.ne.toArray());
     }
+    equals(rhs) {
+        if (!rhs) {
+            return false;
+        }
+        return this.sw === rhs.sw && this.ne === rhs.ne;
+    }
+    hashCode() {
+        return Array.from(JSON.stringify(this))
+            // tslint:disable-next-line:no-bitwise
+            .reduce((s, c) => Math.imul(31, s) + c.charCodeAt(0) | 0, 0);
+        // return fieldsHashCode(this.latitude, this.longitude);
+    }
 }
 exports.LatLngBounds = LatLngBounds;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTGF0TG5nQm91bmRzLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vc3JjL2NvcmUvTGF0TG5nQm91bmRzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEscUNBQWtDO0FBRWxDLE1BQWEsWUFBWTtJQUlyQixZQUFZLFNBQWlCLEVBQUUsU0FBaUI7UUFhaEQsYUFBUSxHQUFHLEdBQVcsRUFBRSxDQUFDLE9BQU8sSUFBSSxDQUFDLEVBQUUsU0FBUyxJQUFJLENBQUMsRUFBRSxHQUFHLENBQUM7UUF3QzNELFVBQUssR0FBRyxHQUFZLEVBQUUsQ0FBQyxJQUFJLENBQUMsRUFBRSxDQUFDLEtBQUssRUFBRSxJQUFJLElBQUksQ0FBQyxFQUFFLENBQUMsS0FBSyxFQUFFLENBQUM7UUFwRHRELDJEQUEyRDtRQUMzRCxNQUFNLFFBQVEsR0FBRyxDQUFDLEtBQWEsRUFBRSxFQUFFLENBQUMsa0JBQWtCLEtBQUssK0JBQStCLENBQUM7UUFDM0YsSUFBSSxTQUFTLENBQUMsR0FBRyxHQUFHLFNBQVMsQ0FBQyxHQUFHLEVBQUU7WUFDL0IsTUFBTSxJQUFJLEtBQUssQ0FBQyxRQUFRLENBQUMsVUFBVSxTQUFTLENBQUMsR0FBRyxjQUFjLFNBQVMsQ0FBQyxHQUFHLEdBQUcsQ0FBQyxDQUFDLENBQUM7U0FDcEY7UUFDRCxJQUFJLFNBQVMsQ0FBQyxHQUFHLEdBQUcsU0FBUyxDQUFDLEdBQUcsRUFBRTtZQUMvQixNQUFNLElBQUksS0FBSyxDQUFDLFFBQVEsQ0FBQyxVQUFVLFNBQVMsQ0FBQyxHQUFHLGNBQWMsU0FBUyxDQUFDLEdBQUcsR0FBRyxDQUFDLENBQUMsQ0FBQztTQUNwRjtRQUNELElBQUksQ0FBQyxFQUFFLEdBQUcsSUFBSSxlQUFNLENBQUMsU0FBUyxDQUFDLEdBQUcsRUFBRSxTQUFTLENBQUMsR0FBRyxDQUFDLENBQUM7UUFDbkQsSUFBSSxDQUFDLEVBQUUsR0FBRyxJQUFJLGVBQU0sQ0FBQyxTQUFTLENBQUMsR0FBRyxFQUFFLFNBQVMsQ0FBQyxHQUFHLENBQUMsQ0FBQztJQUN2RCxDQUFDO0lBSUQsSUFBSSxDQUFDLEVBQVU7UUFDWCxJQUFJLENBQUMsRUFBRSxDQUFDLEdBQUcsSUFBSSxFQUFFLENBQUM7UUFDbEIsSUFBSSxDQUFDLEVBQUUsQ0FBQyxHQUFHLElBQUksRUFBRSxDQUFDO1FBRWxCLElBQUksQ0FBQyxFQUFFLENBQUMsR0FBRyxJQUFJLEVBQUUsQ0FBQztRQUNsQixJQUFJLENBQUMsRUFBRSxDQUFDLEdBQUcsSUFBSSxFQUFFLENBQUM7SUFDdEIsQ0FBQztJQUNELE1BQU0sQ0FBQyxVQUFVLENBQUMsTUFBb0IsRUFBRSxTQUFpQixDQUFDO1FBQ3RELE1BQU0sRUFBRSxHQUFHLElBQUksZUFBTSxDQUFDLE1BQU0sQ0FBQyxFQUFFLENBQUMsR0FBRyxHQUFHLE1BQU0sRUFBRSxNQUFNLENBQUMsRUFBRSxDQUFDLEdBQUcsR0FBRyxNQUFNLENBQUMsQ0FBQztRQUN0RSxNQUFNLEVBQUUsR0FBRyxJQUFJLGVBQU0sQ0FBQyxNQUFNLENBQUMsRUFBRSxDQUFDLEdBQUcsR0FBRyxNQUFNLEVBQUUsTUFBTSxDQUFDLEVBQUUsQ0FBQyxHQUFHLEdBQUcsTUFBTSxDQUFDLENBQUM7UUFDdEUsT0FBTyxJQUFJLFlBQVksQ0FBQyxFQUFFLEVBQUUsRUFBRSxDQUFDLENBQUM7SUFDcEMsQ0FBQztJQUNELE1BQU0sQ0FBQyxTQUFTLENBQUMsTUFBcUI7UUFDbEMsSUFBSSxNQUFNLENBQUMsTUFBTSxLQUFLLENBQUMsRUFBRTtZQUNyQixNQUFNLElBQUksS0FBSyxDQUNYLG1GQUFtRixDQUN0RixDQUFDO1NBQ0w7UUFDRCxNQUFNLFFBQVEsR0FBRyxNQUFNLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFDM0IsTUFBTSxPQUFPLEdBQUcsTUFBTSxDQUFDLENBQUMsQ0FBQyxDQUFDO1FBQzFCLE1BQU0sUUFBUSxHQUFHLE1BQU0sQ0FBQyxDQUFDLENBQUMsQ0FBQztRQUMzQixNQUFNLE9BQU8sR0FBRyxNQUFNLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFFMUIsTUFBTSxFQUFFLEdBQUcsSUFBSSxlQUFNLENBQUMsUUFBUSxFQUFFLE9BQU8sQ0FBQyxDQUFDO1FBQ3pDLE1BQU0sRUFBRSxHQUFHLElBQUksZUFBTSxDQUFDLFFBQVEsRUFBRSxPQUFPLENBQUMsQ0FBQztRQUN6QyxPQUFPLElBQUksWUFBWSxDQUFDLEVBQUUsRUFBRSxFQUFFLENBQUMsQ0FBQztJQUNwQyxDQUFDO0lBRUQsTUFBTSxDQUFDLFdBQVcsQ0FBQyxRQUFnQixFQUFFLE9BQWUsRUFBRSxRQUFnQixFQUFFLE9BQWU7UUFDbkYsTUFBTSxFQUFFLEdBQUcsSUFBSSxlQUFNLENBQUMsUUFBUSxFQUFFLE9BQU8sQ0FBQyxDQUFDO1FBQ3pDLE1BQU0sRUFBRSxHQUFHLElBQUksZUFBTSxDQUFDLFFBQVEsRUFBRSxPQUFPLENBQUMsQ0FBQztRQUN6QyxPQUFPLElBQUksWUFBWSxDQUFDLEVBQUUsRUFBRSxFQUFFLENBQUMsQ0FBQztJQUNwQyxDQUFDO0lBRUQsT0FBTztRQUNILE9BQU8sSUFBSSxDQUFDLEVBQUUsQ0FBQyxPQUFPLEVBQUUsQ0FBQyxNQUFNLENBQUMsSUFBSSxDQUFDLEVBQUUsQ0FBQyxPQUFPLEVBQUUsQ0FBQyxDQUFDO0lBQ3ZELENBQUM7Q0FHSjtBQTFERCxvQ0EwREMifQ==
+//# sourceMappingURL=LatLngBounds.js.map

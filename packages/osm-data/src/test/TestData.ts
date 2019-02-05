@@ -1,19 +1,11 @@
-import { OpenStreetmapQuery, OpenStreetmapFileMetaData } from "..";
-import { LatLngBounds, LatLng } from '@ball-maps/geo-core';
+import { OpenStreetmapQuery, IOpenStreetmapQuery, OpenStreetmapFileMetaData } from "..";
+import { LatLngBounds, LatLng, ILatLngBounds } from '@ball-maps/geo-core';
 
 import { IOpenStreetmapQueryResponse } from "../api/IOpenStreetmapQueryResponse";
 
-export interface ILatLngObj {
-	lat: number;
-	lon: number;
-};
-export interface ILatLngBoundsObj {
-	sw: ILatLngObj;
-	ne: ILatLngObj;
-};
 
 export interface ILatLngBoundsTestData {
-	objBounds: ILatLngBoundsObj;
+	objBounds: ILatLngBounds;
 	sw: LatLng;
 	ne: LatLng;
 	latLngBounds: LatLngBounds;
@@ -25,18 +17,18 @@ export interface IOsmQuery {
 };
 
 export const createNewBounds = (): ILatLngBoundsTestData => {
-	const objBounds = {
+	const objBounds:ILatLngBounds = {
 		sw: {
 			lat: 32.859375,
-			lon: -117.27233,
+			lng: -117.27233,
 		},
 		ne: {
 			lat: 32.902622,
-			lon: -117.20367,
+			lng: -117.20367,
 		}
 	}
-	const sw = new LatLng(objBounds.sw.lat, objBounds.sw.lon);
-	const ne = new LatLng(objBounds.ne.lat, objBounds.ne.lon);
+	const sw = new LatLng(objBounds.sw.lat, objBounds.sw.lng);
+	const ne = new LatLng(objBounds.ne.lat, objBounds.ne.lng);
 	const latLngBounds = new LatLngBounds(sw, ne);
 	return {
 		objBounds,
@@ -53,7 +45,8 @@ export const createNewOpenStreetmapFileMetaData = (): OpenStreetmapFileMetaData 
 
 export const createNewOpenStreetmapQuery = (latLngBoundsTestData?: ILatLngBoundsTestData) => {
 	latLngBoundsTestData = latLngBoundsTestData || createNewBounds();
-	const query = new OpenStreetmapQuery(latLngBoundsTestData.latLngBounds);
+    const osmQuery:IOpenStreetmapQuery = { latLngBounds:latLngBoundsTestData.latLngBounds };
+	const query = new OpenStreetmapQuery(osmQuery);
 	return {
 		query,
 		latLngBoundsTestData

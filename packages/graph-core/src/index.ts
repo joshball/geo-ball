@@ -2,5 +2,4 @@
 // import "core-js/fn/array.find"
 // ...
 
-export * from './core/LatLng';
-export * from './core/LatLngBounds';
+// export * from './core/LatLng';

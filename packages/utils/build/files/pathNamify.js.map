@@ -1,0 +1,1 @@
+{"version":3,"file":"pathNamify.js","sourceRoot":"","sources":["../../src/files/pathNamify.ts"],"names":[],"mappings":";;AAAA,+BAAwD;AACxD,6CAA0C;AAE7B,QAAA,UAAU,GAAG,CAAC,IAAY,EAAE,OAAwB,EAAE,EAAE;IACjE,IAAI,GAAG,cAAO,CAAC,IAAI,CAAC,CAAC;IACrB,OAAO,WAAI,CAAC,cAAO,CAAC,IAAI,CAAC,EAAE,uBAAU,CAAC,eAAQ,CAAC,IAAI,CAAC,EAAE,OAAO,CAAC,CAAC,CAAC;AACpE,CAAC,CAAC"}

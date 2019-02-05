@@ -70,7 +70,7 @@ const dumpHighElementStats = (elements) => {
         .forEach(he => {
             highwayElements.total++;
             if (he.lat) setOrInc(highwayElements, 'withLat');
-            if (he.lon) setOrInc(highwayElements, 'withLon');
+            if (he.lng) setOrInc(highwayElements, 'withLon');
             if (he.tags) setOrInc(highwayElements, 'withTags');
             if (he.nodes) setOrInc(highwayElements, 'withNodes');
         });

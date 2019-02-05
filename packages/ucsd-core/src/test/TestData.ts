@@ -3,17 +3,17 @@
 // import { OpenStreetmapQuery, LatLngBounds, LatLng } from "..";
 // import { IOpenStreetmapQueryResponse } from "../api/IOpenStreetmapQueryResponse";
 
-// export interface ILatLngObj {
+// export interface ILatLng {
 // 	lat: number;
 // 	lon: number;
 // };
-// export interface ILatLngBoundsObj {
-// 	sw: ILatLngObj;
-// 	ne: ILatLngObj;
+// export interface ILatLngBound {
+// 	sw: ILatLng;
+// 	ne: ILatLng;
 // };
 
 // export interface ILatLngBoundsTestData {
-// 	objBounds: ILatLngBoundsObj;
+// 	objBounds: ILatLngBound;
 // 	sw: LatLng;
 // 	ne: LatLng;
 // 	latLngBounds: LatLngBounds;
@@ -35,8 +35,8 @@
 // 			lon: -117.20367,
 // 		}
 // 	}
-// 	const sw = new LatLng(objBounds.sw.lat, objBounds.sw.lon);
-// 	const ne = new LatLng(objBounds.ne.lat, objBounds.ne.lon);
+// 	const sw = new LatLng(objBounds.sw.lat, objBounds.sw.lng);
+// 	const ne = new LatLng(objBounds.ne.lat, objBounds.ne.lng);
 // 	const latLngBounds = new LatLngBounds(sw, ne);
 // 	return {
 // 		objBounds,

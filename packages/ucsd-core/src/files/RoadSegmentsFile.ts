@@ -1,87 +1,116 @@
 import { writeFileSync, readFileSync } from 'fs'
 
 import { LatLngBounds, LatLng } from '@ball-maps/geo-core';
-import { OpenStreetmapFile } from '@ball-maps/osm-data';
+import { OpenStreetmapFile, IOpenStreetMapWay, OpenStreetMapElements, IOpenStreetMapNode } from '@ball-maps/osm-data';
 
-import { RoadSegmentLine } from '../data/RoadSegmentLine';
+import { RoadSegmentLine, RoadSegmentType } from '../data/RoadSegmentLine';
+import { GeoFileMetaData } from './GeoFileMetaData';
+import { basename } from 'path';
 
 
 export type IRoadSegmentsFileData = Array<RoadSegmentLine>;
 
-export class RoadSegmentsFileMetaData {
-	bounds: LatLngBounds;
-	timestamp: Date;
-
-	constructor(bounds:LatLngBounds, timestamp: Date) {
-		this.bounds = bounds;
-		this.timestamp = timestamp;
-	}
-
-	static CreateEmpty(): RoadSegmentsFileMetaData {
-		const emptyBounds = new LatLngBounds(new LatLng(0, 0), new LatLng(0, 0));
-		return new RoadSegmentsFileMetaData(emptyBounds, new Date());
-	}
-}
-
-
 export class RoadSegmentsFile {
-	metaData: RoadSegmentsFileMetaData;
-	segmentsData: IRoadSegmentsFileData;
+    metaData: GeoFileMetaData;
+    segmentsData: IRoadSegmentsFileData;
 
-	constructor(metaData: RoadSegmentsFileMetaData, segmentsData: IRoadSegmentsFileData) {
-		this.metaData = metaData;
-		this.segmentsData = segmentsData;
-	}
+    constructor(metaData: GeoFileMetaData, segmentsData: IRoadSegmentsFileData) {
+        this.metaData = new GeoFileMetaData(metaData.bounds, metaData.timestamp);
+        this.segmentsData = segmentsData;
+    }
 
-	static CreateFromOsm(osmFile: OpenStreetmapFile): RoadSegmentsFile {
-		const metaData = RoadSegmentsFile.CreateMetaDataFromOsm(osmFile)
-		const segmentsData = RoadSegmentsFile.CreateSegmentsDataFromOsm(osmFile);
-		return new RoadSegmentsFile(metaData, segmentsData);
-	}
+    static Extension = 'ucsd-rsd.json';
+    static HasCorrectExtension(filePath: string): boolean {
+        return basename(filePath).endsWith(RoadSegmentsFile.Extension);
+    }
+
+    static CreateFromOsm(osmFile: OpenStreetmapFile): RoadSegmentsFile {
+        const metaData = RoadSegmentsFile.CreateMetaDataFromOsm(osmFile)
+        const segmentsData = RoadSegmentsFile.CreateSegmentsDataFromOsm(osmFile);
+        return new RoadSegmentsFile(metaData, segmentsData);
+    }
+
+    static DeReferenceNode(nodes: Array<IOpenStreetMapNode>, nodeId: number): IOpenStreetMapNode {
+        const node = nodes.find(f => f.id === nodeId);
+        if (!node) {
+            throw new Error('cant find node');
+        }
+        return node;
+    }
+
+    static CreateSegmentsDataFromOsm(_osmFile: OpenStreetmapFile): IRoadSegmentsFileData {
+        const segments: IRoadSegmentsFileData = [];
+        const { elements } = _osmFile.getElements();
+        const ways = elements.filter(e => e.type === 'way') as Array<IOpenStreetMapWay>;
+        const nodes = elements.filter(e => e.type === 'node') as Array<IOpenStreetMapNode>;
+        ways
+            .forEach((e) => {
+                const way = e as IOpenStreetMapWay;
+                const name = way.tags.name!;
+                const highway = way.tags.highway! as RoadSegmentType;
+                const lanes = way.tags.lanes;
+                const maxSpeed = way.tags.maxspeed;
+                const oneWay = way.tags.oneway === 'yes';
+                const nodeIds = way.nodes || [];
+                if (nodeIds.length < 2) {
+                    throw new Error('NODE LEN < 2');
+                }
+                for (let i = 0; i < nodeIds.length - 1; i++) {
+                    const start = RoadSegmentsFile.DeReferenceNode(nodes, nodeIds[i]);
+                    const startLatLng = new LatLng(start.lat, start.lon);
+                    const end = RoadSegmentsFile.DeReferenceNode(nodes, nodeIds[i + 1]);
+                    const endLatLng = new LatLng(end.lat, end.lon);
+                    // BUG: CHECK BOUNDS
+
+                    segments.push(new RoadSegmentLine(startLatLng, endLatLng, name, highway, maxSpeed, lanes));
+                    if (!oneWay) {
+                        segments.push(new RoadSegmentLine(endLatLng, startLatLng, name, highway, maxSpeed, lanes));
+                    }
+                }
+            })
+        return segments;
+    }
+    static CreateMetaDataFromOsm(_osmFile: OpenStreetmapFile): GeoFileMetaData {
+        return new GeoFileMetaData(_osmFile.osmMetaData.osmQuery.latLngBounds, new Date(_osmFile.osmMetaData.queryDate));
+    }
 
 
-	static CreateSegmentsDataFromOsm(_osmFile: OpenStreetmapFile): IRoadSegmentsFileData {
-		throw new Error("Method not implemented.");
-	}
-	static CreateMetaDataFromOsm(_osmFile: OpenStreetmapFile): RoadSegmentsFileMetaData {
-		throw new Error("Method not implemented.");
-	}
+    static LoadFromTextFile(filePath: string): RoadSegmentsFile {
+        const lines = readFileSync(filePath, 'utf8')
+            .split(/\r?\n/)
+            .filter(l => l !== '');
+
+        const roadSegments = lines
+            .map(l => {
+                return RoadSegmentLine.CreateFromString(l);
+            })
+        const bounds = new LatLngBounds(new LatLng(1, 1), new LatLng(3, 3));
+        const metaData = GeoFileMetaData.CreateEmpty();
+        // return new RoadSegmentsFile(bounds, new Date(), roadSegments);;
+        return new RoadSegmentsFile(metaData, roadSegments);;
+    }
 
 
-	static LoadFromTextFile(filePath: string): RoadSegmentsFile {
-		const lines = readFileSync(filePath, 'utf8')
-			.split(/\r?\n/)
-			.filter(l => l !== '');
+    static Load(filePath: string): RoadSegmentsFile {
+        const file = JSON.parse(readFileSync(filePath, 'utf8'));
+        return new RoadSegmentsFile(file.metaData, file.segmentsData);
+    }
 
-		const roadSegments = lines
-			.map(l => {
-				return RoadSegmentLine.CreateFromString(l);
-			})
-		const bounds = new LatLngBounds(new LatLng(1, 1), new LatLng(3, 3));
-		const metaData = RoadSegmentsFileMetaData.CreateEmpty();
-		// return new RoadSegmentsFile(bounds, new Date(), roadSegments);;
-		return new RoadSegmentsFile(metaData, roadSegments);;
-	}
-	static LoadFromJsonFile(filePath: string): RoadSegmentsFile {
-		const file = JSON.parse(readFileSync(filePath, 'utf8'));
-		return new RoadSegmentsFile(file.metaData, file.segmentsData);
-	}
-
-	// ORIG: 32.8769858 -117.2359995 32.8771038 -117.2360337 "Myers Drive" residential
-	/// NEW: 32.8769858 -117.2359995 32.8771038 -117.2360337 "Myers Drive" residential
+    // ORIG: 32.8769858 -117.2359995 32.8771038 -117.2360337 "Myers Drive" residential
+    /// NEW: 32.8769858 -117.2359995 32.8771038 -117.2360337 "Myers Drive" residential
 
 
-	static SaveJsonFile(filePath: string, roadSegmentsFile: RoadSegmentsFile): void {
-		return writeFileSync(filePath, JSON.stringify(roadSegmentsFile));
-	}
+    static SaveJsonFile(filePath: string, roadSegmentsFile: RoadSegmentsFile): void {
+        return writeFileSync(filePath, JSON.stringify(roadSegmentsFile));
+    }
 
-	static SaveTextFile(filePath: string, roadSegmentsFile: RoadSegmentsFile): void {
-		const lines = roadSegmentsFile.segmentsData.map(rs => {
-			const start = rs.start.lat + ' ' + rs.start.lon;
-			const end = rs.end.lat + ' ' + rs.end.lon;
-			return `${start} ${end} "${rs.name}" ${rs.type}`
-		})
-		return writeFileSync(filePath, lines.join('\r\n'));
-	}
+    static SaveTextFile(filePath: string, roadSegmentsFile: RoadSegmentsFile): void {
+        const lines = roadSegmentsFile.segmentsData.map(rs => {
+            const start = rs.start.lat + ' ' + rs.start.lng;
+            const end = rs.end.lat + ' ' + rs.end.lng;
+            return `${start} ${end} "${rs.name}" ${rs.type}`
+        })
+        return writeFileSync(filePath, lines.join('\r\n'));
+    }
 
 }

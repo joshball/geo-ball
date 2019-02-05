@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "ucsd-cli",
+  "name": "@ball-maps/ucsd-cli",
   "description": "OpenStreetMaps CLI",
   "license": "MIT",
   "author": "Joshua Ball",
@@ -23,8 +23,9 @@
     "build:watch": "yarn build && tsc -b --watch",
     "clean": "rimraf build oclif.manifest.json",
     "cleanup:packages": "yarn run prettier-package-json --write",
-    "oclif-stuff": "oclif-dev manifest && oclif-dev readme",
+    "oclif-stuff": "oclif-dev manifest",
     "tscv": "tsc --version && which tsc",
+    "prepublishOnly": "yarn run build && oclif-dev manifest && oclif-dev readme",
     "prepack": "rimraf build && tsc -b && oclif-dev manifest && oclif-dev readme",
     "postpack": "rimraf oclif.manifest.json",
     "test": "echo NO TESTS",
@@ -35,36 +36,21 @@
     "@ball-maps/geo-core": "^1.0.0",
     "@ball-maps/osm-data": "^1.0.0",
     "@ball-maps/ucsd-core": "^1.0.0",
+    "@ball-maps/utils": "^1.0.0",
     "@oclif/command": "^1",
     "@oclif/config": "^1",
-    "@oclif/parser": "^1",
+    "@oclif/parser": "^3.7.2",
     "@oclif/plugin-commands": "^1.2.2",
     "@oclif/plugin-help": "^2",
     "@oclif/plugin-not-found": "^1.2.2",
     "@oclif/plugin-which": "^1.0.3",
     "tslib": "^1"
   },
+  "devDependencies": {
+    "typescript": "^3.2.2"
+  },
   "peerDependencies": {
     "axios": "^0.18.0"
-  },
-  "devDependencies": {
-    "@oclif/dev-cli": "^1",
-    "@oclif/tslint": "^3",
-    "@types/chai": "^4",
-    "@types/mocha": "^5",
-    "@types/node": "^10.12.2",
-    "ava": "^0.25.0",
-    "ava-ts": "^0.25.2",
-    "axios": "^0.18.0",
-    "axios-mock-adapter": "^1.15.0",
-    "globby": "^8",
-    "nyc": "^13.1.0",
-    "prettier-package-json": "^2.0.1",
-    "rimraf": "^2.6.2",
-    "ts-node": "^7.0.1",
-    "tslint": "^5.11.0",
-    "tslint-config-prettier": "^1.15.0",
-    "typescript": "^3.1.6"
   },
   "keywords": [
     "oclif"
@@ -76,10 +62,7 @@
     "commands": "./build/commands",
     "bin": "ucsd-cli",
     "plugins": [
-      "@oclif/plugin-commands",
-      "@oclif/plugin-help",
-      "@oclif/plugin-not-found",
-      "@oclif/plugin-which"
+      "@oclif/plugin-help"
     ]
   },
   "types": "build/index.d.ts"

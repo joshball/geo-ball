@@ -1,0 +1,1 @@
+{"version":3,"file":"TestData.d.ts","sourceRoot":"","sources":["../../src/test/TestData.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAE,MAAM,EAAE,aAAa,EAAE,MAAM,IAAI,CAAC;AAEzD,MAAM,WAAW,qBAAqB;IACrC,SAAS,EAAE,aAAa,CAAC;IACzB,EAAE,EAAE,MAAM,CAAC;IACX,EAAE,EAAE,MAAM,CAAC;IACX,YAAY,EAAE,YAAY,CAAC;CAC3B;AAED,eAAO,MAAM,eAAe,6BAoB3B,CAAA"}

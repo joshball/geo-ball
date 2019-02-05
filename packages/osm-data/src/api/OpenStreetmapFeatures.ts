@@ -1,3 +1,8 @@
+export interface IOSMFeatureKeyValuePair {
+    key: OSMFeatureKey;
+    values: Array<string>;
+}
+
 export class OSMFeatureKeyValuePair {
     key: OSMFeatureKey;
     values: Array<string>;

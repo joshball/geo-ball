@@ -3,7 +3,7 @@
   "name": "@ball-maps/graph-core",
   "description": "Graphing Library",
   "license": "ISC",
-  "author": "Joshua Ball <jball@highseas.com>",
+  "author": "Joshua Ball <joshua.g.s.ball@gmail.com>",
   "homepage": "https://github.com/joshball/ball-maps#readme",
   "repository": {
     "type": "git",
@@ -25,23 +25,10 @@
     "build": "tsc -p tsconfig.json",
     "build:watch": "tsc -p tsconfig.json --watch",
     "clean": "rimraf build",
+    "clean:node_modules": "rimraf node_modules",
     "cleanup:packages": "yarn run prettier-package-json --write",
     "test": "yarn run build && yarn run nyc ava --verbose",
     "test:watch": "yarn run build && yarn run ava --watch"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "@types/node": "^10.12.2",
-    "ava": "^0.25.0",
-    "ava-ts": "^0.25.2",
-    "axios": "^0.18.0",
-    "axios-mock-adapter": "^1.15.0",
-    "nyc": "^13.1.0",
-    "prettier-package-json": "^2.0.1",
-    "ts-node": "^7.0.1",
-    "tslint": "^5.11.0",
-    "tslint-config-prettier": "^1.15.0",
-    "typescript": "^3.1.6"
   },
   "ava": {
     "snapshotDir": "./snapshots",
@@ -52,5 +39,10 @@
     "sources": [
       "build/**/*.js"
     ]
+  },
+  "devDependencies": {
+    "ava": "^1.1.0",
+    "ava-ts": "^0.25.2",
+    "nyc": "^13.1.0"
   }
 }

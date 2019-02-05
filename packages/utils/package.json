@@ -1,0 +1,50 @@
+{
+  "private": true,
+  "name": "@ball-maps/utils",
+  "description": "Utils used in ball-maps",
+  "license": "ISC",
+  "author": "Joshua Ball <joshua.g.s.ball@gmail.com>",
+  "homepage": "https://github.com/joshball/ball-maps#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshball/ball-maps.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joshball/ball-maps/issues"
+  },
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "files": [
+    "build"
+  ],
+  "directories": {
+    "lib": "build",
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "build:watch": "tsc -p tsconfig.json --watch",
+    "clean": "rimraf build",
+    "clean:node_modules": "rimraf node_modules",
+    "cleanup:packages": "yarn run prettier-package-json --write",
+    "test": "yarn run build && yarn run nyc ava --verbose",
+    "test:watch": "yarn run ava-ts --watch --verbose src/**/*.spec.ts"
+  },
+  "ava": {
+    "snapshotDir": "./snapshots",
+    "failFast": true,
+    "files": [
+      "build/**/*.spec.js"
+    ],
+    "sources": [
+      "build/**/*.js"
+    ]
+  },
+  "devDependencies": {
+    "ava": "^1.1.0",
+    "ava-ts": "^0.25.2",
+    "nyc": "^13.1.0"
+  },
+  "dependencies": {
+  }
+}
