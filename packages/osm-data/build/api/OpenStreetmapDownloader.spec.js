@@ -90,8 +90,8 @@ ava_1.default('OpenStreetmapDownloader fetch() valid data', (t) => __awaiter(thi
 //     const queryName = 'query-name';
 //     const fsData = {
 //         data: {},
-//         dataFile: `W:\\src\\__COURSES__\\ball-maps\\osm-data\\osm.data.${queryName}.json`,
-//         queryFile: `W:\\src\\__COURSES__\\ball-maps\\osm-data\\osm.query.${queryName}.txt`,
+//         dataFile: `W:\\src\\__COURSES__\\geo-ball\\osm-data\\osm.data.${queryName}.json`,
+//         queryFile: `W:\\src\\__COURSES__\\geo-ball\\osm-data\\osm.query.${queryName}.txt`,
 //     };
 //     mockedAxios.post.mockImplementationOnce(() => Promise.resolve({ data: {} }))
 //     mockedFs.writeFileSync.mockImplementation(() => undefined);

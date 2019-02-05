@@ -1,4 +1,4 @@
-import { LatLngBounds, LatLng } from '@ball-maps/geo-core';
+import { LatLngBounds, LatLng } from '@geo-ball/geo-core';
 
 export class GeoFileMetaData {
     bounds: LatLngBounds;

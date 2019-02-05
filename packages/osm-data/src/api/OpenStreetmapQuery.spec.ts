@@ -1,7 +1,7 @@
 import test from 'ava';
 
 import { OpenStreetmapQuery, IOpenStreetmapQuery } from './OpenStreetmapQuery';
-import { LatLngBounds, LatLng } from '@ball-maps/geo-core';
+import { LatLngBounds, LatLng } from '@geo-ball/geo-core';
 
 
 // 40.71490728626142, -111.8545264005661, 40.71946109443547, -111.84929072856903

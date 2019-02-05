@@ -68,9 +68,9 @@ export class FileStorageService {
 // app.getPath('appData')      C:\Users\joshua\AppData\Roaming
 // app.getPath('userData')     C:\Users\joshua\AppData\Roaming\UCSD Map App
 // app.getPath('temp')         C:\Users\joshua\AppData\Local\Temp
-// app.getPath('exe')          C:\Users\joshua\Google Drive\_src\ball-maps\packages\ucsd-app\node_modules\electron\dist\electron.exe
+// app.getPath('exe')          C:\Users\joshua\Google Drive\_src\geo-ball\packages\ucsd-app\node_modules\electron\dist\electron.exe
 // app.getPath('logs')         C:\Users\joshua\AppData\Roaming\Electron\logs
-// app.getPath('module')       C:\Users\joshua\Google Drive\_src\ball-maps\packages\ucsd-app\node_modules\electron\dist\electron.exe
+// app.getPath('module')       C:\Users\joshua\Google Drive\_src\geo-ball\packages\ucsd-app\node_modules\electron\dist\electron.exe
 // app.getPath('downloads')    W:\Users\joshua\Downloads
 // console.log('os.homedir:', homedir())
 // console.log('os.userInfo:', userInfo())

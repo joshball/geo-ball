@@ -3,7 +3,7 @@ import { LatLngBounds as LeafLatLngBounds, LatLngLiteral as LeafLatLngLiteral } 
 
 import { Popover, Button, Position, PopoverInteractionKind, Intent } from '@blueprintjs/core';
 import { OsmDownloadQueryForm } from '../../map/OsmDownloadQueryForm';
-import { ILatLngFmt, LatLngQuickFmt } from '@ball-maps/geo-core';
+import { ILatLngFmt, LatLngQuickFmt } from '@geo-ball/geo-core';
 import { LatLngBoundsTxt } from './LatLngBoundsTxt';
 import { LatLngBoundsAreaTxt } from './LatLngBoundsAreaTxt';
 import { DownloadOsmParams } from '../../../services/OsmService';

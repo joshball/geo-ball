@@ -5,10 +5,10 @@ OpenStreetMaps CLI
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/osm-cli.svg)](https://npmjs.org/package/osm-cli)
-[![CircleCI](https://circleci.com/gh/joshball/ball-maps/tree/master.svg?style=shield)](https://circleci.com/gh/joshball/ball-maps/tree/master)
-[![Codecov](https://codecov.io/gh/joshball/ball-maps/branch/master/graph/badge.svg)](https://codecov.io/gh/joshball/ball-maps)
+[![CircleCI](https://circleci.com/gh/joshball/geo-ball/tree/master.svg?style=shield)](https://circleci.com/gh/joshball/geo-ball/tree/master)
+[![Codecov](https://codecov.io/gh/joshball/geo-ball/branch/master/graph/badge.svg)](https://codecov.io/gh/joshball/geo-ball)
 [![Downloads/week](https://img.shields.io/npm/dw/osm-cli.svg)](https://npmjs.org/package/osm-cli)
-[![License](https://img.shields.io/npm/l/osm-cli.svg)](https://github.com/joshball/ball-maps/blob/master/package.json)
+[![License](https://img.shields.io/npm/l/osm-cli.svg)](https://github.com/joshball/geo-ball/blob/master/package.json)
 
 <!-- toc -->
 * [Usage](#usage)
@@ -17,11 +17,11 @@ OpenStreetMaps CLI
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g @ball-maps/osm-cli
+$ npm install -g @geo-ball/osm-cli
 $ osm-cli COMMAND
 running command...
 $ osm-cli (-v|--version|version)
-@ball-maps/osm-cli/1.0.0 win32-x64 node-v11.5.0
+@geo-ball/osm-cli/1.0.0 win32-x64 node-v11.5.0
 $ osm-cli --help [COMMAND]
 USAGE
   $ osm-cli COMMAND
@@ -71,7 +71,7 @@ EXAMPLES
   $ cli download --bounds 40.690856387926516,-111.86356544494627,40.72683597647796,-111.78271293640137
 ```
 
-_See code: [build\commands\download.ts](https://github.com/joshball/ball-maps/blob/v1.0.0/build\commands\download.ts)_
+_See code: [build\commands\download.ts](https://github.com/joshball/geo-ball/blob/v1.0.0/build\commands\download.ts)_
 
 ## `osm-cli help [COMMAND]`
 
@@ -88,7 +88,7 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.1.4/src\commands\help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.1.6/src\commands\help.ts)_
 
 ## `osm-cli stats`
 
@@ -106,7 +106,7 @@ EXAMPLE
   $ cli stats
 ```
 
-_See code: [build\commands\stats.ts](https://github.com/joshball/ball-maps/blob/v1.0.0/build\commands\stats.ts)_
+_See code: [build\commands\stats.ts](https://github.com/joshball/geo-ball/blob/v1.0.0/build\commands\stats.ts)_
 
 ## `osm-cli which COMMAND`
 

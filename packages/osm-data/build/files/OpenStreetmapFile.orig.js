@@ -1,7 +1,7 @@
 "use strict";
 // import { resolve } from 'path';
 // import { readFileSync } from 'fs';
-// import { fileNamify } from '@ball-maps/utils';
+// import { fileNamify } from '@geo-ball/utils';
 // type Maybe<T> = T | void;
 // export type OpenStreetMapFileType =
 // 	'Unknown' |

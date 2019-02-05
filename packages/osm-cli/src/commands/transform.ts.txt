@@ -1,11 +1,11 @@
 // import { join, resolve } from 'path';
 import { Command, flags } from '@oclif/command'
 import { findFilePath } from '../common/fileHelpers';
-import { OverpassHighwayFile, ConvertToRoadSegmentsMap, RoadSegmentsFile, OpenStreetmapFile } from '@ball-maps/osm-data';
+import { OverpassHighwayFile, ConvertToRoadSegmentsMap, RoadSegmentsFile, OpenStreetmapFile } from '@geo-ball/osm-data';
 import { resolve, join, basename, dirname } from 'path';
 import { existsSync } from 'fs';
 // import { writeFileSync, readFileSync, existsSync } from 'fs';
-// import { OverpassHighways, LatLngBounds, LatLng, IHighwayElement } from '@ball-maps/osm-data';
+// import { OverpassHighways, LatLngBounds, LatLng, IHighwayElement } from '@geo-ball/osm-data';
 // import { AxiosResponse } from 'axios';
 // import { BaseDataPath, RelDownloadDir } from '../defaults';
 // import { findFilePath } from '../common';

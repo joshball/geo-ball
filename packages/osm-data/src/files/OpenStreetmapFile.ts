@@ -1,6 +1,6 @@
 import { resolve, basename } from 'path';
 import { readFileSync, writeFileSync } from 'fs';
-import { fileNamify, CreateFilenameTimestamp, FindParseFilenameTimestamp, ParsedFilenameTimestamp } from '@ball-maps/utils';
+import { fileNamify, CreateFilenameTimestamp, FindParseFilenameTimestamp, ParsedFilenameTimestamp } from '@geo-ball/utils';
 import { OpenStreetmapQuery, IOpenStreetmapQuery } from '../api/OpenStreetmapQuery';
 import { IOpenStreetmapQueryResponse } from '../api/IOpenStreetmapQueryResponse';
 import { OpenStreetMapElements } from '../data/OpenStreetMapElements';

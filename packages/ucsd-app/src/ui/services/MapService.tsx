@@ -1,5 +1,5 @@
 import { MapLocation } from "./MapLocation";
-import { UcsdDataFiles, RoadSegmentsFile, IntersectionsFile } from '@ball-maps/ucsd-core';
+import { UcsdDataFiles, RoadSegmentsFile, IntersectionsFile } from '@geo-ball/ucsd-core';
 
 export const getIntersectionsEx = (): Promise<Array<MapLocation>> => {
     const intersections = [

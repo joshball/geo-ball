@@ -1,4 +1,4 @@
-import { IOpenStreetMapNode } from '@ball-maps/osm-data';
+import { IOpenStreetMapNode } from '@geo-ball/osm-data';
 import { GeoFileMetaData } from './GeoFileMetaData';
 import { RoadSegmentsFile } from './RoadSegmentsFile';
 import { PointsToRoadSegmentsMap } from '../data/PointsToRoadSegmentsMap';

@@ -1,7 +1,7 @@
 import { writeFileSync, readFileSync } from 'fs'
 
-import { LatLngBounds, LatLng } from '@ball-maps/geo-core';
-import { OpenStreetmapFile, IOpenStreetMapWay, OpenStreetMapElements, IOpenStreetMapNode } from '@ball-maps/osm-data';
+import { LatLngBounds, LatLng } from '@geo-ball/geo-core';
+import { OpenStreetmapFile, IOpenStreetMapWay, OpenStreetMapElements, IOpenStreetMapNode } from '@geo-ball/osm-data';
 
 import { RoadSegmentLine, RoadSegmentType } from '../data/RoadSegmentLine';
 import { GeoFileMetaData } from './GeoFileMetaData';

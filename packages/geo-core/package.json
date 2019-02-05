@@ -1,16 +1,16 @@
 {
   "private": true,
-  "name": "@ball-maps/geo-core",
+  "name": "@geo-ball/geo-core",
   "description": "Open Street Maps data library",
   "license": "ISC",
   "author": "Joshua Ball <joshua.g.s.ball@gmail.com>",
-  "homepage": "https://github.com/joshball/ball-maps#readme",
+  "homepage": "https://github.com/joshball/geo-ball#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/joshball/ball-maps.git"
+    "url": "git+https://github.com/joshball/geo-ball.git"
   },
   "bugs": {
-    "url": "https://github.com/joshball/ball-maps/issues"
+    "url": "https://github.com/joshball/geo-ball/issues"
   },
   "version": "1.0.0",
   "main": "build/index.js",
@@ -24,7 +24,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "build:watch": "tsc -p tsconfig.json --watch",
-    "clean": "rimraf build",
+    "clean": "rimraf build .nyc_output",
     "clean:node_modules": "rimraf node_modules",
     "cleanup:packages": "yarn run prettier-package-json --write",
     "test": "yarn run build && yarn run nyc ava --verbose",

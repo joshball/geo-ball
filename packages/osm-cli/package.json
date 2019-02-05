@@ -1,12 +1,12 @@
 {
   "private": true,
-  "name": "@ball-maps/osm-cli",
+  "name": "@geo-ball/osm-cli",
   "description": "OpenStreetMaps CLI",
   "license": "MIT",
   "author": "Joshua Ball",
-  "homepage": "https://github.com/joshball/ball-maps",
-  "repository": "https://github.com/joshball/ball-maps",
-  "bugs": "https://github.com/joshball/ball-maps/issues",
+  "homepage": "https://github.com/joshball/geo-ball",
+  "repository": "https://github.com/joshball/geo-ball",
+  "bugs": "https://github.com/joshball/geo-ball/issues",
   "version": "1.0.0",
   "main": "build/index.js",
   "bin": {
@@ -21,7 +21,7 @@
   "scripts": {
     "build": "yarn clean && tsc -b && yarn oclif-stuff",
     "build:watch": "yarn build && tsc -b --watch",
-    "clean": "rimraf build oclif.manifest.json",
+    "clean": "rimraf build oclif.manifest.json .nyc_output",
     "clean:node_modules": "rimraf node_modules",
     "cleanup:packages": "yarn run prettier-package-json --write",
     "oclif-stuff": "oclif-dev manifest && oclif-dev readme",
@@ -32,9 +32,9 @@
     "version": "oclif-dev readme && git add README.md"
   },
   "dependencies": {
-    "@ball-maps/geo-core": "^1.0.0",
-    "@ball-maps/osm-data": "^1.0.0",
-    "@ball-maps/utils": "^1.0.0",
+    "@geo-ball/geo-core": "^1.0.0",
+    "@geo-ball/osm-data": "^1.0.0",
+    "@geo-ball/utils": "^1.0.0",
     "@oclif/command": "^1",
     "@oclif/config": "^1",
     "@oclif/plugin-commands": "^1.2.2",

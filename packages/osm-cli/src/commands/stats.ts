@@ -1,11 +1,11 @@
 import { join, resolve, extname } from 'path';
 import { Command, flags } from '@oclif/command'
-// const BG = require('@ball-maps/osm-data');
+// const BG = require('@geo-ball/osm-data');
 // console.log(BG.FO);
 
-// import { OverpassHighways, LatLngBounds, LatLng, IHighwayElement } from '@ball-maps/osm-data';
-// import { RoadSegmentsFile, OverpassHighwayFile } from '@ball-maps/osm-data';
-import { OpenStreetmapFile } from '@ball-maps/osm-data';
+// import { OverpassHighways, LatLngBounds, LatLng, IHighwayElement } from '@geo-ball/osm-data';
+// import { RoadSegmentsFile, OverpassHighwayFile } from '@geo-ball/osm-data';
+import { OpenStreetmapFile } from '@geo-ball/osm-data';
 // import { BaseDataPath, RelDownloadDir } from '../common/defaults';
 import { findFilePath } from '../common/fileHelpers';
 

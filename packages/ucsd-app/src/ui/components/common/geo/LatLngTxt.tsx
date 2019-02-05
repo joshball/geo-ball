@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { css, StyleAttribute } from 'glamor'
 import { LatLngLiteral as LeafLatLngLiteral} from 'leaflet';
-import { LatLng, LatLngQuickFmt, ILatLngFmt } from '@ball-maps/geo-core';
+import { LatLng, LatLngQuickFmt, ILatLngFmt } from '@geo-ball/geo-core';
 
 const outerBoxCss = css({
     // height: '100%',

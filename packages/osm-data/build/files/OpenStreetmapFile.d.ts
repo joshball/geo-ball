@@ -1,4 +1,4 @@
-import { ParsedFilenameTimestamp } from '@ball-maps/utils';
+import { ParsedFilenameTimestamp } from '@geo-ball/utils';
 import { OpenStreetmapQuery, IOpenStreetmapQuery } from '../api/OpenStreetmapQuery';
 import { IOpenStreetmapQueryResponse } from '../api/IOpenStreetmapQueryResponse';
 import { OpenStreetMapElements } from '../data/OpenStreetMapElements';

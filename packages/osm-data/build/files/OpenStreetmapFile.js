@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = require("path");
 const fs_1 = require("fs");
-const utils_1 = require("@ball-maps/utils");
+const utils_1 = require("@geo-ball/utils");
 const OpenStreetmapQuery_1 = require("../api/OpenStreetmapQuery");
 const OpenStreetMapElements_1 = require("../data/OpenStreetMapElements");
 class OpenStreetmapFileMetaData {

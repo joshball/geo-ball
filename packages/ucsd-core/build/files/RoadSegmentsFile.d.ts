@@ -1,4 +1,4 @@
-import { OpenStreetmapFile, IOpenStreetMapNode } from '@ball-maps/osm-data';
+import { OpenStreetmapFile, IOpenStreetMapNode } from '@geo-ball/osm-data';
 import { RoadSegmentLine } from '../data/RoadSegmentLine';
 import { GeoFileMetaData } from './GeoFileMetaData';
 export declare type IRoadSegmentsFileData = Array<RoadSegmentLine>;

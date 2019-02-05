@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const geo_core_1 = require("@ball-maps/geo-core");
+const geo_core_1 = require("@geo-ball/geo-core");
 /**
  * THe RoadSegementLine is used for parsing a RoadSegments file which
  */

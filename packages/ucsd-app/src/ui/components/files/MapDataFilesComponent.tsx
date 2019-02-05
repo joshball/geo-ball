@@ -7,8 +7,8 @@ import { FileListComponent } from './FileListComponent';
 import { FileStorageService } from '../../services/FileStorageService';
 import { join } from 'path';
 
-import { PointMapsFile, RoadSegmentsFile, IntersectionsFile } from "@ball-maps/ucsd-core";
-import { OpenStreetmapFile } from "@ball-maps/osm-data";
+import { PointMapsFile, RoadSegmentsFile, IntersectionsFile } from "@geo-ball/ucsd-core";
+import { OpenStreetmapFile } from "@geo-ball/osm-data";
 
 
 const singleResultCss = css({

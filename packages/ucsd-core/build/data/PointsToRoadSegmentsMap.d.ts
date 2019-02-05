@@ -1,4 +1,4 @@
-import { LatLng } from '@ball-maps/geo-core';
+import { LatLng } from '@geo-ball/geo-core';
 import { RoadSegmentLine } from './RoadSegmentLine';
 export declare type SerializedGeographicPoint = string;
 export declare type GeographicPointRoadSegments = Array<[LatLng, IncomingAndOutgoingRoadSegments]>;

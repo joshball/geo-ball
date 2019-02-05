@@ -15,7 +15,7 @@ import { createUpdater } from ".//updater"
 import { createMenu } from "./menu"
 // import { promisify } from "util"
 // import fs from "fs"
-import { UcsdDataFiles } from "@ball-maps/ucsd-core";
+import { UcsdDataFiles } from "@geo-ball/ucsd-core";
 import { resolve, join } from "path";
 import * as ipc from 'electron-better-ipc';
 import { promises } from 'fs';

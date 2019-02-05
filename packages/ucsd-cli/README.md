@@ -5,10 +5,10 @@ OpenStreetMaps CLI
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/osm-cli.svg)](https://npmjs.org/package/osm-cli)
-[![CircleCI](https://circleci.com/gh/joshball/ball-maps/tree/master.svg?style=shield)](https://circleci.com/gh/joshball/ball-maps/tree/master)
-[![Codecov](https://codecov.io/gh/joshball/ball-maps/branch/master/graph/badge.svg)](https://codecov.io/gh/joshball/ball-maps)
+[![CircleCI](https://circleci.com/gh/joshball/geo-ball/tree/master.svg?style=shield)](https://circleci.com/gh/joshball/geo-ball/tree/master)
+[![Codecov](https://codecov.io/gh/joshball/geo-ball/branch/master/graph/badge.svg)](https://codecov.io/gh/joshball/geo-ball)
 [![Downloads/week](https://img.shields.io/npm/dw/osm-cli.svg)](https://npmjs.org/package/osm-cli)
-[![License](https://img.shields.io/npm/l/osm-cli.svg)](https://github.com/joshball/ball-maps/blob/master/package.json)
+[![License](https://img.shields.io/npm/l/osm-cli.svg)](https://github.com/joshball/geo-ball/blob/master/package.json)
 
 <!-- toc -->
 * [Usage](#usage)
@@ -17,11 +17,11 @@ OpenStreetMaps CLI
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g @ball-maps/ucsd-cli
+$ npm install -g @geo-ball/ucsd-cli
 $ ucsd-cli COMMAND
 running command...
 $ ucsd-cli (-v|--version|version)
-@ball-maps/ucsd-cli/1.0.0 win32-x64 node-v11.5.0
+@geo-ball/ucsd-cli/1.0.0 win32-x64 node-v11.5.0
 $ ucsd-cli --help [COMMAND]
 USAGE
   $ ucsd-cli COMMAND
@@ -59,7 +59,7 @@ EXAMPLES
   $ ucsd-cli generate:int roadSegmentsFile --out alternative-int-file-path
 ```
 
-_See code: [build\commands\generate\int.ts](https://github.com/joshball/ball-maps/blob/v1.0.0/build\commands\generate\int.ts)_
+_See code: [build\commands\generate\int.ts](https://github.com/joshball/geo-ball/blob/v1.0.0/build\commands\generate\int.ts)_
 
 ## `ucsd-cli generate:osm [OSMQUERYFILE]`
 
@@ -84,7 +84,7 @@ EXAMPLES
   $ ucsd-cli generate:osm osmQueryFile --out alternative-osm-data-path
 ```
 
-_See code: [build\commands\generate\osm.ts](https://github.com/joshball/ball-maps/blob/v1.0.0/build\commands\generate\osm.ts)_
+_See code: [build\commands\generate\osm.ts](https://github.com/joshball/geo-ball/blob/v1.0.0/build\commands\generate\osm.ts)_
 
 ## `ucsd-cli generate:rsd [OSMDATAFILE]`
 
@@ -109,7 +109,7 @@ EXAMPLES
   $ ucsd-cli generate:rsd osmDataFile --out alternative-rsd-path
 ```
 
-_See code: [build\commands\generate\rsd.ts](https://github.com/joshball/ball-maps/blob/v1.0.0/build\commands\generate\rsd.ts)_
+_See code: [build\commands\generate\rsd.ts](https://github.com/joshball/geo-ball/blob/v1.0.0/build\commands\generate\rsd.ts)_
 
 ## `ucsd-cli help [COMMAND]`
 
@@ -144,5 +144,5 @@ EXAMPLE
   $ cli stats
 ```
 
-_See code: [build\commands\stats.ts](https://github.com/joshball/ball-maps/blob/v1.0.0/build\commands\stats.ts)_
+_See code: [build\commands\stats.ts](https://github.com/joshball/geo-ball/blob/v1.0.0/build\commands\stats.ts)_
 <!-- commandsstop -->

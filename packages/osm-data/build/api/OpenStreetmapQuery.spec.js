@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const ava_1 = __importDefault(require("ava"));
 const OpenStreetmapQuery_1 = require("./OpenStreetmapQuery");
-const geo_core_1 = require("@ball-maps/geo-core");
+const geo_core_1 = require("@geo-ball/geo-core");
 // 40.71490728626142, -111.8545264005661, 40.71946109443547, -111.84929072856903
 const sw = new geo_core_1.LatLng(40.71490728626142, -111.8545264005661);
 const ne = new geo_core_1.LatLng(40.71946109443547, -111.84929072856903);

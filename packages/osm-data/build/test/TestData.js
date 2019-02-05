@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const __1 = require("..");
-const geo_core_1 = require("@ball-maps/geo-core");
+const geo_core_1 = require("@geo-ball/geo-core");
 ;
 ;
 exports.createNewBounds = () => {

@@ -1,4 +1,4 @@
-import { IOpenStreetmapQuery, OSMFeatureKeyValuePair, OSMFeatureKey, OpenStreetmapQuery, OpenStreetmapDownloader, IFetchAndSaveResult } from "@ball-maps/osm-data";
+import { IOpenStreetmapQuery, OSMFeatureKeyValuePair, OSMFeatureKey, OpenStreetmapQuery, OpenStreetmapDownloader, IFetchAndSaveResult } from "@geo-ball/osm-data";
 import { LatLng as LeafLatLng, LatLngBounds as LeafLatLngBounds } from "leaflet";
 import { reverseGeocodeLocation } from "./GeocodingService";
 

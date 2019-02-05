@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = require("fs");
-const geo_core_1 = require("@ball-maps/geo-core");
+const geo_core_1 = require("@geo-ball/geo-core");
 const RoadSegmentLine_1 = require("../data/RoadSegmentLine");
 const GeoFileMetaData_1 = require("./GeoFileMetaData");
 const path_1 = require("path");

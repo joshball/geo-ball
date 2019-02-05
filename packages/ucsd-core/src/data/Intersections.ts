@@ -1,5 +1,5 @@
 import { PointsToRoadSegmentsMap } from "./PointsToRoadSegmentsMap";
-import { LatLng } from '@ball-maps/geo-core';
+import { LatLng } from '@geo-ball/geo-core';
 import { RoadSegmentLine } from './RoadSegmentLine';
 
 export const findIntersections = (pointMap: PointsToRoadSegmentsMap): Array<LatLng> => { // List<GeographicPoint>

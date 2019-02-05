@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const geo_core_1 = require("@ball-maps/geo-core");
+const geo_core_1 = require("@geo-ball/geo-core");
 class GeoFileMetaData {
     constructor(bounds, timestamp) {
         const sw = new geo_core_1.LatLng(bounds.sw.lat, bounds.sw.lng);

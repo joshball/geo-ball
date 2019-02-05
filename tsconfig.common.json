@@ -6,7 +6,7 @@
         "target": "es6",
         "baseUrl": "./packages",
         "paths": {
-            "@ball-maps/*": [
+            "@geo-ball/*": [
                 "./*/src"
             ]
         },
@@ -76,7 +76,7 @@
 //     "compilerOptions": {
 //       "baseUrl": "./packages",
 //       "paths": {
-//         "@ball-maps/*": ["./*/src"]
+//         "@geo-ball/*": ["./*/src"]
 //       }
 //     }
 //   }

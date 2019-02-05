@@ -1,4 +1,4 @@
-import { LatLngBounds, ILatLngBounds } from '@ball-maps/geo-core';
+import { LatLngBounds, ILatLngBounds } from '@geo-ball/geo-core';
 import { OSMFeatureKeyValuePair, OSMOutputFormat, OSMFeatureKey, IOSMFeatureKeyValuePair } from './OpenStreetmapFeatures';
 
 export interface IOpenStreetmapQuery{

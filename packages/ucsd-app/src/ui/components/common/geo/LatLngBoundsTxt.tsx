@@ -3,7 +3,7 @@ import { css } from 'glamor'
 import { LatLngBounds as LeafLatLngBounds} from 'leaflet';
 
 import { LatLngTxt } from './LatLngTxt';
-import { ILatLngFmt, LatLngQuickFmt } from '@ball-maps/geo-core';
+import { ILatLngFmt, LatLngQuickFmt } from '@geo-ball/geo-core';
 
 const outerBoxCss = css({
     // height: '100%',

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const SerializedKeyMap_1 = require("../utils/SerializedKeyMap");
-const geo_core_1 = require("@ball-maps/geo-core");
+const geo_core_1 = require("@geo-ball/geo-core");
 class IncomingAndOutgoingRoadSegments {
     constructor() {
         this.toString = () => `Outgoing: ${this.outgoing.length}, Incoming: ${this.incoming.length}`;

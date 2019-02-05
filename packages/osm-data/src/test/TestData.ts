@@ -1,5 +1,5 @@
 import { OpenStreetmapQuery, IOpenStreetmapQuery, OpenStreetmapFileMetaData } from "..";
-import { LatLngBounds, LatLng, ILatLngBounds } from '@ball-maps/geo-core';
+import { LatLngBounds, LatLng, ILatLngBounds } from '@geo-ball/geo-core';
 
 import { IOpenStreetmapQueryResponse } from "../api/IOpenStreetmapQueryResponse";
 

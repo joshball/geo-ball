@@ -1,9 +1,9 @@
 {
   "private": true,
-  "name": "ball-maps",
+  "name": "geo-ball",
   "license": "MIT",
   "author": "Joshua Ball <joshua.g.s.ball@gmail.com>",
-  "repository": "git@github.com:joshball/ball-maps.git",
+  "repository": "git@github.com:joshball/geo-ball.git",
   "version": "1.0.0",
   "workspaces": {
     "packages": ["packages/*"],
@@ -72,13 +72,13 @@
     "typescript": "^3.2.2"
   },
   "dependencies": {
-    "@ball-maps/geo-core": "^1.0.0",
-    "@ball-maps/graph-core": "^1.0.0",
-    "@ball-maps/osm-cli": "^1.0.0",
-    "@ball-maps/osm-data": "^1.0.0",
-    "@ball-maps/ucsd-cli": "^1.0.0",
-    "@ball-maps/ucsd-core": "^1.0.0",
-    "@ball-maps/ucsd-app": "^1.0.0",
-    "@ball-maps/utils": "^1.0.0"
+    "@geo-ball/geo-core": "^1.0.0",
+    "@geo-ball/graph-core": "^1.0.0",
+    "@geo-ball/osm-cli": "^1.0.0",
+    "@geo-ball/osm-data": "^1.0.0",
+    "@geo-ball/ucsd-cli": "^1.0.0",
+    "@geo-ball/ucsd-core": "^1.0.0",
+    "@geo-ball/ucsd-app": "^1.0.0",
+    "@geo-ball/utils": "^1.0.0"
   }
 }

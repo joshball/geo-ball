@@ -1,6 +1,6 @@
 import { writeFileSync, readFileSync } from 'fs'
 
-import { LatLng } from '@ball-maps/geo-core';
+import { LatLng } from '@geo-ball/geo-core';
 import { GeoFileMetaData } from '..';
 import { PointMapsFile } from './PointMapsFile';
 import { findIntersections } from '../data/Intersections';

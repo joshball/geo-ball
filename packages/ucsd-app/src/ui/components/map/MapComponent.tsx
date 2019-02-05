@@ -7,7 +7,7 @@ import { observer, inject } from 'mobx-react';
 import { RootStore } from '../../stores/RootStore';
 import { MapLocationStore } from '../../stores/MapLocationStore';
 import { distance } from '@turf/turf';
-import { getDist } from '@ball-maps/geo-core';
+import { getDist } from '@geo-ball/geo-core';
 
 const mapCss = css({
     height: '100%',

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Map, Marker, Popup, TileLayer, MapControl } from 'react-leaflet';
 import { css } from 'glamor'
-import { LatLng } from '@ball-maps/geo-core';
+import { LatLng } from '@geo-ball/geo-core';
 import { LatLngTuple as LeafLatLngTuple } from 'leaflet';
 // import LocationSelector from './LocationSelector';
 import { MapLocation } from '../../services/MapLocation';

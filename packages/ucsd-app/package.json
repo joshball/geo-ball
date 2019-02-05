@@ -1,5 +1,5 @@
 {
-  "name": "@ball-maps/ucsd-app",
+  "name": "@geo-ball/ucsd-app",
   "productName": "UCSD Map App",
   "main": "out/main.js",
   "version": "1.0.0",
@@ -9,7 +9,7 @@
   "license": "MIT",
   "private": true,
   "build": {
-    "appId": "com.joshuaball.ball-maps",
+    "appId": "com.joshuaball.geo-ball",
     "files": [
       "!src",
       "!docs",
@@ -31,7 +31,7 @@
     "publish": {
       "owner": "joshball",
       "provider": "github",
-      "repo": "ball-maps"
+      "repo": "geo-ball"
     },
     "win": {
       "target": [
@@ -42,7 +42,7 @@
   },
   "scripts": {
     "build-storybook": "build-storybook",
-    "clean": "rm -rf .fusebox out dist coverage",
+    "clean": "rm -rf .fusebox out dist coverage .nyc_output",
     "clean:node_modules": "rimraf node_modules",
     "cleanup:packages": "yarn run prettier-package-json --write",
     "compile": "NODE_ENV=production ts-node fuse",
@@ -73,10 +73,10 @@
     "Xstart:wp": "cross-env ELECTRON_START_URL=http://localhost:3000 electron-webpack dev"
   },
   "dependencies": {
-    "@ball-maps/geo-core": "^1.0.0",
-    "@ball-maps/osm-data": "^1.0.0",
-    "@ball-maps/ucsd-core": "^1.0.0",
-    "@ball-maps/utils": "^1.0.0",
+    "@geo-ball/geo-core": "^1.0.0",
+    "@geo-ball/osm-data": "^1.0.0",
+    "@geo-ball/ucsd-core": "^1.0.0",
+    "@geo-ball/utils": "^1.0.0",
     "@blueprintjs/core": "^3.11.0",
     "@blueprintjs/icons": "^3.5.0",
     "@blueprintjs/select": "^3.5.0",

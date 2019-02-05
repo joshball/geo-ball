@@ -1,1 +1,0 @@
-{"version":3,"file":"IOpenStreetMapWay.d.ts","sourceRoot":"","sources":["../../../src/data/IOpenStreetMapWay.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,sBAAsB,EAAE,MAAM,oBAAoB,CAAC;AAE5D,MAAM,WAAW,iBAAiB;IAC9B,EAAE,EAAE,MAAM,CAAC;IACX,IAAI,EAAE,KAAK,CAAC;IACZ,IAAI,EAAE,sBAAsB,CAAC;IAC7B,KAAK,CAAC,EAAE,KAAK,CAAC,MAAM,CAAC,CAAC;CACzB"}

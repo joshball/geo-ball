@@ -1,4 +1,4 @@
-import { LatLng } from '@ball-maps/geo-core';
+import { LatLng } from '@geo-ball/geo-core';
 import { GeoFileMetaData } from '..';
 import { PointMapsFile } from './PointMapsFile';
 export declare class IntersectionsFile {
