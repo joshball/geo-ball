@@ -17,7 +17,7 @@ export function createBackgroundWindow(appPath: string, showDelay: number = 100)
 
     // load entry html page in the renderer.
     loadURL(window, appPath, 'background-renderer.html')
-    // window.webContents.openDevTools()
+    window.webContents.openDevTools()
 
     return window
 }

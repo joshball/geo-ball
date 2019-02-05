@@ -1,8 +1,9 @@
-import { writeFileSync } from 'fs'
+import { writeFileSync, readFileSync } from 'fs'
 import {  IOpenStreetMapNode } from '@ball-maps/osm-data';
 import { GeoFileMetaData } from './GeoFileMetaData';
 import { RoadSegmentsFile } from './RoadSegmentsFile';
 import { PointsToRoadSegmentsMap } from '../data/PointsToRoadSegmentsMap';
+import { basename } from 'path';
 
 
 export class PointMapsFile {
@@ -12,6 +13,17 @@ export class PointMapsFile {
     constructor(metaData: GeoFileMetaData, pointsMap: PointsToRoadSegmentsMap) {
         this.metaData = new GeoFileMetaData(metaData.bounds, metaData.timestamp);
         this.pointsMap = pointsMap;
+    }
+    static Extension = 'ucsd-pmf.json';
+    static HasCorrectExtension(filePath: string): boolean {
+        return basename(filePath).endsWith(PointMapsFile.Extension);
+    }
+
+    static Load(filePath: string): PointMapsFile {
+        console.log('PointMapsFile.Load', filePath);
+        const file = JSON.parse(readFileSync(filePath, 'utf8'));
+        console.log('IntersectionsFile.Load.metaData', file.metaData);
+        return new PointMapsFile(file.metaData, file.intersections);
     }
 
     static CreateFromRsdFile(rsdFile: RoadSegmentsFile): PointMapsFile {
@@ -60,7 +72,7 @@ export class PointMapsFile {
     //     // return new RoadSegmentsFile(bounds, new Date(), roadSegments);;
     //     return new PointMapsFile(metaData, roadSegments);;
     // }
-    // static LoadFromJsonFile(filePath: string): PointMapsFile {
+    // static Load(filePath: string): PointMapsFile {
     //     const file = JSON.parse(readFileSync(filePath, 'utf8'));
     //     return new PointMapsFile(file.metaData, file.segmentsData);
     // }

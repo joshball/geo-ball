@@ -5,6 +5,7 @@ import { OpenStreetmapFile, IOpenStreetMapWay, OpenStreetMapElements, IOpenStree
 
 import { RoadSegmentLine, RoadSegmentType } from '../data/RoadSegmentLine';
 import { GeoFileMetaData } from './GeoFileMetaData';
+import { basename } from 'path';
 
 
 export type IRoadSegmentsFileData = Array<RoadSegmentLine>;
@@ -16,6 +17,11 @@ export class RoadSegmentsFile {
     constructor(metaData: GeoFileMetaData, segmentsData: IRoadSegmentsFileData) {
         this.metaData = new GeoFileMetaData(metaData.bounds, metaData.timestamp);
         this.segmentsData = segmentsData;
+    }
+
+    static Extension = 'ucsd-rsd.json';
+    static HasCorrectExtension(filePath: string): boolean {
+        return basename(filePath).endsWith(RoadSegmentsFile.Extension);
     }
 
     static CreateFromOsm(osmFile: OpenStreetmapFile): RoadSegmentsFile {
@@ -83,7 +89,9 @@ export class RoadSegmentsFile {
         // return new RoadSegmentsFile(bounds, new Date(), roadSegments);;
         return new RoadSegmentsFile(metaData, roadSegments);;
     }
-    static LoadFromJsonFile(filePath: string): RoadSegmentsFile {
+
+
+    static Load(filePath: string): RoadSegmentsFile {
         const file = JSON.parse(readFileSync(filePath, 'utf8'));
         return new RoadSegmentsFile(file.metaData, file.segmentsData);
     }

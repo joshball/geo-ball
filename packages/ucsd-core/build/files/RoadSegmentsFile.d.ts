@@ -6,12 +6,14 @@ export declare class RoadSegmentsFile {
     metaData: GeoFileMetaData;
     segmentsData: IRoadSegmentsFileData;
     constructor(metaData: GeoFileMetaData, segmentsData: IRoadSegmentsFileData);
+    static Extension: string;
+    static HasCorrectExtension(filePath: string): boolean;
     static CreateFromOsm(osmFile: OpenStreetmapFile): RoadSegmentsFile;
     static DeReferenceNode(nodes: Array<IOpenStreetMapNode>, nodeId: number): IOpenStreetMapNode;
     static CreateSegmentsDataFromOsm(_osmFile: OpenStreetmapFile): IRoadSegmentsFileData;
     static CreateMetaDataFromOsm(_osmFile: OpenStreetmapFile): GeoFileMetaData;
     static LoadFromTextFile(filePath: string): RoadSegmentsFile;
-    static LoadFromJsonFile(filePath: string): RoadSegmentsFile;
+    static Load(filePath: string): RoadSegmentsFile;
     static SaveJsonFile(filePath: string, roadSegmentsFile: RoadSegmentsFile): void;
     static SaveTextFile(filePath: string, roadSegmentsFile: RoadSegmentsFile): void;
 }

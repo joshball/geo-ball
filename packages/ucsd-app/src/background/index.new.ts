@@ -8,18 +8,23 @@ export interface IChannelCallback {
     channel: string;
     callback: (data:any, window:any) => Promise<any>;
 }
+export interface IAllChannels<T> {
+    [key: string]: IChannels<T>;
+}
 export interface IChannels<T> {
     [key: string]: T;
 }
 
-export const CHANNELS:IChannels<string> = {};
+export const CHANNELS:IAllChannels<string> = {};
 
 
 const backgroundWindow = remote.getGlobal('backgroundWindow') as BrowserWindow;
 
 const registerAndExportAndBuildChannels = (channelsExport: any, newChannels: Array<IChannelCallback>) => {
+    console.log('registerAndExportAndBuildChannels', channelsExport, newChannels)
     newChannels.forEach(ccb => {
-        ipc.answerRenderer(backgroundWindow, ccb.channel, ccb.channel);
+        console.log('register ipc.answerRenderer ccb', ccb.channel, ccb.name, ccb.namespace, ccb)
+        ipc.answerRenderer(backgroundWindow, ccb.channel, ccb.callback);
         channelsExport[ccb.namespace] = channelsExport[ccb.namespace] || {};
         if (channelsExport[ccb.namespace][ccb.name]) {
             throw new Error('Channel name already exists!')
@@ -30,3 +35,6 @@ const registerAndExportAndBuildChannels = (channelsExport: any, newChannels: Arr
 }
 
 registerAndExportAndBuildChannels(CHANNELS, FS_CHANNELS);
+console.log('-----------------------------------------------------------------------')
+console.log('CHANNELS', CHANNELS)
+console.log('-----------------------------------------------------------------------')

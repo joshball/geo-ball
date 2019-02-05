@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { css } from 'glamor'
 import { LatLng as LeafLatLng } from 'leaflet';
-import { LatLngTxt } from '../common/LatLngTxt';
+import { LatLngTxt } from '../common/geo/LatLngTxt';
 import { observer, inject } from 'mobx-react';
 import {  colors, fontSizes, fonts } from "../../config/theme"
 import { IGeocodeResponse, geocodeAddress } from '../../services/GeocodingService';

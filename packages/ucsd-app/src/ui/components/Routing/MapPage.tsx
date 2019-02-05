@@ -4,9 +4,9 @@ import { css } from 'glamor'
 import { getRoadSegmentsFiles, getIntersectionFiles } from '../../services/MapService';
 import { LatLngTuple as LeafLatLngTuple } from 'leaflet';
 import { RoadSegmentsFile, IntersectionsFile } from '@ball-maps/ucsd-core';
-import BoundsExample from '../common/BoundsExample';
-import EventsExample from './../common/EventsExample';
-import TooltipExample from '../common/Tooltip';
+import BoundsExample from '../common/geo/BoundsExample';
+import EventsExample from '../common/geo/EventsExample';
+import TooltipExample from '../common/geo/Tooltip';
 
 const mainLayout = css({
     display: 'grid',

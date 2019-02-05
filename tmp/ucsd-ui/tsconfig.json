@@ -8,15 +8,14 @@
 		"./src"
 	],
 	"references": [
-		{
-			"path": "../geo-core"
-		},
-		{
-			"path": "../osm-data"
-		},
-		{
-			"path": "../ucsd-core",
-		}
+        { "path": "../geo-core" },
+        // { "path": "../graph-core" },
+        // { "path": "../osm-cli" },
+        { "path": "../osm-data" },
+        // { "path": "../ucsd-app" },
+        // { "path": "../ucsd-cli" },
+        { "path": "../ucsd-core" },
+        { "path": "../utils" },
 	]
 	// "compilerOptions": {
 	//     "declaration": true,

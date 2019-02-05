@@ -1,10 +1,9 @@
-import { resolve } from 'path';
+import { resolve, basename } from 'path';
 import { readFileSync, writeFileSync } from 'fs';
-import { fileNamify } from '../utils/FileUtils';
+import { fileNamify, CreateFilenameTimestamp, FindParseFilenameTimestamp, ParsedFilenameTimestamp } from '@ball-maps/utils';
 import { OpenStreetmapQuery, IOpenStreetmapQuery } from '../api/OpenStreetmapQuery';
 import { IOpenStreetmapQueryResponse } from '../api/IOpenStreetmapQueryResponse';
 import { OpenStreetMapElements } from '../data/OpenStreetMapElements';
-import { IOpenStreetMapElementsStats } from '../data/IOpenStreetMapElementsStats';
 
 
 // OSM File will have
@@ -47,6 +46,11 @@ export class OpenStreetmapFile {
         return new OpenStreetMapElements(this.osmQueryResp.elements);
     }
 
+    static Extension = 'osm-data.json';
+    static HasCorrectExtension(filePath: string): boolean {
+        return basename(filePath).endsWith(OpenStreetmapFile.Extension);
+    }
+
     // osmd.QUERYNAME[.TS?].json
     static Load(path: string): OpenStreetmapFile {
         const resolvedPath = resolve(path);
@@ -73,29 +77,12 @@ export class OpenStreetmapFile {
         return resolvedPath;
     }
 
-    static CreateFileName(fileQueryName: string, date: Date | undefined): string {
-        const ts = date ? '.' + OpenStreetmapFile.CreateFilenameTimestamp(date) : '';
-        return `${fileNamify(fileQueryName, { replacement: '_' })}${ts}.osm-data.json`;
+    static CreateDescriptiveFileName(fileQueryName: string, date: Date | undefined): string {
+        const ts = date ? '.' + CreateFilenameTimestamp(date) : '';
+        return `${fileNamify(fileQueryName, { replacement: '_' })}${ts}.${OpenStreetmapFile.Extension}`;
     }
 
-    static CreateFilenameTimestamp(date: Date = new Date()): string {
-        // "2018-11-07T21:30:05.974Z" to:
-        // "2018-11-07_2130.05"
-        date = new Date();
-        const dateString = date.toISOString();
-        const split = dateString.split('T');
-        if (split.length !== 2) {
-            return fileNamify(dateString, { replacement: '_' });
-        }
-        // 21:30:05.974Z
-        let time = split[1].replace(/:/g, '');
-        // 213005.974Z
-        time = time.substr(0, time.indexOf('.'));
-        // 2153.44
-        time = time.substr(0, time.length - 2) + '.' + time.substr(time.length - 2);
-
-        return `${split[0]}_${time}`; // ​​​​​2018-11-07_2153.44
+    static ParseOpenStreetmapFileName(filePath: string): ParsedFilenameTimestamp | undefined {
+        return FindParseFilenameTimestamp(filePath);
     }
-
-
 }

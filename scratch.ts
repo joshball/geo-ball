@@ -173,10 +173,18 @@ dump('Original dd after manip', dd)
 dump('X', x);
 
 import { readdirSync } from 'fs';
+import { filenamReservedChars } from './packages/ucsd-core/src/utils/FileUtils';
 
 console.log('readdir:', __dirname);
 const result = readdirSync("/", { withFileTypes: true });
 const f = result[0];
-console.log(f.isDirectory())
-console.log(JSON.stringify(result, undefined, 4));
+// console.log(f.isDirectory())
+// console.log(JSON.stringify(result, undefined, 4));
 
+const dirName = __dirname;
+const filename = 'foo.osm.json';
+
+console.log('__dirname', __dirname)
+console.log('basename(__dirname)', basename(__dirname))
+console.log('basename(__filename)', basename(__filename))
+console.log('basename(filename)', basename(filename))

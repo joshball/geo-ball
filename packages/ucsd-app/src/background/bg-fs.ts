@@ -28,9 +28,14 @@ export const readdirCallback = async (readdirParams: IReaddirParams, _window: an
     console.log('');
     console.log('');
     console.log('======================================== readdirCallback ========================================');
+    console.log('======================================== readdirCallback ========================================');
+    console.log('======================================== readdirCallback ========================================');
+    console.log('#### readdirParams.path: ', readdirParams.path);
+    console.log('======================================== readdirCallback ========================================');
+    console.log('======================================== readdirCallback ========================================');
+    console.log('======================================== readdirCallback ========================================');
     // console.log('### BGW.NEW ipc.answerRenderer(%s, %s)',
     //     backgroundWindow.id, FS_CHANNELS.lstat);
-    // console.log('appPath: ', appPath);
     console.log('BGW.NEW.readdir|readdirParams:', readdirParams)
     const contents = await readdir(readdirParams.path, readdirParams.options);
     console.log('BGW.NEW.readdir|contents:', contents)

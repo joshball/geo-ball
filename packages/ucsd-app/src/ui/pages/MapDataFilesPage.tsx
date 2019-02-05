@@ -3,8 +3,8 @@ import { css } from 'glamor'
 import { colors, fonts, fontSizes, cssProps } from "../config/theme"
 import { Button, Intent } from "@blueprintjs/core";
 import { MapExplorerPage } from './MapExplorerPage';
-import { CenteredContent } from '../components/common/CenteredContent';
-import { Text } from '../components/common/Text';
+import { CenteredContent } from '../components/common/layout/CenteredContent';
+import { Text } from '../components/common/layout/Text';
 import { WelcomeScreen } from '../OLD/views/example/welcome-screen/welcome-screen';
 import { MapDataFilesComponent } from '../components/files/MapDataFilesComponent';
 import { Redirect } from 'react-router';

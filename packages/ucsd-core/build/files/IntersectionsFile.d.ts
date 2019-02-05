@@ -5,9 +5,11 @@ export declare class IntersectionsFile {
     metaData: GeoFileMetaData;
     intersections: Array<LatLng>;
     constructor(metaData: GeoFileMetaData, intersections: Array<LatLng>);
+    static Extension: string;
+    static HasCorrectExtension(filePath: string): boolean;
     static CreateFromPointsFile(pointsFile: PointMapsFile): IntersectionsFile;
     static CreateMetaDataFromPoints(rsdFile: PointMapsFile): GeoFileMetaData;
     static SaveJsonFile(filePath: string, intersectionsFile: IntersectionsFile): void;
-    static LoadFromJsonFile(filePath: string): IntersectionsFile;
+    static Load(filePath: string): IntersectionsFile;
 }
 //# sourceMappingURL=IntersectionsFile.d.ts.map

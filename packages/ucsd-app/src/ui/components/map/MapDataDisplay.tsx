@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { css } from 'glamor'
 
-import { LatLngTxt } from '../common/LatLngTxt';
+import { LatLngTxt } from '../common/geo/LatLngTxt';
 import { observer, inject } from 'mobx-react';
 import { RootStore } from '../../stores/RootStore';
 import { downloadOsmFile, DownloadOsmParams } from '../../services/OsmService';
-import { DownloadLatLngBoundsBox } from '../common/DownloadLatLngBoundsBox';
+import { DownloadLatLngBoundsBox } from '../common/geo/DownloadLatLngBoundsBox';
 
 const outerBoxCss = css({
     flex: '0 0 auto',

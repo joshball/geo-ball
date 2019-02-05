@@ -8,6 +8,7 @@
         // { "path": "../ucsd-app" },
         // { "path": "../ucsd-cli" },
         { "path": "../ucsd-core" },
+        { "path": "../utils" },
     ],
     "compilerOptions": {
         "baseUrl": ".",

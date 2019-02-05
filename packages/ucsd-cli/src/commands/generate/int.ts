@@ -102,7 +102,7 @@ class GenerateIntersectionsFileCommand extends Command {
             IntersectionsFile.SaveJsonFile(orf.intJsonFilePath.path, intFile);
             // IntersectionsFile.SaveJsonFile(orf.intTextFilePath.path, intFile);
 
-            // const rsfJson = RoadSegmentsFile.LoadFromJsonFile(orf.rsdJsonFilePath.path);
+            // const rsfJson = RoadSegmentsFile.Load(orf.rsdJsonFilePath.path);
             // console.log('Loaded RSF metaData:', rsfJson.metaData);
             // console.log('Loaded RSF Json with len:', rsfJson.segmentsData.length);
         });

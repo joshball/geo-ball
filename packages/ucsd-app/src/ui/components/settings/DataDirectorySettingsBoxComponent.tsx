@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { css } from 'glamor'
 import { Button, Intent, H3, ButtonGroup, H5 } from '@blueprintjs/core';
-import { DirectoryChooserButtonComponent } from '../common/DirectoryChooserButtonComponent';
-import { SaveCancelHideButtonComponent } from '../common/SaveCancelHideButtonComponent';
+import { DirectoryChooserButtonComponent } from '../common/input/DirectoryChooserButtonComponent';
+import { SaveCancelHideButtonComponent } from '../common/input/SaveCancelHideButtonComponent';
 
 
 

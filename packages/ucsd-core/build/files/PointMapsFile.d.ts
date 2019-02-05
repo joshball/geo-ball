@@ -6,6 +6,9 @@ export declare class PointMapsFile {
     metaData: GeoFileMetaData;
     pointsMap: PointsToRoadSegmentsMap;
     constructor(metaData: GeoFileMetaData, pointsMap: PointsToRoadSegmentsMap);
+    static Extension: string;
+    static HasCorrectExtension(filePath: string): boolean;
+    static Load(filePath: string): PointMapsFile;
     static CreateFromRsdFile(rsdFile: RoadSegmentsFile): PointMapsFile;
     static DeReferenceNode(nodes: Array<IOpenStreetMapNode>, nodeId: number): IOpenStreetMapNode;
     static CreatePointsToRoadSegmentsMapFromRsdFile(rsdFile: RoadSegmentsFile): PointsToRoadSegmentsMap;

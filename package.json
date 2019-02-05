@@ -78,6 +78,7 @@
     "@ball-maps/osm-data": "^1.0.0",
     "@ball-maps/ucsd-cli": "^1.0.0",
     "@ball-maps/ucsd-core": "^1.0.0",
-    "@ball-maps/ucsd-app": "^1.0.0"
+    "@ball-maps/ucsd-app": "^1.0.0",
+    "@ball-maps/utils": "^1.0.0"
   }
 }

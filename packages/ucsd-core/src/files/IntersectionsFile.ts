@@ -1,13 +1,10 @@
 import { writeFileSync, readFileSync } from 'fs'
 
-import { LatLngBounds, LatLng } from '@ball-maps/geo-core';
-import { OpenStreetmapFile, IOpenStreetMapWay, OpenStreetMapElements, IOpenStreetMapNode } from '@ball-maps/osm-data';
-
-import { RoadSegmentLine, RoadSegmentType } from '../data/RoadSegmentLine';
-import { GeoFileMetaData, IRoadSegmentsFileData } from '..';
+import { LatLng } from '@ball-maps/geo-core';
+import { GeoFileMetaData } from '..';
 import { PointMapsFile } from './PointMapsFile';
 import { findIntersections } from '../data/Intersections';
-
+import { basename } from 'path';
 
 
 export class IntersectionsFile {
@@ -17,6 +14,11 @@ export class IntersectionsFile {
     constructor(metaData: GeoFileMetaData, intersections: Array<LatLng>) {
         this.metaData = new GeoFileMetaData(metaData.bounds, metaData.timestamp);
         this.intersections = intersections;
+    }
+
+    static Extension = 'ucsd-int.json';
+    static HasCorrectExtension(filePath: string): boolean {
+        return basename(filePath).endsWith(IntersectionsFile.Extension);
     }
 
     static CreateFromPointsFile(pointsFile: PointMapsFile): IntersectionsFile {
@@ -31,7 +33,7 @@ export class IntersectionsFile {
 
     static SaveJsonFile(filePath: string, intersectionsFile: IntersectionsFile): void {
         // const pmf = {
-        //     metaData: JSON.parse(JSON.stringify(pointsMapFile.metaData)),
+        //     metaData: JSON.parse(JSON.stringify(pointsMapFLoad
         //     pointsMap: JSON.parse(pointsMapFile.pointsMap.serialize())
         // };
         // console.log(JSON.stringify(intersectionsFile, undefined, 4));
@@ -61,10 +63,10 @@ export class IntersectionsFile {
     //     return new IntersectionsFile(metaData, roadSegments);;
     // }
 
-    static LoadFromJsonFile(filePath: string): IntersectionsFile {
-        console.log('IntersectionsFile.LoadFromJsonFile',filePath);
+    static Load(filePath: string): IntersectionsFile {
+        console.log('IntersectionsFile.Load', filePath);
         const file = JSON.parse(readFileSync(filePath, 'utf8'));
-        console.log('IntersectionsFile.LoadFromJsonFile.metaData',file.metaData);
+        console.log('IntersectionsFile.Load.metaData', file.metaData);
         return new IntersectionsFile(file.metaData, file.intersections);
     }
 
@@ -78,6 +80,13 @@ export class IntersectionsFile {
 
     // static SaveTextFile(filePath: string, roadSegmentsFile: IntersectionsFile): void {
     //     const lines = roadSegmentsFile.segmentsData.map(rs => {
+    //         const start = rs.start.lat + ' ' + rs.start.lng;
+    //         const end = rs.end.lat + ' ' + rs.end.lng;
+    //         return `${start} ${end} "${rs.name}" ${rs.type}`
+    //     })
+    //     return writeFileSync(filePath, lines.join('\r\n'));
+    // }
+
     //         const start = rs.start.lat + ' ' + rs.start.lng;
     //         const end = rs.end.lat + ' ' + rs.end.lng;
     //         return `${start} ${end} "${rs.name}" ${rs.type}`

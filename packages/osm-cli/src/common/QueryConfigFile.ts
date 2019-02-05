@@ -77,7 +77,7 @@ export class QueryConfigFile implements IQueryConfigFile {
 		const osmQuery = new OpenStreetmapQuery(osmQueryObj);
 
 		const now = this.results.timestamp ? new Date() : undefined;
-		const fileName = OpenStreetmapFile.CreateFileName(this.results.queryName, now);
+		const fileName = OpenStreetmapFile.CreateDescriptiveFileName(this.results.queryName, now);
 		const dataDir = resolve(this.results.dataDir || process.cwd());
 		const resultsFileName: string = resolve(join(dataDir, fileName));
 		const osmEndpoint = this.query.osmEndpoint;

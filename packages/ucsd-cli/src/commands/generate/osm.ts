@@ -89,7 +89,7 @@ class GenerateOsmDatFileFromQueryCommand extends Command {
             RoadSegmentsFile.SaveJsonFile(orf.rsdJsonFilePath.path, rsf);
             RoadSegmentsFile.SaveTextFile(orf.rsdTextFilePath.path, rsf);
 
-            const rsfJson = RoadSegmentsFile.LoadFromJsonFile(orf.rsdJsonFilePath.path);
+            const rsfJson = RoadSegmentsFile.Load(orf.rsdJsonFilePath.path);
             console.log('Loaded RSF metaData:', rsfJson.metaData);
             console.log('Loaded RSF Json with len:', rsfJson.segmentsData.length);
         })

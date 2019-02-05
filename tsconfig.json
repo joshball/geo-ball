@@ -8,5 +8,6 @@
         { "path": "packages/ucsd-app" },
         { "path": "packages/ucsd-cli" },
         { "path": "packages/ucsd-core" },
+        { "path": "packages/utils" },
     ]
 }

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { css } from 'glamor'
 import { H1 } from "@blueprintjs/core";
-import { CenteredContent } from '../components/common/CenteredContent';
+import { CenteredContent } from '../components/common/layout/CenteredContent';
 import { DataDirectorySettingsComponent } from '../components/settings/DataDirectorySettingsComponent';
 
 const mainLayout = css({

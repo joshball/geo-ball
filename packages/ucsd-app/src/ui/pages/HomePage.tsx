@@ -3,8 +3,8 @@ import { css } from 'glamor'
 import { Link, Redirect } from 'react-router-dom'
 import { colors, fonts, fontSizes, cssProps } from "../config/theme"
 import { Button, Intent, ControlGroup } from "@blueprintjs/core";
-import { CenteredContent } from '../components/common/CenteredContent';
-import { Text } from '../components/common/Text';
+import { CenteredContent } from '../components/common/layout/CenteredContent';
+import { Text } from '../components/common/layout/Text';
 import { IRouteData, getRouteDataArray, ROUTE_DATA } from '../config/routes';
 
 const mainLayout = css({

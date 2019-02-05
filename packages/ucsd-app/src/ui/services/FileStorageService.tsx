@@ -2,10 +2,8 @@ import { remote, BrowserWindow } from "electron";
 import { resolve, join } from "path";
 import ipc from "../../background/better-ipc";
 import { CHANNELS } from '../../background/index.new';
-import { ensureExistsCallback, IReaddirParams, IReaddirOptions, isBufferType } from '../../background/bg-fs';
-import { PointMapsFile, RoadSegmentsFile, IntersectionsFile } from "@ball-maps/ucsd-core";
-import { OpenStreetmapFile } from "@ball-maps/osm-data";
-import { Dirent, writeFileSync } from 'fs';
+import { IReaddirParams, IReaddirOptions, isBufferType } from '../../background/bg-fs';
+import { Dirent } from 'fs';
 
 const backgroundWindow = remote.getGlobal('backgroundWindow') as BrowserWindow;
 console.log('backgroundWindow:', backgroundWindow);
@@ -13,12 +11,6 @@ if (!backgroundWindow) {
     throw new Error('backgroundWindow global not set!');
 }
 
-export interface IMapDataFileSet {
-    osm: OpenStreetmapFile;
-    rsf: RoadSegmentsFile;
-    pmf: PointMapsFile;
-    int: IntersectionsFile;
-}
 
 // export interface IFileStorageService {
 //     // getMapDataFileSets: () => Promise<Array<IMapDataFileSet>>
@@ -28,29 +20,44 @@ export class FileStorageService {
 
 
     static async EnsureDirectoryStructure(dirToEnsure: string): Promise<void> {
-        await ipc.callRender(backgroundWindow, CHANNELS.ensureExists, dirToEnsure);
+        await ipc.callRender(backgroundWindow, CHANNELS.FS.ensureExists, dirToEnsure);
     }
 
-    static async ReadDir(path: string, options?: IReaddirOptions | undefined): Promise<Array<string | Dirent | Buffer[]>> {
-        const params: IReaddirParams = { path, options };
+    static async ReadDir(directoryPath: string, options?: IReaddirOptions | undefined): Promise<Array<string | Dirent | Buffer[]>> {
+        console.log('FSS>ReadDir #######################################################################');
+        console.log('FSS.ReadDir directoryPath: ', directoryPath);
+        const params: IReaddirParams = { path: directoryPath, options };
         if (options && options.withFileTypes) {
-            return ipc.callRender(backgroundWindow, CHANNELS.readdir, params) as Promise<Array<Dirent>>;
+            return ipc.callRender(backgroundWindow, CHANNELS.FS.readdir, params) as Promise<Array<Dirent>>;
         }
         if (options && options.encoding && isBufferType(options.encoding)) {
-            return ipc.callRender(backgroundWindow, CHANNELS.readdir, params) as Promise<Array<Buffer[]>>;
+            return ipc.callRender(backgroundWindow, CHANNELS.FS.readdir, params) as Promise<Array<Buffer[]>>;
         }
-        return ipc.callRender(backgroundWindow, CHANNELS.readdir, params) as Promise<Array<string>>;
+        return ipc.callRender(backgroundWindow, CHANNELS.FS.readdir, params) as Promise<Array<string>>;
     }
 
-    static async ReadDirWithFullPaths(path: string, options?: IReaddirOptions | undefined): Promise<Array<string | Dirent | Buffer[]>> {
+    static async ReadDirWithFullPaths(directoryPath: string, options?: IReaddirOptions | undefined): Promise<Array<string | Dirent | Buffer[]>> {
+        console.log('ReadDirWithFullPaths.$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+        console.log('ReadDirWithFullPaths.$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+        console.log('ReadDirWithFullPaths.$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+        console.log('ReadDirWithFullPaths.directoryPath:', directoryPath)
         if (options && options.withFileTypes) {
-            return FileStorageService.ReadDir(path) as Promise<Array<Dirent>>;
+            return FileStorageService.ReadDir(directoryPath) as Promise<Array<Dirent>>;
         }
         if (options && options.encoding && isBufferType(options.encoding)) {
-            return FileStorageService.ReadDir(path) as Promise<Array<Buffer[]>>;
+            return FileStorageService.ReadDir(directoryPath) as Promise<Array<Buffer[]>>;
         }
-        return (FileStorageService.ReadDir(path) as Promise<Array<string>>)
-            .then(files => files.map((f: string) => resolve(join(path, f))));
+        return (FileStorageService.ReadDir(directoryPath) as Promise<Array<string>>)
+            // .then(directoryFiles => directoryFiles.map((singleFile: string) => resolve(join(directoryPath, singleFile))));
+            .then(directoryFiles => {
+                console.log('ReadDirWithFullPaths.$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+                console.log('ReadDirWithFullPaths.$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+                console.log('ReadDirWithFullPaths.$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+                console.log('ReadDir RESPONSE: directoryFiles', directoryFiles)
+                console.log('ReadDirWithFullPaths.directoryPath:', directoryPath)
+                console.log('ReadDirWithFullPaths.directoryFiles:', directoryFiles)
+                return directoryFiles.map((singleFile: string) => resolve(join(directoryPath, singleFile)))
+            });
     }
 }
 

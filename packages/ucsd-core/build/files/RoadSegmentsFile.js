@@ -4,10 +4,14 @@ const fs_1 = require("fs");
 const geo_core_1 = require("@ball-maps/geo-core");
 const RoadSegmentLine_1 = require("../data/RoadSegmentLine");
 const GeoFileMetaData_1 = require("./GeoFileMetaData");
+const path_1 = require("path");
 class RoadSegmentsFile {
     constructor(metaData, segmentsData) {
         this.metaData = new GeoFileMetaData_1.GeoFileMetaData(metaData.bounds, metaData.timestamp);
         this.segmentsData = segmentsData;
+    }
+    static HasCorrectExtension(filePath) {
+        return path_1.basename(filePath).endsWith(RoadSegmentsFile.Extension);
     }
     static CreateFromOsm(osmFile) {
         const metaData = RoadSegmentsFile.CreateMetaDataFromOsm(osmFile);
@@ -69,7 +73,7 @@ class RoadSegmentsFile {
         return new RoadSegmentsFile(metaData, roadSegments);
         ;
     }
-    static LoadFromJsonFile(filePath) {
+    static Load(filePath) {
         const file = JSON.parse(fs_1.readFileSync(filePath, 'utf8'));
         return new RoadSegmentsFile(file.metaData, file.segmentsData);
     }
@@ -87,5 +91,6 @@ class RoadSegmentsFile {
         return fs_1.writeFileSync(filePath, lines.join('\r\n'));
     }
 }
+RoadSegmentsFile.Extension = 'ucsd-rsd.json';
 exports.RoadSegmentsFile = RoadSegmentsFile;
 //# sourceMappingURL=RoadSegmentsFile.js.map

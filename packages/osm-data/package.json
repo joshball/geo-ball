@@ -3,7 +3,7 @@
   "name": "@ball-maps/osm-data",
   "description": "Open Street Maps data library",
   "license": "ISC",
-  "author": "Joshua Ball <jball@highseas.com>",
+  "author": "Joshua Ball <joshua.g.s.ball@gmail.com>",
   "homepage": "https://github.com/joshball/ball-maps#readme",
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "@ball-maps/geo-core": "^1.0.0",
+    "@ball-maps/utils": "^1.0.0",
     "axios": "^0.18.0"
   },
   "ava": {

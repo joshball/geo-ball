@@ -3,10 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = require("fs");
 const __1 = require("..");
 const Intersections_1 = require("../data/Intersections");
+const path_1 = require("path");
 class IntersectionsFile {
     constructor(metaData, intersections) {
         this.metaData = new __1.GeoFileMetaData(metaData.bounds, metaData.timestamp);
         this.intersections = intersections;
+    }
+    static HasCorrectExtension(filePath) {
+        return path_1.basename(filePath).endsWith(IntersectionsFile.Extension);
     }
     static CreateFromPointsFile(pointsFile) {
         const metaData = IntersectionsFile.CreateMetaDataFromPoints(pointsFile);
@@ -18,7 +22,7 @@ class IntersectionsFile {
     }
     static SaveJsonFile(filePath, intersectionsFile) {
         // const pmf = {
-        //     metaData: JSON.parse(JSON.stringify(pointsMapFile.metaData)),
+        //     metaData: JSON.parse(JSON.stringify(pointsMapFLoad
         //     pointsMap: JSON.parse(pointsMapFile.pointsMap.serialize())
         // };
         // console.log(JSON.stringify(intersectionsFile, undefined, 4));
@@ -45,12 +49,13 @@ class IntersectionsFile {
     //     // return new RoadSegmentsFile(bounds, new Date(), roadSegments);;
     //     return new IntersectionsFile(metaData, roadSegments);;
     // }
-    static LoadFromJsonFile(filePath) {
-        console.log('IntersectionsFile.LoadFromJsonFile', filePath);
+    static Load(filePath) {
+        console.log('IntersectionsFile.Load', filePath);
         const file = JSON.parse(fs_1.readFileSync(filePath, 'utf8'));
-        console.log('IntersectionsFile.LoadFromJsonFile.metaData', file.metaData);
+        console.log('IntersectionsFile.Load.metaData', file.metaData);
         return new IntersectionsFile(file.metaData, file.intersections);
     }
 }
+IntersectionsFile.Extension = 'ucsd-int.json';
 exports.IntersectionsFile = IntersectionsFile;
 //# sourceMappingURL=IntersectionsFile.js.map
