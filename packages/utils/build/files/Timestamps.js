@@ -9,7 +9,7 @@ const fileNamify_1 = require("./fileNamify");
  *
  * @param date Date
  */
-exports.CreateFilenameTimestamp = (date) => {
+exports.createFilenameTimestamp = (date) => {
     const dateString = date.toISOString(); // '2019-02-04T18:08:19.506Z'
     const split = dateString.split('T'); // [ '2019-02-04', '18:08:19.506Z' ]
     if (split.length !== 2) {
@@ -34,7 +34,7 @@ exports.CreateFilenameTimestamp = (date) => {
  *
  * @param filenameTimestamp
  */
-exports.ParseFilenameTimestamp = (filenameTimestamp) => {
+exports.parseFilenameTimestamp = (filenameTimestamp) => {
     const split = filenameTimestamp.split('_'); // 2019-02-04_1808.19 => [ '2019-02-04', '1808.19' ]
     if (split.length !== 2) {
         throw new Error('Cannot parse ');
@@ -45,7 +45,7 @@ exports.ParseFilenameTimestamp = (filenameTimestamp) => {
     const parsableDateTimeStr = `${split[0]} ${timeStr}`;
     return new Date(parsableDateTimeStr);
 };
-exports.FindParseFilenameTimestamp = (filename) => {
+exports.findParseFilenameTimestamp = (filename) => {
     // 2019-02-04_1808.19
     //  2 0 1 9 - 0 2 - 0 4 _ 1 8 0 8 . 1 9
     // \d\d\d\d\-\d\d\-\d\d\_\d\d\d\d\.\d\d
@@ -69,7 +69,7 @@ exports.FindParseFilenameTimestamp = (filename) => {
         postStr: fileTimestamp.substr(endIndex),
         endIndex,
         orig: filename,
-        date: exports.ParseFilenameTimestamp(fileTimestamp),
+        date: exports.parseFilenameTimestamp(fileTimestamp),
     };
 };
 //# sourceMappingURL=Timestamps.js.map

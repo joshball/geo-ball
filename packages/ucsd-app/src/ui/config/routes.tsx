@@ -2,6 +2,7 @@ import * as React from "react"
 import { Route, Switch } from "react-router";
 
 import { HomePage } from '../pages/HomePage'
+import { HooksPage } from '../pages/HooksPage'
 import { MapExplorerPage } from '../pages/MapExplorerPage'
 import { MapDataFilesPage } from '../pages/MapDataFilesPage'
 import { RoutingPage } from '../pages/RoutingPage'
@@ -20,6 +21,7 @@ export interface IRouteData {
 }
 export interface IRouteConfig {
     home: IRouteData
+    hooks: IRouteData
     maps: IRouteData
     routes: IRouteData
     files: IRouteData
@@ -28,6 +30,7 @@ export interface IRouteConfig {
 
 export const ROUTE_DATA: IRouteConfig = {
     home: { name: 'home', navButtonTxt: 'Home', path: '/', component: HomePage, icon: 'home', exact: true },
+    hooks: { name: 'hooks', navButtonTxt: 'Hooks', path: '/hooks', component: HooksPage, icon: 'home' },
     maps: { name: 'maps', navButtonTxt: 'Explore and Download Maps', path: '/maps', component: MapExplorerPage, },
     routes: { name: 'routes', navButtonTxt: 'Routing', path: '/routes', component: RoutingPage },
     files: { name: 'files', navButtonTxt: 'Manage Files', path: '/files', component: MapDataFilesPage },

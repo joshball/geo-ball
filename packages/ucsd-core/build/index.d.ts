@@ -1,4 +1,5 @@
 export * from './data/RoadSegmentLine';
+export * from './files/OsmFetchGraphFilesSet';
 export * from './files/IntersectionsFile';
 export * from './files/GeoFileMetaData';
 export * from './files/PointMapsFile';

@@ -8,34 +8,34 @@ import { v4 as uuid } from 'uuid';
 
 
 ipc.callRender = (window: BrowserWindow, channel: string, data: any) => new Promise((resolve: any, reject: any) => {
-    console.log('IPC.callRender window.id', window.id);
-    console.log('IPC.callRender channel', channel);
-    console.log('IPC.callRender data',  data);
+    // console.log('IPC.callRender window.id', window.id);
+    // console.log('IPC.callRender channel', channel);
+    // console.log('IPC.callRender data',  data);
     const rw = remote.getCurrentWindow();
     const rendererId = getRendererId(window.id, uuid());
     // const { sendChannel, dataChannel, errorChannel } = getRendererResponseChannels(window.id, channel, uuid());
     const { sendChannel, dataChannel, errorChannel } = getRendererResponseChannels(channel, rendererId);
-    console.log('IPC.callRender channels:', sendChannel, dataChannel, errorChannel);
+    // console.log('IPC.callRender channels:', sendChannel, dataChannel, errorChannel);
     const cleanup = () => {
-        console.log('================> CLEANUP dataChannel', dataChannel)
+        // console.log('================> CLEANUP dataChannel', dataChannel)
         ipcRenderer.removeAllListeners(dataChannel);
         ipcRenderer.removeAllListeners(errorChannel);
     };
 
-    console.log('!!! IPC.callRender LISTENER ipc.on(dataChannel', dataChannel);
+    // console.log('!!! IPC.callRender LISTENER ipc.on(dataChannel', dataChannel);
     ipcRenderer.on(dataChannel, (_event: string, responseData: any) => {
-        console.log('### IPC.callRender(dataChannel)', dataChannel);
-        console.log('**** IPC.callRender._event', _event);
-        console.log('**** IPC.callRender.responseData', responseData);
+        // console.log('### IPC.callRender(dataChannel)', dataChannel);
+        // console.log('**** IPC.callRender._event', _event);
+        // console.log('**** IPC.callRender.responseData', responseData);
         cleanup();
         resolve(responseData);
     });
 
-    console.log('!!! IPC.callRender LISTENER ipc.on(errorChannel', errorChannel);
+    // console.log('!!! IPC.callRender LISTENER ipc.on(errorChannel', errorChannel);
     ipcRenderer.on(errorChannel, (_event: string, error: any) => {
-        console.log('### IPC.callRender(errorChannel) called!');
-        console.log('IPC.callRender._event', _event);
-        console.log('IPC.callRender.error', error);
+        // console.log('### IPC.callRender(errorChannel) called!');
+        // console.log('IPC.callRender._event', _event);
+        // console.log('IPC.callRender.error', error);
         cleanup();
         reject(error);
     });
@@ -43,21 +43,21 @@ ipc.callRender = (window: BrowserWindow, channel: string, data: any) => new Prom
     // ipc.send(sendChannel, data);
     if (window.webContents) {
         const callerId = window.webContents.id;
-        console.log('### IPC.callRender() window.id, window.WC.id:', window.id, window.webContents.id);
-        console.log('IPC.callRender() callerId:', callerId);
-        console.log('IPC.callRender() channel:', channel);
-        console.log('IPC.callRender() sendChannel:', sendChannel);
-        // console.log('@@@ IPC.callRender() ipcRenderer.*sendTo*(%s, %s, data):', callerId, sendChannel, data);
-        // ipcRenderer.sendTo(callerId, sendChannel, data);
-        console.log('@@@ window.webContents.SEND(sc: %s, id: %s) data:', sendChannel, callerId, data);
-        console.log('@@@ window.webContents.SEND.data:', data);
+        // console.log('### IPC.callRender() window.id, window.WC.id:', window.id, window.webContents.id);
+        // console.log('IPC.callRender() callerId:', callerId);
+        // console.log('IPC.callRender() channel:', channel);
+        // console.log('IPC.callRender() sendChannel:', sendChannel);
+        // // console.log('@@@ IPC.callRender() ipcRenderer.*sendTo*(%s, %s, data):', callerId, sendChannel, data);
+        // // ipcRenderer.sendTo(callerId, sendChannel, data);
+        // console.log('@@@ window.webContents.SEND(sc: %s, id: %s) data:', sendChannel, callerId, data);
+        // console.log('@@@ window.webContents.SEND.data:', data);
         const wrappedData = {
             renderWindowId: rw.id,
             rendererId,
             renderData: data,
         }
-        console.log('@@@ window.webContents.SEND.wrappedData:', wrappedData);
-        console.log('@@@ window.webContents.SEND.sendChannel:', sendChannel);
+        // console.log('@@@ window.webContents.SEND.wrappedData:', wrappedData);
+        // console.log('@@@ window.webContents.SEND.sendChannel:', sendChannel);
         window.webContents.send(sendChannel, wrappedData);
 
         // console.log('window.webContents. SENDING.data', data);

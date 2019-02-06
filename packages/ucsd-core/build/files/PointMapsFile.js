@@ -14,7 +14,10 @@ class PointMapsFile {
     }
     static Load(filePath) {
         console.log('PointMapsFile.Load', filePath);
-        const file = JSON.parse(fs_1.readFileSync(filePath, 'utf8'));
+        return PointMapsFile.CreateFromFileJson(fs_1.readFileSync(filePath, 'utf8'));
+    }
+    static CreateFromFileJson(fileJson) {
+        const file = JSON.parse(fileJson);
         console.log('IntersectionsFile.Load.metaData', file.metaData);
         return new PointMapsFile(file.metaData, file.intersections);
     }

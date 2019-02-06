@@ -51,7 +51,10 @@ class IntersectionsFile {
     // }
     static Load(filePath) {
         console.log('IntersectionsFile.Load', filePath);
-        const file = JSON.parse(fs_1.readFileSync(filePath, 'utf8'));
+        return IntersectionsFile.CreateFromFileJson(fs_1.readFileSync(filePath, 'utf8'));
+    }
+    static CreateFromFileJson(fileJson) {
+        const file = JSON.parse(fileJson);
         console.log('IntersectionsFile.Load.metaData', file.metaData);
         return new IntersectionsFile(file.metaData, file.intersections);
     }

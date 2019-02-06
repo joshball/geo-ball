@@ -74,7 +74,12 @@ class RoadSegmentsFile {
         ;
     }
     static Load(filePath) {
-        const file = JSON.parse(fs_1.readFileSync(filePath, 'utf8'));
+        console.log('RoadSegmentsFile.Load', filePath);
+        return RoadSegmentsFile.CreateFromFileJson(fs_1.readFileSync(filePath, 'utf8'));
+    }
+    static CreateFromFileJson(fileJson) {
+        const file = JSON.parse(fileJson);
+        console.log('RoadSegmentsFile.Load.metaData', file.metaData);
         return new RoadSegmentsFile(file.metaData, file.segmentsData);
     }
     // ORIG: 32.8769858 -117.2359995 32.8771038 -117.2360337 "Myers Drive" residential

@@ -9,7 +9,7 @@ import { H3 } from '@blueprintjs/core';
 
 
 
-const outerBoxCss = css({
+export const outerBoxCss = css({
     flex: '0 0 auto',
     margin: '10px',
     padding: '10px',

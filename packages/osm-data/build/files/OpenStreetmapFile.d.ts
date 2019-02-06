@@ -13,6 +13,9 @@ export declare class OpenStreetmapFileMetaData {
     queryDate: string;
     constructor(osmServer: string, osmQuery: IOpenStreetmapQuery, queryDate?: string);
 }
+export interface IFileCreator {
+    Load(path: string): any;
+}
 export declare class OpenStreetmapFile {
     osmMetaData: OpenStreetmapFileMetaData;
     osmQueryResp: IOpenStreetmapQueryResponse;
@@ -20,8 +23,9 @@ export declare class OpenStreetmapFile {
     getElements(): OpenStreetMapElements;
     static Extension: string;
     static HasCorrectExtension(filePath: string): boolean;
-    static Load(path: string): OpenStreetmapFile;
-    static GetFileType(fileData: string): OpenStreetmapFile;
+    static Load(filePath: string): OpenStreetmapFile;
+    static CreateFromFileJson(fileJson: string): OpenStreetmapFile;
+    static IsOsmData(osmData: OpenStreetmapFile): boolean;
     static Save(path: string, osmFile: OpenStreetmapFile): string;
     static CreateDescriptiveFileName(fileQueryName: string, date: Date | undefined): string;
     static ParseOpenStreetmapFileName(filePath: string): ParsedFilenameTimestamp | undefined;

@@ -3,8 +3,8 @@ import { observer, inject } from 'mobx-react';
 import { RootStore } from '../../stores/RootStore';
 import { join, basename, dirname, resolve } from 'path';
 import { remote } from 'electron';
-import { DataDirectorySettingsBoxComponent, DataDirectorySettingsBoxProps } from './DataDirectorySettingsBoxComponent';
-import { IDataDirectory } from '../../models/DataDirectory';
+import { UcsdAppDataDirSettingsBoxComponent, UcsdAppDataDirSettingsBoxProps } from './UcsdAppDataDirSettingsBoxComponent';
+import { IUcsdAppDataDirMgr } from '../../models/UcsdAppDataDirMgr';
 
 
 export interface IValidateFolder {
@@ -12,11 +12,11 @@ export interface IValidateFolder {
     reason: string;
 }
 
-export interface DataDirectorySettingsProps {
+export interface UcsdAppDataDirSettingsProps {
     stores?: RootStore;
 }
 
-export interface DataDirectorySettingsState {
+export interface UcsdAppDataDirSettingsState {
     dirName: string;
     rootPath: string;
     // dataDirectory: IDataDirectory;
@@ -25,25 +25,25 @@ export interface DataDirectorySettingsState {
 
 @inject("stores")
 @observer
-export class DataDirectorySettingsComponent extends React.Component<DataDirectorySettingsProps, DataDirectorySettingsState> {
+export class UcsdAppDataDirSettingsComponent extends React.Component<UcsdAppDataDirSettingsProps, UcsdAppDataDirSettingsState> {
 
-    state: DataDirectorySettingsState;
+    state: UcsdAppDataDirSettingsState;
 
-    originalDataDirectory: IDataDirectory;
+    originalDataDirectory: IUcsdAppDataDirMgr;
     // dataDirectory: IDataDirectory;
 
     // originalDataDir: string;
     // originalUcsdDirRootPath: string;
     // originalUcsdDirName: string;
 
-    constructor(props: DataDirectorySettingsProps) {
+    constructor(props: UcsdAppDataDirSettingsProps) {
         super(props);
 
         // this.originalDataDir = this.props.stores!.data.getDataDirectoryPath();
         // this.originalUcsdDirName = basename(this.originalDataDir);
         // this.originalUcsdDirRootPath = dirname(this.originalDataDir)
 
-        this.originalDataDirectory = this.props.stores!.settings.dataDirectory.getComponents();
+        this.originalDataDirectory = this.props.stores!.settings.ucsdAppDataDirMgr.getComponents();
         // this.dataDirectory = this.props.stores!.settings.dataDirectory.getComponents();
 
         this.state = {
@@ -130,8 +130,8 @@ export class DataDirectorySettingsComponent extends React.Component<DataDirector
         // TODO: offer to create if doesn't exist
         // handle permissions
         this.validateStateSettings();
-        this.props.stores!.settings.dataDirectory.dirName = this.state.dirName;
-        this.props.stores!.settings.dataDirectory.rootPath = this.state.rootPath;
+        this.props.stores!.settings.ucsdAppDataDirMgr.dirName = this.state.dirName;
+        this.props.stores!.settings.ucsdAppDataDirMgr.rootPath = this.state.rootPath;
     }
 
     saveRequired() {
@@ -161,10 +161,10 @@ export class DataDirectorySettingsComponent extends React.Component<DataDirector
         // const defaultText = 'Select the root folder for your your files...'
         // const managedRootDirTxt = selectedFolder ? dirname(selectedFolder) : 'NONE SELECTED';
         // const managedDataDirTxt = selectedFolder || 'NONE SELECTED';
-        const props: DataDirectorySettingsBoxProps = {
-            ballmapsDirName: ucsdDirName,
-            ballmapsDirRootPath: ucsdDirRootPath,
-            ballmapsDirPath: join(ucsdDirRootPath, ucsdDirName),
+        const props: UcsdAppDataDirSettingsBoxProps = {
+            geoballDirName: ucsdDirName,
+            geoballDirRootPath: ucsdDirRootPath,
+            geoballDirPath: join(ucsdDirRootPath, ucsdDirName),
             setFolderBrowse: this.setFolderBrowse,
             setFolderHome: this.setRootPathToUsersHomeDir,
             setFolderAppUserData: this.setRootPathToAppUsersDir,
@@ -178,7 +178,7 @@ export class DataDirectorySettingsComponent extends React.Component<DataDirector
         }
 
         return (
-            <DataDirectorySettingsBoxComponent {...props} />
+            <UcsdAppDataDirSettingsBoxComponent {...props} />
         );
     }
 }

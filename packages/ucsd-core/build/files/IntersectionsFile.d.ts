@@ -11,5 +11,6 @@ export declare class IntersectionsFile {
     static CreateMetaDataFromPoints(rsdFile: PointMapsFile): GeoFileMetaData;
     static SaveJsonFile(filePath: string, intersectionsFile: IntersectionsFile): void;
     static Load(filePath: string): IntersectionsFile;
+    static CreateFromFileJson(fileJson: string): IntersectionsFile;
 }
 //# sourceMappingURL=IntersectionsFile.d.ts.map

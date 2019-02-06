@@ -9,6 +9,7 @@ export declare class PointMapsFile {
     static Extension: string;
     static HasCorrectExtension(filePath: string): boolean;
     static Load(filePath: string): PointMapsFile;
+    static CreateFromFileJson(fileJson: string): PointMapsFile;
     static CreateFromRsdFile(rsdFile: RoadSegmentsFile): PointMapsFile;
     static DeReferenceNode(nodes: Array<IOpenStreetMapNode>, nodeId: number): IOpenStreetMapNode;
     static CreatePointsToRoadSegmentsMapFromRsdFile(rsdFile: RoadSegmentsFile): PointsToRoadSegmentsMap;

@@ -24,8 +24,8 @@ export class FileStorageService {
     }
 
     static async ReadDir(directoryPath: string, options?: IReaddirOptions | undefined): Promise<Array<string | Dirent | Buffer[]>> {
-        console.log('FSS>ReadDir #######################################################################');
-        console.log('FSS.ReadDir directoryPath: ', directoryPath);
+        // console.log('FSS>ReadDir #######################################################################');
+        // console.log('FSS.ReadDir directoryPath: ', directoryPath);
         const params: IReaddirParams = { path: directoryPath, options };
         if (options && options.withFileTypes) {
             return ipc.callRender(backgroundWindow, CHANNELS.FS.readdir, params) as Promise<Array<Dirent>>;
@@ -37,10 +37,7 @@ export class FileStorageService {
     }
 
     static async ReadDirWithFullPaths(directoryPath: string, options?: IReaddirOptions | undefined): Promise<Array<string | Dirent | Buffer[]>> {
-        console.log('ReadDirWithFullPaths.$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-        console.log('ReadDirWithFullPaths.$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-        console.log('ReadDirWithFullPaths.$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-        console.log('ReadDirWithFullPaths.directoryPath:', directoryPath)
+        // console.log('ReadDirWithFullPaths.directoryPath:', directoryPath)
         if (options && options.withFileTypes) {
             return FileStorageService.ReadDir(directoryPath) as Promise<Array<Dirent>>;
         }
@@ -50,12 +47,10 @@ export class FileStorageService {
         return (FileStorageService.ReadDir(directoryPath) as Promise<Array<string>>)
             // .then(directoryFiles => directoryFiles.map((singleFile: string) => resolve(join(directoryPath, singleFile))));
             .then(directoryFiles => {
-                console.log('ReadDirWithFullPaths.$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-                console.log('ReadDirWithFullPaths.$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-                console.log('ReadDirWithFullPaths.$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-                console.log('ReadDir RESPONSE: directoryFiles', directoryFiles)
-                console.log('ReadDirWithFullPaths.directoryPath:', directoryPath)
-                console.log('ReadDirWithFullPaths.directoryFiles:', directoryFiles)
+                // console.log('ReadDirWithFullPaths.$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+                // console.log('ReadDir RESPONSE: directoryFiles', directoryFiles)
+                // console.log('ReadDirWithFullPaths.directoryPath:', directoryPath)
+                // console.log('ReadDirWithFullPaths.directoryFiles:', directoryFiles)
                 return directoryFiles.map((singleFile: string) => resolve(join(directoryPath, singleFile)))
             });
     }

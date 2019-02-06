@@ -21,7 +21,11 @@ export class PointMapsFile {
 
     static Load(filePath: string): PointMapsFile {
         console.log('PointMapsFile.Load', filePath);
-        const file = JSON.parse(readFileSync(filePath, 'utf8'));
+        return PointMapsFile.CreateFromFileJson(readFileSync(filePath, 'utf8'));
+    }
+
+    static CreateFromFileJson(fileJson: string): PointMapsFile {
+        const file = JSON.parse(fileJson);
         console.log('IntersectionsFile.Load.metaData', file.metaData);
         return new PointMapsFile(file.metaData, file.intersections);
     }

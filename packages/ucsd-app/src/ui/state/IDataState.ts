@@ -1,23 +1,26 @@
-import { DataDirectory } from '../models/DataDirectory';
+import { UcsdAppDataDirMgr } from '../models/UcsdAppDataDirMgr';
 export interface IDataState {
-    dataDirectory: IDataDirectoryState;
+    ucsdAppDataDir: IUcsdAppDataDirState;
 }
-export interface IDataDirectoryState {
+export interface IUcsdAppDataDirState {
     path: string;
 }
 
 
 export class DataState implements IDataState {
-    dataDirectory: IDataDirectoryState;
+    ucsdAppDataDir: IUcsdAppDataDirState;
 
-    constructor(dataDirectory?: IDataDirectoryState | undefined) {
-        this.dataDirectory = new DataDirectoryState(dataDirectory ? dataDirectory.path : undefined);
+    constructor(ucsdAppDataDir?: IUcsdAppDataDirState | undefined) {
+        this.ucsdAppDataDir = new UcsdAppDataDirState(ucsdAppDataDir
+            ? ucsdAppDataDir.path
+            : UcsdAppDataDirMgr.GetDefaultUcsdAppDataDirPath());
+            console.log('DataState() this.ucsdAppDataDir', this.ucsdAppDataDir)
     }
 }
 
-export class DataDirectoryState implements IDataDirectoryState {
+export class UcsdAppDataDirState implements IUcsdAppDataDirState {
     path: string;
-    constructor(path?: string | undefined) {
-        this.path = path ? path : DataDirectory.GetDefaultDataDirPath();
+    constructor(path: string) {
+        this.path = path;
     }
 }

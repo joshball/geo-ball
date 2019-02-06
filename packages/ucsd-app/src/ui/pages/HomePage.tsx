@@ -50,6 +50,7 @@ export const HomePage: React.SFC<any> = (props: any) => {
     console.log('HomePage props.location', props.location)
     console.log('HomePage props.match', props.match)
     // return <Redirect to='/settings' />;
+    // return <Redirect to='/hooks' />;
     return <Redirect to='/files' />;
     return (
         <CenteredContent style={mainLayout}>

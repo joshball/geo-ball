@@ -63,12 +63,18 @@ export class IntersectionsFile {
     //     return new IntersectionsFile(metaData, roadSegments);;
     // }
 
-    static Load(filePath: string): IntersectionsFile {
+     static Load(filePath: string): IntersectionsFile {
         console.log('IntersectionsFile.Load', filePath);
-        const file = JSON.parse(readFileSync(filePath, 'utf8'));
+        return IntersectionsFile.CreateFromFileJson(readFileSync(filePath, 'utf8'));
+    }
+
+    static CreateFromFileJson(fileJson: string): IntersectionsFile {
+        const file = JSON.parse(fileJson);
         console.log('IntersectionsFile.Load.metaData', file.metaData);
         return new IntersectionsFile(file.metaData, file.intersections);
     }
+
+
 
     // // ORIG: 32.8769858 -117.2359995 32.8771038 -117.2360337 "Myers Drive" residential
     // /// NEW: 32.8769858 -117.2359995 32.8771038 -117.2360337 "Myers Drive" residential

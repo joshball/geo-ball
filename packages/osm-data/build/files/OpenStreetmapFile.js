@@ -26,21 +26,24 @@ class OpenStreetmapFile {
         return path_1.basename(filePath).endsWith(OpenStreetmapFile.Extension);
     }
     // osmd.QUERYNAME[.TS?].json
-    static Load(path) {
-        const resolvedPath = path_1.resolve(path);
-        const fileData = fs_1.readFileSync(resolvedPath, 'utf8');
-        return OpenStreetmapFile.GetFileType(fileData);
+    static Load(filePath) {
+        console.log('OpenStreetmapFile.Load', filePath);
+        return OpenStreetmapFile.CreateFromFileJson(fs_1.readFileSync(filePath, 'utf8'));
     }
-    static GetFileType(fileData) {
-        const osmData = JSON.parse(fileData);
-        if (osmData.osmMetaData
-            && osmData.osmMetaData.osmServer
-            && osmData.osmMetaData.osmQuery
-            && osmData.osmMetaData.queryDate
-            && osmData.osmQueryResp) {
-            return new OpenStreetmapFile(osmData.osmMetaData, osmData.osmQueryResp);
+    static CreateFromFileJson(fileJson) {
+        const file = JSON.parse(fileJson);
+        if (OpenStreetmapFile.IsOsmData(file)) {
+            console.log('OpenStreetmapFile.Load.osmMetaData', file.osmMetaData);
+            return new OpenStreetmapFile(file.osmMetaData, file.osmQueryResp);
         }
-        throw new Error('Not an OSM File');
+        throw new Error('Invalid file structure');
+    }
+    static IsOsmData(osmData) {
+        return !!osmData.osmMetaData
+            && !!osmData.osmMetaData.osmServer
+            && !!osmData.osmMetaData.osmQuery
+            && !!osmData.osmMetaData.queryDate
+            && !!osmData.osmQueryResp;
     }
     static Save(path, osmFile) {
         const resolvedPath = path_1.resolve(path);
@@ -48,11 +51,11 @@ class OpenStreetmapFile {
         return resolvedPath;
     }
     static CreateDescriptiveFileName(fileQueryName, date) {
-        const ts = date ? '.' + utils_1.CreateFilenameTimestamp(date) : '';
+        const ts = date ? '.' + utils_1.createFilenameTimestamp(date) : '';
         return `${utils_1.fileNamify(fileQueryName, { replacement: '_' })}${ts}.${OpenStreetmapFile.Extension}`;
     }
     static ParseOpenStreetmapFileName(filePath) {
-        return utils_1.FindParseFilenameTimestamp(filePath);
+        return utils_1.findParseFilenameTimestamp(filePath);
     }
 }
 OpenStreetmapFile.Extension = 'osm-data.json';

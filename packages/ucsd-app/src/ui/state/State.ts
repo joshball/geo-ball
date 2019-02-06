@@ -14,11 +14,6 @@ export const defaultState: IState = {
         title: 'Home',
     },
     data: new DataState(),
-    // data: {
-    //     dataDirectory: {
-    //         path: '',
-    //     }
-    // },
     mapExplorer: {
         location: {
             zoom: 19,

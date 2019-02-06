@@ -1,6 +1,5 @@
 // This is the top-most component in the app.
 import * as React from "react"
-import { Route, Switch, Redirect } from "react-router";
 import { MemoryRouter, Link } from 'react-router-dom';
 import "glamor/reset";
 import { compose } from "glamor"

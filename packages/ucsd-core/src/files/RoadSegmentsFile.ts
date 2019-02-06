@@ -92,7 +92,13 @@ export class RoadSegmentsFile {
 
 
     static Load(filePath: string): RoadSegmentsFile {
-        const file = JSON.parse(readFileSync(filePath, 'utf8'));
+        console.log('RoadSegmentsFile.Load', filePath);
+        return RoadSegmentsFile.CreateFromFileJson(readFileSync(filePath, 'utf8'));
+    }
+
+    static CreateFromFileJson(fileJson: string): RoadSegmentsFile {
+        const file = JSON.parse(fileJson);
+        console.log('RoadSegmentsFile.Load.metaData', file.metaData);
         return new RoadSegmentsFile(file.metaData, file.segmentsData);
     }
 

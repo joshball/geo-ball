@@ -7,6 +7,7 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./data/RoadSegmentLine"));
+__export(require("./files/OsmFetchGraphFilesSet"));
 __export(require("./files/IntersectionsFile"));
 __export(require("./files/GeoFileMetaData"));
 __export(require("./files/PointMapsFile"));

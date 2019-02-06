@@ -12,7 +12,7 @@ export interface FileComponentProps {
 }
 
 
-const singleResultCss = css({
+export const singleResultCss = css({
     border: '1px solid #EFCAC450',
     backgroundColor: '#EFCAC415',
     marginTop: '10px',
@@ -33,4 +33,5 @@ export class FileComponent extends React.Component<FileComponentProps> {
         )
     }
 }
+
 
