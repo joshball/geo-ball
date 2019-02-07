@@ -1,7 +1,7 @@
 import { action, computed } from 'mobx'
-import { LatLng as LeafLatLng, LatLngBounds as LeafLatLngBounds, LatLngLiteral as LeafLatLngLiteral } from 'leaflet';
 import { IGeocodeResponse } from '../services/GeocodingService';
 import { IState } from '../state/State';
+import { LatLngBounds, LatLng, ILatLng } from '@geo-ball/geo-core';
 
 
 export class MapLocationStore {
@@ -13,15 +13,15 @@ export class MapLocationStore {
     }
 
 
-    @computed get clickPos(): LeafLatLngLiteral | null {
+    @computed get clickPos(): LatLng | null {
         return this.state.mapExplorer.display.clickPos;
     }
 
-    @computed get mousePos(): LeafLatLngLiteral | null {
+    @computed get mousePos(): LatLng | null {
         return this.state.mapExplorer.display.mousePos;
     }
 
-    @computed get bounds(): LeafLatLngBounds | null {
+    @computed get bounds(): LatLngBounds | null {
         return this.state.mapExplorer.display.bounds;
     }
 
@@ -30,7 +30,7 @@ export class MapLocationStore {
         return this.state.mapExplorer.location.zoom;
     }
 
-    @computed get center(): LeafLatLngLiteral {
+    @computed get center(): ILatLng {
         return this.state.mapExplorer.location.center;
     }
 
@@ -40,13 +40,13 @@ export class MapLocationStore {
 
 
     @action
-    updateCenter = (center: LeafLatLng, bounds: LeafLatLngBounds) => {
+    updateCenter = (center: LatLng, bounds: LatLngBounds) => {
         this.state.mapExplorer.location.center = center;
         this.state.mapExplorer.display.bounds = bounds;
     }
 
     @action
-    updateCore = (center: LeafLatLng, zoom: number, bounds: LeafLatLngBounds) => {
+    updateCore = (center: LatLng, zoom: number, bounds: LatLngBounds) => {
         // console.log('MapLocationStore.updateCore', this.bounds, this.mousePos)
         this.state.mapExplorer.location.center = center;
         this.state.mapExplorer.location.zoom = zoom;
@@ -56,16 +56,16 @@ export class MapLocationStore {
     @action
     updateSelectedAddress = (newAddress: IGeocodeResponse) => {
         this.state.mapExplorer.address.selectedAddress = newAddress;
-        this.state.mapExplorer.location.center = new LeafLatLng(parseFloat(newAddress.y), parseFloat(newAddress.x));
+        this.state.mapExplorer.location.center = new LatLng(parseFloat(newAddress.y), parseFloat(newAddress.x));
     }
 
     @action
-    updateClickLocation = (latLng: LeafLatLng) => {
+    updateClickLocation = (latLng: LatLng) => {
         this.state.mapExplorer.display.clickPos = latLng;
     }
 
     @action
-    updateMousePosition = (latLng: LeafLatLng) => {
+    updateMousePosition = (latLng: LatLng) => {
         // console.log('MapLocationStore.updateMousePosition()');
         // console.log('MapLocationStore.updateMousePosition() this.mousePos',this.mousePos);
         // console.log('MapLocationStore.updateMousePosition() latLng',latLng);

@@ -1,6 +1,6 @@
 
-import { LatLngLiteral as LeafLatLngLiteral, LatLngBounds as LeafLatLngBounds } from 'leaflet';
 import { IGeocodeResponse } from '../services/GeocodingService';
+import { LatLng, LatLngBounds, ILatLng } from '@geo-ball/geo-core';
 
 export interface IMapExplorerState {
     location: IMapLocState;
@@ -11,7 +11,7 @@ export interface IMapExplorerState {
 
 export interface IMapLocState {
     zoom: number;
-    center: LeafLatLngLiteral;
+    center: ILatLng;
 }
 
 export interface IMapAddressState {
@@ -20,7 +20,7 @@ export interface IMapAddressState {
 }
 
 export interface IMapDisplayState {
-    bounds: LeafLatLngBounds | null;
-    clickPos: LeafLatLngLiteral | null;
-    mousePos: LeafLatLngLiteral | null;
+    bounds: LatLngBounds | null;
+    clickPos: LatLng | null;
+    mousePos: LatLng | null;
 }

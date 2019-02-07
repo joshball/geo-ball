@@ -11,10 +11,10 @@ ava_1.default('LatLng is instantiable', t => {
     const ne = new LatLng_1.LatLng(32.902622, -117.20367);
     const latLngBounds = new LatLngBounds_1.LatLngBounds(sw, ne);
     t.true(latLngBounds.valid());
-    t.is(latLngBounds.sw.lat, 32.859375);
-    t.is(latLngBounds.sw.lng, -117.27233);
-    t.is(latLngBounds.ne.lat, 32.902622);
-    t.is(latLngBounds.ne.lng, -117.20367);
+    t.is(latLngBounds.southWest.lat, 32.859375);
+    t.is(latLngBounds.southWest.lng, -117.27233);
+    t.is(latLngBounds.northEast.lat, 32.902622);
+    t.is(latLngBounds.northEast.lng, -117.20367);
 });
 ava_1.default('LatLng is checks lat bounds', t => {
     const sw = new LatLng_1.LatLng(-1, -1);

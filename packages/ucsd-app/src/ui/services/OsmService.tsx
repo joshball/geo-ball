@@ -1,9 +1,8 @@
-import { IOpenStreetmapQuery, OSMFeatureKeyValuePair, OSMFeatureKey, OpenStreetmapQuery, OpenStreetmapDownloader, IFetchAndSaveResult } from "@geo-ball/osm-data";
-import { LatLng as LeafLatLng, LatLngBounds as LeafLatLngBounds } from "leaflet";
-import { reverseGeocodeLocation } from "./GeocodingService";
+import { IOpenStreetmapQuery, OSMFeatureKeyValuePair, OSMFeatureKey, OpenStreetmapQuery, OpenStreetmapDownloader, IFetchAndSaveResult, OpenStreetmapFileMetaData } from "@geo-ball/osm-data";
+import { LatLngBounds, LatLng } from "@geo-ball/geo-core";
 
 
-const getOsmQuery = (latLngBounds: LeafLatLngBounds): OpenStreetmapQuery => {
+const getOsmQuery = (latLngBounds: LatLngBounds): OpenStreetmapQuery => {
     const features = [
         "highway",
         "addr"
@@ -30,11 +29,12 @@ const getOsmQuery = (latLngBounds: LeafLatLngBounds): OpenStreetmapQuery => {
 }
 
 export interface DownloadOsmParams {
-    bounds: LeafLatLngBounds;
-    center: LeafLatLng;
+    bounds: LatLngBounds;
+    center: LatLng;
     name: string;
     desc: string;
     area: string;
+    fake: boolean;
 }
 
 export const downloadOsmFile = async (osmParams: DownloadOsmParams): Promise<void> => {
@@ -42,22 +42,23 @@ export const downloadOsmFile = async (osmParams: DownloadOsmParams): Promise<voi
     const osmQuery = getOsmQuery(osmParams.bounds)
     const overwrite = true;
     const osmDownloadFilePath = osmParams.name || 'map-query';
-    const downloader = new OpenStreetmapDownloader();
+    const endpoint = OpenStreetmapDownloader.DEFAULT_ENDPOINT;
+    const osmMeta = new OpenStreetmapFileMetaData(endpoint, osmQuery, osmParams.name, osmParams.desc, osmQuery.latLngBounds);
 
-    // downloader.fetchAndSave(osmQuery, osmDownloadFilePath, overwrite)
-    //     .then((results: IFetchAndSaveResult) => {
-    //         console.log('Download Complete:');
-    //         console.log('  SERVER:', results.osmDataFile.osmMetaData.osmServer);
-    //         console.log('    DATE:', results.osmDataFile.osmMetaData.queryDate);
-    //         console.log('    FILE:', results.osmDataFilePath);
-    //     })
-    //     .catch(error => {
-    //         console.error('###################################################################################')
-    //         console.error('DOWNLOAD FAILED:')
-    //         console.error(error)
-    //         console.error('###################################################################################')
-    //         throw error;
-    //     });
+    return OpenStreetmapDownloader.FetchAndSave(osmMeta, osmDownloadFilePath, overwrite, osmParams.fake)
+        .then((results: IFetchAndSaveResult) => {
+            console.log('Download Complete:');
+            console.log('  SERVER:', results.osmDataFile.osmMetaData.osmServer);
+            console.log('    DATE:', results.osmDataFile.osmMetaData.queryDate);
+            console.log('    FILE:', results.osmDataFilePath);
+        })
+        .catch(error => {
+            console.error('###################################################################################')
+            console.error('DOWNLOAD FAILED:')
+            console.error(error)
+            console.error('###################################################################################')
+            throw error;
+        });
 
 
 }

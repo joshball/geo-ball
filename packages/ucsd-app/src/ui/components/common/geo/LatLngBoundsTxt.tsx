@@ -1,9 +1,8 @@
 import * as React from 'react'
 import { css } from 'glamor'
-import { LatLngBounds as LeafLatLngBounds} from 'leaflet';
 
 import { LatLngTxt } from './LatLngTxt';
-import { ILatLngFmt, LatLngQuickFmt } from '@geo-ball/geo-core';
+import { ILatLngFmt, LatLngQuickFmt, LatLngBounds } from '@geo-ball/geo-core';
 
 const outerBoxCss = css({
     // height: '100%',
@@ -12,7 +11,7 @@ const outerBoxCss = css({
 })
 
 export interface LatLngBoundsTxtProps {
-    bounds?: LeafLatLngBounds | null;
+    bounds?: LatLngBounds | null;
     latLngQuickFmt?: LatLngQuickFmt;
     latLngFmt?: ILatLngFmt;
 }

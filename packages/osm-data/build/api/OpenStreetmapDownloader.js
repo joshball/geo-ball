@@ -15,35 +15,57 @@ const OverPassApiEndpoints = {
     fr: 'http://overpass.openstreetmap.fr/api/interpreter',
     kumi: 'https://overpass.kumi.systems/api/interpreter',
 };
-const DEFAULT_ENDPOINT = OverPassApiEndpoints.main;
+// const osmMetaData = new OpenStreetmapFileMetaData(this.endpoint, osmQuery);
+exports.osmJsonResp = {
+    "version": 0.6,
+    "generator": "Overpass API 0.7.55.4 3079d8ea",
+    "osm3s": {
+        "timestamp_osm_base": "2018-10-23T19:14:02Z",
+        "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+    },
+    "elements": [
+        {
+            "type": "node",
+            "id": 83550018,
+            "lat": 40.7192445,
+            "lon": -111.8535611,
+            "tags": {
+                "highway": "traffic_signals"
+            }
+        }
+    ]
+};
 class OpenStreetmapDownloader {
-    constructor(endpoint) {
-        this.endpoint = endpoint || DEFAULT_ENDPOINT;
-    }
-    fetch(query) {
+    static Fetch(query, endpoint = OpenStreetmapDownloader.DEFAULT_ENDPOINT, fakeTheDownload = false) {
         if (!query.latLngBounds || !query.latLngBounds.valid()) {
             throw new Error('OpenStreetmapDownloader.fetch() query requires valid latLngBounds');
         }
-        const url = this.endpoint;
+        const url = endpoint;
         const osmFormattedQuery = query.toString();
         // const url = 'http://localhost:1234';
         console.log('overpass query:', osmFormattedQuery);
         console.log('\noverpass url:', url);
-        return axios_1.default.post(url, osmFormattedQuery).then(response => {
-            // console.log('axios.post:', response.status);
-            // console.log('axios.post response.data:', response.data);
-            // console.log('axios.post response:', response);
-            return response.data;
-        });
+        if (fakeTheDownload) {
+            console.log('Faking the download ;-)');
+            return Promise.resolve(exports.osmJsonResp);
+        }
+        else {
+            return axios_1.default.post(url, osmFormattedQuery).then(response => {
+                // console.log('axios.post:', response.status);
+                // console.log('axios.post response.data:', response.data);
+                // console.log('axios.post response:', response);
+                return response.data;
+            });
+        }
     }
-    fetchAndSave(osmQuery, osmDataFilePath, overwriteFile = false) {
+    static FetchAndSave(osmQueryMeta, osmDataFilePath, overwriteFile = false, fakeTheDownload = false) {
         osmDataFilePath = path_1.resolve(osmDataFilePath);
         if (!overwriteFile && fs_1.existsSync(osmDataFilePath)) {
             throw new Error(`File exists [${osmDataFilePath}]`);
         }
-        const osmMetaData = new OpenStreetmapFile_1.OpenStreetmapFileMetaData(this.endpoint, osmQuery);
-        return this.fetch(osmQuery).then((osmQueryResp) => {
-            const osmDataFile = new OpenStreetmapFile_1.OpenStreetmapFile(osmMetaData, osmQueryResp);
+        return OpenStreetmapDownloader.Fetch(osmQueryMeta.osmQuery, osmQueryMeta.osmServer, fakeTheDownload)
+            .then((osmQueryResp) => {
+            const osmDataFile = new OpenStreetmapFile_1.OpenStreetmapFile(osmQueryMeta, osmQueryResp);
             fs_1.writeFileSync(osmDataFilePath, JSON.stringify(osmDataFile, undefined, 4));
             return {
                 osmDataFile,
@@ -52,5 +74,6 @@ class OpenStreetmapDownloader {
         });
     }
 }
+OpenStreetmapDownloader.DEFAULT_ENDPOINT = OverPassApiEndpoints.main;
 exports.OpenStreetmapDownloader = OpenStreetmapDownloader;
 //# sourceMappingURL=OpenStreetmapDownloader.js.map

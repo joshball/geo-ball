@@ -1,6 +1,6 @@
 import { Command, flags } from '@oclif/command'
 import { LatLngBounds, LatLng } from '@geo-ball/geo-core';
-import { OpenStreetmapDownloader, OpenStreetmapQuery, IFetchAndSaveResult } from '@geo-ball/osm-data';
+import { OpenStreetmapDownloader, OpenStreetmapFileMetaData, IFetchAndSaveResult } from '@geo-ball/osm-data';
 import { resolve } from 'path';
 import { readFileSync } from 'fs';
 import { QueryConfigFile } from '../common/QueryConfigFile';
@@ -31,10 +31,17 @@ class Download extends Command {
 		const { args } = this.parse(Download);
 
 		const queryCfgFile = QueryConfigFile.Load(args.queryFile);
-		const osmArgs = queryCfgFile.getOsmDownloadArgs();
+        const osmArgs = queryCfgFile.getOsmDownloadArgs();
+        const osmMetaArgs = new OpenStreetmapFileMetaData(
+            osmArgs.osmEndpoint || OpenStreetmapDownloader.DEFAULT_ENDPOINT,
+            osmArgs.osmQuery,
+            "queryName",
+            "QueryDesc",
+            osmArgs.osmQuery.latLngBounds
+        );
 
-		const downloader = new OpenStreetmapDownloader(osmArgs.osmEndpoint);
-		downloader.fetchAndSave(osmArgs.osmQuery, osmArgs.resultsFileName, osmArgs.overwrite)
+        // osmArgs.osmEndpoint
+		OpenStreetmapDownloader.FetchAndSave(osmMetaArgs, osmArgs.resultsFileName, osmArgs.overwrite)
 			.then((results: IFetchAndSaveResult) => {
 				console.log('Download Complete:');
 				console.log('  SERVER:', results.osmDataFile.osmMetaData.osmServer);

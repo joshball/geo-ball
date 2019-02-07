@@ -4,8 +4,8 @@ export class GeoFileMetaData {
     bounds: LatLngBounds;
     timestamp: Date;
     constructor(bounds: LatLngBounds, timestamp: Date) {
-        const sw = new LatLng(bounds.sw.lat, bounds.sw.lng);
-        const ne = new LatLng(bounds.ne.lat, bounds.ne.lng);
+        const sw = new LatLng(bounds.southWest.lat, bounds.southWest.lng);
+        const ne = new LatLng(bounds.northEast.lat, bounds.northEast.lng);
         this.bounds = new LatLngBounds(sw, ne);
         this.timestamp = timestamp;
     }

@@ -18,17 +18,17 @@ export interface IOsmQuery {
 
 export const createNewBounds = (): ILatLngBoundsTestData => {
 	const objBounds:ILatLngBounds = {
-		sw: {
+		southWest: {
 			lat: 32.859375,
 			lng: -117.27233,
 		},
-		ne: {
+		northEast: {
 			lat: 32.902622,
 			lng: -117.20367,
 		}
 	}
-	const sw = new LatLng(objBounds.sw.lat, objBounds.sw.lng);
-	const ne = new LatLng(objBounds.ne.lat, objBounds.ne.lng);
+	const sw = new LatLng(objBounds.southWest.lat, objBounds.southWest.lng);
+	const ne = new LatLng(objBounds.northEast.lat, objBounds.northEast.lng);
 	const latLngBounds = new LatLngBounds(sw, ne);
 	return {
 		objBounds,
@@ -39,16 +39,22 @@ export const createNewBounds = (): ILatLngBoundsTestData => {
 }
 
 export const createNewOpenStreetmapFileMetaData = (): OpenStreetmapFileMetaData => {
-	const { query } = createNewOpenStreetmapQuery();
-	return new OpenStreetmapFileMetaData('osm-endpoint', query);
+	const { query, queryName, queryDesc, latLngBounds } = createNewOpenStreetmapQuery();
+	return new OpenStreetmapFileMetaData('osm-endpoint', query, queryName, queryDesc, latLngBounds);
 };
 
 export const createNewOpenStreetmapQuery = (latLngBoundsTestData?: ILatLngBoundsTestData) => {
 	latLngBoundsTestData = latLngBoundsTestData || createNewBounds();
     const osmQuery:IOpenStreetmapQuery = { latLngBounds:latLngBoundsTestData.latLngBounds };
-	const query = new OpenStreetmapQuery(osmQuery);
+    const query = new OpenStreetmapQuery(osmQuery);
+    const queryName = 'queryName';
+    const queryDesc = 'queryDesc';
+    const latLngBounds = latLngBoundsTestData.latLngBounds;
 	return {
-		query,
+        query,
+        queryName,
+        queryDesc,
+        latLngBounds,
 		latLngBoundsTestData
 	};
 };

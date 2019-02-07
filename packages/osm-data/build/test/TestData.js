@@ -6,17 +6,17 @@ const geo_core_1 = require("@geo-ball/geo-core");
 ;
 exports.createNewBounds = () => {
     const objBounds = {
-        sw: {
+        southWest: {
             lat: 32.859375,
             lng: -117.27233,
         },
-        ne: {
+        northEast: {
             lat: 32.902622,
             lng: -117.20367,
         }
     };
-    const sw = new geo_core_1.LatLng(objBounds.sw.lat, objBounds.sw.lng);
-    const ne = new geo_core_1.LatLng(objBounds.ne.lat, objBounds.ne.lng);
+    const sw = new geo_core_1.LatLng(objBounds.southWest.lat, objBounds.southWest.lng);
+    const ne = new geo_core_1.LatLng(objBounds.northEast.lat, objBounds.northEast.lng);
     const latLngBounds = new geo_core_1.LatLngBounds(sw, ne);
     return {
         objBounds,
@@ -26,15 +26,21 @@ exports.createNewBounds = () => {
     };
 };
 exports.createNewOpenStreetmapFileMetaData = () => {
-    const { query } = exports.createNewOpenStreetmapQuery();
-    return new __1.OpenStreetmapFileMetaData('osm-endpoint', query);
+    const { query, queryName, queryDesc, latLngBounds } = exports.createNewOpenStreetmapQuery();
+    return new __1.OpenStreetmapFileMetaData('osm-endpoint', query, queryName, queryDesc, latLngBounds);
 };
 exports.createNewOpenStreetmapQuery = (latLngBoundsTestData) => {
     latLngBoundsTestData = latLngBoundsTestData || exports.createNewBounds();
     const osmQuery = { latLngBounds: latLngBoundsTestData.latLngBounds };
     const query = new __1.OpenStreetmapQuery(osmQuery);
+    const queryName = 'queryName';
+    const queryDesc = 'queryDesc';
+    const latLngBounds = latLngBoundsTestData.latLngBounds;
     return {
         query,
+        queryName,
+        queryDesc,
+        latLngBounds,
         latLngBoundsTestData
     };
 };

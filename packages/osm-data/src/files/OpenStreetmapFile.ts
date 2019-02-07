@@ -4,6 +4,7 @@ import { fileNamify, createFilenameTimestamp, findParseFilenameTimestamp, Parsed
 import { OpenStreetmapQuery, IOpenStreetmapQuery } from '../api/OpenStreetmapQuery';
 import { IOpenStreetmapQueryResponse } from '../api/IOpenStreetmapQueryResponse';
 import { OpenStreetMapElements } from '../data/OpenStreetMapElements';
+import { IOpenStreetmapFileMetaData, OpenStreetmapFileMetaData } from './OpenStreetmapFileMetaData';
 
 
 // OSM File will have
@@ -12,25 +13,6 @@ import { OpenStreetMapElements } from '../data/OpenStreetMapElements';
 // - OSM Query Response
 // - Date
 
-export interface IOpenStreetmapFileMetaData {
-    osmServer: string;
-    osmQuery: OpenStreetmapQuery;
-    queryDate: string;
-
-}
-export class OpenStreetmapFileMetaData {
-
-    osmServer: string;
-    osmQuery: OpenStreetmapQuery;
-    queryDate: string;
-
-    constructor(osmServer: string, osmQuery: IOpenStreetmapQuery, queryDate: string = new Date().toISOString()) {
-        this.osmServer = osmServer;
-        // this.osmQuery = new OpenStreetmapQuery(osmQuery.latLngBounds, osmQuery.features, osmQuery.outFormat, osmQuery.timeoutInSec);
-        this.osmQuery = new OpenStreetmapQuery(osmQuery);
-        this.queryDate = queryDate;
-    }
-}
 
 export interface IFileCreator {
     Load(path: string): any
@@ -41,7 +23,14 @@ export class OpenStreetmapFile {
     osmQueryResp: IOpenStreetmapQueryResponse;
 
     constructor(osmMetaData: IOpenStreetmapFileMetaData, osmQueryResp: IOpenStreetmapQueryResponse) {
-        this.osmMetaData = new OpenStreetmapFileMetaData(osmMetaData.osmServer, osmMetaData.osmQuery, osmMetaData.queryDate);
+        this.osmMetaData = new OpenStreetmapFileMetaData(
+            osmMetaData.osmServer,
+            osmMetaData.osmQuery,
+            osmMetaData.queryName,
+            osmMetaData.queryDesc,
+            osmMetaData.queryBoundsArea,
+            osmMetaData.queryDate
+        );
         this.osmQueryResp = osmQueryResp;
     }
 

@@ -1,21 +1,24 @@
 import { LatLng, ILatLng } from './LatLng';
 export interface ILatLngBounds {
-    sw: ILatLng;
-    ne: ILatLng;
-}
-export interface ILatLngBoundsArea extends ILatLngBounds {
-    latDistMeters: number;
-    lngDistMeters: number;
-    areaInMeters: number;
+    southWest: ILatLng;
+    northEast: ILatLng;
 }
 export declare class LatLngBounds {
-    sw: LatLng;
-    ne: LatLng;
+    southWest: LatLng;
+    northEast: LatLng;
+    readonly northWest: LatLng;
+    readonly southEast: LatLng;
+    readonly latDelta: number;
+    readonly lngDelta: number;
+    readonly centerLat: number;
+    readonly centerLng: number;
+    readonly center: LatLng;
+    readonly areaInMeters: number;
+    readonly latDistInMeters: number;
+    readonly lngDistInMeters: number;
     constructor(southwest: LatLng, northeast: LatLng);
     toString: () => string;
-    center: () => LatLng;
     grow(by: number): any;
-    getArea(): ILatLngBoundsArea;
     static FromBounds(bounds: ILatLngBounds, growth?: number): LatLngBounds;
     static FromArray(bounds: Array<number>): LatLngBounds;
     static FromNumbers(southLat: number, westLon: number, northLat: number, eastLon: number): LatLngBounds;

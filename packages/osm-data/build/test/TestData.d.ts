@@ -15,6 +15,9 @@ export declare const createNewBounds: () => ILatLngBoundsTestData;
 export declare const createNewOpenStreetmapFileMetaData: () => OpenStreetmapFileMetaData;
 export declare const createNewOpenStreetmapQuery: (latLngBoundsTestData?: ILatLngBoundsTestData | undefined) => {
     query: OpenStreetmapQuery;
+    queryName: string;
+    queryDesc: string;
+    latLngBounds: LatLngBounds;
     latLngBoundsTestData: ILatLngBoundsTestData;
 };
 export declare const dataDir = ".";

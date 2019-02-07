@@ -1,20 +1,54 @@
 import { LatLng, ILatLng } from './LatLng';
-import distance from '@turf/distance';
+import { distance } from './LatLngHelpers';
 
 export interface ILatLngBounds {
-    sw: ILatLng;
-    ne: ILatLng;
+    southWest: ILatLng;
+    northEast: ILatLng;
 }
-export interface ILatLngBoundsArea extends ILatLngBounds {
-    latDistMeters: number;
-    lngDistMeters: number;
-    areaInMeters: number
-}
-
-
 export class LatLngBounds {
-    sw: LatLng;
-    ne: LatLng;
+    southWest: LatLng;
+    northEast: LatLng;
+
+    get northWest(): LatLng {
+        return new LatLng(this.northEast.lat, this.southWest.lng);
+    }
+
+    get southEast(): LatLng {
+        return new LatLng(this.southEast.lat, this.northEast.lng);
+    }
+
+    get latDelta(): number {
+        return Math.abs(this.northEast.lat - this.southWest.lat) / 2;
+    }
+
+    get lngDelta(): number {
+        return Math.abs(this.northEast.lng - this.southWest.lng) / 2;
+    }
+
+    get centerLat(): number {
+        return this.northEast.lat - this.latDelta;
+    }
+
+    get centerLng(): number {
+        return this.northEast.lng - this.lngDelta;
+    }
+
+    get center(): LatLng {
+        return new LatLng(this.centerLat, this.centerLng);
+    }
+
+    get areaInMeters(): number {
+        return this.latDistInMeters * this.lngDistInMeters;
+    }
+
+    get latDistInMeters(): number {
+        return distance(this.northWest, this.southWest)
+    }
+
+    get lngDistInMeters(): number {
+        return distance(this.northWest, this.southWest)
+    }
+
 
     constructor(southwest: LatLng, northeast: LatLng) {
         if (!(southwest instanceof LatLng)) {
@@ -31,45 +65,24 @@ export class LatLngBounds {
         if (northeast.lng < southwest.lng) {
             throw new Error(getError(`ne.lng[${northeast.lng}] < sw.lng[${southwest.lng}]`));
         }
-        this.ne = new LatLng(northeast.lat, northeast.lng);
-        this.sw = new LatLng(southwest.lat, southwest.lng);
+        this.northEast = new LatLng(northeast.lat, northeast.lng);
+        this.southWest = new LatLng(southwest.lat, southwest.lng);
     }
 
-    toString = (): string => `[SW:${this.sw}],[NE:${this.ne}]`;
-
-    center = (): LatLng => {
-        const latDelta = Math.abs(this.ne.lat - this.sw.lat) / 2;
-        const centerLat = this.ne.lat - latDelta;
-        const lonDelta = Math.abs(this.ne.lng - this.sw.lng) / 2;
-        const centerLon = this.ne.lng - lonDelta;
-        return new LatLng(centerLat, centerLon);
-    };
+    toString = (): string => `[SW:${this.southWest}],[NE:${this.northEast}]`;
 
     grow(by: number): any {
-        this.ne.lat += by;
-        this.sw.lat -= by;
+        this.northEast.lat += by;
+        this.southWest.lat -= by;
 
-        this.ne.lng += by;
-        this.sw.lng -= by;
+        this.northEast.lng += by;
+        this.southWest.lng -= by;
     }
 
-    getArea(): ILatLngBoundsArea {
-        const northWest = new LatLng(this.ne.lat, this.sw.lng);
-        const latDistMeters = distance([northWest.lng, northWest.lat], [this.sw.lng, this.sw.lat], { units: 'meters' });
-        const lngDistMeters = distance([northWest.lng, northWest.lat], [this.ne.lng, this.ne.lat], { units: 'meters' });
-        const areaInMeters = latDistMeters * lngDistMeters;
-        return {
-            ne: this.ne,
-            sw: this.sw,
-            latDistMeters,
-            lngDistMeters,
-            areaInMeters,
-        };
-    }
 
     static FromBounds(bounds: ILatLngBounds, growth: number = 0) {
-        const sw = new LatLng(bounds.sw.lat - growth, bounds.sw.lng - growth);
-        const ne = new LatLng(bounds.ne.lat + growth, bounds.ne.lng + growth);
+        const sw = new LatLng(bounds.southWest.lat - growth, bounds.southWest.lng - growth);
+        const ne = new LatLng(bounds.northEast.lat + growth, bounds.northEast.lng + growth);
         return new LatLngBounds(sw, ne);
     }
 
@@ -96,16 +109,16 @@ export class LatLngBounds {
     }
 
     toArray(): Array<number> {
-        return this.sw.toArray().concat(this.ne.toArray());
+        return this.southWest.toArray().concat(this.northEast.toArray());
     }
 
-    valid = (): boolean => this.sw.valid() && this.ne.valid();
+    valid = (): boolean => this.southWest.valid() && this.northEast.valid();
 
     equals(rhs: ILatLngBounds): boolean {
         if (!rhs) {
             return false;
         }
-        return this.sw === rhs.sw && this.ne === rhs.ne;
+        return this.southWest === rhs.southWest && this.northEast === rhs.northEast;
     }
 
     hashCode(): number {

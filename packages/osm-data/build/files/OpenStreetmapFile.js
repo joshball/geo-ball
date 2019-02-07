@@ -3,20 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = require("path");
 const fs_1 = require("fs");
 const utils_1 = require("@geo-ball/utils");
-const OpenStreetmapQuery_1 = require("../api/OpenStreetmapQuery");
 const OpenStreetMapElements_1 = require("../data/OpenStreetMapElements");
-class OpenStreetmapFileMetaData {
-    constructor(osmServer, osmQuery, queryDate = new Date().toISOString()) {
-        this.osmServer = osmServer;
-        // this.osmQuery = new OpenStreetmapQuery(osmQuery.latLngBounds, osmQuery.features, osmQuery.outFormat, osmQuery.timeoutInSec);
-        this.osmQuery = new OpenStreetmapQuery_1.OpenStreetmapQuery(osmQuery);
-        this.queryDate = queryDate;
-    }
-}
-exports.OpenStreetmapFileMetaData = OpenStreetmapFileMetaData;
+const OpenStreetmapFileMetaData_1 = require("./OpenStreetmapFileMetaData");
 class OpenStreetmapFile {
     constructor(osmMetaData, osmQueryResp) {
-        this.osmMetaData = new OpenStreetmapFileMetaData(osmMetaData.osmServer, osmMetaData.osmQuery, osmMetaData.queryDate);
+        this.osmMetaData = new OpenStreetmapFileMetaData_1.OpenStreetmapFileMetaData(osmMetaData.osmServer, osmMetaData.osmQuery, osmMetaData.queryName, osmMetaData.queryDesc, osmMetaData.queryBoundsArea, osmMetaData.queryDate);
         this.osmQueryResp = osmQueryResp;
     }
     getElements() {

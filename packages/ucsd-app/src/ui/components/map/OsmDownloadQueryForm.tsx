@@ -1,17 +1,17 @@
 import * as React from 'react'
 
-import { Intent, Label, Classes, TextArea, InputGroup, Button } from '@blueprintjs/core';
-import { LatLngBounds as LeafLatLngBounds, LatLngLiteral as LeafLatLngLiteral } from 'leaflet';
+import { Intent, Label, Icon, TextArea, InputGroup, Button, Checkbox, Alignment } from '@blueprintjs/core';
 
 import { DownloadOsmParams } from '../../services/OsmService';
 import { reverseGeocodeLocation, IReverseGeocodeResponse } from '../../services/GeocodingService';
+import { LatLngBounds, LatLng } from '@geo-ball/geo-core';
 
 
 export interface OsmDownloadQueryFormProps {
     downloadOsmFile: (osmParams: DownloadOsmParams) => void;
-    bounds: LeafLatLngBounds;
+    bounds: LatLngBounds;
     area: string;
-    center: LeafLatLngLiteral;
+    center: LatLng;
 }
 export interface OsmDownloadQueryFormState {
     name: string;
@@ -22,7 +22,8 @@ export interface OsmDownloadQueryFormState {
     state: string;
     zip: string;
     county: string;
-    [key: string]: string;
+    downloadEnabled: boolean;
+    [key: string]: string | boolean;
 }
 
 export class OsmDownloadQueryForm extends React.Component<OsmDownloadQueryFormProps, OsmDownloadQueryFormState> {
@@ -37,15 +38,22 @@ export class OsmDownloadQueryForm extends React.Component<OsmDownloadQueryFormPr
             city: '',
             state: '',
             county: '',
+            downloadEnabled: true,
             zip: '',
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.reverseGeocode = this.reverseGeocode.bind(this);
+        this.handleDownloadCheck = this.handleDownloadCheck.bind(this);
     }
     handleChange(event: any) {
         this.setState({
             [event.target.name]: event.target.value
+        });
+    }
+    handleDownloadCheck(event: any) {
+        this.setState({
+            downloadEnabled: event.target.checked
         });
     }
     reverseGeocode(_event: any) {
@@ -86,16 +94,22 @@ export class OsmDownloadQueryForm extends React.Component<OsmDownloadQueryFormPr
             area: this.props.area,
             bounds: this.props.bounds,
             center: this.props.center,
+            fake: !this.state.downloadEnabled,
         });
     }
     render() {
         return (<form onSubmit={this.handleSubmit}>
             <Label>
-                Query Name
+                <strong style={{ fontSize: '1.3em' }}>Query Name</strong>
                 <InputGroup name="name" value={this.state.name} onChange={this.handleChange} placeholder="Name for query" style={{ width: '100%' }} />
             </Label>
             <Label>
-                Query Description
+                <Checkbox style={{ float: 'right' }} alignIndicator={Alignment.RIGHT} checked={this.state.downloadEnabled} onChange={this.handleDownloadCheck}>
+                    <Icon icon="download" />&nbsp;&nbsp;<strong>Fake the query</strong>
+                </Checkbox>
+            </Label>
+            <Label>
+                <strong style={{ fontSize: '1.3em' }}>Query Description</strong>
                 <TextArea name="desc" value={this.state.desc} onChange={this.handleChange} large={true} placeholder="Description for query" intent={Intent.PRIMARY} style={{ width: '100%', height: '350px' }} />
             </Label>
 

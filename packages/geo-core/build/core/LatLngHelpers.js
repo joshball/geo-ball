@@ -12,6 +12,9 @@ exports.RADIUS_OF_EARTH = 6373; // radius of the earth in kilometres
 exports.distance = (lhs, rhs) => {
     return exports.getDist(lhs.lat, lhs.lng, rhs.lat, rhs.lng);
 };
+//
+// We can use this if we need to:
+// const latDistMeters = leaflet.distance([northWest.lng, northWest.lat], [this.southWest.lng, this.southWest.lat], { units: 'meters' });
 exports.getDist = (lat1, lon1, lat2, lon2) => {
     const lat1rad = exports.degreesToRadians(lat1);
     const lat2rad = exports.degreesToRadians(lat2);

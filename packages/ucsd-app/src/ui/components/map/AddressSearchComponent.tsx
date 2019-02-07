@@ -116,7 +116,7 @@ export class AddressSearchComponent extends React.Component<AddressSearchCompone
             return (
                 <div onClick={clickHandler} key={index} className={`${singleResultCss}`}>
                     <div className={`${labelCss}`}>{result.label}</div>
-                    <div className={`${llCss}`}><LatLngTxt llt={latLng} lltStyle={'shortLng'} /></div>
+                    <div className={`${llCss}`}><LatLngTxt llt={latLng} latLngQuickFmt={'short'} /></div>
                 </div>
             )
         }

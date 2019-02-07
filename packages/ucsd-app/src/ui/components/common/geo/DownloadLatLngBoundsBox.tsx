@@ -1,17 +1,16 @@
 import * as React from 'react'
-import { LatLngBounds as LeafLatLngBounds, LatLngLiteral as LeafLatLngLiteral } from 'leaflet';
 
 import { Popover, Button, Position, PopoverInteractionKind, Intent } from '@blueprintjs/core';
 import { OsmDownloadQueryForm } from '../../map/OsmDownloadQueryForm';
-import { ILatLngFmt, LatLngQuickFmt } from '@geo-ball/geo-core';
+import { ILatLngFmt, LatLngQuickFmt, LatLngBounds, LatLng } from '@geo-ball/geo-core';
 import { LatLngBoundsTxt } from './LatLngBoundsTxt';
 import { LatLngBoundsAreaTxt } from './LatLngBoundsAreaTxt';
 import { DownloadOsmParams } from '../../../services/OsmService';
 
 
 export interface DownloadLatLngBoundsBoxProps {
-    bounds: LeafLatLngBounds | null;
-    center: LeafLatLngLiteral | null;
+    bounds: LatLngBounds | null;
+    center: LatLng | null;
     latLngQuickFmt?: LatLngQuickFmt;
     latLngFmt?: ILatLngFmt;
     downloadOsmFile: (osmParams: DownloadOsmParams) => void;

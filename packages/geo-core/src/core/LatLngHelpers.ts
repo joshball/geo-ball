@@ -1,5 +1,5 @@
 // import { fieldsHashCode, areEqual } from "prelude.ts";
-import { LatLng } from './LatLng';
+import { LatLng, ILatLng } from './LatLng';
 // export const deg2rad = (degrees: number): number => degrees * Math.PI / 180.0;
 export const degreesToRadians = (degrees: number): number => degrees / 180.0 * Math.PI;
 
@@ -11,9 +11,14 @@ export const RADIUS_OF_EARTH = 6373; // radius of the earth in kilometres
  * @param other
  * @return The distance between this lat, lon point and the other point
  */
-export const distance = (lhs: LatLng, rhs: LatLng): number => {
+export const distance = (lhs: ILatLng, rhs: ILatLng): number => {
     return getDist(lhs.lat, lhs.lng, rhs.lat, rhs.lng);
 }
+
+
+//
+// We can use this if we need to:
+// const latDistMeters = leaflet.distance([northWest.lng, northWest.lat], [this.southWest.lng, this.southWest.lat], { units: 'meters' });
 
 
 export const getDist = (lat1: number, lon1: number, lat2: number, lon2: number): number => {

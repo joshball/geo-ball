@@ -1,18 +1,7 @@
 import { ParsedFilenameTimestamp } from '@geo-ball/utils';
-import { OpenStreetmapQuery, IOpenStreetmapQuery } from '../api/OpenStreetmapQuery';
 import { IOpenStreetmapQueryResponse } from '../api/IOpenStreetmapQueryResponse';
 import { OpenStreetMapElements } from '../data/OpenStreetMapElements';
-export interface IOpenStreetmapFileMetaData {
-    osmServer: string;
-    osmQuery: OpenStreetmapQuery;
-    queryDate: string;
-}
-export declare class OpenStreetmapFileMetaData {
-    osmServer: string;
-    osmQuery: OpenStreetmapQuery;
-    queryDate: string;
-    constructor(osmServer: string, osmQuery: IOpenStreetmapQuery, queryDate?: string);
-}
+import { IOpenStreetmapFileMetaData, OpenStreetmapFileMetaData } from './OpenStreetmapFileMetaData';
 export interface IFileCreator {
     Load(path: string): any;
 }

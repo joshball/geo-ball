@@ -10,10 +10,10 @@ test('LatLng is instantiable', t => {
 
     t.true(latLngBounds.valid());
 
-    t.is(latLngBounds.sw.lat, 32.859375);
-    t.is(latLngBounds.sw.lng, -117.27233);
-    t.is(latLngBounds.ne.lat, 32.902622);
-    t.is(latLngBounds.ne.lng, -117.20367);
+    t.is(latLngBounds.southWest.lat, 32.859375);
+    t.is(latLngBounds.southWest.lng, -117.27233);
+    t.is(latLngBounds.northEast.lat, 32.902622);
+    t.is(latLngBounds.northEast.lng, -117.20367);
 });
 
 test('LatLng is checks lat bounds', t => {

@@ -1,5 +1,6 @@
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
 import { LatLng as LeafLatLng } from 'leaflet';
+import { ILatLng } from '@geo-ball/geo-core';
 
 
 // const x = {
@@ -91,17 +92,17 @@ export interface IReverseGeocodeResponse {
 const provider = new OpenStreetMapProvider();
 
 
-export const geocodeAddress = async (address: string): Promise<IGeocodeResponse> => {
+export const geocodeAddress = async (address: string): Promise<Array<IGeocodeResponse>> => {
     console.log('geocodeAddress')
     return provider.search({ query: address })
-        .then((json: IGeocodeResponse) => {
-            console.log('json:', json)
+        .then((json: Array<IGeocodeResponse>) => {
+            console.log('Array<IGeocodeResponse>:', json)
             return json;
         });
 
 }
 
-export const reverseGeocodeLocation = async (p: LeafLatLng): Promise<IReverseGeocodeResponse> => {
+export const reverseGeocodeLocation = async (p: ILatLng): Promise<IReverseGeocodeResponse> => {
     console.log('reverseGeocodeLocation')
     const paramString = getParamString({
         format: 'json',

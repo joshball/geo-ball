@@ -31,7 +31,6 @@ ava_1.default('OpenStreetmapDownloader is instantiable', t => {
     t.not(new OpenStreetmapDownloader_1.OpenStreetmapDownloader(), undefined);
 });
 ava_1.default('OpenStreetmapDownloader should throw if missing bounds in query', (t) => __awaiter(this, void 0, void 0, function* () {
-    const d = new OpenStreetmapDownloader_1.OpenStreetmapDownloader();
     // const { latLngBounds } = createNewBounds();
     const { objBounds } = TestData_1.createNewBounds();
     const osmQuery = { latLngBounds: objBounds };
@@ -39,24 +38,23 @@ ava_1.default('OpenStreetmapDownloader should throw if missing bounds in query',
     delete missingBoundsQuery.latLngBounds;
     t.plan(1);
     try {
-        yield d.fetch(missingBoundsQuery);
+        yield OpenStreetmapDownloader_1.OpenStreetmapDownloader.Fetch(missingBoundsQuery);
     }
     catch (e) {
         t.is(e.message, 'OpenStreetmapDownloader.fetch() query requires valid latLngBounds');
     }
 }));
 ava_1.default('OpenStreetmapDownloader should throw if bad bounds in query', (t) => __awaiter(this, void 0, void 0, function* () {
-    const d = new OpenStreetmapDownloader_1.OpenStreetmapDownloader();
     // const { latLngBounds } = createNewBounds();
     // latLngBounds.ne.lat = 200;
     const { objBounds } = TestData_1.createNewBounds();
-    objBounds.ne.lat = 200;
+    objBounds.northEast.lat = 200;
     const osmQuery = { latLngBounds: objBounds };
     // set lat to out of bounds (can't be bigger than 180)
     const badBoundsQuery = new OpenStreetmapQuery_1.OpenStreetmapQuery(osmQuery);
     t.plan(1);
     try {
-        yield d.fetch(badBoundsQuery);
+        yield OpenStreetmapDownloader_1.OpenStreetmapDownloader.Fetch(badBoundsQuery);
     }
     catch (e) {
         t.is(e.message, 'OpenStreetmapDownloader.fetch() query requires valid latLngBounds');
@@ -66,10 +64,9 @@ ava_1.default('OpenStreetmapDownloader should throw if API post fails', (t) => _
     const mockAxios = new axios_mock_adapter_1.default(axios_1.default);
     mockAxios.onPost().networkError();
     const { query } = TestData_1.createNewOpenStreetmapQuery();
-    const d = new OpenStreetmapDownloader_1.OpenStreetmapDownloader();
     t.plan(1);
     try {
-        yield d.fetch(query); // .then(r => console.log('rrrr', r)).catch(e => console.log('EEEEE:', e));
+        yield OpenStreetmapDownloader_1.OpenStreetmapDownloader.Fetch(query); // .then(r => console.log('rrrr', r)).catch(e => console.log('EEEEE:', e));
         console.log('GOT HREERERERE');
     }
     catch (e) {
@@ -80,8 +77,7 @@ ava_1.default('OpenStreetmapDownloader fetch() valid data', (t) => __awaiter(thi
     const { query } = TestData_1.createNewOpenStreetmapQuery();
     const mockAxios = new axios_mock_adapter_1.default(axios_1.default);
     mockAxios.onPost().replyOnce(200, TestData_1.osmJsonResp);
-    const d = new OpenStreetmapDownloader_1.OpenStreetmapDownloader();
-    const data = yield d.fetch(query);
+    const data = yield OpenStreetmapDownloader_1.OpenStreetmapDownloader.Fetch(query);
     // console.log('data:', JSON.stringify(data, undefined, 4));
     // console.log('osmR:', JSON.stringify(osmJsonResp, undefined, 4));
     t.deepEqual(data, TestData_1.osmJsonResp);
@@ -96,7 +92,7 @@ ava_1.default('OpenStreetmapDownloader fetch() valid data', (t) => __awaiter(thi
 //     mockedAxios.post.mockImplementationOnce(() => Promise.resolve({ data: {} }))
 //     mockedFs.writeFileSync.mockImplementation(() => undefined);
 //     const d = new OpenStreetmapDownloader(dataDir)
-//     const data = await d.fetchAndSave(query, queryName);
+//     const data = await OpenStreetmapDownloader.FetchAndSave(query, queryName);
 //     expect(data).toEqual(fsData);
 // })
 //# sourceMappingURL=OpenStreetmapDownloader.spec.js.map

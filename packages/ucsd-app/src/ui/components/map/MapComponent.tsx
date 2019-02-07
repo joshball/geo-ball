@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Map, Marker, Popup, TileLayer, MapControl } from 'react-leaflet';
 import { css } from 'glamor'
-import { LeafletMouseEvent, LeafletEvent, LatLng as LeafLatLng, LatLngBounds as LeafLatLngBounds } from 'leaflet';
+import { LeafletMouseEvent, LeafletEvent } from 'leaflet';
 import { action } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { RootStore } from '../../stores/RootStore';
@@ -71,67 +71,23 @@ export class MapComponent extends React.Component<MapProps> {
 
     }
 
-    getBoundsData(bounds: LeafLatLngBounds) {
-        const southWest = bounds.getSouthWest();
-        const northEast = bounds.getNorthEast();
-        const northWest = new LeafLatLng(northEast.lat, southWest.lng);
-        const latDistMeters = distance([northWest.lng, northWest.lat], [southWest.lng, southWest.lat], { units: 'meters' });
-        const lngDistMeters = distance([northWest.lng, northWest.lat], [northEast.lng, northEast.lat], { units: 'meters' });
-        const latDistYards = distance([northWest.lng, northWest.lat], [southWest.lng, southWest.lat], { units: 'yards' });
-        const lngDistYards = distance([northWest.lng, northWest.lat], [northEast.lng, northEast.lat], { units: 'yards' });
-        // const latDist = distance([northWest.lat, northWest.lng], [southWest.lat, southWest.lng], { units: 'meters' });
-        // const lngDist = distance([northWest.lat, northWest.lng], [northEast.lat, northEast.lng], { units: 'meters' });
-        // const latDist = distance (northWest, southWest);
-        // const lngDist = distance( northWest, northEast);
-        const latDelta = northWest.lat - southWest.lat;
-        const lngDelta = northWest.lng - northEast.lng;
-        // const a = new LatLng(40.715192, -111.852676);
-        // const b = new LatLng(40.718445, -111.848384);
-        // const turfDist = distance([a.lat, a.lng], [b.lat, b.lng], { units: 'meters' });
-        const mylatDist = getDist(northWest.lat, northWest.lng, southWest.lat, southWest.lng) * 1000;
-        const mylngDist = getDist(northWest.lat, northWest.lng, northEast.lat, northEast.lng) * 1000;
-        // console.log('myDist: ', myDist)
-        // console.log('turfDist: ', turfDist)
-        const area = latDistMeters * lngDistMeters;
-        console.log('bounds.southWest: ', southWest)
-        console.log('bounds.northEast: ', northEast)
-        console.log('bounds.northWest: ', northWest)
-        console.log('latDelta,lngDelta ', latDelta, lngDelta)
-        console.log('latDist(nw-sw): ', latDistMeters)
-        console.log('     mylatDist: ', mylatDist)
-        console.log('lngDist(nw-ne): ', lngDistMeters)
-        console.log('     mylngDist: ', mylngDist)
-        console.log('area: ', area)
-        return {
-            southWest,
-            northEast,
-            northWest,
-            latDist: latDistMeters,
-            lngDist: lngDistMeters,
-            latDistYards,
-            lngDistYards,
-            latDelta,
-            lngDelta,
-            area
-        }
-    }
 
-    createMarkers() {
-        if (this.mapLocationStore.bounds) {
-            const d = this.getBoundsData(this.mapLocationStore.bounds);
-            const markers = [
-                { name: 'SW', pos: d.southWest, txt: `North is ${d.latDist} [${d.latDelta}]` },
-                { name: 'NE', pos: d.northEast, txt: `just NE` },
-                { name: 'NW', pos: d.northWest, txt: `West is ${d.lngDist} [${d.lngDelta}]` },
-            ]
-            return markers.map((m, i) => (
-                <Marker key={i} position={m.pos}>
-                    <Popup>[${m.name}]:${m.txt}</Popup>
-                </Marker>
-            ));
-        }
-        return null;
-    }
+    // createMarkers() {
+    //     if (this.mapLocationStore.bounds) {
+    //         const d = this.getBoundsData(this.mapLocationStore.bounds);
+    //         const markers = [
+    //             { name: 'SW', pos: d.southWest, txt: `North is ${d.latDist} [${d.latDelta}]` },
+    //             { name: 'NE', pos: d.northEast, txt: `just NE` },
+    //             { name: 'NW', pos: d.northWest, txt: `West is ${d.lngDist} [${d.lngDelta}]` },
+    //         ]
+    //         return markers.map((m, i) => (
+    //             <Marker key={i} position={m.pos}>
+    //                 <Popup>[${m.name}]:${m.txt}</Popup>
+    //             </Marker>
+    //         ));
+    //     }
+    //     return null;
+    // }
     @action
     handleMoveEnd = (e: LeafletEvent) => {
         // console.log('DMC.handleMoveEnd', e);
