@@ -29,11 +29,8 @@ class LatLngBounds {
     get southEast() {
         return new LatLng_1.LatLng(this.southEast.lat, this.northEast.lng);
     }
-    get latDelta() {
-        return Math.abs(this.northEast.lat - this.southWest.lat) / 2;
-    }
-    get lngDelta() {
-        return Math.abs(this.northEast.lng - this.southWest.lng) / 2;
+    get center() {
+        return new LatLng_1.LatLng(this.centerLat, this.centerLng);
     }
     get centerLat() {
         return this.northEast.lat - this.latDelta;
@@ -41,8 +38,11 @@ class LatLngBounds {
     get centerLng() {
         return this.northEast.lng - this.lngDelta;
     }
-    get center() {
-        return new LatLng_1.LatLng(this.centerLat, this.centerLng);
+    get latDelta() {
+        return Math.abs(this.northEast.lat - this.southWest.lat) / 2;
+    }
+    get lngDelta() {
+        return Math.abs(this.northEast.lng - this.southWest.lng) / 2;
     }
     get areaInMeters() {
         return this.latDistInMeters * this.lngDistInMeters;
@@ -59,10 +59,20 @@ class LatLngBounds {
         this.northEast.lng += by;
         this.southWest.lng -= by;
     }
-    static FromBounds(bounds, growth = 0) {
-        const sw = new LatLng_1.LatLng(bounds.southWest.lat - growth, bounds.southWest.lng - growth);
-        const ne = new LatLng_1.LatLng(bounds.northEast.lat + growth, bounds.northEast.lng + growth);
-        return new LatLngBounds(sw, ne);
+    toArray() {
+        return this.southWest.toArray().concat(this.northEast.toArray());
+    }
+    equals(rhs) {
+        if (!rhs) {
+            return false;
+        }
+        return this.southWest === rhs.southWest && this.northEast === rhs.northEast;
+    }
+    hashCode() {
+        return Array.from(JSON.stringify(this))
+            // tslint:disable-next-line:no-bitwise
+            .reduce((s, c) => Math.imul(31, s) + c.charCodeAt(0) | 0, 0);
+        // return fieldsHashCode(this.latitude, this.longitude);
     }
     static FromArray(bounds) {
         if (bounds.length !== 4) {
@@ -81,20 +91,16 @@ class LatLngBounds {
         const ne = new LatLng_1.LatLng(northLat, eastLon);
         return new LatLngBounds(sw, ne);
     }
-    toArray() {
-        return this.southWest.toArray().concat(this.northEast.toArray());
+    static FromBounds(bounds, growth = 0) {
+        const sw = new LatLng_1.LatLng(bounds.southWest.lat - growth, bounds.southWest.lng - growth);
+        const ne = new LatLng_1.LatLng(bounds.northEast.lat + growth, bounds.northEast.lng + growth);
+        return new LatLngBounds(sw, ne);
     }
-    equals(rhs) {
-        if (!rhs) {
-            return false;
-        }
-        return this.southWest === rhs.southWest && this.northEast === rhs.northEast;
-    }
-    hashCode() {
-        return Array.from(JSON.stringify(this))
-            // tslint:disable-next-line:no-bitwise
-            .reduce((s, c) => Math.imul(31, s) + c.charCodeAt(0) | 0, 0);
-        // return fieldsHashCode(this.latitude, this.longitude);
+    static FromLeafletBounds(leafletBounds) {
+        return LatLngBounds.FromBounds({
+            southWest: leafletBounds.getSouthWest(),
+            northEast: leafletBounds.getNorthEast(),
+        });
     }
 }
 exports.LatLngBounds = LatLngBounds;

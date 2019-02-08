@@ -4,8 +4,8 @@ import { MemoryRouter, Link } from 'react-router-dom';
 import "glamor/reset";
 import { compose } from "glamor"
 import { Provider, observer } from "mobx-react";
-import { install } from 'devtron';
-install();
+import * as devtron from 'devtron';
+devtron.install();
 // import DevTools from 'mobx-react-devtools';
 // import { autorun } from "mobx";
 

@@ -5,7 +5,7 @@ import { LatLngTxt } from '../common/geo/LatLngTxt';
 import { observer, inject } from 'mobx-react';
 import { RootStore } from '../../stores/RootStore';
 import { downloadOsmFile, DownloadOsmParams } from '../../services/OsmService';
-import { DownloadLatLngBoundsBox } from '../common/geo/DownloadLatLngBoundsBox';
+import { DownloadLatLngBoundsBox } from './download/DownloadLatLngBoundsBox';
 
 const outerBoxCss = css({
     flex: '0 0 auto',

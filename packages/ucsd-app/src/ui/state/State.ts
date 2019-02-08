@@ -1,7 +1,7 @@
 import { extendObservable } from 'mobx';
-import { IMapExplorerState } from './IMapExplorerState';
+import { IMapExplorerState, MapExplorerState } from './MapExplorerState';
 import { ICommonState } from './ICommonState';
-import { IDataState, DataState } from './IDataState';
+import { IDataState, DataState } from './DataState';
 
 export interface IState {
     common: ICommonState
@@ -14,35 +14,17 @@ export const defaultState: IState = {
         title: 'Home',
     },
     data: new DataState(),
-    mapExplorer: {
-        location: {
-            zoom: 19,
-            center: {
-                lat: 40.716847,
-                lng: -111.850494,
-            }
-        },
-        display: {
-            bounds: null,
-            clickPos: null,
-            mousePos: null,
-        },
-        address: {
-            selectedAddress: null,
-            geoSearchResults: [],
-        },
-    }
-
+    mapExplorer: new MapExplorerState()
 };
 
 /**
  * This is our state, we update it
  * using the methods from other stores
  */
-class State implements IState {
+export class State implements IState {
     common!: ICommonState;
-    data!: IDataState;
-    mapExplorer!: IMapExplorerState;
+    data!: DataState;
+    mapExplorer!: MapExplorerState;
     constructor(state?: IState | undefined) {
         const newState = { ...defaultState, ...state };
         extendObservable(this, newState);

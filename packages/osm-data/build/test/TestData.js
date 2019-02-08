@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const __1 = require("..");
 const geo_core_1 = require("@geo-ball/geo-core");
+const utils_1 = require("@geo-ball/utils");
 ;
 ;
 exports.createNewBounds = () => {
@@ -25,23 +26,30 @@ exports.createNewBounds = () => {
         latLngBounds
     };
 };
-exports.createNewOpenStreetmapFileMetaData = () => {
-    const { query, queryName, queryDesc, latLngBounds } = exports.createNewOpenStreetmapQuery();
-    return new __1.OpenStreetmapFileMetaData('osm-endpoint', query, queryName, queryDesc, latLngBounds);
-};
-exports.createNewOpenStreetmapQuery = (latLngBoundsTestData) => {
+exports.createOsmFileMetaData = (latLngBoundsTestData) => {
     latLngBoundsTestData = latLngBoundsTestData || exports.createNewBounds();
-    const osmQuery = { latLngBounds: latLngBoundsTestData.latLngBounds };
-    const query = new __1.OpenStreetmapQuery(osmQuery);
+    const latLngBounds = latLngBoundsTestData.latLngBounds;
+    const iOsmQuery = { latLngBounds: latLngBoundsTestData.latLngBounds };
+    const osmQuery = new __1.OpenStreetmapQuery(iOsmQuery);
     const queryName = 'queryName';
     const queryDesc = 'queryDesc';
-    const latLngBounds = latLngBoundsTestData.latLngBounds;
+    const originalFilePath = 'originalFilePath';
+    const queryDate = utils_1.LocalDateTime.Now();
+    const iGeoBounds = {
+        date: queryDate,
+        name: queryName,
+        description: queryDesc,
+        latLngBoundsArea: latLngBounds,
+        address: '123 State St, Salt Lake City, UT 8401',
+        geocodedAddress: '123 State St, Salt Lake City, UT 8401',
+    };
+    const geoBounds = new __1.GeographicBoundsDescription(iGeoBounds);
     return {
-        query,
-        queryName,
-        queryDesc,
-        latLngBounds,
-        latLngBoundsTestData
+        osmServer: 'osm-endpoint',
+        osmQuery,
+        queryDate,
+        geoBounds,
+        originalFilePath
     };
 };
 exports.dataDir = '.';

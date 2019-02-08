@@ -1,5 +1,10 @@
-import { IOpenStreetmapQuery, OSMFeatureKeyValuePair, OSMFeatureKey, OpenStreetmapQuery, OpenStreetmapDownloader, IFetchAndSaveResult, OpenStreetmapFileMetaData } from "@geo-ball/osm-data";
-import { LatLngBounds, LatLng } from "@geo-ball/geo-core";
+import {
+    IOpenStreetmapQuery, OSMFeatureKeyValuePair,
+    OSMFeatureKey, OpenStreetmapQuery,
+    OpenStreetmapDownloader, IFetchAndSaveResult,
+    OpenStreetmapFileMetaData
+} from "@geo-ball/osm-data";
+import { LatLngBounds, LatLng, ILatLng } from '@geo-ball/geo-core';
 
 
 const getOsmQuery = (latLngBounds: LatLngBounds): OpenStreetmapQuery => {
@@ -30,7 +35,7 @@ const getOsmQuery = (latLngBounds: LatLngBounds): OpenStreetmapQuery => {
 
 export interface DownloadOsmParams {
     bounds: LatLngBounds;
-    center: LatLng;
+    center: ILatLng;
     name: string;
     desc: string;
     area: string;
@@ -52,7 +57,7 @@ export const downloadOsmFile = async (osmParams: DownloadOsmParams): Promise<voi
             console.log('    DATE:', results.osmDataFile.osmMetaData.queryDate);
             console.log('    FILE:', results.osmDataFilePath);
         })
-        .catch(error => {
+        .catch((error: Error) => {
             console.error('###################################################################################')
             console.error('DOWNLOAD FAILED:')
             console.error(error)

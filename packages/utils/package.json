@@ -37,14 +37,17 @@
       "build/**/*.spec.js"
     ],
     "sources": [
+      "**/*.ts*",
       "build/**/*.js"
     ]
   },
   "devDependencies": {
+    "@types/moment-timezone": "^0.5.10",
     "ava": "^1.1.0",
     "ava-ts": "^0.25.2",
     "nyc": "^13.1.0"
   },
   "dependencies": {
+    "moment-timezone": "^0.5.23"
   }
 }

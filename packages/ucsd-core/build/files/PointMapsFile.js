@@ -46,7 +46,7 @@ class PointMapsFile {
         return pointMap;
     }
     static CreateMetaDataFromRsd(rsdFile) {
-        return new GeoFileMetaData_1.GeoFileMetaData(rsdFile.metaData.bounds, new Date(rsdFile.metaData.timestamp));
+        return new GeoFileMetaData_1.GeoFileMetaData(rsdFile.metaData.bounds, rsdFile.metaData.timestamp);
     }
     // static LoadFromTextFile(filePath: string): PointMapsFile {
     //     const lines = readFileSync(filePath, 'utf8')

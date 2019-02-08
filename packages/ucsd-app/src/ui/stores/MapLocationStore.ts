@@ -1,27 +1,27 @@
 import { action, computed } from 'mobx'
 import { IGeocodeResponse } from '../services/GeocodingService';
-import { IState } from '../state/State';
-import { LatLngBounds, LatLng, ILatLng } from '@geo-ball/geo-core';
+import { LatLngBounds, LatLng, ILatLng, ILatLngBounds } from '@geo-ball/geo-core';
+import { State } from '../state/State';
 
 
 export class MapLocationStore {
 
-    private state!: IState;
+    private state!: State;
 
-    constructor(state: IState) {
+    constructor(state: State) {
         this.state = state;
     }
 
 
-    @computed get clickPos(): LatLng | null {
+    @computed get clickPos(): ILatLng | null {
         return this.state.mapExplorer.display.clickPos;
     }
 
-    @computed get mousePos(): LatLng | null {
+    @computed get mousePos(): ILatLng | null {
         return this.state.mapExplorer.display.mousePos;
     }
 
-    @computed get bounds(): LatLngBounds | null {
+    @computed get bounds():  LatLngBounds | null {
         return this.state.mapExplorer.display.bounds;
     }
 
@@ -46,7 +46,7 @@ export class MapLocationStore {
     }
 
     @action
-    updateCore = (center: LatLng, zoom: number, bounds: LatLngBounds) => {
+    updateCore = (center: ILatLng, zoom: number, bounds: LatLngBounds) => {
         // console.log('MapLocationStore.updateCore', this.bounds, this.mousePos)
         this.state.mapExplorer.location.center = center;
         this.state.mapExplorer.location.zoom = zoom;
@@ -60,12 +60,12 @@ export class MapLocationStore {
     }
 
     @action
-    updateClickLocation = (latLng: LatLng) => {
+    updateClickLocation = (latLng: ILatLng) => {
         this.state.mapExplorer.display.clickPos = latLng;
     }
 
     @action
-    updateMousePosition = (latLng: LatLng) => {
+    updateMousePosition = (latLng: ILatLng) => {
         // console.log('MapLocationStore.updateMousePosition()');
         // console.log('MapLocationStore.updateMousePosition() this.mousePos',this.mousePos);
         // console.log('MapLocationStore.updateMousePosition() latLng',latLng);

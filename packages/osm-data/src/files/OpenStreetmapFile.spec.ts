@@ -1,11 +1,11 @@
 import test from 'ava';
 
 import { OpenStreetmapFile } from './OpenStreetmapFile';
-import { createNewOpenStreetmapFileMetaData, osmJsonResp } from '../test/TestData';
+import { createOsmFileMetaData, osmJsonResp } from '../test/TestData';
 
 test('OpenStreetmapFile is instantiable', (t) => {
 	t.log('NO TESTS HERE')
-	const osmMeta = createNewOpenStreetmapFileMetaData();
+	const osmMeta = createOsmFileMetaData();
 	const newOsmFile = new OpenStreetmapFile(osmMeta, osmJsonResp);
 	t.not(newOsmFile, undefined);
 });

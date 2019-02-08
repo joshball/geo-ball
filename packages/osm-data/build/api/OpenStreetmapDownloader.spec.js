@@ -63,10 +63,10 @@ ava_1.default('OpenStreetmapDownloader should throw if bad bounds in query', (t)
 ava_1.default('OpenStreetmapDownloader should throw if API post fails', (t) => __awaiter(this, void 0, void 0, function* () {
     const mockAxios = new axios_mock_adapter_1.default(axios_1.default);
     mockAxios.onPost().networkError();
-    const { query } = TestData_1.createNewOpenStreetmapQuery();
+    const { osmQuery } = TestData_1.createOsmFileMetaData();
     t.plan(1);
     try {
-        yield OpenStreetmapDownloader_1.OpenStreetmapDownloader.Fetch(query); // .then(r => console.log('rrrr', r)).catch(e => console.log('EEEEE:', e));
+        yield OpenStreetmapDownloader_1.OpenStreetmapDownloader.Fetch(osmQuery); // .then(r => console.log('rrrr', r)).catch(e => console.log('EEEEE:', e));
         console.log('GOT HREERERERE');
     }
     catch (e) {
@@ -74,10 +74,10 @@ ava_1.default('OpenStreetmapDownloader should throw if API post fails', (t) => _
     }
 }));
 ava_1.default('OpenStreetmapDownloader fetch() valid data', (t) => __awaiter(this, void 0, void 0, function* () {
-    const { query } = TestData_1.createNewOpenStreetmapQuery();
+    const { osmQuery } = TestData_1.createOsmFileMetaData();
     const mockAxios = new axios_mock_adapter_1.default(axios_1.default);
     mockAxios.onPost().replyOnce(200, TestData_1.osmJsonResp);
-    const data = yield OpenStreetmapDownloader_1.OpenStreetmapDownloader.Fetch(query);
+    const data = yield OpenStreetmapDownloader_1.OpenStreetmapDownloader.Fetch(osmQuery);
     // console.log('data:', JSON.stringify(data, undefined, 4));
     // console.log('osmR:', JSON.stringify(osmJsonResp, undefined, 4));
     t.deepEqual(data, TestData_1.osmJsonResp);

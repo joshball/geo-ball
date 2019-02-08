@@ -2,11 +2,19 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 const path_1 = require("path");
 const fs_1 = require("fs");
 const OpenStreetmapFile_1 = require("../files/OpenStreetmapFile");
+const FAKE = __importStar(require("../test/FakeData"));
 // https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances
 const OverPassApiEndpoints = {
     main: 'http://overpass-api.de/api/interpreter',
@@ -16,25 +24,6 @@ const OverPassApiEndpoints = {
     kumi: 'https://overpass.kumi.systems/api/interpreter',
 };
 // const osmMetaData = new OpenStreetmapFileMetaData(this.endpoint, osmQuery);
-exports.osmJsonResp = {
-    "version": 0.6,
-    "generator": "Overpass API 0.7.55.4 3079d8ea",
-    "osm3s": {
-        "timestamp_osm_base": "2018-10-23T19:14:02Z",
-        "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
-    },
-    "elements": [
-        {
-            "type": "node",
-            "id": 83550018,
-            "lat": 40.7192445,
-            "lon": -111.8535611,
-            "tags": {
-                "highway": "traffic_signals"
-            }
-        }
-    ]
-};
 class OpenStreetmapDownloader {
     static Fetch(query, endpoint = OpenStreetmapDownloader.DEFAULT_ENDPOINT, fakeTheDownload = false) {
         if (!query.latLngBounds || !query.latLngBounds.valid()) {
@@ -47,7 +36,7 @@ class OpenStreetmapDownloader {
         console.log('\noverpass url:', url);
         if (fakeTheDownload) {
             console.log('Faking the download ;-)');
-            return Promise.resolve(exports.osmJsonResp);
+            return Promise.resolve(FAKE.osmQueryResp);
         }
         else {
             return axios_1.default.post(url, osmFormattedQuery).then(response => {

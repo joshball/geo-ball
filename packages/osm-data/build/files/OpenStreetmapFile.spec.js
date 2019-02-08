@@ -8,7 +8,7 @@ const OpenStreetmapFile_1 = require("./OpenStreetmapFile");
 const TestData_1 = require("../test/TestData");
 ava_1.default('OpenStreetmapFile is instantiable', (t) => {
     t.log('NO TESTS HERE');
-    const osmMeta = TestData_1.createNewOpenStreetmapFileMetaData();
+    const osmMeta = TestData_1.createOsmFileMetaData();
     const newOsmFile = new OpenStreetmapFile_1.OpenStreetmapFile(osmMeta, TestData_1.osmJsonResp);
     t.not(newOsmFile, undefined);
 });

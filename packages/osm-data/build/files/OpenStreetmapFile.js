@@ -7,7 +7,7 @@ const OpenStreetMapElements_1 = require("../data/OpenStreetMapElements");
 const OpenStreetmapFileMetaData_1 = require("./OpenStreetmapFileMetaData");
 class OpenStreetmapFile {
     constructor(osmMetaData, osmQueryResp) {
-        this.osmMetaData = new OpenStreetmapFileMetaData_1.OpenStreetmapFileMetaData(osmMetaData.osmServer, osmMetaData.osmQuery, osmMetaData.queryName, osmMetaData.queryDesc, osmMetaData.queryBoundsArea, osmMetaData.queryDate);
+        this.osmMetaData = new OpenStreetmapFileMetaData_1.OpenStreetmapFileMetaData(osmMetaData);
         this.osmQueryResp = osmQueryResp;
     }
     getElements() {

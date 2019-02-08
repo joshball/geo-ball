@@ -7,7 +7,7 @@ import { observer, inject } from 'mobx-react';
 import { RootStore } from '../../stores/RootStore';
 import { MapLocationStore } from '../../stores/MapLocationStore';
 import { distance } from '@turf/turf';
-import { getDist } from '@geo-ball/geo-core';
+import { getDist, LatLngBounds } from '@geo-ball/geo-core';
 
 const mapCss = css({
     height: '100%',
@@ -64,10 +64,10 @@ export class MapComponent extends React.Component<MapProps> {
         const zoom = map.leafletElement.getZoom();
         const bounds = map.leafletElement.getBounds();
         // const mapStore = this.props.stores!.map;
-        this.mapLocationStore.updateCore(center, zoom, bounds);
+        this.mapLocationStore.updateCore(center, zoom, LatLngBounds.FromLeafletBounds(bounds));
         // mapState.setBounds(bounds);
         // mapState.setCenter(center);
-        // mapState.setZoom(zoom);
+        // mapState.setZoom(zoom);``
 
     }
 
@@ -89,7 +89,7 @@ export class MapComponent extends React.Component<MapProps> {
     //     return null;
     // }
     @action
-    handleMoveEnd = (e: LeafletEvent) => {
+    handleMoveEnd = (_e: LeafletEvent) => {
         // console.log('DMC.handleMoveEnd', e);
         const map = this.mapRef.current as Map;
         this.updateMapState(map);

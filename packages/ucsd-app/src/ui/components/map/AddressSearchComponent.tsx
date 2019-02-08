@@ -120,6 +120,7 @@ export class AddressSearchComponent extends React.Component<AddressSearchCompone
                 </div>
             )
         }
+        return null;
     }
     getResults() {
         // console.log('getResults',this.state.results)
@@ -156,37 +157,3 @@ export class AddressSearchComponent extends React.Component<AddressSearchCompone
         )
     }
 }
-
-// export const MapDataDisplay: React.SFC<MapDataDisplayProps> = inject("mapState")(observer((props: MapDataDisplayProps) => {
-//     const lltStyle = 'short';
-//     // const { bounds, center, mousePos, zoom, mapState } = props;
-//     const { bounds, mousePos, zoom, mapState } = props;
-//     console.log('MapDataDisplay.mapState', mapState);
-//     // const center = mapState!.center;
-//     const center = mapState!.center;
-//     console.log('MapDataDisplay.bounds', bounds);
-//     console.log('MapDataDisplay.center', center);
-//     const boundsElem = bounds ?
-//         <div className={`${rowCss}`}>
-//             <div>Bounds:</div>
-//             <div>SW: <LatLngTxt llt={bounds.getSouthWest()} lltStyle={lltStyle} /></div>
-//             <div>NE: <LatLngTxt llt={bounds.getNorthEast()} lltStyle={lltStyle} /></div>
-//         </div>
-//         : null;
-//     return (
-//         <div className={`${outerBoxCss}`}>
-//             <h2 className={`${headingCss}`}>Map Data</h2>
-//             {boundsElem}
-//             <div className={`${rowCss}`}>
-//                 Center: <LatLngTxt llt={center} lltStyle={lltStyle} />
-//             </div>
-//             <div className={`${rowCss}`}>
-//                 Zoom: {zoom}
-//             </div>
-//             <div className={`${rowCss}`}>
-//                 Mouse: <LatLngTxt llt={mousePos} lltStyle={lltStyle} />
-//             </div>
-//         </div>
-//     )
-// }))
-

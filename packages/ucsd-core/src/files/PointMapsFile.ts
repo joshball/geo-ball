@@ -58,7 +58,7 @@ export class PointMapsFile {
     }
 
     static CreateMetaDataFromRsd(rsdFile: RoadSegmentsFile): GeoFileMetaData {
-        return new GeoFileMetaData(rsdFile.metaData.bounds, new Date(rsdFile.metaData.timestamp));
+        return new GeoFileMetaData(rsdFile.metaData.bounds, rsdFile.metaData.timestamp);
     }
 
 

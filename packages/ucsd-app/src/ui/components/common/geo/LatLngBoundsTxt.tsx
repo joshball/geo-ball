@@ -20,8 +20,8 @@ export interface LatLngBoundsTxtProps {
 export const LatLngBoundsTxt: React.SFC<LatLngBoundsTxtProps> = (props: LatLngBoundsTxtProps) => {
     // const [lat, lon] = props.llt;
     if (props.bounds) {
-        const southWest = props.bounds.getSouthWest();
-        const northEast = props.bounds.getNorthEast();
+        const southWest = props.bounds.southWest;
+        const northEast = props.bounds.northEast;
         return (
             <span className={`${outerBoxCss}`}>
                 <div><b>SW:</b> <LatLngTxt llt={southWest} latLngQuickFmt={props.latLngQuickFmt} latLngFmt={props.latLngFmt} /></div>

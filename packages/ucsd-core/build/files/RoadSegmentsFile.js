@@ -57,7 +57,7 @@ class RoadSegmentsFile {
         return segments;
     }
     static CreateMetaDataFromOsm(_osmFile) {
-        return new GeoFileMetaData_1.GeoFileMetaData(_osmFile.osmMetaData.osmQuery.latLngBounds, new Date(_osmFile.osmMetaData.queryDate));
+        return new GeoFileMetaData_1.GeoFileMetaData(_osmFile.osmMetaData.osmQuery.latLngBounds, _osmFile.osmMetaData.queryDate);
     }
     static LoadFromTextFile(filePath) {
         const lines = fs_1.readFileSync(filePath, 'utf8')

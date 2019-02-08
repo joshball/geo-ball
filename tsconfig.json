@@ -4,7 +4,7 @@
         { "path": "packages/geo-core" },
         { "path": "packages/graph-core" },
         { "path": "packages/osm-cli" },
-        { "path": "packages/osm-dtaa" },
+        { "path": "packages/osm-data" },
         { "path": "packages/ucsd-app" },
         { "path": "packages/ucsd-cli" },
         { "path": "packages/ucsd-core" },

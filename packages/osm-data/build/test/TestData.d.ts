@@ -1,4 +1,4 @@
-import { OpenStreetmapQuery, OpenStreetmapFileMetaData } from "..";
+import { OpenStreetmapQuery, IOpenStreetmapFileMetaData } from "..";
 import { LatLngBounds, LatLng, ILatLngBounds } from '@geo-ball/geo-core';
 import { IOpenStreetmapQueryResponse } from "../api/IOpenStreetmapQueryResponse";
 export interface ILatLngBoundsTestData {
@@ -12,14 +12,7 @@ export interface IOsmQuery {
     latLngBoundsTestData: ILatLngBoundsTestData;
 }
 export declare const createNewBounds: () => ILatLngBoundsTestData;
-export declare const createNewOpenStreetmapFileMetaData: () => OpenStreetmapFileMetaData;
-export declare const createNewOpenStreetmapQuery: (latLngBoundsTestData?: ILatLngBoundsTestData | undefined) => {
-    query: OpenStreetmapQuery;
-    queryName: string;
-    queryDesc: string;
-    latLngBounds: LatLngBounds;
-    latLngBoundsTestData: ILatLngBoundsTestData;
-};
+export declare const createOsmFileMetaData: (latLngBoundsTestData?: ILatLngBoundsTestData | undefined) => IOpenStreetmapFileMetaData;
 export declare const dataDir = ".";
 export declare const osmJsonResp: IOpenStreetmapQueryResponse;
 //# sourceMappingURL=TestData.d.ts.map

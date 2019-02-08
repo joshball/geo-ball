@@ -1,11 +1,31 @@
 import { LatLng, ILatLng } from './LatLng';
 import { distance } from './LatLngHelpers';
+import { LatLngBounds as LefletLatLngBounds } from 'leaflet';
 
 export interface ILatLngBounds {
     southWest: ILatLng;
     northEast: ILatLng;
 }
-export class LatLngBounds {
+export interface ILatLngBoundsArea extends ILatLngBounds {
+    southWest: ILatLng;
+    northEast: ILatLng;
+
+    northWest: ILatLng;
+    southEast: ILatLng;
+
+    center: ILatLng;
+    centerLat: number;
+    centerLng: number;
+
+    latDelta: number;
+    lngDelta: number;
+
+    latDistInMeters: number;
+    lngDistInMeters: number;
+
+    areaInMeters: number;
+}
+export class LatLngBounds implements ILatLngBoundsArea {
     southWest: LatLng;
     northEast: LatLng;
 
@@ -17,12 +37,9 @@ export class LatLngBounds {
         return new LatLng(this.southEast.lat, this.northEast.lng);
     }
 
-    get latDelta(): number {
-        return Math.abs(this.northEast.lat - this.southWest.lat) / 2;
-    }
 
-    get lngDelta(): number {
-        return Math.abs(this.northEast.lng - this.southWest.lng) / 2;
+    get center(): LatLng {
+        return new LatLng(this.centerLat, this.centerLng);
     }
 
     get centerLat(): number {
@@ -33,9 +50,16 @@ export class LatLngBounds {
         return this.northEast.lng - this.lngDelta;
     }
 
-    get center(): LatLng {
-        return new LatLng(this.centerLat, this.centerLng);
+
+    get latDelta(): number {
+        return Math.abs(this.northEast.lat - this.southWest.lat) / 2;
     }
+
+    get lngDelta(): number {
+        return Math.abs(this.northEast.lng - this.southWest.lng) / 2;
+    }
+
+
 
     get areaInMeters(): number {
         return this.latDistInMeters * this.lngDistInMeters;
@@ -79,11 +103,24 @@ export class LatLngBounds {
         this.southWest.lng -= by;
     }
 
+    toArray(): Array<number> {
+        return this.southWest.toArray().concat(this.northEast.toArray());
+    }
 
-    static FromBounds(bounds: ILatLngBounds, growth: number = 0) {
-        const sw = new LatLng(bounds.southWest.lat - growth, bounds.southWest.lng - growth);
-        const ne = new LatLng(bounds.northEast.lat + growth, bounds.northEast.lng + growth);
-        return new LatLngBounds(sw, ne);
+    valid = (): boolean => this.southWest.valid() && this.northEast.valid();
+
+    equals(rhs: ILatLngBounds): boolean {
+        if (!rhs) {
+            return false;
+        }
+        return this.southWest === rhs.southWest && this.northEast === rhs.northEast;
+    }
+
+    hashCode(): number {
+        return Array.from(JSON.stringify(this))
+            // tslint:disable-next-line:no-bitwise
+            .reduce((s, c) => Math.imul(31, s) + c.charCodeAt(0) | 0, 0);
+        // return fieldsHashCode(this.latitude, this.longitude);
     }
 
     static FromArray(bounds: Array<number>) {
@@ -108,23 +145,16 @@ export class LatLngBounds {
         return new LatLngBounds(sw, ne);
     }
 
-    toArray(): Array<number> {
-        return this.southWest.toArray().concat(this.northEast.toArray());
+    static FromBounds(bounds: ILatLngBounds, growth: number = 0) {
+        const sw = new LatLng(bounds.southWest.lat - growth, bounds.southWest.lng - growth);
+        const ne = new LatLng(bounds.northEast.lat + growth, bounds.northEast.lng + growth);
+        return new LatLngBounds(sw, ne);
     }
 
-    valid = (): boolean => this.southWest.valid() && this.northEast.valid();
-
-    equals(rhs: ILatLngBounds): boolean {
-        if (!rhs) {
-            return false;
-        }
-        return this.southWest === rhs.southWest && this.northEast === rhs.northEast;
-    }
-
-    hashCode(): number {
-        return Array.from(JSON.stringify(this))
-            // tslint:disable-next-line:no-bitwise
-            .reduce((s, c) => Math.imul(31, s) + c.charCodeAt(0) | 0, 0);
-        // return fieldsHashCode(this.latitude, this.longitude);
+    static FromLeafletBounds(leafletBounds: LefletLatLngBounds): LatLngBounds {
+        return LatLngBounds.FromBounds({
+            southWest: leafletBounds.getSouthWest(),
+            northEast: leafletBounds.getNorthEast(),
+        });
     }
 }

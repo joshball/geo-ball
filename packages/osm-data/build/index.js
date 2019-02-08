@@ -7,10 +7,11 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./api/OpenStreetmapDownloader"));
-__export(require("./api/OpenStreetmapFeatures"));
 __export(require("./api/OpenStreetmapQuery"));
+__export(require("./data/OpenStreetMapElements"));
+__export(require("./data/OpenStreetMapElements"));
+__export(require("./data/OpenStreetmapFeatures"));
+__export(require("./files/GeographicBoundsDescription"));
 __export(require("./files/OpenStreetmapFile"));
 __export(require("./files/OpenStreetmapFileMetaData"));
-__export(require("./data/OpenStreetMapElements"));
-__export(require("./data/OpenStreetMapElements"));
 //# sourceMappingURL=index.js.map

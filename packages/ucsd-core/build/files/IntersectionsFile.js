@@ -18,7 +18,7 @@ class IntersectionsFile {
         return new IntersectionsFile(metaData, intersections);
     }
     static CreateMetaDataFromPoints(rsdFile) {
-        return new __1.GeoFileMetaData(rsdFile.metaData.bounds, new Date(rsdFile.metaData.timestamp));
+        return new __1.GeoFileMetaData(rsdFile.metaData.bounds, rsdFile.metaData.timestamp);
     }
     static SaveJsonFile(filePath, intersectionsFile) {
         // const pmf = {

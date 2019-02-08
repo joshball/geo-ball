@@ -1,4 +1,4 @@
-import { IState } from '../state/State';
+import { IState, State } from '../state/State';
 import { CommonStore } from "./CommonStore";
 // import { DataStore } from "./DataStore";
 import { MapLocationStore } from "./MapLocationStore";
@@ -11,7 +11,7 @@ export class RootStore {
     mapLocation: MapLocationStore;
     // services: IServices;
 
-    constructor(state: IState) {
+    constructor(state: State) {
         this.common = new CommonStore(state);
         // this.data = new DataStore(state);
         this.settings = new SettingsStore(state);

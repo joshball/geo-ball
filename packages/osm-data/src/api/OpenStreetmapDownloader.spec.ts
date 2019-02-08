@@ -5,7 +5,7 @@ import MockAdapter from 'axios-mock-adapter';
 
 import { OpenStreetmapDownloader } from './OpenStreetmapDownloader';
 import { OpenStreetmapQuery, IOpenStreetmapQuery } from './OpenStreetmapQuery';
-import { dataDir, createNewBounds, createNewOpenStreetmapQuery, osmJsonResp, IOsmQuery } from '../test/TestData';
+import { createNewBounds, createOsmFileMetaData, osmJsonResp, IOsmQuery } from '../test/TestData';
 
 
 // test.beforeEach(_t => {
@@ -58,10 +58,10 @@ test('OpenStreetmapDownloader should throw if API post fails', async t => {
     const mockAxios = new MockAdapter(axios);
     mockAxios.onPost().networkError();
 
-    const { query } = createNewOpenStreetmapQuery();
+    const { osmQuery } = createOsmFileMetaData();
     t.plan(1);
     try {
-        await OpenStreetmapDownloader.Fetch(query); // .then(r => console.log('rrrr', r)).catch(e => console.log('EEEEE:', e));
+        await OpenStreetmapDownloader.Fetch(osmQuery); // .then(r => console.log('rrrr', r)).catch(e => console.log('EEEEE:', e));
         console.log('GOT HREERERERE')
     } catch (e) {
         t.is(e.message, 'Network Error');
@@ -69,10 +69,10 @@ test('OpenStreetmapDownloader should throw if API post fails', async t => {
 });
 
 test('OpenStreetmapDownloader fetch() valid data', async (t) => {
-    const { query } = createNewOpenStreetmapQuery();
+    const { osmQuery } = createOsmFileMetaData();
     const mockAxios = new MockAdapter(axios);
     mockAxios.onPost().replyOnce(200, osmJsonResp);
-    const data = await OpenStreetmapDownloader.Fetch(query);
+    const data = await OpenStreetmapDownloader.Fetch(osmQuery);
     // console.log('data:', JSON.stringify(data, undefined, 4));
     // console.log('osmR:', JSON.stringify(osmJsonResp, undefined, 4));
     t.deepEqual(data, osmJsonResp);

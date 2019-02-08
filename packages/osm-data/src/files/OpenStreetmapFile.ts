@@ -23,14 +23,7 @@ export class OpenStreetmapFile {
     osmQueryResp: IOpenStreetmapQueryResponse;
 
     constructor(osmMetaData: IOpenStreetmapFileMetaData, osmQueryResp: IOpenStreetmapQueryResponse) {
-        this.osmMetaData = new OpenStreetmapFileMetaData(
-            osmMetaData.osmServer,
-            osmMetaData.osmQuery,
-            osmMetaData.queryName,
-            osmMetaData.queryDesc,
-            osmMetaData.queryBoundsArea,
-            osmMetaData.queryDate
-        );
+        this.osmMetaData = new OpenStreetmapFileMetaData(osmMetaData);
         this.osmQueryResp = osmQueryResp;
     }
 

@@ -15,8 +15,8 @@ const outerBoxCss = css({
 export const LatLngBoundsAreaTxt = (props: LatLngBoundsTxtProps) => {
     if (props.bounds) {
         const clean = (num: number) => Number.parseFloat(num.toString()).toFixed(2);
-        const southWest = props.bounds.getSouthWest();
-        const northEast = props.bounds.getNorthEast();
+        const southWest = props.bounds.southWest;
+        const northEast = props.bounds.northEast;
         const northWest = { lat: northEast.lat, lng: southWest.lng }
         // const northWest = new LatLng(northEast.lat,southWest.lng);
         // const latDistLeaf = southWest.distanceTo(northWest);

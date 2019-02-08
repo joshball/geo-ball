@@ -43,5 +43,11 @@
     "sources": [
       "build/**/*.js"
     ]
+  },
+  "devDependencies": {
+    "ava": "^1.2.1",
+    "ava-ts": "^0.25.2",
+    "axios-mock-adapter": "^1.16.0",
+    "nyc": "^13.2.0"
   }
 }

@@ -71,7 +71,7 @@ export class RoadSegmentsFile {
         return segments;
     }
     static CreateMetaDataFromOsm(_osmFile: OpenStreetmapFile): GeoFileMetaData {
-        return new GeoFileMetaData(_osmFile.osmMetaData.osmQuery.latLngBounds, new Date(_osmFile.osmMetaData.queryDate));
+        return new GeoFileMetaData(_osmFile.osmMetaData.osmQuery.latLngBounds, _osmFile.osmMetaData.queryDate);
     }
 
 

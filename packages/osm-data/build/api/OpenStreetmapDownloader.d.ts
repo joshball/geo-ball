@@ -6,7 +6,6 @@ export interface IFetchAndSaveResult {
     osmDataFile: OpenStreetmapFile;
     osmDataFilePath: string;
 }
-export declare const osmJsonResp: IOpenStreetmapQueryResponse;
 export declare class OpenStreetmapDownloader {
     static DEFAULT_ENDPOINT: string;
     static Fetch(query: OpenStreetmapQuery, endpoint?: string, fakeTheDownload?: boolean): Promise<IOpenStreetmapQueryResponse>;

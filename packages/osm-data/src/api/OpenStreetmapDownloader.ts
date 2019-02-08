@@ -3,8 +3,9 @@ import { resolve } from 'path';
 import { writeFileSync, existsSync } from 'fs';
 import { OpenStreetmapQuery } from './OpenStreetmapQuery';
 import { OpenStreetmapFile } from '../files/OpenStreetmapFile';
-import { OpenStreetmapFileMetaData } from "../files/OpenStreetmapFileMetaData";
+import { OpenStreetmapFileMetaData, IOpenStreetmapFileMetaData } from "../files/OpenStreetmapFileMetaData";
 import { IOpenStreetmapQueryResponse } from './IOpenStreetmapQueryResponse';
+import * as FAKE from '../test/FakeData';
 
 // https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances
 const OverPassApiEndpoints = {
@@ -20,25 +21,7 @@ export interface IFetchAndSaveResult {
     osmDataFilePath: string;
 }
 // const osmMetaData = new OpenStreetmapFileMetaData(this.endpoint, osmQuery);
-export const osmJsonResp: IOpenStreetmapQueryResponse = {
-    "version": 0.6,
-    "generator": "Overpass API 0.7.55.4 3079d8ea",
-    "osm3s": {
-        "timestamp_osm_base": "2018-10-23T19:14:02Z",
-        "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
-    },
-    "elements": [
-        {
-            "type": "node",
-            "id": 83550018,
-            "lat": 40.7192445,
-            "lon": -111.8535611,
-            "tags": {
-                "highway": "traffic_signals"
-            }
-        }
-    ]
-};
+
 
 export class OpenStreetmapDownloader {
 
@@ -56,7 +39,7 @@ export class OpenStreetmapDownloader {
         console.log('\noverpass url:', url);
         if (fakeTheDownload) {
             console.log('Faking the download ;-)')
-            return Promise.resolve(osmJsonResp);
+            return Promise.resolve(FAKE.osmQueryResp);
         }
         else {
             return axios.post(url, osmFormattedQuery).then(response => {

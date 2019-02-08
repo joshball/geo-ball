@@ -1,20 +1,19 @@
-import { OpenStreetmapQuery, IOpenStreetmapQuery } from '../api/OpenStreetmapQuery';
-import { ILatLngBounds } from '@geo-ball/geo-core';
+import { OpenStreetmapQuery } from '../api/OpenStreetmapQuery';
+import { GeographicBoundsDescription } from './GeographicBoundsDescription';
+import { LocalDateTime } from '../../../utils/src/time/LocalDateTime';
 export interface IOpenStreetmapFileMetaData {
     osmServer: string;
     osmQuery: OpenStreetmapQuery;
-    queryDate: string;
-    queryName: string;
-    queryDesc: string;
-    queryBoundsArea: ILatLngBounds;
+    queryDate: LocalDateTime;
+    geoBounds: GeographicBoundsDescription;
+    originalFilePath: string;
 }
 export declare class OpenStreetmapFileMetaData {
     osmServer: string;
     osmQuery: OpenStreetmapQuery;
-    queryDate: string;
-    queryName: string;
-    queryDesc: string;
-    queryBoundsArea: ILatLngBounds;
-    constructor(osmServer: string, osmQuery: IOpenStreetmapQuery, queryName: string, queryDesc: string, queryBoundsArea: ILatLngBounds, queryDate?: string);
+    queryDate: LocalDateTime;
+    geoBounds: GeographicBoundsDescription;
+    originalFilePath: string;
+    constructor(osmFileMetaData: IOpenStreetmapFileMetaData);
 }
 //# sourceMappingURL=OpenStreetmapFileMetaData.d.ts.map

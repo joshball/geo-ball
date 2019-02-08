@@ -28,7 +28,7 @@ export class IntersectionsFile {
     }
 
     static CreateMetaDataFromPoints(rsdFile: PointMapsFile): GeoFileMetaData {
-        return new GeoFileMetaData(rsdFile.metaData.bounds, new Date(rsdFile.metaData.timestamp));
+        return new GeoFileMetaData(rsdFile.metaData.bounds, rsdFile.metaData.timestamp);
     }
 
     static SaveJsonFile(filePath: string, intersectionsFile: IntersectionsFile): void {

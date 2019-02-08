@@ -22,6 +22,7 @@ export type OpenStreetMapTag =
 	'direction' |
 	'fixme' |
 	'foot' |
+	'footway' |
 	'guidepost' |
 	'hgv' |
 	'highway' |

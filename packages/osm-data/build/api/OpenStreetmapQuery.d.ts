@@ -1,5 +1,5 @@
 import { LatLngBounds, ILatLngBounds } from '@geo-ball/geo-core';
-import { OSMFeatureKeyValuePair, OSMOutputFormat, IOSMFeatureKeyValuePair } from './OpenStreetmapFeatures';
+import { OSMFeatureKeyValuePair, OSMOutputFormat, IOSMFeatureKeyValuePair } from '../data/OpenStreetmapFeatures';
 export interface IOpenStreetmapQuery {
     latLngBounds?: ILatLngBounds;
     outFormat?: OSMOutputFormat;
