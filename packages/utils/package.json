@@ -28,7 +28,7 @@
     "clean:node_modules": "rimraf node_modules",
     "cleanup:packages": "yarn run prettier-package-json --write",
     "test": "yarn run build && yarn run nyc ava --verbose",
-    "test:watch": "yarn run ava-ts --watch --verbose src/**/*.spec.ts"
+    "test:watch": "yarn run ava-ts --watch --serial --verbose src/**/*.spec.ts"
   },
   "ava": {
     "snapshotDir": "./snapshots",
@@ -41,11 +41,16 @@
       "build/**/*.js"
     ]
   },
+  "nyc": {
+    "include": "build/**/*",
+    "exclude": "build/**/*.spec.js"
+  },
   "devDependencies": {
     "@types/moment-timezone": "^0.5.10",
     "ava": "^1.1.0",
     "ava-ts": "^0.25.2",
-    "nyc": "^13.1.0"
+    "nyc": "^13.1.0",
+    "ts-node": "^8.0.2"
   },
   "dependencies": {
     "moment-timezone": "^0.5.23"

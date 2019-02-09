@@ -2,13 +2,13 @@ import * as React from 'react'
 
 import { Intent, Label, Icon, TextArea, InputGroup, Button, Checkbox, Alignment } from '@blueprintjs/core';
 
-import { DownloadOsmParams } from '../../../services/OsmService';
+import { IDownloadOsmParams } from '../../../services/OsmService';
 import { reverseGeocodeLocation, IReverseGeocodeResponse } from '../../../services/GeocodingService';
 import { LatLngBounds, LatLng, ILatLng } from '@geo-ball/geo-core';
 
 
 export interface OsmDownloadQueryFormProps {
-    downloadOsmFile: (osmParams: DownloadOsmParams) => void;
+    downloadOsmFile: (osmParams: IDownloadOsmParams) => void;
     bounds: LatLngBounds;
     area: string;
     center: ILatLng;

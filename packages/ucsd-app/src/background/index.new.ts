@@ -1,5 +1,6 @@
 import ipc from './better-ipc';
 import { FS_CHANNELS } from './bg-fs';
+import { UCSD_CHANNELS } from './bg-ucsd';
 import { remote, BrowserWindow } from 'electron';
 
 export interface IChannelCallback {
@@ -34,7 +35,7 @@ const registerAndExportAndBuildChannels = (channelsExport: any, newChannels: Arr
 
 }
 
-registerAndExportAndBuildChannels(CHANNELS, FS_CHANNELS);
+registerAndExportAndBuildChannels(CHANNELS, FS_CHANNELS.concat(UCSD_CHANNELS));
 console.log('-----------------------------------------------------------------------')
 console.log('CHANNELS', CHANNELS)
 console.log('-----------------------------------------------------------------------')

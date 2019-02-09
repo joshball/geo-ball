@@ -4,7 +4,7 @@ import { css } from 'glamor'
 import { LatLngTxt } from '../common/geo/LatLngTxt';
 import { observer, inject } from 'mobx-react';
 import { RootStore } from '../../stores/RootStore';
-import { downloadOsmFile, DownloadOsmParams } from '../../services/OsmService';
+import { downloadOsmFile, IDownloadOsmParams } from '../../services/OsmService';
 import { DownloadLatLngBoundsBox } from './download/DownloadLatLngBoundsBox';
 
 const outerBoxCss = css({
@@ -37,7 +37,7 @@ export class MapDataDisplay extends React.Component<MapDataDisplayProps> {
         super(props)
         this.downloadOsmFile = this.downloadOsmFile.bind(this);
     }
-    downloadOsmFile(osmParams: DownloadOsmParams) {
+    downloadOsmFile(osmParams: IDownloadOsmParams) {
         console.log('MapDataDisplay.downloadOsm', osmParams);
         const mapStore = this.props.stores!.mapLocation;
         const { bounds, zoom, mousePos, clickPos, center, selectedAddress } = mapStore;

@@ -90,4 +90,4 @@ class OsmFetchManager {
     }
 }
 exports.OsmFetchManager = OsmFetchManager;
-//# sourceMappingURL=OpenStreetmapDownloader.js.map
+//# sourceMappingURL=OpenStreetmapDownloader.1.js.map

@@ -8,6 +8,5 @@ function __export(m) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./files/fileNamify"));
 __export(require("./files/pathNamify"));
-__export(require("./files/Timestamps"));
 __export(require("./time/LocalDateTime"));
 //# sourceMappingURL=index.js.map

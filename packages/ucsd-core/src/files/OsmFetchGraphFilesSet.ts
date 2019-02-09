@@ -2,7 +2,7 @@ import { OpenStreetmapFile } from '@geo-ball/osm-data';
 import { RoadSegmentsFile } from './RoadSegmentsFile';
 import { PointMapsFile } from './PointMapsFile';
 import { IntersectionsFile } from './IntersectionsFile';
-import { findParseFilenameTimestamp } from '@geo-ball/utils';
+import { LocalDateTime } from '@geo-ball/utils';
 
 export type ReadDirCallback = (path: string) => Promise<Array<string>>
 export type ReadFileCallback = (path: string) => Promise<any>
@@ -52,7 +52,7 @@ export class OsmFetchGraphFilesSet implements IOsmFetchGraphFilesSet {
 
     constructor(fetchDirPath: string) {
         this.fetchDirPath = fetchDirPath;
-        const pft = findParseFilenameTimestamp(fetchDirPath);
+        const pft = LocalDateTime.ParseFilenameFormatWithRegex(fetchDirPath);
         this.fetchDate = pft ? pft.fileTimestamp : '';
         this.osm = new PathFileMap();
         this.rsd = new PathFileMap();

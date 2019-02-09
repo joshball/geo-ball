@@ -1,4 +1,3 @@
-import ipc from './better-ipc';
 import { lstat, access, mkdir, readdir, CONSTANTS } from './utils-fs';
 import { join, resolve as pathResolve } from 'path';
 import { remote } from 'electron';

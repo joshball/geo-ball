@@ -27,4 +27,4 @@ export interface IOsmFetchAndSaveParams {
     overwrite: boolean;
     fake: boolean;
 }
-//# sourceMappingURL=OpenStreetmapDownloader.d.ts.map
+//# sourceMappingURL=OpenStreetmapDownloader.1.d.ts.map

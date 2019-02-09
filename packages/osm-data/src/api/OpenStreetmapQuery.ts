@@ -26,7 +26,7 @@ export class OpenStreetmapQuery {
         this.latLngBounds = LatLngBounds.FromBounds(osmQueryObj.latLngBounds);
         this.outFormat = osmQueryObj.outFormat || 'json';
         this.timeoutInSec = osmQueryObj.timeoutInSec || 180;
-        this.bds = osmQueryObj.bds || ['node', 'way', 'relation'];
+        this.bds = osmQueryObj.bds || ['node', 'way', 'rel'];
         if (osmQueryObj.features) {
             this.features = osmQueryObj.features.map((kvp: OSMFeatureKeyValuePair) => new OSMFeatureKeyValuePair(kvp.key, kvp.values));
         }
@@ -44,7 +44,7 @@ export class OpenStreetmapQuery {
     // 	this.outFormat = outFormat;
     // 	this.timeoutInSec = timeoutInSec;
     // 	this.features = osmFeatures.map(f => new OSMFeatureKeyValuePair(f));
-    // 	this.bds = ['node', 'way', 'relation'];
+    // 	this.bds = ['node', 'way', 'rel'];
     // }
 
     // https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL#Standalone_queries
@@ -72,11 +72,11 @@ export class OpenStreetmapQuery {
     // // query part for: “highway=*”
     // node["highway"](40.690856387926516,-111.86356544494627,40.72683597647796,-111.78271293640137);
     // way["highway"](40.690856387926516,-111.86356544494627,40.72683597647796,-111.78271293640137);
-    // relation["highway"](40.690856387926516,-111.86356544494627,40.72683597647796,-111.78271293640137);
+    // rel["highway"](40.690856387926516,-111.86356544494627,40.72683597647796,-111.78271293640137);
     // // query part for: “"addr:street"=*”
     // node["addr"](40.690856387926516,-111.86356544494627,40.72683597647796,-111.78271293640137);
     // way["addr"](40.690856387926516,-111.86356544494627,40.72683597647796,-111.78271293640137);
-    // relation["addr"](40.690856387926516,-111.86356544494627,40.72683597647796,-111.78271293640137);
+    // rel["addr"](40.690856387926516,-111.86356544494627,40.72683597647796,-111.78271293640137);
     // );
     // // print results
     // out body;

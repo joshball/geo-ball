@@ -30,7 +30,7 @@ exports.PathFileMap = PathFileMap;
 class OsmFetchGraphFilesSet {
     constructor(fetchDirPath) {
         this.fetchDirPath = fetchDirPath;
-        const pft = utils_1.findParseFilenameTimestamp(fetchDirPath);
+        const pft = utils_1.LocalDateTime.ParseFilenameFormatWithRegex(fetchDirPath);
         this.fetchDate = pft ? pft.fileTimestamp : '';
         this.osm = new PathFileMap();
         this.rsd = new PathFileMap();

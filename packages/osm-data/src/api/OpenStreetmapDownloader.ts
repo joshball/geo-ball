@@ -6,6 +6,8 @@ import { OpenStreetmapFile } from '../files/OpenStreetmapFile';
 import { OpenStreetmapFileMetaData, IOpenStreetmapFileMetaData } from "../files/OpenStreetmapFileMetaData";
 import { IOpenStreetmapQueryResponse } from './IOpenStreetmapQueryResponse';
 import * as FAKE from '../test/FakeData';
+import { LocalDateTime } from '@geo-ball/utils';
+import { IGeographicBoundsDescription } from '@geo-ball/osm-data';
 
 // https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances
 const OverPassApiEndpoints = {
@@ -66,4 +68,42 @@ export class OpenStreetmapDownloader {
                 };
             });
     }
+
+    public static FetchAndSaveEx(params: IOsmFetchAndSaveParams): Promise<IFetchAndSaveResult> {
+        const osmDataFilePath = resolve(params.fetchDir);
+
+        // if (!params.overwrite && existsSync(osmDataFilePath)) {
+        //     throw new Error(`File exists [${osmDataFilePath}]`);
+        // }
+        return OpenStreetmapDownloader.Fetch(osmQueryMeta.osmQuery, osmQueryMeta.osmServer, fakeTheDownload)
+            .then((osmQueryResp: IOpenStreetmapQueryResponse) => {
+                const osmDataFile = new OpenStreetmapFile(osmQueryMeta, osmQueryResp);
+                writeFileSync(osmDataFilePath, JSON.stringify(osmDataFile, undefined, 4));
+                return {
+                    osmDataFile,
+                    osmDataFilePath,
+                };
+            });
+    }
+}
+
+export class OsmFetchManager{
+    fetchRootPath: string;
+
+    constructor(fetchRootPath:string){
+        this.fetchRootPath = resolve(fetchRootPath);
+        this.runs = 
+    }
+
+    createFetch(ldt:LocalDateTime){
+
+    }
+}
+export interface IOsmFetchAndSaveParams {
+    osmServer: string;
+    queryDate: LocalDateTime;
+    geoBounds: IGeographicBoundsDescription;
+    fetchDir: string;
+    overwrite: boolean;
+    fake: boolean;
 }

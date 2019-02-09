@@ -13,6 +13,7 @@ export class OSMFeatureKeyValuePair {
 }
 
 export type OSMFeatureKey =
+    | 'addr'
     | 'aerialway'
     | 'aeroway'
     | 'amenity'
@@ -24,16 +25,22 @@ export type OSMFeatureKey =
     | 'geological'
     | 'highway'
     | 'historic'
-    | 'military'
     | 'man_made'
+    | 'military'
     | 'power'
     | 'public_transport'
     | 'railway'
     | 'route'
     | 'shop'
     | 'waterway'
-    | 'addr';
 
-export type OSMBasicStructure = 'nodes' | 'ways' | 'relations';
+/**
+ * https://wiki.openstreetmap.org/wiki/Elements
+ *  - nodes (defining points in space),
+ *  - ways (defining linear features and area boundaries), and
+ *  - relations (which are sometimes used to explain how other elements work together).
+ */
+export type OsmElementType = 'nodes' | 'ways' | 'relations';
+
 
 export type OSMOutputFormat = 'json' | 'xml' | 'csv' | 'custom' | 'popup';
