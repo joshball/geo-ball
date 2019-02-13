@@ -75,7 +75,7 @@ class GenerateRsdFileFromOsmDataCommand extends Command {
             if(!overwriteRsFiles && (orf.rsdJsonFilePath.exists || orf.rsdTextFilePath.exists)){
                 throw new Error(`RSD file exists. Use overwrite! ${orf.rsdJsonFilePath.path}`);
             }
-            const osmFile = OpenStreetmapFile.Load(orf.osmFilePath.path);
+            const osmFile = OpenStreetmapFile.LoadSync(orf.osmFilePath.path);
             console.log('-------------------------------------------------')
             const osmElements = osmFile.getElements();
             const osmStats = osmElements.getStats();
@@ -95,7 +95,7 @@ class GenerateRsdFileFromOsmDataCommand extends Command {
         // const { osmDataFilePath, rsTextPath, rsJsonPath } = this.getFilePaths(overwriteRsFiles);
 
 
-        // const osmFile = OpenStreetmapFile.Load(osmDataFilePath);
+        // const osmFile = OpenStreetmapFile.LoadSync(osmDataFilePath);
         // const osmElements = osmFile.getElements();
         // const osmStats = osmElements.getStats();
         // console.log('osmStats', JSON.stringify(osmStats, undefined, 4));

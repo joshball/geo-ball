@@ -1,4 +1,4 @@
-import { lstat, access, mkdir, readdir, CONSTANTS } from './utils-fs';
+import { lstat, access, mkdir, readdir, CONSTANTS } from '@geo-ball/utils';
 import { join, resolve as pathResolve } from 'path';
 import { remote } from 'electron';
 import { IChannelCallback } from './index.new';

@@ -1,0 +1,1 @@
+{"version":3,"file":"OsmRunError.d.ts","sourceRoot":"","sources":["OsmRunError.ts"],"names":[],"mappings":"AAAA,oBAAY,cAAc,GACtB,qBAAqB,GACrB,mBAAmB,GACnB,oBAAoB,GACpB,6BAA6B,GAC7B,eAAe,GACf,iBAAiB,GACjB,oBAAoB,GACpB,mBAAmB,GACnB,mBAAmB,CAAC;AAExB,qBAAa,WAAY,SAAQ,KAAK;IAClC,QAAQ,EAAE,MAAM,CAAC;gBACL,OAAO,EAAE,MAAM,EAAE,QAAQ,EAAE,cAAc;CAMxD"}

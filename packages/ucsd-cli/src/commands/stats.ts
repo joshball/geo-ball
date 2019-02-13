@@ -36,7 +36,7 @@ class Stats extends Command {
 			console.log('overpassHighwaysFile', osmDataFile);
 
 			// const rsd = OverpassHighwayFile.loadJsonFile(overpassHighwaysFile)
-			const osmFile = OpenStreetmapFile.Load(osmDataFile);
+			const osmFile = OpenStreetmapFile.LoadSync(osmDataFile);
 
 			const elements = osmFile.getElements();
 			const stats = elements.getStats();

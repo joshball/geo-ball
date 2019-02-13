@@ -8,6 +8,8 @@ function __export(m) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./api/OpenStreetmapDownloader"));
 __export(require("./api/OpenStreetmapQuery"));
+__export(require("./api/nominatim/INominatimParams"));
+__export(require("./api/nominatim/NominatimApi"));
 __export(require("./data/OpenStreetMapElements"));
 __export(require("./data/OpenStreetMapElements"));
 __export(require("./data/OpenStreetmapFeatures"));

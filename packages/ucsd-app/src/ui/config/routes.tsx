@@ -7,9 +7,41 @@ import { MapExplorerPage } from '../pages/MapExplorerPage'
 import { MapDataFilesPage } from '../pages/MapDataFilesPage'
 import { RoutingPage } from '../pages/RoutingPage'
 import { SettingsPage } from '../pages/SettingsPage'
+import { ApiTesterPage } from '../pages/ApiTesterPage'
 import { IconName, MaybeElement, Button, Intent } from "@blueprintjs/core";
 import { Link } from "react-router-dom";
 
+
+export interface IRouteDataEx {
+    path: string;
+    component: any;
+    linkName: string;
+    navName: string;
+    getRoute: (i: number, exact?: boolean) => any;
+    getLink: (i: number, linkStyle?: any, ln?: string | undefined) => any;
+    getListItemLink: (i: number, liStyle?: any, linkStyle?: any, ln?: string | undefined) => any;
+}
+export const getRouteDataEx = (path: string, component: any, linkName: string, navName?: string): IRouteDataEx => {
+    const getRoute = (i: number, exact: boolean = false) =>
+        <Route key={i} path={path} component={component} exatct={exact} />
+    const getLink = (i: number, linkStyle?: any, ln?: string | undefined) =>
+        <Link style={linkStyle} key={i} to={path}>{ln || linkName}</Link>
+    const getListItemLink = (i: number, liStyle?: any, linkStyle?: any, ln?: string | undefined) =>
+        <li key={i} style={liStyle}>
+            {getLink(i, linkStyle, ln)}
+        </li>
+
+
+    return {
+        path,
+        component,
+        linkName,
+        navName: navName || linkName,
+        getRoute,
+        getLink,
+        getListItemLink
+    }
+}
 
 export interface IRouteData {
     name: string;
@@ -25,6 +57,7 @@ export interface IRouteConfig {
     maps: IRouteData
     routes: IRouteData
     files: IRouteData
+    api: IRouteData
     settings: IRouteData
 }
 
@@ -34,6 +67,7 @@ export const ROUTE_DATA: IRouteConfig = {
     maps: { name: 'maps', navButtonTxt: 'Explore and Download Maps', path: '/maps', component: MapExplorerPage, },
     routes: { name: 'routes', navButtonTxt: 'Routing', path: '/routes', component: RoutingPage },
     files: { name: 'files', navButtonTxt: 'Manage Files', path: '/files', component: MapDataFilesPage },
+    api: { name: 'api', navButtonTxt: 'API Tester', path: '/api', component: ApiTesterPage },
     settings: { name: 'settings', navButtonTxt: 'Settings', path: '/settings', component: SettingsPage },
 }
 

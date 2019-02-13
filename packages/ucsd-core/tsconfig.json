@@ -10,11 +10,11 @@
         // { "path": "../ucsd-core" },
         { "path": "../utils" },
     ],
-	"compilerOptions": {
-		"rootDir": "src",
-		"outDir": "./build"
-	},
-	"include": [
-		"./src"
-	],
+    "compilerOptions": {
+        "rootDir": "src",
+        "outDir": "./build",
+    },
+    "include": [
+        "./src"
+    ]
 }

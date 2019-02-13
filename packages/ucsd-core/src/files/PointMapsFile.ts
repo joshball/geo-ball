@@ -4,6 +4,7 @@ import { GeoFileMetaData } from './GeoFileMetaData';
 import { RoadSegmentsFile } from './RoadSegmentsFile';
 import { PointsToRoadSegmentsMap } from '../data/PointsToRoadSegmentsMap';
 import { basename } from 'path';
+import { readFile } from '@geo-ball/utils';
 
 
 export class PointMapsFile {
@@ -19,7 +20,13 @@ export class PointMapsFile {
         return basename(filePath).endsWith(PointMapsFile.Extension);
     }
 
-    static Load(filePath: string): PointMapsFile {
+    static async Load(filePath: string): Promise<PointMapsFile> {
+        console.log('PointMapsFile.Load', filePath);
+        return readFile(filePath, 'utf8')
+            .then(file => PointMapsFile.CreateFromFileJson(file))
+    }
+
+    static LoadSync(filePath: string): PointMapsFile {
         console.log('PointMapsFile.Load', filePath);
         return PointMapsFile.CreateFromFileJson(readFileSync(filePath, 'utf8'));
     }

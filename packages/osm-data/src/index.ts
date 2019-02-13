@@ -4,6 +4,9 @@
 
 export * from './api/OpenStreetmapDownloader';
 export * from './api/OpenStreetmapQuery';
+export * from './api/nominatim/INominatimParams';
+export * from './api/nominatim/INominatimResult';
+export * from './api/nominatim/NominatimApi';
 export * from './data/IOpenStreetMapElementsStats';
 export * from './data/IOpenStreetMapNode';
 export * from './data/IOpenStreetMapWay';

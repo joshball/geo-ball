@@ -21,9 +21,10 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "build:stream": "lerna run build --stream",
+    "build:clean": "lerna run --parallel build:clean",
     "build:watch": "lerna run --parallel build:watch",
     "build": "lerna run build",
-    "clean:node_modules": "lerna run clean:node_modules",
+    "clean:node_modules": "lerna run --parallel clean:node_modules",
     "clean": "lerna run clean",
     "cleanup:packages": "yarn run prettier-package-json --write && lerna run cleanup:packages",
     "electron": "lerna run electron --scope ucsd-app",
@@ -63,13 +64,13 @@
     "rimraf": "^2.6.2",
     "ts-jest": "^23.10.5",
     "ts-loader": "^5.3.2",
-    "ts-node": "^7.0.1",
+    "ts-node": "^8.0.2",
     "tslint": "^5.12.0",
     "tslint-config-prettier": "^1.15.0",
     "tslint-microsoft-contrib": "^5.2.1",
     "tslint-plugin-prettier": "^2.0.0",
     "tslint-sane": "^1.0.4",
-    "typescript": "^3.2.2"
+    "typescript": "^3.3.3"
   },
   "dependencies": {
     "@geo-ball/geo-core": "^1.0.0",

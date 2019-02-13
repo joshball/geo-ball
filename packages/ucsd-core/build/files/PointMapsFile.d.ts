@@ -8,7 +8,8 @@ export declare class PointMapsFile {
     constructor(metaData: GeoFileMetaData, pointsMap: PointsToRoadSegmentsMap);
     static Extension: string;
     static HasCorrectExtension(filePath: string): boolean;
-    static Load(filePath: string): PointMapsFile;
+    static Load(filePath: string): Promise<PointMapsFile>;
+    static LoadSync(filePath: string): PointMapsFile;
     static CreateFromFileJson(fileJson: string): PointMapsFile;
     static CreateFromRsdFile(rsdFile: RoadSegmentsFile): PointMapsFile;
     static DeReferenceNode(nodes: Array<IOpenStreetMapNode>, nodeId: number): IOpenStreetMapNode;

@@ -55,6 +55,20 @@ const nav = {
   active: primaryScale[1],
 }
 
+const pastels = {
+    litBlue: '#00BCD4',
+    medBlue: '#2196F3',
+    drkBlue: '#3F51B5',
+    litGreen: '#8BC34A',
+    medGreen: '#4CAF50',
+    litOrange: '#FF9800',
+    medOrange: '#FF5722',
+    red: '#F44336',
+    yellow: '#FFEB3B',
+    purple: '#673AB7',
+    grey: '#607D8B',
+}
+
 /**
  * These are the various roles that colour plays in the system.
  */
@@ -62,6 +76,7 @@ export const colors = {
   primaryScale,
   secondaryScale,
   black,
+  pastels,
   white,
   window,
   scrollbar,

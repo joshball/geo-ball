@@ -77,7 +77,7 @@ class GenerateIntersectionsFileCommand extends Command {
             if (!overwriteRsFiles && (orf.intJsonFilePath.exists || orf.intTextFilePath.exists)) {
                 throw new Error(`INT file exists. Use overwrite! ${orf.intJsonFilePath.path}`);
             }
-            const osmFile = OpenStreetmapFile.Load(orf.osmFilePath.path);
+            const osmFile = OpenStreetmapFile.LoadSync(orf.osmFilePath.path);
             const osmElements = osmFile.getElements();
             const osmStats = osmElements.getStats();
             // console.log('osmStats', JSON.stringify(osmStats, undefined, 4));

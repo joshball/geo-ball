@@ -30,7 +30,7 @@ class Transform extends Command {
 	async run() {
 		const { osmDataFilePath, roadSegementsFilePath } = this.getFilePaths();
 
-		const osmFile = OpenStreetmapFile.Load(osmDataFilePath);
+		const osmFile = OpenStreetmapFile.LoadSync(osmDataFilePath);
 		const osmElements = osmFile.getElements();
 		const osmStats = osmElements.getStats();
 		console.log('osmStats', JSON.stringify(osmStats, undefined, 4));

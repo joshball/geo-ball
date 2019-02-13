@@ -1,7 +1,6 @@
 import { resolve, basename } from 'path';
 import { readFileSync, writeFileSync } from 'fs';
-import { fileNamify, createFilenameTimestamp, findParseFilenameTimestamp, ParsedFilenameTimestamp } from '@geo-ball/utils';
-import { OpenStreetmapQuery, IOpenStreetmapQuery } from '../api/OpenStreetmapQuery';
+import { fileNamify, LocalDateTime, ParsedFilenameTimestamp, readFile, writeFile } from '@geo-ball/utils';
 import { IOpenStreetmapQueryResponse } from '../api/IOpenStreetmapQueryResponse';
 import { OpenStreetMapElements } from '../data/OpenStreetMapElements';
 import { IOpenStreetmapFileMetaData, OpenStreetmapFileMetaData } from './OpenStreetmapFileMetaData';
@@ -37,8 +36,14 @@ export class OpenStreetmapFile {
     }
 
     // osmd.QUERYNAME[.TS?].json
-    static Load(filePath: string): OpenStreetmapFile {
+    static async Load(filePath: string): Promise<OpenStreetmapFile> {
         console.log('OpenStreetmapFile.Load', filePath);
+        return readFile(filePath, 'utf8')
+            .then(file => OpenStreetmapFile.CreateFromFileJson(file))
+    }
+
+    static LoadSync(filePath: string): OpenStreetmapFile {
+        console.log('OpenStreetmapFile.LoadSync', filePath);
         return OpenStreetmapFile.CreateFromFileJson(readFileSync(filePath, 'utf8'));
     }
 
@@ -67,11 +72,11 @@ export class OpenStreetmapFile {
     }
 
     static CreateDescriptiveFileName(fileQueryName: string, date: Date | undefined): string {
-        const ts = date ? '.' + createFilenameTimestamp(date) : '';
+        const ts = date ? '.' + LocalDateTime.FromDate(date).filename : '';
         return `${fileNamify(fileQueryName, { replacement: '_' })}${ts}.${OpenStreetmapFile.Extension}`;
     }
 
     static ParseOpenStreetmapFileName(filePath: string): ParsedFilenameTimestamp | undefined {
-        return findParseFilenameTimestamp(filePath);
+        return LocalDateTime.ParseFilenameFormatWithRegex(filePath);
     }
 }

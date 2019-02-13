@@ -6,6 +6,7 @@ import { OpenStreetmapFile, IOpenStreetMapWay, OpenStreetMapElements, IOpenStree
 import { RoadSegmentLine, RoadSegmentType } from '../data/RoadSegmentLine';
 import { GeoFileMetaData } from './GeoFileMetaData';
 import { basename } from 'path';
+import { readFile } from '@geo-ball/utils';
 
 
 export type IRoadSegmentsFileData = Array<RoadSegmentLine>;
@@ -90,8 +91,13 @@ export class RoadSegmentsFile {
         return new RoadSegmentsFile(metaData, roadSegments);;
     }
 
+    static async Load(filePath: string): Promise<RoadSegmentsFile> {
+        console.log('RoadSegmentsFile.Load', filePath);
+        return readFile(filePath, 'utf8')
+            .then(file => RoadSegmentsFile.CreateFromFileJson(file))
+    }
 
-    static Load(filePath: string): RoadSegmentsFile {
+    static LoadSync(filePath: string): RoadSegmentsFile {
         console.log('RoadSegmentsFile.Load', filePath);
         return RoadSegmentsFile.CreateFromFileJson(readFileSync(filePath, 'utf8'));
     }

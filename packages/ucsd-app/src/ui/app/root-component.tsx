@@ -1,6 +1,6 @@
 // This is the top-most component in the app.
 import * as React from "react"
-import { MemoryRouter, Link } from 'react-router-dom';
+import { HashRouter as Router, MemoryRouter as Routerx, Link } from 'react-router-dom';
 import "glamor/reset";
 import { compose } from "glamor"
 import { Provider, observer } from "mobx-react";
@@ -15,6 +15,7 @@ import { NavBarMenuComponent } from "../components/layout/NavBarMenuComponent";
 import { RootStore } from "../stores/RootStore";
 
 import state from "../state/State";
+import { MemoryRouterProps } from "react-router";
 
 // import BackgroundTask from '../../background/BackgroundTask';
 const rootStore = new RootStore(state);
@@ -26,19 +27,32 @@ const ROOT = compose(styles.fullScreen, {
     "& ::-webkit-scrollbar-thumb": { backgroundColor: colors.scrollbar.thumb, borderRadius: 4 },
 })
 
+export class DebugRouter extends Router {
+    constructor(props: MemoryRouterProps) {
+        super(props);
+        const mr = this as any;
+        console.log('initial history is: ', JSON.stringify(mr.history, null, 2))
+        mr.history.listen((location:any, action:any) => {
+            console.log(
+                `The current URL is ${location.pathname}${location.search}${location.hash}`
+            )
+            console.log(`The last navigation action was ${action}`, JSON.stringify(mr.history, null, 2));
+        });
+    }
+}
 @observer
 export class RootComponent extends React.Component<{}, {}> {
     render() {
         console.log('location.pathname:', location.pathname)
         return (
-            <MemoryRouter {...ROOT} >
+            <DebugRouter {...ROOT} >
                 <Provider stores={rootStore}>
                     <div>
                         <NavBarMenuComponent />
                         {ROUTE_COMPONENTS}
                     </div>
                 </Provider>
-            </MemoryRouter>
+            </DebugRouter>
         )
     }
 }

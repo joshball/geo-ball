@@ -5,6 +5,7 @@ import { GeoFileMetaData } from '..';
 import { PointMapsFile } from './PointMapsFile';
 import { findIntersections } from '../data/Intersections';
 import { basename } from 'path';
+import { readFile } from '@geo-ball/utils';
 
 
 export class IntersectionsFile {
@@ -62,8 +63,13 @@ export class IntersectionsFile {
     //     // return new RoadSegmentsFile(bounds, new Date(), roadSegments);;
     //     return new IntersectionsFile(metaData, roadSegments);;
     // }
+    static async Load(filePath: string): Promise<IntersectionsFile> {
+        console.log('IntersectionsFile.Load', filePath);
+        return readFile(filePath, 'utf8')
+            .then(file => IntersectionsFile.CreateFromFileJson(file))
+    }
 
-     static Load(filePath: string): IntersectionsFile {
+     static LoadSync(filePath: string): IntersectionsFile {
         console.log('IntersectionsFile.Load', filePath);
         return IntersectionsFile.CreateFromFileJson(readFileSync(filePath, 'utf8'));
     }

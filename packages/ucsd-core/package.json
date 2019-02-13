@@ -23,10 +23,12 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "build:clean": "tsc --build tsconfig.json --clean",
     "build:watch": "tsc -p tsconfig.json --watch",
     "clean": "rimraf build .nyc_output",
     "clean:node_modules": "rimraf node_modules",
     "cleanup:packages": "yarn run prettier-package-json --write",
+    "clean:x": "find.exe",
     "test": "yarn run build && yarn run nyc ava --verbose",
     "test:watch": "yarn run build && yarn run ava --watch"
   },
@@ -34,7 +36,8 @@
     "@geo-ball/geo-core": "^1.0.0",
     "@geo-ball/osm-data": "^1.0.0",
     "@geo-ball/utils": "^1.0.0",
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "upath": "^1.1.0"
   },
   "ava": {
     "snapshotDir": "./snapshots",
@@ -45,5 +48,9 @@
     "sources": [
       "build/**/*.js"
     ]
+  },
+  "devDependencies": {
+    "ts-node": "^8.0.2",
+    "typescript": "^3.3.3"
   }
 }

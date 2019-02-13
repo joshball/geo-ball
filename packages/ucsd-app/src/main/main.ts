@@ -72,12 +72,12 @@ app.on("ready", () => {
     createMenu(global.uiWindow)
 
     if (isDev) {
-        global.uiWindow.webContents.on("did-fail-load", () => {
-            dialog.showErrorBox(
-                "Error opening storybook",
-                'Storybook failed to open. Please ensure the storybook server is running by executing "npm run storybook"',
-            )
-        })
+        // global.uiWindow.webContents.on("did-fail-load", () => {
+        //     dialog.showErrorBox(
+        //         "Error opening storybook",
+        //         'Storybook failed to open. Please ensure the storybook server is running by executing "npm run storybook"',
+        //     )
+        // })
 
         ipcMain.on("storybook-toggle", () => {
             showStorybook = !showStorybook

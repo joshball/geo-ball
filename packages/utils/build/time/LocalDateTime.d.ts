@@ -21,6 +21,12 @@ export interface ILocalDateTimeObject {
     isoSimple: string;
     isoLocal: string;
 }
+export interface ILocalDateTime {
+    unixUtcEpochMs: number;
+    timezoneOffsetMin: number;
+    timezoneName: string;
+    MTZ: string;
+}
 export declare class LocalDateTime {
     /**
      * number of seconds elapsed since January 1, 1970 00:00:00 UTC.

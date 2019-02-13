@@ -20,6 +20,7 @@
   ],
   "scripts": {
     "build": "yarn clean && tsc -b && yarn oclif-stuff",
+    "build:clean": "tsc --build tsconfig.json --clean",
     "build:watch": "yarn build && tsc -b --watch",
     "clean": "rimraf build oclif.manifest.json .nyc_output",
     "clean:node_modules": "rimraf node_modules",
@@ -44,7 +45,7 @@
     "tslib": "^1"
   },
   "devDependencies": {
-    "typescript": "^3.2.2"
+    "typescript": "^3.3.3"
   },
   "peerDependencies": {
     "axios": "^0.18.0"

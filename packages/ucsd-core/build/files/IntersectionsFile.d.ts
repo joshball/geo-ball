@@ -10,7 +10,8 @@ export declare class IntersectionsFile {
     static CreateFromPointsFile(pointsFile: PointMapsFile): IntersectionsFile;
     static CreateMetaDataFromPoints(rsdFile: PointMapsFile): GeoFileMetaData;
     static SaveJsonFile(filePath: string, intersectionsFile: IntersectionsFile): void;
-    static Load(filePath: string): IntersectionsFile;
+    static Load(filePath: string): Promise<IntersectionsFile>;
+    static LoadSync(filePath: string): IntersectionsFile;
     static CreateFromFileJson(fileJson: string): IntersectionsFile;
 }
 //# sourceMappingURL=IntersectionsFile.d.ts.map

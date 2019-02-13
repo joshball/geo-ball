@@ -4,14 +4,14 @@ import { observer, inject, propTypes } from 'mobx-react';
 import { colors, fontSizes, fonts } from "../../config/theme"
 import { RootStore } from '../../stores/RootStore';
 import { basename } from 'path';
-import { OsmFetchGraphFilesSet } from '@geo-ball/ucsd-core';
-import { findParseFilenameTimestamp } from '@geo-ball/utils';
+import { IOsmFetchDir } from '@geo-ball/ucsd-core';
+import { LocalDateTime } from '@geo-ball/utils';
 
 
 export interface OsmFetchComponentProps {
     stores?: RootStore;
-    fetch: OsmFetchGraphFilesSet;
-    fetchClicked: (fetch: OsmFetchGraphFilesSet) => void;
+    fetch: IOsmFetchDir;
+    fetchClicked: (fetch: IOsmFetchDir) => void;
 }
 
 
@@ -31,9 +31,11 @@ export class OsmFetchComponent extends React.Component<OsmFetchComponentProps> {
 
     render() {
         // console.log('render. results', this.state.results)
-        const ptd = findParseFilenameTimestamp(basename(this.props.fetch.fetchDirPath));
-        console.log('render.ptd', ptd)
-        const runTitle = ptd ? ptd.date.toLocaleDateString() + " " + ptd.date.toLocaleTimeString() : basename(this.props.fetch.fetchDirPath);
+        // const ptd = findParseFilenameTimestamp(basename(this.props.fetch.fetchDirPath));
+        // console.log('render.ptd', ptd)
+        const fldt = this.props.fetch.fetchLocalDateTime;
+        const ldt = new LocalDateTime(fldt.unixUtcEpochMs, fldt.timezoneOffsetMin, fldt.timezoneName);
+        const runTitle = ldt.jsDate.toLocaleDateString() + " " + ldt.jsDate.toLocaleTimeString();
         return (
             <div onClick={this.handleClick} className={`${singleResultCss}`}>
                 {runTitle}

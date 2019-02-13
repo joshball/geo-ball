@@ -13,7 +13,8 @@ export declare class RoadSegmentsFile {
     static CreateSegmentsDataFromOsm(_osmFile: OpenStreetmapFile): IRoadSegmentsFileData;
     static CreateMetaDataFromOsm(_osmFile: OpenStreetmapFile): GeoFileMetaData;
     static LoadFromTextFile(filePath: string): RoadSegmentsFile;
-    static Load(filePath: string): RoadSegmentsFile;
+    static Load(filePath: string): Promise<RoadSegmentsFile>;
+    static LoadSync(filePath: string): RoadSegmentsFile;
     static CreateFromFileJson(fileJson: string): RoadSegmentsFile;
     static SaveJsonFile(filePath: string, roadSegmentsFile: RoadSegmentsFile): void;
     static SaveTextFile(filePath: string, roadSegmentsFile: RoadSegmentsFile): void;

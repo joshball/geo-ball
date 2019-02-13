@@ -3,14 +3,16 @@ import { observer, inject } from 'mobx-react';
 import { FileComponent } from './FileComponent';
 import { H3 } from '@blueprintjs/core';
 import { RootStore } from '../../stores/RootStore';
-import { OsmFetchGraphFilesSet } from '@geo-ball/ucsd-core';
+import { IOsmFetchDir } from '@geo-ball/ucsd-core';
 import { OsmFetchComponent } from './OsmFetchComponent';
 import { css } from 'glamor';
 
 export interface OsmFetchesListComponentProps {
     stores?: RootStore;
-    fetches: Array<OsmFetchGraphFilesSet>;
-    fetchClicked: (fetch: OsmFetchGraphFilesSet) => void;
+    // fetches: Array<OsmFetchGraphFilesSet>;
+    fetches: Array<IOsmFetchDir>;
+    fetchClicked: (fetch: IOsmFetchDir) => void;
+    // fetchClicked: (fetch: OsmFetchGraphFilesSet) => void;
 }
 export interface OsmFetchesListComponentState {
     selected: string;
