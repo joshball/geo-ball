@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { css, target } from 'glamor'
-import { NominatimApi, NominatimParams, INominatimResult, INominatimParams } from '@geo-ball/osm-data'
+import { NominatimApi, NominatimParams, INominatimResult, INominatimParams, NominatimFormat } from '@geo-ball/osm-data'
 import { Formik, FormikActions, Form, Field, ErrorMessage } from "formik";
 import { Button, ButtonGroup, AnchorButton, RadioGroup, Radio } from '@blueprintjs/core';
 import { RadioButtonGroupContainerProps as IRadioButtonGroupContainerProps, RadioButtonGroupContainer } from '../common/input/RadioButtonGroupContainer';
@@ -91,11 +91,15 @@ import { RadioButton, IRadioButtonData } from '../common/input/RadioButton';
 //     }, 400);
 // }
 
+class TempNominatimParams {
+    format?: NominatimFormat | undefined;
+
+}
 
 export interface ReverseGeocodingApiPanelProps {
 }
 export interface ReverseGeocodingApiPanelState {
-    searchParams: NominatimParams;
+    searchParams: INominatimParams;
     searchResults: INominatimResult[];
 }
 
@@ -164,9 +168,9 @@ export class ReverseGeocodingApiPanel extends React.Component<ReverseGeocodingAp
         this.setState((prevState) => ({
             searchParams: {
                 ...prevState.searchParams,
-                format: button.id
+                format: button.id as NominatimFormat
             }
-        });
+        }));
         // this.setState(({ searchParams }:NominatimParams) => ({
         //     searchParams: {
         //         ...searchParams,
