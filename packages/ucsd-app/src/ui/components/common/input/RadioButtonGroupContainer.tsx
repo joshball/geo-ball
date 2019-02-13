@@ -32,8 +32,8 @@ export interface RadioButtonGroupContainerProps extends IButtonGroupNoChangeProp
      * Use `event.currentTarget.value` to read the currently selected value.
      * This prop is required because this component only supports controlled usage.
      */
-    onChange: RadioButtonGroupOnChangeCallback
-    onFormixChange: (field: string, value: any, shouldValidate?: boolean) => void
+    onChange?: RadioButtonGroupOnChangeCallback
+    onFormixChange?: (field: string, value: any, shouldValidate?: boolean) => void
 }
 
 export interface RadioButtonGroupContainerState {
@@ -64,7 +64,9 @@ export class RadioButtonGroupContainer extends React.Component<RadioButtonGroupC
     }
 
     onChange(button: IRadioButtonData, event: React.FormEvent<HTMLInputElement>) {
-        this.props.onChange(button, event);
+        if (this.props.onChange) {
+            this.props.onChange(button, event);
+        }
         // Formix is going to pass setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
         // into our onChange props
         // Set the value of a field imperatively.
@@ -72,7 +74,12 @@ export class RadioButtonGroupContainer extends React.Component<RadioButtonGroupC
         // Useful for creating custom input change handlers.
         // Calling this will trigger validation to run if validateOnChange is set to true (which it is by default).
         // You can also explicitly prevent/skip validation by passing a third argument as false.
-        this.props.onFormixChange(this.props.formFieldName!, button.id);
+        if (this.props.onFormixChange) {
+            if (!this.props.formFieldName) {
+                throw new Error('Must set the formFieldName')
+            }
+            this.props.onFormixChange(this.props.formFieldName, button.id);
+        }
     }
 
     onContainerButtonClicked = (event: React.MouseEvent<HTMLElement>, theClickedButton: IRadioButtonData) => {
@@ -108,7 +115,7 @@ export class RadioButtonGroupContainer extends React.Component<RadioButtonGroupC
             prevState.buttons.forEach((prevStateButton) => adjustButtonState(prevStateButton, theClickedButton));
             const newActiveButton = prevState.buttons.find((b) => b.active === true) || prevState.buttons[0];
             console.log('BG.SETTTTING STATE AFTER prevState:', prevState);
-            return {...prevState, value: newActiveButton.id};
+            return { ...prevState, value: newActiveButton.id };
         })
     }
 

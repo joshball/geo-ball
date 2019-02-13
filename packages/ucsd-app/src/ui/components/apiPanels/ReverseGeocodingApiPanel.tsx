@@ -124,7 +124,7 @@ export class ReverseGeocodingApiPanel extends React.Component<ReverseGeocodingAp
 
         this.onButtonClick = this.onButtonClick.bind(this);
         this.handleRadioGroupChange = this.handleRadioGroupChange.bind(this);
-        this.handleRadioButtonGroupChange = this.handleRadioButtonGroupChange.bind(this);
+        // this.handleRadioButtonGroupChange = this.handleRadioButtonGroupChange.bind(this);
         this.onBlur = this.onBlur.bind(this);
 
     }
@@ -162,22 +162,16 @@ export class ReverseGeocodingApiPanel extends React.Component<ReverseGeocodingAp
         console.log('handleRadioGroupChange.event.target', event.target);
     }
 
-    handleRadioButtonGroupChange(button: IRadioButtonData, event: React.FormEvent<HTMLDivElement>): void {
-        console.log('### handleRadioButtonGroupChange.button', button);
-        console.log('### handleRadioButtonGroupChange.setState', button);
-        this.setState((prevState) => ({
-            searchParams: {
-                ...prevState.searchParams,
-                format: button.id as NominatimFormat
-            }
-        }));
-        // this.setState(({ searchParams }:NominatimParams) => ({
-        //     searchParams: {
-        //         ...searchParams,
-        //         format: button.id
-        //     }
-        // }));
-    }
+    // handleRadioButtonGroupChange(button: IRadioButtonData, event: React.FormEvent<HTMLDivElement>): void {
+    //     console.log('### handleRadioButtonGroupChange.button', button);
+    //     console.log('### handleRadioButtonGroupChange.setState', button);
+    //     this.setState((prevState) => ({
+    //         searchParams: {
+    //             ...prevState.searchParams,
+    //             format: button.id as NominatimFormat
+    //         }
+    //     }));
+    // }
 
     onBlur(event: React.FocusEvent<HTMLElement>): void {
         console.log('onBlur.item', event.target);
@@ -225,7 +219,7 @@ export class ReverseGeocodingApiPanel extends React.Component<ReverseGeocodingAp
                             <RadioButtonGroupContainer
                                 buttons={rbg}
                                 formFieldName='format'
-                                onChange={this.handleRadioButtonGroupChange}
+                                // onChange={this.handleRadioButtonGroupChange}
                                 onFormixChange={setFieldValue}
                                 value={values.format}
                                 onBlur={handleBlur}
