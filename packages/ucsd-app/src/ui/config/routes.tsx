@@ -38,7 +38,7 @@ export const createRouteCoreData = (path: string, component: any, exData: IRoute
         <Route key={i} path={path} component={component} exact={exData.exact} />
 
     const getLink = (i: number, linkStyle?: any, ln?: string | undefined) =>
-        <Link key={i} to={path} style={linkStyle}>
+        <Link key={i} to={path} style={linkStyle} replace={path === location.pathname}>
             {ln || exData.linkLabel || '********-YOU FORGOT TO GIVE ME A NAME ********'}
         </Link>
 
@@ -48,12 +48,12 @@ export const createRouteCoreData = (path: string, component: any, exData: IRoute
         </li>
 
     const getNavbarLinkButtons = (i: number, linkStyle?: any) => (
-        <Link key={i} to={path} style={linkStyle}>
+        <Link key={i} to={path} style={linkStyle} replace={path === location.pathname}>
             <Button icon={exData.icon} text={exData.linkLabel} />
         </Link>
     )
     const getLinkButtons = (i: number, linkStyle?: any) => (
-        <Link key={i} to={path} style={linkStyle}>
+        <Link key={i} to={path} style={linkStyle} replace={path === location.pathname}>
             <Button intent={Intent.PRIMARY} text={exData.linkLabel} />
         </Link>
     )
@@ -94,9 +94,11 @@ export interface IRedirectData {
     [key: string]: IRedirectRouteData;
 }
 
-export const Redirect = (rr: IRedirectRouteData) =>
-    <Redirect from={rr.from} to={rr.to} exact={rr.exact} />
+// export const Redirect = (rr: IRedirectRouteData) =>
+//     <Redirect from={rr.from} to={rr.to} exact={rr.exact} />
 
-export const REDIRECTS: IRedirectData = {
-    api: { from: '/', to: '/reverse-geocode', exact: true },
-}
+// export const REDIRECTS_DATA: IRedirectData = {
+//     api: { from: '/', to: '/reverse-geocode', exact: true },
+// }
+
+// export const Redirects = REDIRECTS_DATA.map(r => Redirect(r))

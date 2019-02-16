@@ -4,7 +4,7 @@
 import "glamor/reset";
 
 import * as React from "react"
-import { HashRouter as Router  } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import { compose } from "glamor"
 import { Provider, observer } from "mobx-react";
 import * as devtron from 'devtron';
@@ -21,7 +21,7 @@ import { NavBarMenuComponent } from "../components/layout/NavBarMenuComponent";
 import { RootStore } from "../stores/RootStore";
 
 import state from "../state/State";
-import { MemoryRouterProps } from "react-router";
+import { MemoryRouterProps, Switch } from "react-router";
 
 // import BackgroundTask from '../../background/BackgroundTask';
 const rootStore = new RootStore(state);
@@ -38,7 +38,7 @@ export class DebugRouter extends Router {
         super(props);
         const mr = this as any;
         console.log('initial history is: ', JSON.stringify(mr.history, null, 2))
-        mr.history.listen((location:any, action:any) => {
+        mr.history.listen((location: any, action: any) => {
             console.log(
                 `The current URL is ${location.pathname}${location.search}${location.hash}`
             )
@@ -55,7 +55,9 @@ export class RootComponent extends React.Component<{}, {}> {
                 <Provider stores={rootStore}>
                     <div>
                         <NavBarMenuComponent />
-                        {MAIN_ROUTE_COMPONENTS}
+                        <Switch>
+                            {MAIN_ROUTE_COMPONENTS}
+                        </Switch>
                     </div>
                 </Provider>
             </DebugRouter>

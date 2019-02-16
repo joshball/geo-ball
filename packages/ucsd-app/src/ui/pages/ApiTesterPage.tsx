@@ -4,6 +4,7 @@ import { createRouteCoreData, IRouteCoreData } from '../config/routes';
 import { GeocodingApiPanel } from '../components/apiPanels/GeocodingApiPanel';
 import { ReverseGeocodingApiPanel } from '../components/apiPanels/ReverseGeocodingApiPanel';
 import { OsmDownalodApiPanel } from '../components/apiPanels/OsmDownalodApiPanel';
+import { Redirect, Switch } from 'react-router';
 
 const styles: any = {}
 
@@ -45,7 +46,9 @@ export const ApiTesterPage = (params: any) => {
         createRouteCoreData(params.match.url + '/geocode', GeocodingApiPanel, { linkLabel: 'Geocode API'}),
         createRouteCoreData(params.match.url + '/download', OsmDownalodApiPanel, { linkLabel: 'OSM Download API'}),
     ]
+
     const theRoutes = routes.map((r, i) => r.getRoute(i));
+    theRoutes.unshift(<Redirect key={routes.length} from={params.match.url + '/'} to={params.match.url + '/reverse-geocode'} exact={true} />)
     const theLinks = routes.map((r, i) => r.getListItemLink(i, styles.tabListItem, styles.tabLink));
     return (
         <div>
@@ -54,9 +57,9 @@ export const ApiTesterPage = (params: any) => {
                     {theLinks}
                 </ul>
             </div>
-            <div>
+            <Switch>
                 {theRoutes}
-            </div>
+            </Switch>
         </div>
     );
 }
