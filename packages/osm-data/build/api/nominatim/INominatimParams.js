@@ -1,14 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class NominatimParams {
-    get 'accept-language'() {
-        return this.accept_language;
-    }
-    get countrycodes() {
-        return this.countryCodes ? this.countryCodes.join(',') : undefined;
-    }
     // [key: string]: any;
     constructor(params = {}) {
+        this.format = 'json';
+        this.json_callback = undefined;
+        this._accept_language = undefined;
+        this._countryCodes = [];
+        this.viewbox = undefined;
+        this.bounded = undefined;
+        this._bounded = false;
+        this._addressdetails = false;
+        this._dedupe = false;
+        this._debug = false;
+        this._polygon_geojson = false;
+        this._polygon_kml = false;
+        this._polygon_svg = false;
+        this._polygon_text = false;
+        this._extratags = false;
+        this._namedetails = false;
         const checkExperimentalQuery = (obj) => !!obj.street || !!obj.city || !!obj.county || !!obj.state || !!obj.country || !!obj.postalcode;
         const qQuery = (obj) => !!obj.q;
         const eQuery = checkExperimentalQuery;
@@ -30,6 +40,12 @@ class NominatimParams {
         //     throw new Error('neither q nor experimental query is set.');
         // }
         this.format = 'json';
+    }
+    get 'accept-language'() {
+        return this._accept_language;
+    }
+    get countrycodes() {
+        return this._countryCodes ? this._countryCodes.join(',') : undefined;
     }
     buildQueryParamObject() {
         const qpObj = JSON.parse(JSON.stringify(this));

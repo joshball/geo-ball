@@ -234,7 +234,7 @@ export interface INominatimParams extends INominatimQueryParamObj {
      * We use this to access while using the object:
      * accept-language=<browser language string>
      */
-    accept_language?: string
+    _accept_language?: string
 
     /**
      * Because it is easier to maintain an array, we use
@@ -242,18 +242,32 @@ export interface INominatimParams extends INominatimQueryParamObj {
      * to store and then transform
      *  countrycodes:string // as a comma separated string
      */
-    countryCodes?: string[]
+    _countryCodes?: string[]
 
+    _bounded?: boolean;
+
+    _addressdetails?: boolean
+    _dedupe?: boolean;
+    _debug?: boolean;
+
+    _polygon_geojson?: boolean;
+    _polygon_kml?: boolean;
+    _polygon_svg?: boolean;
+    _polygon_text?: boolean;
+
+    _extratags?: boolean;
+    _namedetails?: boolean;
     [key: string]: any;
 }
 
 
 export class NominatimParams implements INominatimParams {
+    [key: string]: any;
 
-    format?: NominatimFormat | undefined;
+    format?: NominatimFormat | undefined = 'json';
 
-    json_callback?: string | undefined;
-    accept_language?: string | undefined;
+    json_callback?: string | undefined = undefined;
+    _accept_language?: string | undefined = undefined;
 
     q?: string;
 
@@ -264,40 +278,57 @@ export class NominatimParams implements INominatimParams {
     country?: string | undefined;
     postalcode?: string | undefined;
 
-    countryCodes?: string[] | undefined;
+    _countryCodes: string[] = [];
 
-    viewbox?: string | undefined;
-    bounded?: ZeroOrOne | undefined;
+    viewbox?: string | undefined = undefined;
 
-    addressdetails?: ZeroOrOne | undefined;
+    bounded?: ZeroOrOne | undefined = undefined;
+    _bounded: boolean = false;
+
+    addressdetails?: ZeroOrOne | undefined
+    _addressdetails: boolean = false;
+
     email?: string | undefined;
     exclude_place_ids?: string | undefined;
     limit?: number | undefined;
     dedupe?: ZeroOrOne | undefined;
+    _dedupe: boolean = false;
+
     debug?: ZeroOrOne;
+    _debug: boolean = false;
 
     polygon_geojson?: ZeroOrOne
     polygon_kml?: ZeroOrOne
     polygon_svg?: ZeroOrOne
     polygon_text?: ZeroOrOne
+    _polygon_geojson: boolean = false;
+    _polygon_kml: boolean = false;
+    _polygon_svg: boolean = false;
+    _polygon_text: boolean = false;
 
     extratags?: ZeroOrOne;
+    _extratags: boolean = false;
+
     namedetails?: ZeroOrOne;
+    _namedetails: boolean = false;
 
     get 'accept-language'() {
-        return this.accept_language
+        return this._accept_language
     }
     get countrycodes() {
-        return this.countryCodes ? this.countryCodes.join(',') : undefined;
+        return this._countryCodes ? this._countryCodes.join(',') : undefined;
     }
 
     // [key: string]: any;
 
     constructor(params: INominatimParams = {}) {
+
         const checkExperimentalQuery = (obj: any) =>
             !!obj.street || !!obj.city || !!obj.county || !!obj.state || !!obj.country || !!obj.postalcode;
+
         const qQuery = (obj: any) => !!obj.q;
         const eQuery = checkExperimentalQuery;
+
 
         if (eQuery(params) && qQuery(params)) {
             throw new Error('you cannot have both q and experimental query params set');

@@ -162,20 +162,31 @@ export interface INominatimParams extends INominatimQueryParamObj {
      * We use this to access while using the object:
      * accept-language=<browser language string>
      */
-    accept_language?: string;
+    _accept_language?: string;
     /**
      * Because it is easier to maintain an array, we use
      *  countryCodes:string[]
      * to store and then transform
      *  countrycodes:string // as a comma separated string
      */
-    countryCodes?: string[];
+    _countryCodes?: string[];
+    _bounded?: boolean;
+    _addressdetails?: boolean;
+    _dedupe?: boolean;
+    _debug?: boolean;
+    _polygon_geojson?: boolean;
+    _polygon_kml?: boolean;
+    _polygon_svg?: boolean;
+    _polygon_text?: boolean;
+    _extratags?: boolean;
+    _namedetails?: boolean;
     [key: string]: any;
 }
 export declare class NominatimParams implements INominatimParams {
+    [key: string]: any;
     format?: NominatimFormat | undefined;
     json_callback?: string | undefined;
-    accept_language?: string | undefined;
+    _accept_language?: string | undefined;
     q?: string;
     street?: string | undefined;
     city?: string | undefined;
@@ -183,21 +194,31 @@ export declare class NominatimParams implements INominatimParams {
     state?: string | undefined;
     country?: string | undefined;
     postalcode?: string | undefined;
-    countryCodes?: string[] | undefined;
+    _countryCodes: string[];
     viewbox?: string | undefined;
     bounded?: ZeroOrOne | undefined;
+    _bounded: boolean;
     addressdetails?: ZeroOrOne | undefined;
+    _addressdetails: boolean;
     email?: string | undefined;
     exclude_place_ids?: string | undefined;
     limit?: number | undefined;
     dedupe?: ZeroOrOne | undefined;
+    _dedupe: boolean;
     debug?: ZeroOrOne;
+    _debug: boolean;
     polygon_geojson?: ZeroOrOne;
     polygon_kml?: ZeroOrOne;
     polygon_svg?: ZeroOrOne;
     polygon_text?: ZeroOrOne;
+    _polygon_geojson: boolean;
+    _polygon_kml: boolean;
+    _polygon_svg: boolean;
+    _polygon_text: boolean;
     extratags?: ZeroOrOne;
+    _extratags: boolean;
     namedetails?: ZeroOrOne;
+    _namedetails: boolean;
     readonly 'accept-language': string | undefined;
     readonly countrycodes: string | undefined;
     constructor(params?: INominatimParams);
