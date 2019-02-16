@@ -1,13 +1,19 @@
 import * as React from "react"
 import { Navbar, Alignment, Button } from "@blueprintjs/core";
 
-import { Link } from "react-router-dom";
-import {ROUTE_DATA as RD, LINK_COMPONENTS} from '../../config/routes';
+import { MAIN_ROUTES_DATA } from '../../config/routes';
 
-export const NavBarMenuComponent = (_props:any) => <Navbar className="bp3-dark">
+const NavBarHomeLinkButton = MAIN_ROUTES_DATA
+    .find(r => r.path === '/')!.getNavbarLinkButtons(0);
+
+const NavBarLinkButtons = MAIN_ROUTES_DATA
+    .filter(r => r.path !== '/')
+    .map((r, i) => r.getNavbarLinkButtons(i));
+
+export const NavBarMenuComponent = (_props: any) => <Navbar className="bp3-dark">
     <Navbar.Group align={Alignment.LEFT}>
-        <Navbar.Heading>UCSD</Navbar.Heading>
+        <Navbar.Heading>{NavBarHomeLinkButton}</Navbar.Heading>
         <Navbar.Divider />
-        {LINK_COMPONENTS}
+        {NavBarLinkButtons}
     </Navbar.Group>
 </Navbar>;

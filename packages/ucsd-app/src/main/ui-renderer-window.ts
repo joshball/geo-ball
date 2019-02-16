@@ -13,7 +13,7 @@ require('electron-context-menu')({
 
 // default dimensions
 // export const DIMENSIONS = { width: 1800, height: 1500, minWidth: 200, minHeight: 200 }
-export const DIMENSIONS = { width: 1200, height: 900, minWidth: 1200, minHeight: 900 }
+export const DIMENSIONS = { width: 1200, height: 1500, minWidth: 1200, minHeight: 1500 }
 
 /**
  * Creates the main window.
@@ -24,10 +24,10 @@ export const DIMENSIONS = { width: 1200, height: 900, minWidth: 1200, minHeight:
  */
 export function createUiWindow(appPath: string, showDelay: number = 100):BrowserWindow {
     // persistent window state manager
-    const windowState = new WindowStateManager("main", {
-        defaultWidth: DIMENSIONS.width,
-        defaultHeight: DIMENSIONS.height,
-    })
+    // const windowState = new WindowStateManager("main", {
+    //     defaultWidth: DIMENSIONS.width,
+    //     defaultHeight: DIMENSIONS.height,
+    // })
 
     // create our main window
     const window = new BrowserWindow({
@@ -37,8 +37,8 @@ export function createUiWindow(appPath: string, showDelay: number = 100):Browser
         // height: windowState.height,
         width: DIMENSIONS.width,
         height: DIMENSIONS.height,
-        x: windowState.x,
-        y: windowState.y,
+        // x: windowState.x,
+        // y: windowState.y,
         show: false,
         resizable: true,
         maximizable: true,
@@ -67,14 +67,14 @@ export function createUiWindow(appPath: string, showDelay: number = 100):Browser
 
 
     // maximize if we did before
-    if (windowState.maximized) {
-        window.maximize()
-    }
+    // if (windowState.maximized) {
+    //     window.maximize()
+    // }
 
     // trap movement events
-    window.on("close", () => windowState.saveState(window))
-    window.on("move", () => windowState.saveState(window))
-    window.on("resize", () => windowState.saveState(window))
+    // window.on("close", () => windowState.saveState(window))
+    // window.on("move", () => windowState.saveState(window))
+    // window.on("resize", () => windowState.saveState(window))
     window.on('app-command', (e, cmd) => {
         console.log('app-command', cmd);
         console.log('app-window.webContents.canGoBack()', window.webContents.canGoBack());

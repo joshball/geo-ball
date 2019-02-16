@@ -1,16 +1,22 @@
 // This is the top-most component in the app.
-import * as React from "react"
-import { HashRouter as Router, MemoryRouter as Routerx, Link } from 'react-router-dom';
+
+// tslint:disable-next-line:no-submodule-imports
 import "glamor/reset";
+
+import * as React from "react"
+import { HashRouter as Router  } from 'react-router-dom';
 import { compose } from "glamor"
 import { Provider, observer } from "mobx-react";
 import * as devtron from 'devtron';
 devtron.install();
+
 // import DevTools from 'mobx-react-devtools';
 // import { autorun } from "mobx";
 
 import { styles, colors } from "../config/theme"
-import { ROUTE_COMPONENTS } from "../config/routes"
+
+import { MAIN_ROUTE_COMPONENTS } from "../config/routes"
+
 import { NavBarMenuComponent } from "../components/layout/NavBarMenuComponent";
 import { RootStore } from "../stores/RootStore";
 
@@ -49,7 +55,7 @@ export class RootComponent extends React.Component<{}, {}> {
                 <Provider stores={rootStore}>
                     <div>
                         <NavBarMenuComponent />
-                        {ROUTE_COMPONENTS}
+                        {MAIN_ROUTE_COMPONENTS}
                     </div>
                 </Provider>
             </DebugRouter>

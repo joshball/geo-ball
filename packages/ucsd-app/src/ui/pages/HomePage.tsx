@@ -1,11 +1,9 @@
 import * as React from 'react'
 import { css } from 'glamor'
-import { Link, Redirect } from 'react-router-dom'
 import { colors, fonts, fontSizes, cssProps } from "../config/theme"
-import { Button, Intent, ControlGroup } from "@blueprintjs/core";
 import { CenteredContent } from '../components/common/layout/CenteredContent';
 import { Text } from '../components/common/layout/Text';
-import { IRouteData, getRouteDataArray, ROUTE_DATA } from '../config/routes';
+import { MAIN_ROUTES_DATA } from '../config/routes';
 
 const mainLayout = css({
     // display: 'grid',
@@ -15,7 +13,7 @@ const mainLayout = css({
     // gridTemplateAreas: 'main sidebar',
 });
 
-const STYLE = cssProps({
+const WelcomeTextStyle = cssProps({
     color: colors.text,
     fontSize: fontSizes.large,
     fontFamily: fonts.default,
@@ -23,44 +21,40 @@ const STYLE = cssProps({
     margin: 0,
 })
 
-const LINK_STYLE = cssProps({
-    // padding: 0,
+const HomeButtonLinkStyle = cssProps({
     margin: '10px',
 })
 
-const buttonBarCss = cssProps({
-    // padding: 0,
+const HomeButtonDivStyle = cssProps({
     margin: '20px',
 })
 
-export const getRouteButtonsLinkComp = (r: IRouteData, i: number) => (
-    <Link style={LINK_STYLE} key={i} to={r.path}>
-        <Button intent={Intent.PRIMARY} text={r.navButtonTxt} />
-    </Link>
-)
-
-
+// // console.log('ROUTE_DATA', ROUTE_DATA)
+// console.log('ROUTE_COMPONENTS_EX', ROUTE_COMPONENTS_EX)
+// // console.log('getRouteDataArray', getRouteDataArray)
+// // const BUTTON_COMPONENTS = getRouteButtonsLinkCompArray(ROUTE_DATA);
+// // const BUTTON_COMPONENTS = getRouteButtonsLinkCompArray(ROUTE_DATA);
 
 export const HomePage: React.SFC<any> = (props: any) => {
-    console.log('ROUTE_DATA', ROUTE_DATA)
-    console.log('getRouteDataArray', getRouteDataArray)
-    const getRouteButtonsLinkCompArray = (rd: any) => getRouteDataArray(rd).map(getRouteButtonsLinkComp)
-    const BUTTON_COMPONENTS = getRouteButtonsLinkCompArray(ROUTE_DATA);
-    console.log('HomePage location', location)
-    console.log('HomePage props.location', props.location)
-    console.log('HomePage props.match', props.match)
+    // console.log('HomePage location', location)
+    // console.log('HomePage props.location', props.location)
+    // console.log('HomePage props.match', props.match)
     // return <Redirect to='/settings' />;
     // return <Redirect to='/hooks' />;
-    return <Redirect to='/api' />;
+    // return <Redirect to='/api' />;
     // return <Redirect to='/files' />;
     // return <Redirect to='/maps' />;
+    const homeButtons = MAIN_ROUTES_DATA
+        .filter(r => r.path !== '/')
+        .map((r, i) => r.getLinkButtons(i, HomeButtonLinkStyle));
+
     return (
         <CenteredContent style={mainLayout}>
-            <Text style={STYLE}>
+            <Text style={WelcomeTextStyle}>
                 Welcome
             </Text>
-            <div style={buttonBarCss}>
-                {BUTTON_COMPONENTS}
+            <div style={HomeButtonDivStyle}>
+                {homeButtons}
             </div>
         </CenteredContent>
     )
