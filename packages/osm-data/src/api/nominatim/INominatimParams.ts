@@ -89,6 +89,7 @@ export interface INominatimQueryParamObj {
     state?: string;
     country?: string;
     postalcode?: string;
+    foo?: string;
 
 
     /**
@@ -246,6 +247,8 @@ export interface INominatimParams extends INominatimQueryParamObj {
 
     _bounded?: boolean;
 
+    _useStructuredQuery?: boolean;
+
     _addressdetails?: boolean
     _dedupe?: boolean;
     _debug?: boolean;
@@ -269,14 +272,17 @@ export class NominatimParams implements INominatimParams {
     json_callback?: string | undefined = undefined;
     _accept_language?: string | undefined = undefined;
 
+
     q?: string;
 
-    street?: string | undefined;
-    city?: string | undefined;
-    county?: string | undefined;
-    state?: string | undefined;
-    country?: string | undefined;
-    postalcode?: string | undefined;
+    _useStructuredQuery?: boolean;
+
+    street?: string;
+    city?: string;
+    county?: string;
+    state?: string;
+    country?: string;
+    postalcode?: string;
 
     _countryCodes: string[] = [];
 
@@ -321,36 +327,53 @@ export class NominatimParams implements INominatimParams {
 
     // [key: string]: any;
 
-    constructor(params: INominatimParams = {}) {
+    constructor(params?: INominatimParams) {
+        this.initializeForForm();
 
-        const checkExperimentalQuery = (obj: any) =>
-            !!obj.street || !!obj.city || !!obj.county || !!obj.state || !!obj.country || !!obj.postalcode;
+        if (params) {
+            const checkExperimentalQuery = (obj: any) =>
+                !!obj.street || !!obj.city ||
+                !!obj.county || !!obj.state ||
+                 !!obj.country || !!obj.postalcode;
 
-        const qQuery = (obj: any) => !!obj.q;
-        const eQuery = checkExperimentalQuery;
+
+            const qQuery = (obj: any) => !!obj.q;
+            const eQuery = checkExperimentalQuery;
 
 
-        if (eQuery(params) && qQuery(params)) {
-            throw new Error('you cannot have both q and experimental query params set');
+            if (eQuery(params) && qQuery(params)) {
+                throw new Error('you cannot have both q and experimental query params set');
+            }
+            if (qQuery(params)) {
+                this.q = params.q;
+            }
+            else if (eQuery(params)) {
+                this.street = params.street;
+                this.city = params.city;
+                this.county = params.county;
+                this.state = params.state;
+                this.country = params.country;
+                this.postalcode = params.postalcode;
+            }
+            else {
+                throw new Error('neither q nor experimental query is set.');
+            }
         }
-        if (qQuery(params)) {
-            this.q = params.q;
-        }
-        else if (eQuery(params)) {
-            this.street = params.street;
-            this.city = params.city;
-            this.county = params.county;
-            this.state = params.state;
-            this.country = params.country;
-            this.postalcode = params.postalcode;
-        }
-        // else {
-        //     throw new Error('neither q nor experimental query is set.');
-        // }
-        this.format = 'json';
     }
 
+    initializeForForm() {
+        this.format = 'json';
 
+        // this.q = '';
+
+        this._useStructuredQuery = false;
+        // this.street = '';
+        // this.city = '';
+        // this.county = '';
+        // // this.state = '';
+        // this.country = '';
+        // this.postalcode = '';
+    }
 
     buildQueryParamObject(): INominatimQueryParamObj {
         const qpObj: any = JSON.parse(JSON.stringify(this));

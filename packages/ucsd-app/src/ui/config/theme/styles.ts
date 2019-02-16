@@ -1,4 +1,5 @@
 import { CSSProperties } from "react"
+import { fonts } from "./fonts";
 
 /**
  * Typecast objects as CSSProperties.  ¯\\_(ツ)_/¯
@@ -28,14 +29,52 @@ const flexbox = {
         flexShrink: 1,
         flexBasis: 'auto'
     }),
+    justifyRight: {
+        display: 'flex',
+        justifyContent: 'flex-end'
+    },
+
+    formColumn: {
+        display: 'inline-block',
+        margin: '10px',
+        padding: '10px',
+    },
+
 }
+
+export const BaseFormFont = {
+    fontFamily: fonts.forms,
+    fontSize: '16px',
+}
+
+export const FormLabelStyle = { ...BaseFormFont, fontSize: '18px' };
+
+const commonSectionHeader = (more: any) => {
+    return {
+        fontFamily: fonts.forms,
+        fontWeight: 700,
+        ...more
+    }
+}
+
+export const sectionHeaders = {
+    1: commonSectionHeader({ fontSize: '36px' }),
+    2: commonSectionHeader({ fontSize: '30px' }),
+    3: commonSectionHeader({ fontSize: '24px' }),
+    4: commonSectionHeader({ fontSize: '18px' }),
+    5: commonSectionHeader({ fontSize: '14px' }),
+}
+
 
 const electron = {
     /** Enable window dragging. */
-    windowDrag: cssProps({ WebkitAppRegion: "drag" }),
+    // tslint:disable-next-line:no-object-literal-type-assertion
+    windowDrag: cssProps({ WebkitAppRegion: "drag" } as CSSProperties),
+    // windowDrag: cssProps({ WebkitAppRegion: "drag" }),
 
     /** Disable window dragging. */
-    noWindowDrag: cssProps({ WebkitAppRegion: "no-drag" }),
+    // tslint:disable-next-line:no-object-literal-type-assertion
+    noWindowDrag: cssProps({ WebkitAppRegion: "no-drag" } as CSSProperties),
 }
 
 /**

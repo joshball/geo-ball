@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class NominatimParams {
     // [key: string]: any;
-    constructor(params = {}) {
+    constructor(params) {
         this.format = 'json';
         this.json_callback = undefined;
         this._accept_language = undefined;
@@ -19,33 +19,48 @@ class NominatimParams {
         this._polygon_text = false;
         this._extratags = false;
         this._namedetails = false;
-        const checkExperimentalQuery = (obj) => !!obj.street || !!obj.city || !!obj.county || !!obj.state || !!obj.country || !!obj.postalcode;
-        const qQuery = (obj) => !!obj.q;
-        const eQuery = checkExperimentalQuery;
-        if (eQuery(params) && qQuery(params)) {
-            throw new Error('you cannot have both q and experimental query params set');
+        this.initializeForForm();
+        if (params) {
+            const checkExperimentalQuery = (obj) => !!obj.street || !!obj.city ||
+                !!obj.county || !!obj.state ||
+                !!obj.country || !!obj.postalcode;
+            const qQuery = (obj) => !!obj.q;
+            const eQuery = checkExperimentalQuery;
+            if (eQuery(params) && qQuery(params)) {
+                throw new Error('you cannot have both q and experimental query params set');
+            }
+            if (qQuery(params)) {
+                this.q = params.q;
+            }
+            else if (eQuery(params)) {
+                this.street = params.street;
+                this.city = params.city;
+                this.county = params.county;
+                this.state = params.state;
+                this.country = params.country;
+                this.postalcode = params.postalcode;
+            }
+            else {
+                throw new Error('neither q nor experimental query is set.');
+            }
         }
-        if (qQuery(params)) {
-            this.q = params.q;
-        }
-        else if (eQuery(params)) {
-            this.street = params.street;
-            this.city = params.city;
-            this.county = params.county;
-            this.state = params.state;
-            this.country = params.country;
-            this.postalcode = params.postalcode;
-        }
-        // else {
-        //     throw new Error('neither q nor experimental query is set.');
-        // }
-        this.format = 'json';
     }
     get 'accept-language'() {
         return this._accept_language;
     }
     get countrycodes() {
         return this._countryCodes ? this._countryCodes.join(',') : undefined;
+    }
+    initializeForForm() {
+        this.format = 'json';
+        // this.q = '';
+        this._useStructuredQuery = false;
+        // this.street = '';
+        // this.city = '';
+        // this.county = '';
+        // // this.state = '';
+        // this.country = '';
+        // this.postalcode = '';
     }
     buildQueryParamObject() {
         const qpObj = JSON.parse(JSON.stringify(this));

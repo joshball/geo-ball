@@ -57,6 +57,7 @@ export interface INominatimQueryParamObj {
     state?: string;
     country?: string;
     postalcode?: string;
+    foo?: string;
     /**
      * countrycodes=<countrycode>[,<countrycode>][,<countrycode>]...
      *
@@ -171,6 +172,7 @@ export interface INominatimParams extends INominatimQueryParamObj {
      */
     _countryCodes?: string[];
     _bounded?: boolean;
+    _useStructuredQuery?: boolean;
     _addressdetails?: boolean;
     _dedupe?: boolean;
     _debug?: boolean;
@@ -188,12 +190,13 @@ export declare class NominatimParams implements INominatimParams {
     json_callback?: string | undefined;
     _accept_language?: string | undefined;
     q?: string;
-    street?: string | undefined;
-    city?: string | undefined;
-    county?: string | undefined;
-    state?: string | undefined;
-    country?: string | undefined;
-    postalcode?: string | undefined;
+    _useStructuredQuery?: boolean;
+    street?: string;
+    city?: string;
+    county?: string;
+    state?: string;
+    country?: string;
+    postalcode?: string;
     _countryCodes: string[];
     viewbox?: string | undefined;
     bounded?: ZeroOrOne | undefined;
@@ -222,6 +225,7 @@ export declare class NominatimParams implements INominatimParams {
     readonly 'accept-language': string | undefined;
     readonly countrycodes: string | undefined;
     constructor(params?: INominatimParams);
+    initializeForForm(): void;
     buildQueryParamObject(): INominatimQueryParamObj;
     getQueryParams(): string;
 }
