@@ -364,7 +364,7 @@ export class NominatimParams implements INominatimParams {
     initializeForForm() {
         this.format = 'json';
 
-        // this.q = '';
+        this.q = "2516 Chadwick St. Salt Lake City, UT 84106";
 
         this._useStructuredQuery = false;
         // this.street = '';
