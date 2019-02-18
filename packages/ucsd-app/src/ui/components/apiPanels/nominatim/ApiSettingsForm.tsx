@@ -14,7 +14,8 @@ const queryColStyle = css({
     flexDirection: 'column',
     alignContent: 'flex-start',
     flexWrap: 'wrap',
-    height: '220px'
+    height: '220px',
+    // width: '100%'
 });
 
 const fieldWrap = css({
@@ -95,6 +96,7 @@ const toggleBox = css({
     // margin: '10px',
     // padding: '10px',
     height: '110px',
+    // width: '100%',
     // border: '1px solid black',
     // backgroundColor: colors.primaryScale[3]
 });

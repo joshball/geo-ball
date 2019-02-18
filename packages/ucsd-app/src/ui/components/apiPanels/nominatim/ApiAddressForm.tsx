@@ -66,8 +66,10 @@ export const getFreeSearchForm = () => (
 
 export const searchChoiceDiv = <TFormValues extends {}>(formikProps: FormikProps<TFormValues>) => {
     console.log('formikProps:', formikProps.values)
-    const { _useStructuredQuery } = formikProps.values as INominatimParams;
+    const values = formikProps.values as INominatimParams;
+    const { _useStructuredQuery } = values;
     console.log('formikProps:', _useStructuredQuery)
+    console.log('values:', values.q)
     const form = _useStructuredQuery
         ? getSpecificAddressSearchForm()
         : getFreeSearchForm();

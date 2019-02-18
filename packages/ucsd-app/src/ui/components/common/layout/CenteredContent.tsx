@@ -20,3 +20,4 @@ const BASE = compose(
 export function CenteredContent(props: CenteredContentProps) {
     return <div {...css(BASE, props.style)}>{props.children}</div>
 }
+

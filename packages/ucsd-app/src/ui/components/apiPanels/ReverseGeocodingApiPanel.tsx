@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { Formik, Form } from "formik";
-import { DebugFormix } from './DebugFormix';
+import { DebugFormix } from '../common/input/DebugFormix';
 import { INominatimParams, NominatimParams } from '@geo-ball/osm-data';
 import { Card, Elevation, Button, Intent } from '@blueprintjs/core';
 import { css } from 'glamor';
 import { styles } from '../../config/theme';
-import { searchChoiceDiv } from './common/ApiAddressForm';
-import { getOtherSettingsForm, getSwitchesFormBox } from './common/ApiSettingsForm';
+import { searchChoiceDiv } from './nominatim/ApiAddressForm';
+import { getOtherSettingsForm, getSwitchesFormBox } from './nominatim/ApiSettingsForm';
 import { SectionHeaderTwo, SectionHeaderThree } from "../common/layout/SectionHeader";
 
 const JDR = styles.justifyRight;
@@ -40,8 +40,10 @@ export class ReverseGeocodingApiPanel extends React.Component<IReverseGeocodingA
 
     constructor(props: IReverseGeocodingApiPanelProps) {
         super(props);
+        const formData = this.props.formData || new NominatimParams();
+        formData.q = "2516 Chadwick St. Salt Lake City, UT 84106"
         this.state = {
-            formData: this.props.formData || new NominatimParams()
+            formData
         };
         this.handleRadioGroupChange = this.handleRadioGroupChange.bind(this);
         // this.handleRadioButtonGroupChange = this.handleRadioButtonGroupChange.bind(this);
@@ -74,13 +76,24 @@ export class ReverseGeocodingApiPanel extends React.Component<IReverseGeocodingA
     }
 
     onSubmit(formData: any): void {
-        // const params = this.state.searchParams
         console.log('onSubmit:', formData);
-        // const params = new NominatimParams('2516 Chadwick St, Salt Lake City, UT 84106');
         this.setState({
             formData
-        })
-
+        });
+        // reverseGeocodeLocation(this.props.center)
+        //     .then((revGeocode: IReverseGeocodeResponse) => {
+        //         console.log('reverseGeocode', revGeocode);
+        //         const desc = this.state.desc + '\n' + JSON.stringify(revGeocode.address, undefined, 4);
+        //         this.setState({
+        //             revGeocode: JSON.stringify(revGeocode),
+        //             neighborhood: revGeocode.address.neighbourhood,
+        //             city: revGeocode.address.city,
+        //             state: revGeocode.address.state,
+        //             zip: revGeocode.address.postcode,
+        //             county: revGeocode.address.county,
+        //             desc
+        //         });
+        //     })
     }
 
     // https://github.com/vadistic/vats/blob/b7c9e08eb45d7fd94af477575adea04df5e06aca/packages/client/src/components/editable/formik.tsx
@@ -95,11 +108,21 @@ export class ReverseGeocodingApiPanel extends React.Component<IReverseGeocodingA
     render() {
         const mainQueryStyle = css({
             display: 'flex',
-            margin: '10px',
+            // margin: '10px',
             padding: '10px',
             // justifyContent: 'flex-end',
             // alignContent: 'flex-end',
             width: 'fit-content',
+            // align:'right',
+            // backgroundColor: colors.pastels.litBlue,
+        });
+        const mainSettingsStyle = css({
+            display: 'flex',
+            // margin: '10px',
+            padding: '10px',
+            // justifyContent: 'flex-end',
+            // alignContent: 'flex-end',
+            width: '100%',
             // align:'right',
             // backgroundColor: colors.pastels.litBlue,
         });
@@ -109,24 +132,11 @@ export class ReverseGeocodingApiPanel extends React.Component<IReverseGeocodingA
             // padding: '10px',
         };
 
-        const mainFormDiv = {
-            border: '1px solid black',
-        };
         const mainFormWrapDiv = {
             display: 'flex',
             height: '440px',
         };
 
-        const otherDiv = (
-            <div {...mainQueryStyle}>
-                <Card interactive={false} elevation={Elevation.THREE}>
-                    <SectionHeaderTwo style={{marginBottom:"15px"}}>Settings</SectionHeaderTwo>
-                    {getOtherSettingsForm()}
-                    <SectionHeaderThree>Toggles</SectionHeaderThree>
-                    {getSwitchesFormBox()}
-                </Card>
-            </div>
-        )
 
         return (
             <div style={pageStyle}>
@@ -135,19 +145,26 @@ export class ReverseGeocodingApiPanel extends React.Component<IReverseGeocodingA
                     {/* {({ values, isSubmitting, setFieldValue, handleBlur }) => ( */}
                     {(formikStuff) => (
                         <Form>
-                            <div style={mainFormDiv}>
+                            <Card interactive={false} elevation={Elevation.FOUR}>
                                 <div style={mainFormWrapDiv}>
                                     <div {...mainQueryStyle}>
-                                        <Card interactive={false} elevation={Elevation.THREE}>
+                                        <Card interactive={false} elevation={Elevation.TWO}>
                                             {searchChoiceDiv<IFormData>(formikStuff)}
                                             <div style={JDR}>
                                                 <Button intent={Intent.PRIMARY} type="submit">Submit</Button>
                                             </div>
                                         </Card>
                                     </div>
-                                    {otherDiv}
+                                    <div {...mainSettingsStyle}>
+                                        <Card style={{ width: '100%' }} interactive={false} elevation={Elevation.TWO}>
+                                            <SectionHeaderTwo style={{ marginBottom: "15px" }}>Settings</SectionHeaderTwo>
+                                            {getOtherSettingsForm()}
+                                            <SectionHeaderThree>Toggles</SectionHeaderThree>
+                                            {getSwitchesFormBox()}
+                                        </Card>
+                                    </div>
                                 </div>
-                            </div>
+                            </Card>
                             <DebugFormix />
                         </Form>
                     )}

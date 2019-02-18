@@ -4,7 +4,7 @@ import { LatLng as LeafLatLng } from 'leaflet';
 import { LatLngTxt } from '../common/geo/LatLngTxt';
 import { observer, inject } from 'mobx-react';
 import {  colors, fontSizes, fonts } from "../../config/theme"
-import { IGeocodeResponse, geocodeAddress } from '../../services/GeocodingService';
+import { IGeocodeResponse, geocodeSimpleAddress } from '../../services/GeocodingService';
 import { RootStore } from '../../stores/RootStore';
 
 
@@ -83,7 +83,7 @@ export class AddressSearchComponent extends React.Component<AddressSearchCompone
         })
 
         console.log('handleSearch calling geocodeAddress (address):', address);
-        geocodeAddress(address)
+        geocodeSimpleAddress(address)
             .then((results: Array<IGeocodeResponse>) => {
                 console.log('handleSearch calling results:', results);
                 this.setState({ results, address });

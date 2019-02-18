@@ -5,6 +5,7 @@ import { GeocodingApiPanel } from '../components/apiPanels/GeocodingApiPanel';
 import { ReverseGeocodingApiPanel } from '../components/apiPanels/ReverseGeocodingApiPanel';
 import { OsmDownalodApiPanel } from '../components/apiPanels/OsmDownalodApiPanel';
 import { Redirect, Switch } from 'react-router';
+import { GenericApiPanel } from '../components/apiPanels/GenericApi';
 
 const styles: any = {}
 
@@ -42,13 +43,16 @@ export const ApiTesterPage = (params: any) => {
     console.log('params.match', params.match)
     console.log('params.location', params.location)
     const routes: Array<IRouteCoreData> = [
-        createRouteCoreData(params.match.url + '/reverse-geocode', ReverseGeocodingApiPanel, { linkLabel: 'Reverse Geocode API'}),
         createRouteCoreData(params.match.url + '/geocode', GeocodingApiPanel, { linkLabel: 'Geocode API'}),
+        createRouteCoreData(params.match.url + '/reverse-geocode', ReverseGeocodingApiPanel, { linkLabel: 'Reverse Geocode API'}),
         createRouteCoreData(params.match.url + '/download', OsmDownalodApiPanel, { linkLabel: 'OSM Download API'}),
+        createRouteCoreData(params.match.url + '/generic', GenericApiPanel, { linkLabel: 'Generic API'}),
     ]
 
     const theRoutes = routes.map((r, i) => r.getRoute(i));
-    theRoutes.unshift(<Redirect key={routes.length} from={params.match.url + '/'} to={params.match.url + '/reverse-geocode'} exact={true} />)
+
+    theRoutes.unshift(<Redirect key={routes.length} from={params.match.url + '/'} to={params.match.url + '/generic'} exact={true} />)
+
     const theLinks = routes.map((r, i) => r.getListItemLink(i, styles.tabListItem, styles.tabLink));
     return (
         <div>

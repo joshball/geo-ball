@@ -1,34 +1,58 @@
 import * as React from 'react'
-import { Formik, FormikActions, Form, Field, ErrorMessage, FieldProps, FormikProps } from "formik";
-import { DebugFormix } from './DebugFormix';
-import { RadioButtonGroup, RadioButton } from '../common/input/RadioButtonGroup';
+import { Formik, Form } from "formik";
+import { DebugFormix } from '../common/input/DebugFormix';
+import { INominatimParams, NominatimParams, INominatimResult } from '@geo-ball/osm-data';
+import { Card, Elevation, Button, Intent } from '@blueprintjs/core';
+import { css } from 'glamor';
+import { styles } from '../../config/theme';
+import { searchChoiceDiv } from './nominatim/ApiAddressForm';
+import { getOtherSettingsForm, getSwitchesFormBox } from './nominatim/ApiSettingsForm';
+import { SectionHeaderTwo, SectionHeaderThree } from "../common/layout/SectionHeader";
+import { geocodeAddress } from '../../services/GeocodingService';
 
+const JDR = styles.justifyRight;
 
+// TWO WAYS to deep destructure setstate
+// this.setState(({ formData }) => ({
+//     formData: {
+//         ...formData,
+//         [name]: value
+//     }
+// }));
+// this.setState({
+//     formData:{
+//         ...this.state.formData,
+//         [name]: value
+//     }
+// });
 
-export interface GeocodingApiPanelProps {
+export interface IFormData extends INominatimParams {
 }
-export interface GeocodingApiPanelState {
-    isGoing: boolean;
-    numberOfGuests: number;
-    format: string;
-    [key: string]: any;
+
+export interface IReverseGeocodingApiPanelProps {
+    formData: IFormData;
 }
 
-export class GeocodingApiPanel extends React.Component<GeocodingApiPanelProps, GeocodingApiPanelState> {
+export interface IReverseGeocodingApiPanelState {
+    formData: IFormData;
+    searchResults: Array<INominatimResult>;
+}
 
-    constructor(props: GeocodingApiPanelProps) {
+export class GeocodingApiPanel extends React.Component<IReverseGeocodingApiPanelProps, IReverseGeocodingApiPanelState> {
+
+    constructor(props: IReverseGeocodingApiPanelProps) {
         super(props);
+        const formData = this.props.formData || new NominatimParams();
+        formData.q = "2516 Chadwick St. Salt Lake City, UT 84106"
         this.state = {
-            isGoing: true,
-            numberOfGuests: 2,
-            format: 'json',
+            formData,
+            searchResults: []
         };
         this.handleRadioGroupChange = this.handleRadioGroupChange.bind(this);
         // this.handleRadioButtonGroupChange = this.handleRadioButtonGroupChange.bind(this);
         this.onBlur = this.onBlur.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     handleChange(event: any) {
@@ -37,15 +61,14 @@ export class GeocodingApiPanel extends React.Component<GeocodingApiPanelProps, G
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-        this.setState({
-            [name]: value
-        });
+        this.setState(({ formData }) => ({
+            formData: {
+                ...formData,
+                [name]: value
+            }
+        }));
     }
 
-    handleSubmit(event: any) {
-        console.log('handleSubmit.event', event);
-        event.preventDefault();
-    }
     handleRadioGroupChange(event: React.FormEvent<HTMLInputElement>): void {
         console.log('handleRadioGroupChange.event', event);
         console.log('handleRadioGroupChange.event.target', event.target);
@@ -55,49 +78,142 @@ export class GeocodingApiPanel extends React.Component<GeocodingApiPanelProps, G
         console.log('onBlur.item', event.target);
     }
 
-    onSubmit(event: any): void {
-        // const params = this.state.searchParams
-        console.log('onSubmit:', event);
-        // const params = new NominatimParams('2516 Chadwick St, Salt Lake City, UT 84106');
-
+    onSubmit(formData: any): void {
+        console.log('onSubmit:', formData);
+        this.setState({
+            formData
+        });
+        const nominatimParams = new NominatimParams(formData);
+        console.log('onSubmit:', nominatimParams);
+        geocodeAddress(nominatimParams)
+            .then((searchResults: Array<INominatimResult>) => {
+                console.log('geocodeAddress Array<INominatimResult> result:', searchResults);
+                const r = JSON.stringify(searchResults, undefined, 4);
+                console.log(r)
+                this.setState({
+                    searchResults
+                });
+            })
     }
 
+    // https://github.com/vadistic/vats/blob/b7c9e08eb45d7fd94af477575adea04df5e06aca/packages/client/src/components/editable/formik.tsx
+
+    // NEXT: Design the form to be on one line and pretty
+    // Show the URL/Querystring
+    // Show the results
+    // Add copy for results and string
+    // use formik debug as example
+
+
     render() {
+        const mainQueryStyle = css({
+            display: 'flex',
+            // margin: '10px',
+            padding: '10px',
+            // justifyContent: 'flex-end',
+            // alignContent: 'flex-end',
+            width: 'fit-content',
+            // align:'right',
+            // backgroundColor: colors.pastels.litBlue,
+        });
+        const mainSettingsStyle = css({
+            display: 'flex',
+            // margin: '10px',
+            padding: '10px',
+            // justifyContent: 'flex-end',
+            // alignContent: 'flex-end',
+            width: '100%',
+            // align:'right',
+            // backgroundColor: colors.pastels.litBlue,
+        });
+
+        const pageStyle = {
+            margin: '20px',
+            // padding: '10px',
+        };
+
+        const mainFormWrapDiv = {
+            display: 'flex',
+            height: '440px',
+        };
+
+
         return (
-            <div>
-                <h1>Reverse Geocoding (NORMAL FORM)</h1>
-                <form>
-                    <label>
-                        Is going:
-                        <input name="isGoing" type="checkbox" checked={this.state.isGoing} onChange={this.handleChange} />
-                    </label>
-                    <br />
-                    <label>
-                        Format:
-                        <input name="format" type="text" value={this.state.format} onChange={this.handleChange} />
-                    </label>
-                    <br />
-                    <label>
-                        Number of guests:
-                        <input name="numberOfGuests" type="number" value={this.state.numberOfGuests} onChange={this.handleChange} />
-                    </label>
-                    <br />
-                    <RadioButtonGroup name="format" selectedButtonId={this.state.format} onChange={this.handleChange}>
-                        <RadioButton id="json">JSON</RadioButton>
-                        <RadioButton id="jsonv2">JSONv2</RadioButton>
-                        <RadioButton id="xml">XML</RadioButton>
-                        <RadioButton id="html">HTML</RadioButton>
-                    </RadioButtonGroup>
-                    <br />
-                    <button type="submit">Submit</button>
-                </form>
-                <pre>
+            <div style={pageStyle}>
+                <h1>Geocoding</h1>
+                <Formik initialValues={this.state.formData} onSubmit={this.onSubmit}>
+                    {/* {({ values, isSubmitting, setFieldValue, handleBlur }) => ( */}
+                    {(formikStuff) => (
+                        <Form>
+                            <Card interactive={false} elevation={Elevation.FOUR}>
+                                <div style={mainFormWrapDiv}>
+                                    <div {...mainQueryStyle}>
+                                        <Card interactive={false} elevation={Elevation.TWO}>
+                                            {searchChoiceDiv<IFormData>(formikStuff)}
+                                            <div style={JDR}>
+                                                <Button intent={Intent.PRIMARY} type="submit">Submit</Button>
+                                            </div>
+                                        </Card>
+                                    </div>
+                                    <div {...mainSettingsStyle}>
+                                        <Card style={{ width: '100%' }} interactive={false} elevation={Elevation.TWO}>
+                                            <SectionHeaderTwo style={{ marginBottom: "15px" }}>Settings</SectionHeaderTwo>
+                                            {getOtherSettingsForm()}
+                                            <SectionHeaderThree>Toggles</SectionHeaderThree>
+                                            {getSwitchesFormBox()}
+                                        </Card>
+                                    </div>
+                                </div>
+                            </Card>
+                            {ApiResults(this.state.searchResults)}
+                            {/* <DebugFormix /> */}
+                        </Form>
+                    )}
+                </Formik>
+                {/* <pre>
                     STATE:
                     {JSON.stringify(this.state, undefined, 4)}
-                </pre>
+                </pre> */}
             </div>
         );
     }
-
-
 }
+
+
+export const ApiResults = (json: any) => (
+    <div
+        style={{
+            margin: '3rem 0',
+            borderRadius: 4,
+            background: '#f6f8fa',
+            boxShadow: '0 0 1px  #eee inset',
+        }}
+    >
+        <div
+            style={{
+                textTransform: 'uppercase',
+                fontSize: 11,
+                borderTopLeftRadius: 4,
+                borderTopRightRadius: 4,
+                fontWeight: 500,
+                padding: '.5rem',
+                background: '#555',
+                color: '#fff',
+                letterSpacing: '1px',
+            }}
+        >
+            API RESULT
+        </div>
+        <pre
+            style={{
+                fontSize: '.65rem',
+                padding: '.25rem .5rem',
+                overflowX: 'scroll',
+            }}
+        >
+            {JSON.stringify(json, null, 4)}
+        </pre>
+
+    </div>
+);
+

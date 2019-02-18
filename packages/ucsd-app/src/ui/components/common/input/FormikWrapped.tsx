@@ -23,6 +23,7 @@ export class FormikTextArea<TFormProps> extends React.PureComponent<IFormikTextA
             <div {...outerDivProps}>
                 <TextArea
                     name={field.name}
+                    value={field.value}
                     onChange={field.onChange}
                     onBlur={field.onBlur}
                     placeholder={field.name}

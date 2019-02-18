@@ -58,9 +58,7 @@
         ],
         "typeRoots": [
             "node_modules/@types",
-            "src/typings",
-            "src/types",
-            "test/types",
+            "./ext-stub-types"
         ]
     },
     // "include": [
@@ -69,7 +67,7 @@
     "exclude": [
         "node_modules/**"
     ],
-    "compileOnSave": false
+    "compileOnSave": true
 }
 // {
 //     "extends": "./tsconfig.compiler.json",
