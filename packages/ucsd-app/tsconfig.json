@@ -1,43 +1,81 @@
 {
     "extends": "../../tsconfig.common.json",
-    "references": [
-        { "path": "../geo-core" },
+    "references": [{
+            "path": "../geo-core"
+        },
         // { "path": "../graph-core" },
         // { "path": "../osm-cli" },
-        { "path": "../osm-data" },
+        {
+            "path": "../osm-data"
+        },
         // { "path": "../ucsd-app" },
         // { "path": "../ucsd-cli" },
-        { "path": "../ucsd-core" },
-        { "path": "../utils" },
+        {
+            "path": "../ucsd-core"
+        },
+        {
+            "path": "../utils"
+        },
     ],
     "compilerOptions": {
-        "baseUrl": ".",
-        "paths": { "*": ["types/*"] },
-        // "rootDir": "src",
-        // "target": "es2015",
+        "outDir": "build/lib",
         "module": "commonjs",
-        "experimentalDecorators": true,
-        "lib": ["dom", "es2017", "es2018", "es2018.promise"],
-        // "outDir": "./build",
+        "target": "es5",
+        "lib": ["es5", "es6", "es7", "es2017", "dom"],
+        "sourceMap": true,
+        "allowJs": false,
         "jsx": "react",
+        "moduleResolution": "node",
+        "rootDirs": ["src", ".storybook/views"],
+        "baseUrl": "src",
+        "forceConsistentCasingInFileNames": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "noUnusedLocals": true,
+        "declaration": true,
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
     },
-    "include": ["src", "typings", "fuse.ts", "./storybook/views"],
+    "include": ["src/**/*", "typings/**/*", "fuse.ts", ".storybook/views"],
+    "exclude": ["node_modules", "build", "scripts"]
+
+    // "compilerOptions": {
+    //     "baseUrl": ".",
+    //     "paths": {
+    //         "*": ["types/*"]
+    //     },
+    //     "rootDirs": ["src", ".storybook/views"],
+    //     // "target": "es2015",
+    //     "module": "commonjs",
+    //     "experimentalDecorators": true,
+    //     "lib": ["dom", "es2017", "es2018", "es2018.promise"],
+    //     // "outDir": "./build",
+    //     "jsx": "react",
+    // },
+    // "include": ["src/**/*", "typings/**/*", "fuse.ts", ".storybook/views/**/*"],
+    // "exclude": [
+    //     "node_modules"
+    // ]
     // "include": [        "./src"    ],
-//     "compilerOptions": {
-//         "target": "es2015",
-//         "module": "commonjs",
-//         "moduleResolution": "node",
-//         "jsx": "react",
-//         "experimentalDecorators": true,
-//         "allowSyntheticDefaultImports": false,
-//         "noUnusedLocals": true,
-//         "resolveJsonModule": true,
-//         "strictNullChecks": false,
-//         "noImplicitReturns": true,
-//         "noImplicitAny": true
-//     },
-//     "include": ["src", "typings", "fuse.ts", "./storybook/views"],
-//     "exclude": [
-//         "node_modules"
-//     ]
+    //     "compilerOptions": {
+    //         "target": "es2015",
+    //         "module": "commonjs",
+    //         "moduleResolution": "node",
+    //         "jsx": "react",
+    //         "experimentalDecorators": true,
+    //         "allowSyntheticDefaultImports": false,
+    //         "noUnusedLocals": true,
+    //         "resolveJsonModule": true,
+    //         "strictNullChecks": false,
+    //         "noImplicitReturns": true,
+    //         "noImplicitAny": true
+    //     },
+    //     "include": ["src", "typings", "fuse.ts", "./storybook/views"],
+    //     "exclude": [
+    //         "node_modules"
+    //     ]
 }

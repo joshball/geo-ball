@@ -1,18 +1,29 @@
 const path = require("path")
-const genDefaultConfig = require("@storybook/react/dist/server/config/defaults/webpack.config.js")
+// module.exports = (baseConfig, env, config) => {
 
-module.exports = (config, env) => {
-  const myConfig = genDefaultConfig(config, env)
+//   config.module.rules.push({
+//     test: /\.tsx?$/,
+//     loader: "ts-loader",
+//     exclude: /node_modules/,
+//     include: [path.resolve(__dirname, "..", "src"), path.resolve(__dirname, "views")],
+//   })
 
-  myConfig.module.rules.push({
-    test: /\.tsx?$/,
-    loader: "ts-loader",
-    exclude: /node_modules/,
-    include: [path.resolve(__dirname, "..", "src"), path.resolve(__dirname, "views")],
-  })
+//   config.resolve.extensions.unshift(".tsx")
+//   config.resolve.extensions.unshift(".ts")
 
-  myConfig.resolve.extensions.unshift(".tsx")
-  myConfig.resolve.extensions.unshift(".ts")
-
-  return myConfig
-}
+//   return config
+// }
+module.exports = (baseConfig, env, config) => {
+    config.module.rules.push({
+        test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
+        include: [path.resolve(__dirname, "..", "src"), path.resolve(__dirname, "views")],
+        use: [{
+            loader: require.resolve('awesome-typescript-loader')
+        }, {
+            loader: require.resolve('react-docgen-typescript-loader')
+        }]
+    });
+    config.resolve.extensions.push('.ts', '.tsx');
+    return config;
+};
