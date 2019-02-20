@@ -6,9 +6,9 @@
         "target": "es6",
         "baseUrl": "./packages",
         "paths": {
-            "@geo-ball/*": [
-                "./*/src"
-            ]
+            // "@geo-ball/*": [
+            //     "./*/src"
+            // ]
         },
         "composite": true,
         "moduleResolution": "node",
@@ -58,7 +58,7 @@
         ],
         "typeRoots": [
             "node_modules/@types",
-            "./ext-stub-types"
+            "ext-stub-types"
         ]
     },
     // "include": [

@@ -73,6 +73,7 @@
     "typescript": "^3.3.3"
   },
   "dependencies": {
+    "@geo-ball/component-lib": "^1.0.0",
     "@geo-ball/geo-core": "^1.0.0",
     "@geo-ball/graph-core": "^1.0.0",
     "@geo-ball/osm-cli": "^1.0.0",

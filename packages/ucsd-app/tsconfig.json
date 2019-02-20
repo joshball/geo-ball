@@ -1,24 +1,23 @@
 {
     "extends": "../../tsconfig.common.json",
-    "references": [{
-            "path": "../geo-core"
-        },
-        // { "path": "../graph-core" },
-        // { "path": "../osm-cli" },
-        {
-            "path": "../osm-data"
-        },
-        // { "path": "../ucsd-app" },
-        // { "path": "../ucsd-cli" },
-        {
-            "path": "../ucsd-core"
-        },
-        {
-            "path": "../utils"
-        },
+    "references": [
+        { "path": "../component-lib" },
+        { "path": "../geo-core" },
+        { "path": "../graph-core" },
+        { "path": "../osm-cli" },
+        { "path": "../osm-data" },
+        { "path": "../ucsd-app" },
+        { "path": "../ucsd-cli" },
+        { "path": "../ucsd-core" },
+        { "path": "../utils" },
     ],
     "compilerOptions": {
+        "rootDirs": ["src", ".storybook/views"],
         "outDir": "build/lib",
+        "baseUrl": ".",
+        "paths": {
+            // "*": ["ext-stub-types/*"]
+        },
         "module": "commonjs",
         "target": "es5",
         "lib": ["es5", "es6", "es7", "es2017", "dom"],
@@ -26,8 +25,6 @@
         "allowJs": false,
         "jsx": "react",
         "moduleResolution": "node",
-        "rootDirs": ["src", ".storybook/views"],
-        "baseUrl": "src",
         "forceConsistentCasingInFileNames": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
@@ -38,9 +35,13 @@
         "declaration": true,
         "allowSyntheticDefaultImports": true,
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
+        "emitDecoratorMetadata": true,
+        "typeRoots": [
+            "node_modules/@types",
+            "ext-stub-types"
+        ]
     },
-    "include": ["src/**/*", "typings/**/*", "fuse.ts", ".storybook/views"],
+    "include": ["src/**/*", "ext-stub-types/**/*", "fuse.ts", ".storybook/views"],
     "exclude": ["node_modules", "build", "scripts"]
 
     // "compilerOptions": {

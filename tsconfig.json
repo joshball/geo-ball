@@ -1,6 +1,7 @@
 {
     "files": [],
     "references": [
+        { "path": "packages/component-lib" },
         { "path": "packages/geo-core" },
         { "path": "packages/graph-core" },
         { "path": "packages/osm-cli" },
