@@ -70,4 +70,4 @@ class NominatimParams {
     }
 }
 exports.NominatimParams = NominatimParams;
-//# sourceMappingURL=INominatimParams.js.map
+//# sourceMappingURL=INominatimParams.1.js.map

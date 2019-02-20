@@ -1,6 +1,7 @@
 import { NominatimFormat, INominatimQueryParamObj } from "./INominatimQueryParamObj";
 export interface INominatimStringQuery {
     q: string;
+    [key: string]: string;
 }
 export interface INominatimStructuredQuery {
     street: string;
@@ -9,11 +10,13 @@ export interface INominatimStructuredQuery {
     state: string;
     country: string;
     postalcode: string;
+    [key: string]: string;
 }
 export interface INominatimQuery {
     useStructured: boolean;
     stringQuery: INominatimStringQuery;
     structuredQuery: INominatimStructuredQuery;
+    [key: string]: any;
 }
 export interface INominatimSettings {
     format: NominatimFormat;
@@ -24,6 +27,7 @@ export interface INominatimSettings {
     email: string;
     exclude_place_ids: string;
     limit: number;
+    [key: string]: any;
 }
 export interface INominatimToggles {
     addressdetails: boolean;
@@ -36,16 +40,14 @@ export interface INominatimToggles {
     polygon_kml: boolean;
     polygon_svg: boolean;
     polygon_text: boolean;
+    [key: string]: boolean;
 }
 export interface INominatimParams {
     query: INominatimQuery;
     settings: INominatimSettings;
     toggles: INominatimToggles;
 }
-export declare class NominatimParams {
-    formParams: INominatimParams;
-    constructor(params?: INominatimParams);
-    buildQueryParamObject(): INominatimQueryParamObj;
-    getQueryParams(): string;
-}
-//# sourceMappingURL=INominatimParams.d.ts.map
+export declare const createNominatimParams: (params?: INominatimParams | undefined) => INominatimParams;
+export declare const flattenNominatimParams: (params: INominatimParams) => INominatimQueryParamObj;
+export declare const getQueryParamEncodedString: (qpObj: INominatimQueryParamObj) => string;
+//# sourceMappingURL=NominatimParams.d.ts.map
