@@ -1,49 +1,131 @@
 import * as React from 'react'
-import { Card, Elevation, Button, Intent } from '@blueprintjs/core';
+import { Card, Elevation, Button, Intent, Switch } from '@blueprintjs/core';
 import { cardStyle } from './ApiStyles';
+import { styles } from '../../../config/theme';
+import { flow } from 'mobx';
+import { style } from 'glamor';
+
+
 
 export interface IApiActionsViewProps {
-    fullUrl: string;
+    fakeTheApiCallValue: boolean;
+    fakeTheApiCallToggle: (_event: React.SyntheticEvent) => void;
+
+    showFormStatePaneValue: boolean;
+    showFormStatePaneToggle: (_event: React.SyntheticEvent) => void;
+    getFormState: () => Promise<any>;
+
+    showParameterPaneValue: boolean;
+    showParameterPaneToggle: (_event: React.SyntheticEvent) => void;
+    getParameters: () => Promise<any>;
+
     makeRequest: () => Promise<any>;
 }
-export interface IApiActionsViewState {
+
+export const ApiActionsView = (props: IApiActionsViewProps) => {
+    const actionBarDivStyle = {
+        overflow: 'hidden',
+        height: '30px',
+        // float: 'right',
+        // display: 'flex',
+    }
+    return (
+        <Card style={cardStyle} interactive={false} elevation={Elevation.FOUR}>
+            <div style={actionBarDivStyle}>
+                <SubmitRequestButton {...props} />
+                <DebugToggles  {...props} />
+            </div>
+        </Card>
+    );
+}
+
+const floatRight = {
+    float: 'right',
+    // display: 'flex',
+}
+
+export const DebugToggles = (props: IApiActionsViewProps) => {
+    const switchDivStyle = {
+        float: 'right',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100%',
+    }
+    const switchStyle = {
+        margin: '0px 10px 0px 10px',
+    }
+    return (
+        <div style={switchDivStyle}>
+            <Switch
+                style={switchStyle}
+                checked={props.fakeTheApiCallValue}
+                label="Fake the API call"
+                onChange={props.fakeTheApiCallToggle}
+            />
+            <Switch
+                style={switchStyle}
+                checked={props.showFormStatePaneValue}
+                label="Show Form State"
+                onChange={props.showFormStatePaneToggle}
+            />
+            <Switch
+                style={switchStyle}
+                checked={props.showParameterPaneValue}
+                label="Show Parameter Pane"
+                onChange={props.showParameterPaneToggle}
+            />
+
+        </div>
+    )
+}
+
+
+export interface ISubmitRequestButtonState {
     submitting: boolean;
 }
 
-export class ApiActionsView extends React.Component<IApiActionsViewProps, IApiActionsViewState> {
+export class SubmitRequestButton extends React.Component<IApiActionsViewProps, ISubmitRequestButtonState> {
 
-    state: IApiActionsViewState;
+    state: ISubmitRequestButtonState;
 
     constructor(props: IApiActionsViewProps) {
         super(props)
-        this.state = {
-            submitting: false
-        }
+        this.state = { submitting: false }
         this.onClick = this.onClick.bind(this);
     }
-    onClick() {
-        console.log('onClick!')
-        this.setState({
-            submitting: true,
-        });
 
-        this.props.makeRequest()
-            .finally(() => {
-                this.setState({
-                    submitting: false,
-                });
-            })
+    async onClick() {
+        console.log('onClick!')
+        this.setState({ submitting: true, });
+
+        try { await this.props.makeRequest(); }
+        finally {
+            this.setState({ submitting: false, });
+        }
     }
+
     render() {
-        console.log('this.state.submitting', this.state.submitting)
-        return <Card style={cardStyle}  interactive={false} elevation={Elevation.FOUR}>
-            <div>
-                {this.props.fullUrl}
+        const buttonDiv = {
+            float: 'right',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100%',
+            marginRight: '75px',
+            marginLeft: '75px',
+        }
+
+        return (
+            <div style={buttonDiv}>
+                <Button
+                    disabled={this.state.submitting}
+                    onClick={this.onClick}
+                    intent={Intent.PRIMARY}
+                >
+                    Make the request
+                </Button>
             </div>
-            <Button
-                disabled={this.state.submitting}
-                onClick={this.onClick}
-                intent={Intent.PRIMARY}>Make it so!</Button>
-        </Card>;
+        );
     }
 }

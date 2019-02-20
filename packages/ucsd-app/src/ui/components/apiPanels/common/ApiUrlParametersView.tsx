@@ -1,15 +1,29 @@
 import * as React from 'react'
-import { Card, Elevation } from '@blueprintjs/core';
+import { Card, Elevation, Collapse } from '@blueprintjs/core';
 import { css } from 'glamor';
 import { QuantumPlugin } from 'fuse-box';
 import { cardStyle } from './ApiStyles';
 
+export interface IApiUrlParametersViewState {
+    isOpen: boolean
+}
 export interface IApiUrlParametersViewProps {
     formData: any
 }
 
 
-export class ApiUrlParametersView extends React.Component<IApiUrlParametersViewProps> {
+export class ApiUrlParametersView extends React.Component<IApiUrlParametersViewProps, IApiUrlParametersViewState> {
+    state: IApiUrlParametersViewState;
+    constructor(props: IApiUrlParametersViewProps) {
+        super(props);
+        this.state = {
+            isOpen: false
+        }
+        this.handleClick = this.handleClick.bind(this);
+    }
+    private handleClick = () => {
+        this.setState({ isOpen: !this.state.isOpen });
+    }
     render() {
         const mainFormWrapDiv = {
             display: 'flex',
@@ -45,21 +59,23 @@ export class ApiUrlParametersView extends React.Component<IApiUrlParametersViewP
         const qp = this.getQueryParams(this.props.formData);
         return <Card style={cardStyle} interactive={false} elevation={Elevation.FOUR}>
             <div {...mainQueryStyle}>
-                <Card style={colCard} interactive={false} elevation={Elevation.TWO}>
-                    <div {...queryColStyle}>
-                        <pre>{JSON.stringify(this.props.formData, null, 4)}</pre>
-                    </div>
-                </Card>
-                <Card style={colCard} interactive={false} elevation={Elevation.TWO}>
-                    <div {...queryColStyle}>
-                        <pre>{JSON.stringify(qp.map, null, 4)}</pre>
-                    </div>
-                </Card>
-                <Card style={colCard} interactive={false} elevation={Elevation.TWO}>
-                    <div {...queryColStyle}>
-                        <pre>{qp.map.join('\n')}</pre>
-                    </div>
-                </Card>
+                <Collapse isOpen={this.state.isOpen}>
+                    <Card style={colCard} interactive={false} elevation={Elevation.TWO}>
+                        <div {...queryColStyle}>
+                            <pre>{JSON.stringify(this.props.formData, null, 4)}</pre>
+                        </div>
+                    </Card>
+                    <Card style={colCard} interactive={false} elevation={Elevation.TWO}>
+                        <div {...queryColStyle}>
+                            <pre>{JSON.stringify(qp.map, null, 4)}</pre>
+                        </div>
+                    </Card>
+                    <Card style={colCard} interactive={false} elevation={Elevation.TWO}>
+                        <div {...queryColStyle}>
+                            <pre>{qp.map.join('\n')}</pre>
+                        </div>
+                    </Card>
+                </Collapse>
             </div>
             <div>
                 EnodedURL: <pre>{qp.url}</pre>

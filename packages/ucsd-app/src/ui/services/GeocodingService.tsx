@@ -1,7 +1,6 @@
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
-import { LatLng as LeafLatLng } from 'leaflet';
 import { ILatLng } from '@geo-ball/geo-core';
-import { NominatimParams, NominatimApi, INominatimResult } from '@geo-ball/osm-data';
+import { INominatimParams, NominatimApi, INominatimResult } from '@geo-ball/osm-data';
 
 
 // const x = {
@@ -101,7 +100,7 @@ export const geocodeSimpleAddress = async (address: string): Promise<Array<IGeoc
             return json;
         });
 }
-export const geocodeAddress = async (params: NominatimParams): Promise<Array<INominatimResult>> => {
+export const geocodeAddress = async (params: INominatimParams): Promise<Array<INominatimResult>> => {
     console.log('geocodeAddress')
 
     return NominatimApi.search(params)

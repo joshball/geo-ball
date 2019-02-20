@@ -5,7 +5,7 @@ import ipc from './better-ipc';
 import { Stats } from 'fs';
 import { CHANNELS } from './index.new';
 const backgroundWindow = remote.getGlobal('backgroundWindow') as BrowserWindow;
-console.log('backgroundWindow:', backgroundWindow);
+// console.log('backgroundWindow:', backgroundWindow);
 if(!backgroundWindow){
     throw new Error('backgroundWindow global not set!');
 }

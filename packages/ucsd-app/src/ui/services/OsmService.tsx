@@ -5,7 +5,7 @@ import { remote, BrowserWindow } from 'electron';
 import { OsmFetchManager, IOsmFetchDir, OsmFetchData, IOsmFetchManager } from '@geo-ball/ucsd-core';
 
 const backgroundWindow = remote.getGlobal('backgroundWindow') as BrowserWindow;
-console.log('backgroundWindow:', backgroundWindow);
+// console.log('backgroundWindow:', backgroundWindow);
 if (!backgroundWindow) {
     throw new Error('backgroundWindow global not set!');
 }

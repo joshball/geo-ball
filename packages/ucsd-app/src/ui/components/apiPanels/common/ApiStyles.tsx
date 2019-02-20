@@ -1,5 +1,12 @@
 
 export const colors = {
+    backGrey: "#414E60",
+    lightGrey: "#F7F7F8",
+    medGrey: "#455364",
+    darkGrey: "#424242",
+    lg1: "#596068",
+    lg2: "#4A4F56",
+    green: "#59BC79",
     drkBlue: "#1F4B99",
     medBlue: "#447C9F",
     lgtBlue: "#7CAAA2",
@@ -11,5 +18,6 @@ export const colors = {
 };
 
 export const cardStyle = {
-    margin: '10px 0px 10px 0px'
+    margin: '10px 0px 10px 0px',
+    backgroundColor: colors.lightGrey,
 }

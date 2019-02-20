@@ -22,9 +22,9 @@ export const CHANNELS:IAllChannels<string> = {};
 const backgroundWindow = remote.getGlobal('backgroundWindow') as BrowserWindow;
 
 const registerAndExportAndBuildChannels = (channelsExport: any, newChannels: Array<IChannelCallback>) => {
-    console.log('registerAndExportAndBuildChannels', channelsExport, newChannels)
+    // console.log('registerAndExportAndBuildChannels', channelsExport, newChannels)
     newChannels.forEach(ccb => {
-        console.log('register ipc.answerRenderer ccb', ccb.channel, ccb.name, ccb.namespace, ccb)
+        // console.log('register ipc.answerRenderer ccb', ccb.channel, ccb.name, ccb.namespace, ccb)
         ipc.answerRenderer(backgroundWindow, ccb.channel, ccb.callback);
         channelsExport[ccb.namespace] = channelsExport[ccb.namespace] || {};
         if (channelsExport[ccb.namespace][ccb.name]) {
@@ -36,6 +36,6 @@ const registerAndExportAndBuildChannels = (channelsExport: any, newChannels: Arr
 }
 
 registerAndExportAndBuildChannels(CHANNELS, FS_CHANNELS.concat(UCSD_CHANNELS));
-console.log('-----------------------------------------------------------------------')
-console.log('CHANNELS', CHANNELS)
-console.log('-----------------------------------------------------------------------')
+// console.log('-----------------------------------------------------------------------')
+// console.log('CHANNELS', CHANNELS)
+// console.log('-----------------------------------------------------------------------')

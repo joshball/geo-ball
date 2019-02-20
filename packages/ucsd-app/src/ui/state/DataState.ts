@@ -14,7 +14,7 @@ export class DataState implements IDataState {
         this.ucsdAppDataDir = new UcsdAppDataDirState(ucsdAppDataDir
             ? ucsdAppDataDir.path
             : UcsdAppDataDirMgr.GetDefaultUcsdAppDataDirPath());
-            console.log('DataState() this.ucsdAppDataDir', this.ucsdAppDataDir)
+        // console.log('DataState() this.ucsdAppDataDir', this.ucsdAppDataDir)
     }
 }
 

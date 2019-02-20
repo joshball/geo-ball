@@ -73,21 +73,21 @@ export interface IWrappedData {
 
 
 ipc.answerRenderer = (windowToListenOn: BrowserWindow, channel: string, callback: any) => {
-    console.log('IPC.answerRenderer windowToListenOn:', windowToListenOn);
-    console.log('IPC.answerRenderer channel:', channel);
+    // console.log('IPC.answerRenderer windowToListenOn:', windowToListenOn);
+    // console.log('IPC.answerRenderer channel:', channel);
     const rw = remote.getCurrentWindow();
-    console.log('IPC.answerRenderer rw:', rw);
+    // console.log('IPC.answerRenderer rw:', rw);
     // const { sendChannel, dataChannel, errorChannel } = getRendererResponseChannels(windowToListenOn.id, channel);
     const { sendChannel } = getListenerChannel(channel);
-    console.log('IPC.answerRenderer channels:', sendChannel,);
+    // console.log('IPC.answerRenderer channels:', sendChannel,);
 
     const listener = async (event: any, wrappedData: IWrappedData) => {
-        console.log('### IPC.answerRenderer().listener() RECEIVED (event, data)', event.senderId, event, wrappedData);
+        // console.log('### IPC.answerRenderer().listener() RECEIVED (event, data)', event.senderId, event, wrappedData);
 
         const send = (sc: any, sd: any) => {
             if (!(windowToListenOn && windowToListenOn.isDestroyed())) {
                 // console.log('IPC.answerRenderer().listener. EVENT.sender.SEND (sc,sd):', sc, sd);
-                console.log('@@@ IPC.ARG ipcRenderer.sendTo(%s, %s, sd):', windowToListenOn.id, sc, sd);
+                // console.log('@@@ IPC.ARG ipcRenderer.sendTo(%s, %s, sd):', windowToListenOn.id, sc, sd);
                 ipcRenderer.sendTo(wrappedData.renderWindowId, sc, sd);
                 // console.log('event.sender', event.senderId, event.sender);
                 // event.sender.send(sc, sd);
@@ -99,26 +99,26 @@ ipc.answerRenderer = (windowToListenOn: BrowserWindow, channel: string, callback
             }
         };
         const { dataChannel, errorChannel } = getRendererResponseChannels(channel, wrappedData.rendererId);
-        console.log('IPC.answerRenderer channels:', sendChannel, dataChannel, errorChannel);
+        // console.log('IPC.answerRenderer channels:', sendChannel, dataChannel, errorChannel);
 
         try {
-            console.log('IPC.AR local.SEND() dataChannel/window', dataChannel, windowToListenOn.id, windowToListenOn.webContents.id);
-            console.log('IPC.AR local.SEND() wrappedData', wrappedData);
+            // console.log('IPC.AR local.SEND() dataChannel/window', dataChannel, windowToListenOn.id, windowToListenOn.webContents.id);
+            // console.log('IPC.AR local.SEND() wrappedData', wrappedData);
 
             send(dataChannel, await callback(wrappedData.renderData, windowToListenOn));
         } catch (error) {
-            console.log('IPC.answerRenderer().listener try.SEND error', error);
+            // console.log('IPC.answerRenderer().listener try.SEND error', error);
             send(errorChannel, error);
         }
     };
 
-    console.log('!!! IPC.answerRenderer() CALLING ipcRenderer. *ON* (sendChannel, listenerFunc)', sendChannel);
+    // console.log('!!! IPC.answerRenderer() CALLING ipcRenderer. *ON* (sendChannel, listenerFunc)', sendChannel);
     ipcRenderer.on(sendChannel, listener);
 
     return () => {
-        console.log('================> CLEANUP sendChannel ', sendChannel)
-        console.log('IPC.answerRenderer().listener RETURN.sc', sendChannel);
-        console.log('IPC.answerRenderer().listener ipc.removeListener', listener);
+        // console.log('================> CLEANUP sendChannel ', sendChannel)
+        // console.log('IPC.answerRenderer().listener RETURN.sc', sendChannel);
+        // console.log('IPC.answerRenderer().listener ipc.removeListener', listener);
         ipcRenderer.removeListener(sendChannel, listener);
     };
 

@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Colors } from "@blueprintjs/core";
 import { createRouteCoreData, IRouteCoreData } from '../config/routes';
-import { GeocodingApiPanel } from '../components/apiPanels/GeocodingApiPanel';
-import { ReverseGeocodingApiPanel } from '../components/apiPanels/ReverseGeocodingApiPanel';
+import { GeocodingApiPanel } from '../components/apiPanels/GeocodingApi';
+// import { ReverseGeocodingApiPanel } from '../components/apiPanels/ReverseGeocodingApiPanel';
 import { OsmDownalodApiPanel } from '../components/apiPanels/OsmDownalodApiPanel';
 import { Redirect, Switch } from 'react-router';
 import { GenericApiPanel } from '../components/apiPanels/GenericApi';
@@ -44,14 +44,14 @@ export const ApiTesterPage = (params: any) => {
     console.log('params.location', params.location)
     const routes: Array<IRouteCoreData> = [
         createRouteCoreData(params.match.url + '/geocode', GeocodingApiPanel, { linkLabel: 'Geocode API'}),
-        createRouteCoreData(params.match.url + '/reverse-geocode', ReverseGeocodingApiPanel, { linkLabel: 'Reverse Geocode API'}),
+        // createRouteCoreData(params.match.url + '/reverse-geocode', ReverseGeocodingApiPanel, { linkLabel: 'Reverse Geocode API'}),
         createRouteCoreData(params.match.url + '/download', OsmDownalodApiPanel, { linkLabel: 'OSM Download API'}),
         createRouteCoreData(params.match.url + '/generic', GenericApiPanel, { linkLabel: 'Generic API'}),
     ]
 
     const theRoutes = routes.map((r, i) => r.getRoute(i));
 
-    theRoutes.unshift(<Redirect key={routes.length} from={params.match.url + '/'} to={params.match.url + '/generic'} exact={true} />)
+    theRoutes.unshift(<Redirect key={routes.length} from={params.match.url + '/'} to={params.match.url + '/geocode'} exact={true} />)
 
     const theLinks = routes.map((r, i) => r.getListItemLink(i, styles.tabListItem, styles.tabLink));
     return (

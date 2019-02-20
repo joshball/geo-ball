@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Field, FieldProps } from "formik";
-import { FormGroup, InputGroup, Label, ITextAreaProps, TextArea, ISwitchProps, Switch, ControlGroup, IInputGroupProps } from '@blueprintjs/core';
+import { FormGroup, InputGroup, Label, ITextAreaProps, TextArea, ISwitchProps, Switch, ControlGroup, IInputGroupProps, INumericInputProps, NumericInput } from '@blueprintjs/core';
 import { css } from 'glamor';
 import { colors, styles } from '../../../config/theme';
 import { IRadioButtonGroupProps, RadioButtonGroup } from './RadioButtonGroup';
@@ -28,6 +28,7 @@ export class FormikTextArea<TFormProps> extends React.PureComponent<IFormikTextA
                     onBlur={field.onBlur}
                     placeholder={field.name}
                     fill={true}
+                    {...field}
                     {...props}
                 />
             </div>
@@ -61,6 +62,7 @@ export class FormikSwitch<TFormProps> extends React.PureComponent<IFormikSwitchP
                     label={label}
                     onChange={field.onChange}
                     {...switchProps}
+                    {...field}
                     {...props}
                 />
             </div>
@@ -96,6 +98,7 @@ export class FormikRadioButtonGroup<TFormProps> extends React.PureComponent<IFor
                     name={field.name}
                     selectedButtonId={field.value}
                     onChange={field.onChange}
+                    {...field}
                     {...props}
                 >
                     {children}
@@ -133,6 +136,7 @@ export class FormikInputGroup<TFormProps> extends React.PureComponent<IFormikInp
                 onChange={field.onChange}
                 onBlur={field.onBlur}
                 placeholder={field.name}
+                {...field}
                 {...props}
             />
         );
@@ -151,3 +155,56 @@ export class FormikInputGroup<TFormProps> extends React.PureComponent<IFormikInp
 //     return (
 //         <InputGroup name={field.name} onChange={field.onChange} value={field.value} placeholder={field.name}/>
 //     )};
+
+
+interface IFormikNumericInputProps<TForm> extends FieldProps<TForm>, INumericInputProps {
+    min?: number
+    max?: number
+}
+export class FormikNumericInput<TFormProps> extends React.PureComponent<IFormikNumericInputProps<TFormProps>> {
+
+    render() {
+        // field, // { name, value, onChange, onBlur }
+        // form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+        const { field, form, min, max, ...props } = this.props;
+        // console.log('NUMBER:')
+        // console.log('NUMBER.field:', field)
+        // console.log('NUMBER field.name:', field.name)
+        // console.log('NUMBER field.value:', field.value)
+
+
+        const onChange = (_valueAsNumber: number, valueAsString: string) => {
+            // console.log("Value as number:", valueAsNumber);
+            // console.log("Value as string:", valueAsString);
+            // console.log('NUMBER. onCHANGE valueAsString:', valueAsString)
+            const cleanVal = valueAsString.trim();
+            // console.log('NUMBER. onCHANGE cleanVal:', cleanVal)
+            if (cleanVal === "") {
+                form.setFieldValue(field.name, cleanVal);
+                return;
+            }
+
+            let changeVal = Number(cleanVal);
+            // console.log('NUMBER. onCHANGE changeVal:', changeVal)
+            if (min !== undefined && changeVal < min) {
+                changeVal = min;
+            }
+            else if (max !== undefined && changeVal > max) {
+                changeVal = max;
+            }
+            // console.log('NUMBER. onCHANGE FINAL changeVal:', changeVal)
+            form.setFieldValue(field.name, changeVal);
+        }
+
+        return (
+            <NumericInput
+                name={field.name}
+                onValueChange={onChange}
+                onBlur={field.onBlur}
+                placeholder={field.name}
+                {...field}
+                {...props}
+            />
+        );
+    }
+}

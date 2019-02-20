@@ -6,7 +6,7 @@ export class ApiPanelLayoutContainer extends React.Component {
     render() {
         const panelStyle = {
             display: 'block',
-            backgroundColor: colors.cream,
+            backgroundColor: colors.backGrey,
             minHeight: 'calc(100vh - 100px)',
             padding: '10px',
         };

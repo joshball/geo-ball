@@ -37,7 +37,7 @@ export class DebugRouter extends Router {
     constructor(props: MemoryRouterProps) {
         super(props);
         const mr = this as any;
-        console.log('initial history is: ', JSON.stringify(mr.history, null, 2))
+        // console.log('initial history is: ', JSON.stringify(mr.history, null, 2))
         mr.history.listen((location: any, action: any) => {
             console.log(
                 `The current URL is ${location.pathname}${location.search}${location.hash}`

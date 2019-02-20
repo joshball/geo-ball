@@ -16,8 +16,8 @@ export interface IRadioButtonProps extends IButtonProps {
 }
 
 export const RadioButton = (props: IRadioButtonProps) => {
-    console.log('')
-    console.log('RadioButton. PROPS', props)
+    // console.log('')
+    // console.log('RadioButton. PROPS', props)
     const { id } = props;
     return <RadioButtonGroupConsumer>
         {(ctx) => {
@@ -27,7 +27,7 @@ export const RadioButton = (props: IRadioButtonProps) => {
                 ctx.onButtonClicked(e, id);
             };
             const isActive = ctx.selectedButtonId === id;
-            console.log(`Button.ctx.selectedButtonId(${ctx.selectedButtonId}), id(${id}), isActive: ${isActive}`)
+            // console.log(`Button.ctx.selectedButtonId(${ctx.selectedButtonId}), id(${id}), isActive: ${isActive}`)
             // return <Button onClick={onClick} value={value} active={active} {...props}>
             return <Button onClick={onClick} value={id} active={isActive} {...props}>
                 {props.children}
