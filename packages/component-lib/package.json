@@ -28,6 +28,7 @@
     "clean": "rimraf build .nyc_output",
     "clean:node_modules": "rimraf node_modules",
     "cleanup:packages": "yarn run prettier-package-json --write",
+    "sg": "styleguidist server",
     "test": "yarn run build && yarn run nyc ava --verbose",
     "test:watch": "yarn run build && yarn run ava --watch"
   },
@@ -42,8 +43,34 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.3.3",
+    "@babel/plugin-proposal-class-properties": "^7.3.3",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-stage-3": "^7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/react": "^16.8.2",
+    "@types/react-dom": "^16.8.2",
     "ava": "^1.1.0",
     "ava-ts": "^0.25.2",
-    "nyc": "^13.1.0"
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-loader": "^8.0.5",
+    "create-index": "^2.4.0",
+    "css-loader": "^2.1.0",
+    "nyc": "^13.1.0",
+    "react-docgen-typescript": "^1.12.3",
+    "react-styleguidist": "^9.0.1",
+    "source-map-loader": "^0.2.4",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3"
+  },
+  "dependencies": {
+    "@blueprintjs/core": "^3.13.0",
+    "fannypack": "^4.11.9",
+    "formik": "^1.5.1",
+    "glamor": "^2.20.40",
+    "react": "^16.8.2",
+    "react-dom": "^16.8.2"
   }
 }

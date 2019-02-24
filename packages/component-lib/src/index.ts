@@ -2,4 +2,5 @@
 // import "core-js/fn/array.find"
 // ...
 
-export * from './ApiTester';
+export * from './components';
+export * from './types';

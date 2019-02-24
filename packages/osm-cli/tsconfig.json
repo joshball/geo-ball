@@ -1,21 +1,23 @@
 {
     "extends": "../../tsconfig.common.json",
     "references": [
-        { "path": "../component-lib" },
+        // { "path": "../component-lib" },
         { "path": "../geo-core" },
-        { "path": "../graph-core" },
-        { "path": "../osm-cli" },
+        // { "path": "../graph-core" },
+        // { "path": "../osm-cli" },
         { "path": "../osm-data" },
-        { "path": "../ucsd-app" },
-        { "path": "../ucsd-cli" },
-        { "path": "../ucsd-core" },
+        // { "path": "../ucsd-app" },
+        // { "path": "../ucsd-cli" },
+        // { "path": "../ucsd-core" },
         { "path": "../utils" },
     ],
 	"compilerOptions": {
 		"rootDir": "src",
 		"outDir": "./build"
 	},
-	"include": [
-		"./src"
-	]
+    "include": [
+        "./src",
+        "./ext-stub-types",
+        "../../ext-stub-types",
+    ]
 }

@@ -1,151 +1,169 @@
 import * as React from 'react'
-import { IFakeGetApiParams, FakeApiService, IFakeGetApiResult } from './FakeApiService';
-import { GenericApiParamsFormView, IGenericApiParamsFormProps } from './GenericApiParamsFormView';
-import { ApiPanelLayoutContainer } from '../common/ApiPanelLayoutContainer';
-import { HeaderContainer } from '../common/HeaderContainer';
-import { FormContainer } from '../common/FormContainer';
-import { ApiUrlParametersView } from '../common/ApiUrlParametersView';
-import { ResultsContainer } from '../common/ResultsContainer';
+import {
+    Heading,
+    ApiCallDefinition,
+    HttpUrlParameters,
+    IApiParameters,
+    ApiBrowser,
+    IApiBrowserPageStateFormProps,
+    ApiParameters,
+    IHeaderContainerProps
+} from '@geo-ball/component-lib';
+import {
+    IFakeGetUrlParams,
+    IFakeGetBodyParams,
+    IFakeGetApiResponse,
+    FakeApiService,
+} from './FakeApiService';
 
-import { withFormik, FormikConsumer } from "formik";
-import { DebugFormix } from '../../common/input/DebugFormix';
-import { truncateSync } from 'fs';
+// import { GenericApiParamsFormView, IGenericApiParamsFormProps } from './GenericApiParamsFormView';
+// import { ApiPanelLayoutContainer } from '../common/ApiPanelLayoutContainer';
+// import { HeaderContainer } from '../common/HeaderContainer';
+// import { FormContainer } from '../common/FormContainer';
+// import { ApiUrlParametersView } from '../common/ApiUrlParametersView';
+// import { ResultsContainer } from '../common/ResultsContainer';
+
+// import { withFormik, FormikConsumer } from "formik";
+// import { DebugFormix } from '../../common/input/DebugFormix';
+import { withFormik } from 'formik';
 
 export interface IGenericApiPanelState {
-    apiRequestParams: IFakeGetApiParams;
-    apiResponse?: IFakeGetApiResult | any | undefined;
-    showDebugForm: boolean;
+    urlParamsForm: Optional<IFakeGetUrlParams>;
+    bodyParamsForm: Optional<IFakeGetBodyParams>;
+    apiResponse?: Optional<IFakeGetApiResponse>;
 }
 
 export interface IGenericApiPanelProps {
-    apiCallback: (query: any) => Promise<any>;
 }
 
-// (
-//     ({ handleSubmit, handleChange, values, ...props }) => {
-//         return (
-//             <Question
-//                 handleResponseSubmission={handleSubmit}
-//                 handleResponseChange={handleChange}
-//                 response={values.response}
-//                 {...props}
-//             />
-//         );
-//     }
-// )
+export interface IParamFormProps<TParamObj> {
+    formData: TParamObj;
+    onSubmit: (formData: TParamObj) => void;
+}
 
 
 
-// export declare const
-//     FormikProvider: React.ComponentClass<import("create-react-context").ProviderProps<FormikContext<any>>, any>,
-//     FormikConsumer: React.ComponentClass<import("create-react-context").ConsumerProps<FormikContext<any>>, any>;
-
-// export declare function connect<OuterProps, Values = {}>
-//     (Comp: React.ComponentType<OuterProps & { formik: FormikContext<Values>; }>)
-//     : React.ComponentType<OuterProps>;
-
-
-const GenericApiParamsForm = withFormik<IGenericApiParamsFormProps, IFakeGetApiParams>({
-    mapPropsToValues: (props: IGenericApiParamsFormProps) => {
-        FormikConsumer
-        console.log('GenericApiParamsForm================================');
-        console.log('GenericApiParamsForm.this', this);
-        console.log('GenericApiParamsForm.props', props);
-        console.log('GenericApiParamsForm.props.formData', props.formData);
-        console.log('GenericApiParamsForm.props.formData', { ...props.formData });
-        return { ...props.formData };
-    },
-    handleSubmit: (values: IFakeGetApiParams, other) => {
-        console.log('GenericApiParamsForm.SUBMIT: values:', values);
-        console.log('GenericApiParamsForm.SUBMIT: other:', other);
-        other.props.onSubmit(values);
-        // cons
-        // this.setState({
-        //     apiRequestParams: values,
-        // });
-    }
-})(GenericApiParamsFormView)
-
-export class GenericApiPanel extends React.Component<IGenericApiPanelProps, IGenericApiPanelState> {
+export class GenericApiPanel
+    extends React.Component<IGenericApiPanelProps, IGenericApiPanelState> {
 
     state: IGenericApiPanelState;
-
+    ApiDef: ApiCallDefinition<IFakeGetApiResponse, IFakeGetUrlParams, IFakeGetBodyParams>;
     constructor(props: IGenericApiPanelProps) {
         super(props);
 
+        this.ApiDef = FakeApiService.GetApiCallDefinition()
         this.state = {
-            apiRequestParams: {
-                query: 'some query string',
-                skip: 1,
-                take: 2,
-                debug: true
-            },
-            showDebugForm: true,
-            apiResponse: {},
+            urlParamsForm: this.ApiDef.apiParams.urlParams.getInitialValues(),
+            bodyParamsForm: this.ApiDef.apiParams.bodyParams.getInitialValues(),
+            apiResponse: undefined,
         };
 
 
         this.fetchIt = this.fetchIt.bind(this);
-        this.updateFormData = this.updateFormData.bind(this);
+        this.updateUrlParamsForm = this.updateUrlParamsForm.bind(this);
+        this.updateBodyParamsForm = this.updateBodyParamsForm.bind(this);
     }
 
-    fetchIt(): Promise<IFakeGetApiResult> {
-        if (this.state.apiRequestParams) {
-            return FakeApiService.FetchWithGet(this.state.apiRequestParams)
-                .then((apiResponse: IFakeGetApiResult) => {
-                    this.setState({ apiResponse });
-                    return apiResponse;
-                });
-        }
-        throw new Error('Should not call fetch with apiRequestParams set!')
+
+
+    fetchIt(): Promise<IFakeGetApiResponse> {
+        const urlParams = new HttpUrlParameters<IFakeGetUrlParams>(this.state.urlParamsForm);
+        const apiParams = new ApiParameters(urlParams);
+        // TODO handle submitting and disabling button - do it lower!
+        return this.ApiDef.apiCallback(apiParams)
+            .then((apiResponse: IFakeGetApiResponse) => {
+                this.setState({ apiResponse });
+                return apiResponse;
+            });
     }
-    updateFormData(formData: IFakeGetApiParams): void {
-        console.log('Got form data:', formData);
-        this.setState({
-            apiRequestParams: formData,
-        });
+
+
+
+    updateUrlParamsForm(urlParamsForm: IFakeGetUrlParams): void {
+        console.log('GenericApiPanel.updateUrlParamsForm:', urlParamsForm);
+        this.setState({ urlParamsForm, });
     }
+
+
+    updateBodyParamsForm(bodyParamsForm: IFakeGetBodyParams): void {
+        console.log('GenericApiPanel.updateBodyParamsForm:', bodyParamsForm);
+        this.setState({ bodyParamsForm, });
+    }
+
+
+    // updateHeadersForm(_headersForm: any): void {
+    //     console.log('GenericApiPanel.updateHeadersForm:', _headersForm);
+    //     this.setState({
+    //         _headersForm,
+    //     });
+    // }
 
     render() {
-
-        const formProps: IGenericApiParamsFormProps = {
-            formData: this.state.apiRequestParams,
-            onSubmit: this.updateFormData,
-        }
-
-        const apiHeaderView = {
+        const header: IHeaderContainerProps = {
             name: "Generic API",
             helpUrl: "https://wiki.openstreetmap.org/wiki/Nominatim",
+            openUrlCb: (_url: string) => undefined
         };
 
-        const apiUrlParamsView = {
-            formData: this.state.apiRequestParams
+        const pageStateProps: IApiBrowserPageStateFormProps<IFakeGetApiResponse> = {
+            header,
+            formData: {
+                showPanels: {
+                    queryParamFormDebug: false,
+                    bodyParamFormDebug: false,
+                },
+            },
+            fetch: this.fetchIt
         };
-        const debugForm = this.state.showDebugForm ? <DebugFormix /> : null;
-        const x = <GenericApiParamsForm {...formProps}/>
-        console.log('formProps.formData:',GenericApiParamsForm.displayName)
-        console.log('formProps.formData:',GenericApiParamsForm.contextTypes)
-        console.log('formProps.formData:',GenericApiParamsForm.defaultProps)
-        console.log('formProps.formData:',GenericApiParamsForm.propTypes)
-        console.log('formProps.formData:',GenericApiParamsForm)
-        console.log('formProps.x:',x.props)
-        // console.log('formProps.formData:',formProps.formData)
-        // const debugForm = this.state.showDebugForm ? <pre>OH</pre> : null;
+
+        // const queryFormProps: IParamFormProps<IFakeGetUrlParams> = {
+        //     formData: this.state.urlParamsForm!,
+        //     onSubmit: this.updateUrlParamsForm,
+        // }
+
+        // const bodyFormProps: IParamFormProps<IFakeGetBodyParams> = {
+        //     formData: this.state.bodyParamsForm!,
+        //     onSubmit: this.updateBodyParamsForm,
+        // }
+
+
+        // const x = <GenericApiParamsForm {...formProps} />
 
         return (
-            <ApiPanelLayoutContainer>
-                <HeaderContainer {...apiHeaderView} />
-                <FormContainer>
-                    <GenericApiParamsForm {...formProps}>
-                        {debugForm}
-                    </GenericApiParamsForm>
-                </FormContainer>
-                <ApiUrlParametersView {...apiUrlParamsView}>
-                </ApiUrlParametersView>
-                <ResultsContainer>
-                    {this.state.apiResponse}
-                </ResultsContainer>
-            </ApiPanelLayoutContainer>);
+            <div>
+                <ApiBrowser<IFakeGetApiResponse> {...pageStateProps}>
+                    <Heading>hey</Heading>
+                </ApiBrowser>
+            </div>
+            //     <ApiPanelLayoutContainer>
+            //         <HeaderContainer {...apiHeaderView} />
+            //         <FormContainer>
+            //             <GenericApiParamsForm {...formProps}>
+            //                 {debugForm}
+            //             </GenericApiParamsForm>
+            //         </FormContainer>
+            //         <ApiUrlParametersView {...apiUrlParamsView}>
+            //         </ApiUrlParametersView>
+            //         <ResultsContainer>
+            //             {this.state.apiResponse}
+            //         </ResultsContainer>
+            //     </ApiPanelLayoutContainer>
+        );
     }
 }
 
+// const GenericApiParamsForm = withFormik<IGenericApiParamsFormProps, IParamFormProps<IFakeGetUrlParams>>({
+//     mapPropsToValues: (props: IGenericApiParamsFormProps) => {
+//         // console.log('GenericApiParamsForm================================');
+//         // // console.log('GenericApiParamsForm.this', this);
+//         // console.log('GenericApiParamsForm.props', props);
+//         // console.log('GenericApiParamsForm.props.formData', props.formData);
+//         // console.log('GenericApiParamsForm.props.formData', { ...props.formData });
+//         return { ...props.formData };
+//     },
+//     handleSubmit: (values: IFakeGetUrlParams, other) => {
+//         console.log('GenericApiParamsForm.SUBMIT: values:', values);
+//         console.log('GenericApiParamsForm.SUBMIT: other:', other);
+//         other.props.onSubmit(values);
+//     }
+// })(GenericApiParamsFormView)

@@ -4,10 +4,10 @@
         { "path": "../component-lib" },
         { "path": "../geo-core" },
         { "path": "../graph-core" },
-        { "path": "../osm-cli" },
+        // { "path": "../osm-cli" },
         { "path": "../osm-data" },
-        { "path": "../ucsd-app" },
-        { "path": "../ucsd-cli" },
+        // { "path": "../ucsd-app" },
+        // { "path": "../ucsd-cli" },
         { "path": "../ucsd-core" },
         { "path": "../utils" },
     ],
@@ -36,12 +36,15 @@
         "allowSyntheticDefaultImports": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "typeRoots": [
-            "node_modules/@types",
-            "ext-stub-types"
-        ]
     },
-    "include": ["src/**/*", "ext-stub-types/**/*", "fuse.ts", ".storybook/views"],
+    "include": [
+        "./src",
+        "./ext-stub-types",
+        "../../ext-stub-types",
+        "./fuse.ts",
+        ".storybook/views",
+    ],
+    // "include": ["src/**/*", "ext-stub-types/**/*", "fuse.ts", ".storybook/views"],
     "exclude": ["node_modules", "build", "scripts"]
 
     // "compilerOptions": {

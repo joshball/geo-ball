@@ -1,14 +1,14 @@
 import * as React from 'react'
 import { INominatimParams, createNominatimParams, INominatimResult, INominatimQueryParamObj } from '@geo-ball/osm-data';
-import { ApiPanelLayoutContainer } from '../common/ApiPanelLayoutContainer';
-import { HeaderContainer } from '../common/HeaderContainer';
-import { FormContainer } from '../common/FormContainer';
-import { ApiActionsView, IApiActionsViewProps } from '../common/ApiActionsView';
-import { ResultsContainer } from '../common/ResultsContainer';
-import { geocodeAddress } from '../../../services/GeocodingService';
-import { IGeocodingApiFormProps, GeocodingApiForm } from './GeocodingApiForm';
-import { DebugFormix } from '../../common/input/DebugFormix';
-import { connect as formikConnect, Formik } from 'formik';
+// import { ApiPanelLayoutContainer } from '../common/ApiPanelLayoutContainer';
+// import { HeaderContainer } from '../common/HeaderContainer';
+// import { FormContainer } from '../common/FormContainer';
+// import { ApiActionsView, IApiActionsViewProps } from '../common/ApiActionsView';
+// import { ResultsContainer } from '../common/ResultsContainer';
+// import { geocodeAddress } from '../../../services/GeocodingService';
+// import { IGeocodingApiFormProps, GeocodingApiForm } from './GeocodingApiForm';
+// import { DebugFormix } from '../../common/input/DebugFormix';
+// import { connect as formikConnect, Formik } from 'formik';
 
 // TWO WAYS to deep destructure setstate
 // this.setState(({ formData }) => ({
@@ -109,10 +109,10 @@ export class GeocodingApiPanel extends React.Component<IReverseGeocodingApiPanel
     }
 
     getFormikProps = (formikProps: any) => {
-        console.log('XXXformikPropsthis.formikProps', this.formikProps)
-        console.log('XXXformikProps', formikProps.values.query.stringQuery.q)
+        // console.log('XXXformikPropsthis.formikProps', this.formikProps)
+        // console.log('XXXformikProps', formikProps.values.query.stringQuery.q)
         // this.setState({ formikProps })
-        this.formikProps = formikProps;
+        // this.formikProps = formikProps;
         // if (!this.state.formikProps) {
         //     this.setState({ formikProps })
         // }
@@ -125,97 +125,97 @@ export class GeocodingApiPanel extends React.Component<IReverseGeocodingApiPanel
     }
 
     render() {
+        return <div>oo</div>;
+        // const formProps: IGeocodingApiFormProps = {
+        //     formData: this.state.apiRequestParams,
+        //     onSubmit: this.updateFormData,
 
-        const formProps: IGeocodingApiFormProps = {
-            formData: this.state.apiRequestParams,
-            onSubmit: this.updateFormData,
+        //     showFormStatePanel: this.state.showFormStatePanel,
+        //     getFormikProps: this.getFormikProps,
+        // }
 
-            showFormStatePanel: this.state.showFormStatePanel,
-            getFormikProps: this.getFormikProps,
-        }
+        // const apiHeaderView = {
+        //     name: "Geocoding API",
+        //     helpUrl: "https://wiki.openstreetmap.org/wiki/Nominatim",
+        // };
 
-        const apiHeaderView = {
-            name: "Geocoding API",
-            helpUrl: "https://wiki.openstreetmap.org/wiki/Nominatim",
-        };
+        // const apiUrlParamsView = {
+        //     formData: this.state.apiRequestParams
+        // };
 
-        const apiUrlParamsView = {
-            formData: this.state.apiRequestParams
-        };
+        // const apiActionView: IApiActionsViewProps = {
+        //     fakeTheApiCallValue: this.state.fakeTheApiCall,
+        //     fakeTheApiCallToggle: this.toggleFakeApiCall,
 
-        const apiActionView: IApiActionsViewProps = {
-            fakeTheApiCallValue: this.state.fakeTheApiCall,
-            fakeTheApiCallToggle: this.toggleFakeApiCall,
+        //     showFormStatePaneValue: this.state.showFormStatePanel,
+        //     showFormStatePaneToggle: this.toggleFormStatePanel,
+        //     getFormState: this.getFormState,
 
-            showFormStatePaneValue: this.state.showFormStatePanel,
-            showFormStatePaneToggle: this.toggleFormStatePanel,
-            getFormState: this.getFormState,
+        //     showParameterPaneValue: this.state.showParamStatePanel,
+        //     showParameterPaneToggle: this.toggleParamStatePanel,
+        //     getParameters: this.getParameters,
 
-            showParameterPaneValue: this.state.showParamStatePanel,
-            showParameterPaneToggle: this.toggleParamStatePanel,
-            getParameters: this.getParameters,
-
-            makeRequest: this.fetchIt,
-        };
-        // const debugForm = this.state.showDebugForm ? <DebugFormix /> : null;
-        // console.log('FORM DATA:', this.state.formData)
-
-
-
-        // const debugFormContainer = this.state.showFormStatePanel ? <DebugFormix /> : null;
-        console.log('RENDER.state.showFormStatePanel', this.state.showFormStatePanel);
-        console.log('RENDER.state.debugFormix', this.state.debugFormix);
-        console.log('RENDER.state.formikProps', this.state.formikProps);
-        // const debugFormContainer = this.state.showFormStatePanel ? <DebugFormix {...this.state.formikProps} /> : null;
-        const debugFormContainer = this.state.showFormStatePanel ? JSON.stringify(, null, 4) : null;
-        const debugParamsContainer = null;
-        return (
-            <ApiPanelLayoutContainer>
-
-                <HeaderContainer {...apiHeaderView} />
-
-                <FormContainer>
-                    <GeocodingApiForm {...formProps} />
-                    {/* <ApiUrlParametersView {...apiUrlParamsView}/> */}
-                    <ApiActionsView {...apiActionView} />
-                </FormContainer>
+        //     makeRequest: this.fetchIt,
+        // };
+        // // const debugForm = this.state.showDebugForm ? <DebugFormix /> : null;
+        // // console.log('FORM DATA:', this.state.formData)
 
 
 
+        // // const debugFormContainer = this.state.showFormStatePanel ? <DebugFormix /> : null;
+        // console.log('RENDER.state.showFormStatePanel', this.state.showFormStatePanel);
+        // console.log('RENDER.state.debugFormix', this.state.debugFormix);
+        // console.log('RENDER.state.formikProps', this.state.formikProps);
+        // // const debugFormContainer = this.state.showFormStatePanel ? <DebugFormix {...this.state.formikProps} /> : null;
+        // const debugFormContainer = this.state.showFormStatePanel ? JSON.stringify(, null, 4) : null;
+        // const debugParamsContainer = null;
+        // return (
+        //     <ApiPanelLayoutContainer>
 
-                <ResultsContainer>
-                    {this.state.formikProps}
-                    {this.state.formikProps}
-                    {/* {debugFormContainer}
-                    {debugParamsContainer} */}
-                    {this.state.apiResponse}
-                </ResultsContainer>
+        //         <HeaderContainer {...apiHeaderView} />
 
-            </ApiPanelLayoutContainer>);
+        //         <FormContainer>
+        //             <GeocodingApiForm {...formProps} />
+        //             {/* <ApiUrlParametersView {...apiUrlParamsView}/> */}
+        //             <ApiActionsView {...apiActionView} />
+        //         </FormContainer>
+
+
+
+
+        //         <ResultsContainer>
+        //             {this.state.formikProps}
+        //             {this.state.formikProps}
+        //             {/* {debugFormContainer}
+        //             {debugParamsContainer} */}
+        //             {this.state.apiResponse}
+        //         </ResultsContainer>
+
+        //     </ApiPanelLayoutContainer>);
     }
 }
 
-const DisplayFormikState = (props) => (
-    <div style={{ margin: "1rem 0" }}>
-        <h3 style={{ fontFamily: "monospace" }} />
-        <pre
-            style={{
-                background: "#f6f8fa",
-                fontSize: ".65rem",
-                padding: ".5rem",
-            }}
-        >
-            <strong>props</strong> ={" "}
-            console.log('props', props)
-      {JSON.stringify(props, undefined, 4)}
-            {/* {JSON.stringify(
-        R.dissocPath(["formik", "validationSchema"], props),
-        null,
-        2,
-      )} */}
-        </pre>
-    </div>
-);
+// const DisplayFormikState = (props) => (
+//     <div style={{ margin: "1rem 0" }}>
+//         <h3 style={{ fontFamily: "monospace" }} />
+//         <pre
+//             style={{
+//                 background: "#f6f8fa",
+//                 fontSize: ".65rem",
+//                 padding: ".5rem",
+//             }}
+//         >
+//             <strong>props</strong> ={" "}
+//             console.log('props', props)
+//       {JSON.stringify(props, undefined, 4)}
+//             {/* {JSON.stringify(
+//         R.dissocPath(["formik", "validationSchema"], props),
+//         null,
+//         2,
+//       )} */}
+//         </pre>
+//     </div>
+// );
 
-const ConnectedDisplayFormikState = formikConnect(DisplayFormikState);
+// const ConnectedDisplayFormikState = formikConnect(DisplayFormikState);
 

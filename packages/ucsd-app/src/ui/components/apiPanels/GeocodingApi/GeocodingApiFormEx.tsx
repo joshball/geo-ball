@@ -92,15 +92,15 @@ export const GeocodingApiFormEx = (formikProps: any) => {
     )
 }
 
-const GeocodingApiFormParent = withFormik({
-    mapPropsToValues: () => ({ name: '' }),
+// const GeocodingApiFormParent = withFormik({
+//     mapPropsToValues: () => ({ name: '' }),
 
-    handleSubmit: (values, { setSubmitting }) => {
-      setTimeout(() => {
-        alert(JSON.stringify(values, null, 2));
-        setSubmitting(false);
-      }, 1000);
-    },
+//     handleSubmit: (values, { setSubmitting }) => {
+//       setTimeout(() => {
+//         alert(JSON.stringify(values, null, 2));
+//         setSubmitting(false);
+//       }, 1000);
+//     },
 
-    displayName: 'BasicForm',
-  })(GeocodingApiFormEx);
+//     displayName: 'BasicForm',
+//   })(GeocodingApiFormEx);

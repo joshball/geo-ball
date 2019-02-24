@@ -57,13 +57,17 @@
             "es6", "es2015","es2018","es2018.promise", "esnext", "dom"
         ],
         "typeRoots": [
-            "node_modules/@types",
-            "ext-stub-types"
+            "./node_modules/@types",
+            "../../node_modules/@types",
+            "./ext-stub-types",
+            "../../ext-stub-types",
         ]
     },
-    // "include": [
-    // 	"./src/**/*.ts"
-    // ],
+    "include": [
+        "./src",
+        "./ext-stub-types",
+        "../../ext-stub-types",
+    ],
     "exclude": [
         "node_modules/**"
     ],
