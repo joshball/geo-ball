@@ -16,9 +16,9 @@
 //     }).parse
 // };
 
-const glob = require("glob");
-const path = require("path");
-const fs = require("fs");
+const glob = require('glob');
+const path = require('path');
+const fs = require('fs');
 
 module.exports = {
     title: 'geo-ball',
@@ -47,7 +47,7 @@ module.exports = {
             // content: 'src/components/atoms/primitives.md',
             components: 'src/components/atoms/**/*.tsx',
             exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
-            usageMode: 'expand' // 'hide' | 'collapse' | 'expand'
+            usageMode: 'expand', // 'hide' | 'collapse' | 'expand'
         },
         // {
         //     name: 'Primitives',
@@ -86,7 +86,7 @@ module.exports = {
         'rsg-example': path.resolve(__dirname, 'src'),
     },
     components: () => {
-        return glob.sync("src/components/**/*.{ts,tsx}")
+        return glob.sync('src/components/**/*.{ts,tsx}');
         // return glob.sync("src/components/atoms/**/*.tsx")
         //     .filter(file => {
         //         // Take only connect component if exists, ignore others.
@@ -110,10 +110,10 @@ module.exports = {
         //         }
         //     });
     },
-    propsParser: require("react-docgen-typescript").parse,
-    webpackConfig: Object.assign({}, require("./webpack.config"), {}),
+    propsParser: require('react-docgen-typescript').parse,
+    webpackConfig: Object.assign({}, require('./webpack.config'), {}),
     // styleguideComponents: {
     //     Wrapper: __dirname + "/src/styleguide/Wrapper.tsx",
     // },
-    styleguideDir: "docs",
+    styleguideDir: 'docs',
 };
