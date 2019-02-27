@@ -1,10 +1,14 @@
 {
 	"extends": [
+        "tslint-config-airbnb",
 		"tslint:latest",
-		"tslint-config-prettier"
+		"tslint:recommended",
+		"tslint-config-prettier",
+		"tslint-plugin-prettier",
 		// "tslint-immutable"
 	],
 	"rules": {
+		"prettier": true,
 		"array-type": false,
 		"interface-name": false,
 		// "interface-name": [true,"never-prefix"],
