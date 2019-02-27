@@ -3,7 +3,7 @@
         // "outDir": "./build",
         // "rootDir": "./src",
         // "target": "es2015",
-        "target": "es5",
+        "target": "es6",
         "baseUrl": "./packages",
         "paths": {
             // "@geo-ball/*": [
