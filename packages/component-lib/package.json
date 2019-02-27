@@ -30,8 +30,6 @@
     "cleanup:packages": "yarn run prettier-package-json --write",
     "eslint:lint": "eslint './src/**/*.{js,jsx,ts,tsx}'",
     "eslint:check-config": "eslint --print-config . | eslint-config-prettier-check",
-    "prettier:format": "prettier-eslint \"src/**/*.{js,jsx,ts,tsx}\"",
-    "prettier:write": "prettier-eslint --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "sg": "styleguidist server",
     "test": "yarn run build && yarn run nyc ava --verbose",
     "test:watch": "yarn run build && yarn run ava --watch"
