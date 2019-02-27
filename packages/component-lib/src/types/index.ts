@@ -3,3 +3,4 @@
 // ...
 
 export * from './EventCallback';
+export * from './ApiTypes';

@@ -1,5 +1,4 @@
-
-
+import * as React from 'react';
 
 // const ContentType = {
 //     'multipart/form-data',
@@ -7,9 +6,7 @@
 //     'application/json',
 //     'application/xml'
 // }
-
 export const cssProps = (props?: React.CSSProperties): React.CSSProperties => props as React.CSSProperties;
-
 
 export type HttpMethod = 'get' | 'post';
 
@@ -27,6 +24,7 @@ export interface IBaseHttpParameters<TParameterData = any> {
     getParams: () => Optional<TParameterData>;
     getInitialValues: () => Optional<TParameterData>
 }
+
 
 export interface IHttpUrlParameters<TParameterData> extends IBaseHttpParameters<TParameterData> {
 }
@@ -98,6 +96,7 @@ export interface IApiCallDefinition<TApiResponse, TUrlParameterData=any, TBodyPa
     url: string;
     apiParams: IApiParameters<TUrlParameterData, TBodyParameterData>;
     apiCallback: ApiCallback<TApiResponse, TUrlParameterData, TBodyParameterData>;
+    mockCallback: ApiCallback<TApiResponse, TUrlParameterData, TBodyParameterData>;
 }
 
 export type ApiCallback<TApiResponse, TUrlParameterData = any, TBodyParameterData = any> =
@@ -112,24 +111,33 @@ export const ApiCallbackStub = <TApiResponse>(_p: any): Promise<TApiResponse> =>
 );
 // export const ApiCallbackStub = <TApiResponse>(_p: any) => Promise.resolve({} as TApiResponse);
 
-export class ApiCallDefinition<TApiResponse, TUrlParameterData = any, TBodyParameterData = any> implements
-    IApiCallDefinition<TApiResponse, TUrlParameterData, TBodyParameterData> {
+export class ApiCallDefinition<TApiResponse, TUrlParameterData = any, TBodyParameterData = any>
+    implements IApiCallDefinition<TApiResponse, TUrlParameterData, TBodyParameterData> {
 
-    name: string;
-    method: HttpMethod;
-    url: string;
-    apiParams: IApiParameters<TUrlParameterData, TBodyParameterData>;
-    apiCallback: ApiCallback<TApiResponse, TUrlParameterData, TBodyParameterData>;
+    name: string
+    method: HttpMethod
+    url: string
+    apiParams: IApiParameters<TUrlParameterData, TBodyParameterData>
+    apiCallback: ApiCallback<TApiResponse, TUrlParameterData, TBodyParameterData>
+    mockCallback: ApiCallback<TApiResponse, TUrlParameterData, TBodyParameterData>;
 
-    constructor(name: string, method: HttpMethod, url: string,
+    constructor(
+        name: string,
+        method: HttpMethod,
+        url: string,
         apiParams: IApiParameters = new ApiParameters(),
-        apiCallback: ApiCallback<TApiResponse> = ApiCallbackStub
+        apiCallback: ApiCallback<TApiResponse>,
+        mockCallback: ApiCallback<TApiResponse> = ApiCallbackStub,
     ) {
-        this.name = name;
-        this.method = method;
-        this.url = url;
-        this.apiParams = apiParams;
-        this.apiCallback = apiCallback;
+        console.log("API DEF")
+        console.log("API DEF")
+        this.name = name
+        this.method = method
+        this.url = url
+        this.apiParams = apiParams
+        this.apiCallback = apiCallback
+        this.mockCallback = mockCallback
     }
 
 }
+

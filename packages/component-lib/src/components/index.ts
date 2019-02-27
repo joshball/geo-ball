@@ -3,8 +3,8 @@
 // ...
 
 export * from './atoms';
-// export * from './molecules';
+export * from './molecules';
 export * from './organisms';
-// export * from './panels';
+export * from './panels';
 // export * from './templates';
 export * from './themes';

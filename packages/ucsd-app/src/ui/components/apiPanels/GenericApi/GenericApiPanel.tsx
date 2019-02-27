@@ -3,18 +3,17 @@ import {
     Heading,
     ApiCallDefinition,
     HttpUrlParameters,
-    IApiParameters,
     ApiBrowser,
     IApiBrowserPageStateFormProps,
     ApiParameters,
     IHeaderContainerProps
 } from '@geo-ball/component-lib';
 import {
-    IFakeGetUrlParams,
-    IFakeGetBodyParams,
-    IFakeGetApiResponse,
-    FakeApiService,
-} from './FakeApiService';
+    IGenericGetUrlParams,
+    IGenericGetBodyParams,
+    IGenericGetApiResponse,
+    GenericApiService,
+} from './GenericApiService';
 
 // import { GenericApiParamsFormView, IGenericApiParamsFormProps } from './GenericApiParamsFormView';
 // import { ApiPanelLayoutContainer } from '../common/ApiPanelLayoutContainer';
@@ -26,11 +25,14 @@ import {
 // import { withFormik, FormikConsumer } from "formik";
 // import { DebugFormix } from '../../common/input/DebugFormix';
 import { withFormik } from 'formik';
+import { GenericGetApiCallDefinition } from './GenericApiDefinition';
+import { IHttpHeader } from '../../../../../../component-lib/build/components/panels/ApiBrowser/ApiTypes';
 
 export interface IGenericApiPanelState {
-    urlParamsForm: Optional<IFakeGetUrlParams>;
-    bodyParamsForm: Optional<IFakeGetBodyParams>;
-    apiResponse?: Optional<IFakeGetApiResponse>;
+    urlParamsForm: Optional<IGenericGetUrlParams>;
+    bodyParamsForm: Optional<IGenericGetBodyParams>;
+    headersForm: Optional<Array<IHttpHeader>>;
+    apiResponse?: Optional<IGenericGetApiResponse>;
 }
 
 export interface IGenericApiPanelProps {
@@ -47,14 +49,17 @@ export class GenericApiPanel
     extends React.Component<IGenericApiPanelProps, IGenericApiPanelState> {
 
     state: IGenericApiPanelState;
-    ApiDef: ApiCallDefinition<IFakeGetApiResponse, IFakeGetUrlParams, IFakeGetBodyParams>;
+    // ApiDef: ApiCallDefinition<IGenericGetApiResponse, IGenericGetUrlParams, IGenericGetBodyParams>;
+    ApiDef: GenericGetApiCallDefinition;
     constructor(props: IGenericApiPanelProps) {
         super(props);
 
-        this.ApiDef = FakeApiService.GetApiCallDefinition()
+        this.ApiDef = new GenericGetApiCallDefinition();
+
         this.state = {
             urlParamsForm: this.ApiDef.apiParams.urlParams.getInitialValues(),
             bodyParamsForm: this.ApiDef.apiParams.bodyParams.getInitialValues(),
+            headersForm: this.ApiDef.apiParams.headers,
             apiResponse: undefined,
         };
 
@@ -66,12 +71,14 @@ export class GenericApiPanel
 
 
 
-    fetchIt(): Promise<IFakeGetApiResponse> {
-        const urlParams = new HttpUrlParameters<IFakeGetUrlParams>(this.state.urlParamsForm);
+    fetchIt(): Promise<IGenericGetApiResponse> {
+        console.log('GenericApiPanel.fetchIt()')
+
+        const urlParams = new HttpUrlParameters<IGenericGetUrlParams>(this.state.urlParamsForm);
         const apiParams = new ApiParameters(urlParams);
         // TODO handle submitting and disabling button - do it lower!
         return this.ApiDef.apiCallback(apiParams)
-            .then((apiResponse: IFakeGetApiResponse) => {
+            .then((apiResponse: IGenericGetApiResponse) => {
                 this.setState({ apiResponse });
                 return apiResponse;
             });
@@ -79,13 +86,13 @@ export class GenericApiPanel
 
 
 
-    updateUrlParamsForm(urlParamsForm: IFakeGetUrlParams): void {
+    updateUrlParamsForm(urlParamsForm: IGenericGetUrlParams): void {
         console.log('GenericApiPanel.updateUrlParamsForm:', urlParamsForm);
         this.setState({ urlParamsForm, });
     }
 
 
-    updateBodyParamsForm(bodyParamsForm: IFakeGetBodyParams): void {
+    updateBodyParamsForm(bodyParamsForm: IGenericGetBodyParams): void {
         console.log('GenericApiPanel.updateBodyParamsForm:', bodyParamsForm);
         this.setState({ bodyParamsForm, });
     }
@@ -105,7 +112,7 @@ export class GenericApiPanel
             openUrlCb: (_url: string) => undefined
         };
 
-        const pageStateProps: IApiBrowserPageStateFormProps<IFakeGetApiResponse> = {
+        const pageStateProps: IApiBrowserPageStateFormProps<IGenericGetApiResponse> = {
             header,
             formData: {
                 showPanels: {
@@ -116,12 +123,12 @@ export class GenericApiPanel
             fetch: this.fetchIt
         };
 
-        // const queryFormProps: IParamFormProps<IFakeGetUrlParams> = {
+        // const queryFormProps: IParamFormProps<IGenericGetUrlParams> = {
         //     formData: this.state.urlParamsForm!,
         //     onSubmit: this.updateUrlParamsForm,
         // }
 
-        // const bodyFormProps: IParamFormProps<IFakeGetBodyParams> = {
+        // const bodyFormProps: IParamFormProps<IGenericGetBodyParams> = {
         //     formData: this.state.bodyParamsForm!,
         //     onSubmit: this.updateBodyParamsForm,
         // }
@@ -131,8 +138,8 @@ export class GenericApiPanel
 
         return (
             <div>
-                <ApiBrowser<IFakeGetApiResponse> {...pageStateProps}>
-                    <Heading>hey</Heading>
+                <ApiBrowser<IGenericGetApiResponse> {...pageStateProps}>
+                    <Heading>hey hey7</Heading>
                 </ApiBrowser>
             </div>
             //     <ApiPanelLayoutContainer>
@@ -152,7 +159,7 @@ export class GenericApiPanel
     }
 }
 
-// const GenericApiParamsForm = withFormik<IGenericApiParamsFormProps, IParamFormProps<IFakeGetUrlParams>>({
+// const GenericApiParamsForm = withFormik<IGenericApiParamsFormProps, IParamFormProps<IGenericGetUrlParams>>({
 //     mapPropsToValues: (props: IGenericApiParamsFormProps) => {
 //         // console.log('GenericApiParamsForm================================');
 //         // // console.log('GenericApiParamsForm.this', this);
@@ -161,7 +168,7 @@ export class GenericApiPanel
 //         // console.log('GenericApiParamsForm.props.formData', { ...props.formData });
 //         return { ...props.formData };
 //     },
-//     handleSubmit: (values: IFakeGetUrlParams, other) => {
+//     handleSubmit: (values: IGenericGetUrlParams, other) => {
 //         console.log('GenericApiParamsForm.SUBMIT: values:', values);
 //         console.log('GenericApiParamsForm.SUBMIT: other:', other);
 //         other.props.onSubmit(values);

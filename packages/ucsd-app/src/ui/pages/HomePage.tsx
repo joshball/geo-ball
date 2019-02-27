@@ -4,6 +4,7 @@ import { colors, fonts, fontSizes, cssProps } from "../config/theme"
 import { CenteredContent } from '../components/common/layout/CenteredContent';
 import { Text } from '../components/common/layout/Text';
 import { MAIN_ROUTES_DATA } from '../config/routes';
+import { Redirect } from 'react-router';
 
 const mainLayout = css({
     // display: 'grid',
@@ -41,7 +42,7 @@ export const HomePage: React.SFC<any> = (props: any) => {
     // console.log('HomePage props.match', props.match)
     // return <Redirect to='/settings' />;
     // return <Redirect to='/hooks' />;
-    // return <Redirect to='/api' />;
+    return <Redirect to='/api' />;
     // return <Redirect to='/files' />;
     // return <Redirect to='/maps' />;
     const homeButtons = MAIN_ROUTES_DATA

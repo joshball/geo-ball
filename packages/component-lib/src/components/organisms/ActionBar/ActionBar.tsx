@@ -1,9 +1,9 @@
-import * as React from 'react'
-// import { Card, Elevation } from '@blueprintjs/core';
+import * as React from 'react';
+// import { Card, Elevation } from 'fannypack';
 import { Card } from 'fannypack';
-import { IActionButton, ActionButton } from '../ActionButton/ActionButton';
 import { DebugToggles, IActionBarDebugTogglesProps } from './DebugToggles';
-
+import { SubmitButton, ISubmitButtonProps } from '../../molecules/SubmitButton/SubmitButton';
+import { cssProps } from '../../../types';
 
 /** These are the props for the action bar */
 export interface IActionBarProps {
@@ -13,9 +13,8 @@ export interface IActionBarProps {
     debugToggles: IActionBarDebugTogglesProps;
 
     /** This is the request button description */
-    requestButton: IActionButton;
+    submitButtonProps: ISubmitButtonProps;
 }
-
 
 /**
  * This bar holds all the actions
@@ -24,75 +23,36 @@ export interface IActionBarProps {
 export const ActionBar = (props: IActionBarProps) => {
     const actionBarDivStyle = {
         overflow: 'hidden',
-        height: '30px',
+        // minHeight: '30px',
+        // height: '100%',
         // float: 'right',
         // display: 'flex',
-    }
+    };
+
+    const toggleDivStyle = cssProps({
+        float: 'left',
+        display: 'inline-block',
+    });
+    const submitDivStyle = cssProps({
+        float: 'right',
+        display: 'flex',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    });
 
     console.log('ActionBar PROPS:', props);
-    const actionButton = new ActionButton(props.requestButton);
-    const ButtonProps = actionButton.getButton();
-
 
     return (
-        <Card >
+        <Card>
             <div style={actionBarDivStyle}>
-                {/* <SubmitRequestButton {...props} /> */}
-                <DebugToggles {...props.debugToggles} />
-                {ButtonProps}
+                <div style={toggleDivStyle}>
+                    <DebugToggles {...props.debugToggles} />
+                </div>
+                <div style={submitDivStyle}>
+                    <SubmitButton {...props.submitButtonProps} />
+                </div>
             </div>
         </Card>
     );
-}
-
-
-
-// export interface ISubmitRequestButtonState {
-//     submitting: boolean;
-// }
-
-// export class SubmitRequestButton extends React.Component<IActionBarProps, ISubmitRequestButtonState> {
-
-//     state: ISubmitRequestButtonState;
-
-//     constructor(props: IActionBarProps) {
-//         super(props)
-//         this.state = { submitting: false }
-//         this.onClick = this.onClick.bind(this);
-//     }
-
-//     async onClick() {
-//         console.log('onClick!')
-//         this.setState({ submitting: true, });
-
-//         try { await this.props.makeRequest(); }
-//         finally {
-//             this.setState({ submitting: false, });
-//         }
-//     }
-
-//     render() {
-//         /** @type {{search: React.CSSProperties}} */
-//         const buttonDiv = {
-//             float: 'right' as FloatProperty,
-//             display: 'inline-flex',
-//             alignItems: 'center',
-//             justifyContent: 'center',
-//             height: '100%',
-//             marginRight: '75px',
-//             marginLeft: '75px',
-//         }
-
-//         return (
-//             <div style={buttonDiv}>
-//                 <Button
-//                     disabled={this.state.submitting}
-//                     onClick={this.onClick}
-//                     intent={Intent.PRIMARY}
-//                 >
-//                     Make the request
-//                 </Button>
-//             </div>
-//         );
-//     }
-// }
+};

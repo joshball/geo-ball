@@ -4,7 +4,7 @@ import { Card, Elevation, Button, Intent, FormGroup } from '@blueprintjs/core';
 import { styles } from '../../../config/theme/index';
 import { css } from 'glamor';
 import { FormikTextArea } from '../../common/input/FormikWrapped';
-import { IFakeUrlApiParams } from './FakeApiService';
+import { IGenericUrlApiParams } from './GenericApiService';
 
 const JDR = styles.justifyRight;
 
@@ -14,8 +14,8 @@ const JDR = styles.justifyRight;
 // }
 
 export interface IGenericApiParamsFormProps {
-    formData: IFakeUrlApiParams;
-    onSubmit: (formData: IFakeUrlApiParams) => void;
+    formData: IGenericUrlApiParams;
+    onSubmit: (formData: IGenericUrlApiParams) => void;
 }
 
 const mainFormWrapDiv = {
@@ -33,7 +33,7 @@ const queryColStyle = css({
 });
 
 
-export const GenericApiParamsFormView = (props: IGenericApiParamsFormProps & FormikProps<IFakeUrlApiParams>) => {
+export const GenericApiParamsFormView = (props: IGenericApiParamsFormProps & FormikProps<IGenericUrlApiParams>) => {
 
     console.log('GenericApiParamsFormView BEFORE')
     console.log('GenericApiParamsFormView.props:', props)

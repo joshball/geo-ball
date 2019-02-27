@@ -1,15 +1,18 @@
-import * as React from 'react'
+import * as React from 'react';
+import stringify from 'json-stringify-safe';
 
 import { Card, Elevation } from '@blueprintjs/core';
-import { cardStyle } from '../themes/ApiStyles'
-
+// import { Card, Elevation } from 'fannypack';
+import { cardStyle } from '../themes/ApiStyles';
 
 export class ResultsContainer extends React.Component {
     render() {
-        return <Card style={cardStyle} interactive={false} elevation={Elevation.FOUR}>
-            <h4>Results</h4>
-            <pre>{JSON.stringify(this.props.children, null, 4)}</pre>
-        </Card>;
+        return (
+            <Card style={cardStyle} interactive={false} elevation={Elevation.FOUR}>
+                <h4>Results</h4>
+                <pre>{stringify(this.props.children, null, 4)}</pre>
+            </Card>
+        );
     }
 }
 
@@ -44,8 +47,7 @@ const AltApiResultsView = (json: any) => (
                 overflowX: 'scroll',
             }}
         >
-            {JSON.stringify(json, null, 4)}
+            {stringify(json, null, 4)}
         </pre>
-
     </div>
 );

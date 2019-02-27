@@ -1,6 +1,6 @@
 // import * as React from 'react'
 // import { Heading } from '@geo-ball/component-lib';
-// import { IFakeUrlApiParams, FakeApiService, IFakeGetApiResult } from './FakeApiService';
+// import { IGenericUrlApiParams, GenericApiService, IGenericGetApiResult } from './GenericApiService';
 // import { GenericApiParamsFormView, IGenericApiParamsFormProps } from './GenericApiParamsFormView';
 
 
@@ -8,8 +8,8 @@
 // export interface IGenericApiPanelProps { }
 
 // export interface IGenericApiPanelState {
-//     apiRequestParams: IFakeUrlApiParams;
-//     apiResponse?: IFakeGetApiResult | any | undefined;
+//     apiRequestParams: IGenericUrlApiParams;
+//     apiResponse?: IGenericGetApiResult | any | undefined;
 //     showDebugForm: boolean;
 // }
 
@@ -37,10 +37,10 @@
 //         this.updateFormData = this.updateFormData.bind(this);
 //     }
 
-//     fetchIt(): Promise<IFakeGetApiResult> {
+//     fetchIt(): Promise<IGenericGetApiResult> {
 //         if (this.state.apiRequestParams) {
-//             return FakeApiService.FetchWithGet(this.state.apiRequestParams)
-//                 .then((apiResponse: IFakeGetApiResult) => {
+//             return GenericApiService.FetchWithGet(this.state.apiRequestParams)
+//                 .then((apiResponse: IGenericGetApiResult) => {
 //                     this.setState({ apiResponse });
 //                     return apiResponse;
 //                 });

@@ -36,6 +36,7 @@ export class HeaderContainer extends React.Component<IHeaderContainerProps> {
         return (<div style={headerDiv}>
             <div style={headerName}>
                 {this.props.name}
+                YEAH
             </div>
             <div style={headerHelp}>
                 <a  href="{this.props.helpUrl}" onClick={this.onClick}>{this.props.helpUrl}</a>
