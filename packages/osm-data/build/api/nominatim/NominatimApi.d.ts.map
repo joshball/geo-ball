@@ -1,1 +1,0 @@
-{"version":3,"file":"NominatimApi.d.ts","sourceRoot":"","sources":["../../../src/api/nominatim/NominatimApi.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,gBAAgB,EAAsD,MAAM,mBAAmB,CAAC;AACzG,OAAO,EAAE,gBAAgB,EAAyC,MAAM,oBAAoB,CAAC;AAG7F,qBAAa,YAAY;IAErB,OAAc,SAAS,SAAgD;WAEnD,MAAM,CAAC,MAAM,EAAE,gBAAgB,EAAE,IAAI,GAAE,OAAe,GAAG,OAAO,CAAC,gBAAgB,EAAE,CAAC;CAkB3G"}

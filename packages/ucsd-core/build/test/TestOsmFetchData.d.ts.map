@@ -1,1 +1,0 @@
-{"version":3,"file":"TestOsmFetchData.d.ts","sourceRoot":"","sources":["../../src/test/TestOsmFetchData.ts"],"names":[],"mappings":"AAKA,OAAO,EAAsD,gBAAgB,EAAE,MAAM,IAAI,CAAC;AAc1F,MAAM,WAAW,mBAAmB;IAChC,UAAU,EAAE,KAAK,CAAC,MAAM,CAAC,CAAA;IACzB,WAAW,EAAE,KAAK,CAAC,MAAM,CAAC,CAAA;CAC7B;AAkGD,eAAO,MAAM,YAAY,EAAC,gBAQzB,CAAA"}

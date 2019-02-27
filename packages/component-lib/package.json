@@ -22,6 +22,7 @@
     "test": "tests"
   },
   "scripts": {
+    "tv": "tsc -v",
     "build": "tsc -p tsconfig.json",
     "build:clean": "tsc --build tsconfig.json --clean",
     "build:watch": "tsc -p tsconfig.json --watch",
@@ -57,8 +58,8 @@
     "@types/react": "^16.8.2",
     "@types/react-dom": "^16.8.2",
     "@typescript-eslint/parser": "^1.4.2",
-    "ava": "^1.1.0",
-    "ava-ts": "^0.25.2",
+    "ava": "^1.2",
+    "ava-ts": "^0.25",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.5",
     "create-index": "^2.4.0",
@@ -79,12 +80,12 @@
     "style-loader": "^0.23.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.0.1",
+    "typescript": "^3.3.3",
     "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3"
   },
   "dependencies": {
     "@blueprintjs/core": "^3.13.0",
-    "fannypack": "^4.11.9",
     "formik": "^1.5.1",
     "glamor": "^2.20.40",
     "json-stringify-safe": "^5.0.1",

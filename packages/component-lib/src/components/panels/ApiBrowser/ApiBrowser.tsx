@@ -28,12 +28,13 @@ export interface IApiBrowserPageStateFormProps<TApiResponse> {
     formData: IApiBrowserPageState;
     fetch: () => Promise<TApiResponse>;
 }
-import posed from 'react-pose';
+// import posed from 'react-pose';
 
-const Content = posed.div({
-    closed: { height: 0 },
-    open: { height: 'auto' },
-});
+// const Content = posed.div({
+//     closed: { height: 0 },
+//     open: { height: 'auto' },
+// });
+const Content = <div></div>
 
 export class ApiBrowser<TApiResponse> extends React.Component<
     IApiBrowserPageStateFormProps<TApiResponse>,

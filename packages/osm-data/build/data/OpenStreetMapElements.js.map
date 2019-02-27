@@ -1,1 +1,0 @@
-{"version":3,"file":"OpenStreetMapElements.js","sourceRoot":"","sources":["../../src/data/OpenStreetMapElements.ts"],"names":[],"mappings":";;AAOA,MAAa,qBAAqB;IAGjC,YAAY,QAAqC;QAChD,IAAI,CAAC,QAAQ,GAAG,QAAQ,CAAC;IAC1B,CAAC;IAED,QAAQ;QACP,OAAO;YACN,YAAY,EAAE,IAAI,CAAC,QAAQ,CAAC,MAAM;SAClC,CAAC;IACH,CAAC;CACD;AAZD,sDAYC"}

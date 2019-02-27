@@ -11,3 +11,9 @@ Finally, I saw a class on Coursera from UCSD [Advanced Data Structures in Java](
 So, this is a repo for messing around with mapping and routing algs.
     
 
+        "airbnb",
+        "eslint:recommended",
+        "plugin:prettier/recommended",
+        "prettier/react",
+        "prettier/@typescript-eslint",
+        "prettier/unicorn"
