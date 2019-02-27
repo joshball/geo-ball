@@ -24,11 +24,14 @@
 
 # These may not be right for every project, or once we publish
 # compilation output
-packages/**/lib/
 packages/**/build/
 packages/**/out/
-packages/**/tmp/
 # packages/**/dist/
+# packages/**/lib/
+
+.tmp/
+tmp/
+
 config/**/lib/
 .lerna_backup/
 
