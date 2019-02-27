@@ -1,8 +1,7 @@
 import * as React from 'react';
 import stringify from 'json-stringify-safe';
 
-import { Card, Elevation } from '@blueprintjs/core';
-// import { Card, Elevation } from 'fannypack';
+import { BlueCard as Card, Elevation } from '../atoms';
 import { cardStyle } from '../themes/ApiStyles';
 
 export class ResultsContainer extends React.Component {

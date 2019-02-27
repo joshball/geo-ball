@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Switch } from 'fannypack';
+import { BlueSwitch as Switch } from '../../atoms';
 import { SwitchProps, SwitchPropTypes } from '../../molecules/SwitchProps/ISwitchProps';
 import { SwitchBoxGroup } from '../../molecules/SwitchBoxGroup/SwitchBoxGroup';
 import PropTypes from 'prop-types';

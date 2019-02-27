@@ -1,6 +1,5 @@
 import * as React from 'react';
-// import { Card, Elevation } from 'fannypack';
-import { Card } from 'fannypack';
+import { ReakCard as Card } from '../../atoms';
 import { DebugToggles, IActionBarDebugTogglesProps } from './DebugToggles';
 import { SubmitButton, ISubmitButtonProps } from '../../molecules/SubmitButton/SubmitButton';
 import { cssProps } from '../../../types';

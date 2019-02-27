@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { cssProps } from '../../../types/ApiTypes';
-import { Switch } from 'fannypack';
+import { BlueSwitch as Switch } from '../../atoms';
+
 import { SwitchProps } from '../../molecules/SwitchProps/ISwitchProps';
 import { IDebugParamTogglesGroupProps, DebugParamTogglesGroup } from '../DebugParamTogglesGroup/DebugParamTogglesGroup';
 

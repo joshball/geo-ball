@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import { Button, ButtonProps } from '../../atoms/Button';
+import { BlueButton as Button } from '../../atoms';
 
 import { FloatProperty } from 'csstype';
 
-export interface ISubmitButtonProps extends ButtonProps {
+export interface ISubmitButtonProps {
     disabled?: boolean;
     execute: () => Promise<any>;
     children: React.ReactNode;
@@ -47,8 +47,8 @@ export class SubmitButton extends React.Component<ISubmitButtonProps, ISubmitBut
             // <div style={buttonDiv}>
                 <Button
                     {...props}
-                    palette="primary"
-                    isLoading={this.state.submitting}
+                    // palette="primary"
+                    // isLoading={this.state.submitting}
                     disabled={this.props.disabled}
                     onClick={this.onClick}
                 >

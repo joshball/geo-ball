@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Card, Set } from 'fannypack';
+import { ReakCard as Card } from '../../atoms';
 import PropTypes from 'prop-types';
 
 export type SwitchBoxGroupProps = {
@@ -11,8 +11,10 @@ export type SwitchBoxGroupProps = {
 
 export const SwitchBoxGroup: React.FunctionComponent<SwitchBoxGroupProps> = ({ groupLabel, children, ...rest }) => {
     return (
-        <Card title={groupLabel} {...rest}>
-            <Set>{children}</Set>
+        // <Card title={groupLabel} {...rest}>
+        <Card {...rest}>
+            <h3>{groupLabel}</h3>
+            {children}
         </Card>
     );
 };

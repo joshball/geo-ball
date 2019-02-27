@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { ThemeProvider, Container, LayoutSet } from 'fannypack';
-import { theme } from '../../themes/default';
-
+// import { ThemeProvider, Container } from '../../atoms';
+import { ReakProvider } from '../../atoms';
+// import { theme } from '../../themes/default';
+import theme from 'reakit-theme-default';
 
 export class ApiPanelLayoutContainer extends React.Component {
     render() {
@@ -10,15 +11,17 @@ export class ApiPanelLayoutContainer extends React.Component {
             padding: '10px',
         };
         return (
-            <ThemeProvider theme={theme}>
-                <Container breakpoint="fullHD" style={panelStyle}>
-                    <LayoutSet>
-                        {this.props.children}
-                        {/* <div style={panelStyle}>
-                    </div> */}
-                    </LayoutSet>
-                </Container>
-            </ThemeProvider>
+            <ReakProvider theme={theme}>
+                <div {...panelStyle}>{this.props.children}</div>
+            </ReakProvider>
+            // <ThemeProvider theme={theme}>
+            //     {/* <Container breakpoint="fullHD" style={panelStyle}> */}
+            //     <div {...panelStyle}>
+            //         {this.props.children}
+            //         {/* <div style={panelStyle}>
+            //         </div> */}
+            //     </div>
+            // </ThemeProvider>
         );
     }
 }

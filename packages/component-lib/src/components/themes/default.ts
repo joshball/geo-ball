@@ -1,4 +1,4 @@
-import { ThemeProvider, css } from 'fannypack';
+// import { ThemeProvider } from '../atoms';
 
 const fonts = {
     systemUi: 'system-ui',

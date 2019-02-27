@@ -9,7 +9,6 @@ import { IActionBarDebugTogglesProps } from '../../organisms/ActionBar/DebugTogg
 import { ISubmitButtonProps } from '../../molecules/SubmitButton/SubmitButton';
 import { SwitchProps } from '../../molecules/SwitchProps/ISwitchProps';
 import { ApiUrlParametersView } from '../../organisms/Parameters';
-import { Hidden } from 'fannypack';
 
 export interface IApiBrowserPageState {
     local: {
@@ -28,12 +27,12 @@ export interface IApiBrowserPageStateFormProps<TApiResponse> {
     formData: IApiBrowserPageState;
     fetch: () => Promise<TApiResponse>;
 }
-import posed from 'react-pose';
+// import posed from 'react-pose';
 
-const Content = posed.div({
-    closed: { height: 0 },
-    open: { height: 'auto' },
-});
+// const Content = posed.div({
+//     closed: { height: 0 },
+//     open: { height: 'auto' },
+// });
 
 export class ApiBrowser<TApiResponse> extends React.Component<
     IApiBrowserPageStateFormProps<TApiResponse>,
@@ -158,21 +157,21 @@ export class ApiBrowser<TApiResponse> extends React.Component<
                     </GenericApiParamsForm> */}
                 </FormContainer>
                 <ActionBar {...this.actionBarProps} />
-                <Hidden.Container>
+                {/* <Hidden.Container>
                     {_hidden => (
                         <Hidden isVisible={local.bodyParamDebugForm}>
                             <ApiUrlParametersView {...apiUrlParamsView} />
                         </Hidden>
                     )}
-                </Hidden.Container>
+                </Hidden.Container> */}
                 <React.Fragment>
                     <h1>Accordian demo</h1>
                     <React.Fragment>
-                        <Content className="content" pose={local.bodyParamViewPanel ? 'open' : 'closed'}>
+                        {/* <Content className="content" pose={local.bodyParamViewPanel ? 'open' : 'closed'}>
                             <div className="content-wrapper">
                                 <ResultsContainer>{this.actionBarProps}</ResultsContainer>
                             </div>
-                        </Content>
+                        </Content> */}
                     </React.Fragment>
                 </React.Fragment>
                 <ResultsContainer>{this.actionBarProps}</ResultsContainer>

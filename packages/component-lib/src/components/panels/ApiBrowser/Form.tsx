@@ -1,6 +1,5 @@
 import * as React from 'react'
-// import { Card, Elevation } from 'fannypack';
-import { Card, Elevation } from '@blueprintjs/core';
+import { BlueCard as Card, Elevation } from '../../atoms';
 import { cardStyle } from '../../themes/ApiStyles';
 
 export class FormContainer extends React.Component {

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 /**
  * Note this is the props we want to track from:
- * import { Switch }from 'fannypack';
  */
 export declare type SwitchProps = {
     /** Switch label */
