@@ -56,6 +56,7 @@
     "@types/json-stringify-safe": "^5.0.0",
     "@types/react": "^16.8.2",
     "@types/react-dom": "^16.8.2",
+    "@types/styled-components": "^4.1.11",
     "@typescript-eslint/parser": "^1.4.2",
     "ava": "^1.1.0",
     "ava-ts": "^0.25.2",
@@ -75,20 +76,22 @@
     "prettier": "^1.16.4",
     "react-docgen-typescript": "^1.12.3",
     "react-styleguidist": "^9.0.1",
+    "reakit-theme-default": "^0.2.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.0.1",
+    "typescript": "^3.3.3333",
     "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3"
   },
   "dependencies": {
     "@blueprintjs/core": "^3.13.0",
-    "fannypack": "^4.11.9",
     "formik": "^1.5.1",
     "glamor": "^2.20.40",
     "json-stringify-safe": "^5.0.1",
     "react": "^16.8.2",
-    "react-dom": "^16.8.2"
+    "react-dom": "^16.8.2",
+    "reakit": "^0.16.0"
   }
 }
