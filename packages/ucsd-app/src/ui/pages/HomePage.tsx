@@ -40,6 +40,7 @@ export const HomePage: React.SFC<any> = (props: any) => {
     // console.log('HomePage location', location)
     // console.log('HomePage props.location', props.location)
     // console.log('HomePage props.match', props.match)
+    console.log('HomePage props (about to redirect to /api)', props)
     // return <Redirect to='/settings' />;
     // return <Redirect to='/hooks' />;
     return <Redirect to='/api' />;
