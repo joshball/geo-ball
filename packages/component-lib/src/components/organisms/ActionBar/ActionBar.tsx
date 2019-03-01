@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BlueCard as Card } from '../../atoms';
+import { Card } from '../../atoms';
 import { DebugToggles, IActionBarDebugTogglesProps } from './DebugToggles';
 import { SubmitButton, ISubmitButtonProps } from '../../molecules/SubmitButton/SubmitButton';
 import { cssProps } from '../../../types';

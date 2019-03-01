@@ -1,13 +1,13 @@
 import * as React from 'react';
 import stringify from 'json-stringify-safe';
 
-import { BlueCard as Card, Elevation } from '../atoms';
+import { Card } from '../atoms';
 import { cardStyle } from '../themes/ApiStyles';
 
 export class ResultsContainer extends React.Component {
     render() {
         return (
-            <Card style={cardStyle} interactive={false} elevation={Elevation.FOUR}>
+            <Card style={cardStyle} elevation="400">
                 <h4>Results</h4>
                 <pre>{stringify(this.props.children, null, 4)}</pre>
             </Card>

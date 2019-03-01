@@ -19,6 +19,7 @@ export const colors = {
 
 export const cardStyle = {
     margin: '10px 0px 10px 0px',
-    backgroundColor: colors.lightGrey,
+    // margin: '10px 0px 10px 0px',
+    // backgroundColor: colors.lightGrey,
 }
 

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { BlueCard as Card, Elevation, Collapse } from '../atoms';
+import { Card } from '../atoms';
 
 import { css } from 'glamor';
-import { cardStyle } from '../themes/ApiStyles';
+import * as THEME from '../themes/ApiStyles';
 
 export interface IApiUrlParametersViewState {
     isOpen: boolean;
@@ -57,9 +57,9 @@ export class ApiUrlParametersView extends React.Component<IApiUrlParametersViewP
         });
         const qp = this.getQueryParams(this.props.formData);
         return (
-            <Card style={cardStyle} interactive={false} elevation={Elevation.FOUR}>
+            <Card style={THEME.cardStyle} elevation="400">
                 <div {...mainQueryStyle}>
-                    <Collapse isOpen={this.state.isOpen}>
+                    {/* <Collapse isOpen={this.state.isOpen}>
                         <Card style={colCard} interactive={false} elevation={Elevation.TWO}>
                             <div {...queryColStyle}>
                                 <pre>{JSON.stringify(this.props.formData, null, 4)}</pre>
@@ -75,7 +75,7 @@ export class ApiUrlParametersView extends React.Component<IApiUrlParametersViewP
                                 <pre>{qp.map.join('\n')}</pre>
                             </div>
                         </Card>
-                    </Collapse>
+                    </Collapse> */}
                 </div>
                 <div>
                     EnodedURL: <pre>{qp.url}</pre>

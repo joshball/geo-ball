@@ -1,14 +1,15 @@
 import * as React from 'react';
+import { Heading } from '../atoms';
 
 export interface IHeaderContainerProps {
     name: string;
     helpUrl: string;
-    openUrlCb: (url:string) => void;
+    openUrlCb: (url: string) => void;
 }
 
 export class HeaderContainer extends React.Component<IHeaderContainerProps> {
     constructor(props: IHeaderContainerProps) {
-        super(props)
+        super(props);
         this.onClick = this.onClick.bind(this);
     }
     onClick(e: any) {
@@ -24,23 +25,20 @@ export class HeaderContainer extends React.Component<IHeaderContainerProps> {
             // color: 'white',
             // backgroundColor: colors.lgtGreen,
         };
-        const headerName = {
-            fontFamily: "Fira Code, Operator Mono, -apple-system, Helvetica Neue, Segoe UI, Roboto, Liberation Sans",
-            fontWeight: 700,
-            fontSize: '36px'
-        };
+
         const headerHelp = {
             display: 'inline-block',
             // color: 'white',
         };
-        return (<div style={headerDiv}>
-            <div style={headerName}>
-                {this.props.name}
-                YEAH
+        return (
+            <div style={headerDiv}>
+                <Heading use="h2">{this.props.name}</Heading>
+                <div style={headerHelp}>
+                    <a href="{this.props.helpUrl}" onClick={this.onClick}>
+                        {this.props.helpUrl}
+                    </a>
+                </div>
             </div>
-            <div style={headerHelp}>
-                <a  href="{this.props.helpUrl}" onClick={this.onClick}>{this.props.helpUrl}</a>
-            </div>
-        </div>);
+        );
     }
 }

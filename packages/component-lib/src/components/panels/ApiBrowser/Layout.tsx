@@ -1,8 +1,6 @@
 import * as React from 'react';
-// import { ThemeProvider, Container } from '../../atoms';
-// import { ReakProvider } from '../../atoms';
-// import { theme } from '../../themes/default';
-// import theme from 'reakit-theme-default';
+import { ThemeProvider } from '../../atoms';
+import { fpTheme } from '../../themes';
 
 export class ApiPanelLayoutContainer extends React.Component {
     render() {
@@ -10,6 +8,10 @@ export class ApiPanelLayoutContainer extends React.Component {
             minHeight: 'calc(100vh - 100px)',
             padding: '10px',
         };
-        return <div style={panelStyle}>{this.props.children}</div>;
+        return (
+            <ThemeProvider theme={fpTheme}>
+                <div style={panelStyle}>{this.props.children}</div>
+            </ThemeProvider>
+        );
     }
 }

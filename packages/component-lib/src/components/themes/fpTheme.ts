@@ -1,5 +1,7 @@
 // import { ThemeProvider } from '../atoms';
 
+// https://fannypack.style/styling/theming
+// https://fannypack.style/styling/fonts
 const fonts = {
     systemUi: 'system-ui',
     appleSystem: '-apple-system',

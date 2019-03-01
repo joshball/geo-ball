@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { cssProps } from '../../../types/ApiTypes';
-import { BlueSwitch as Switch } from '../../atoms';
+import { Switch } from '../../atoms';
 
-import { SwitchProps } from '../../molecules/SwitchProps/ISwitchProps';
+import { SwitchProps } from '../../molecules/SwitchProps/SwitchProps';
 import { IDebugParamTogglesGroupProps, DebugParamTogglesGroup } from '../DebugParamTogglesGroup/DebugParamTogglesGroup';
 
 

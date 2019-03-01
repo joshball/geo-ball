@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BlueCard as Card } from '../../atoms';
+import { Card } from '../../atoms';
 import PropTypes from 'prop-types';
 
 export type SwitchBoxGroupProps = {
@@ -9,12 +9,9 @@ export type SwitchBoxGroupProps = {
     children?: React.ReactNode;
 };
 
-// export const SwitchBoxGroup: React.FunctionComponent<SwitchBoxGroupProps> = ({ groupLabel, children, ...rest }) => {
-export const SwitchBoxGroup: React.FunctionComponent<SwitchBoxGroupProps> = ({ groupLabel, children }) => {
+export const SwitchBoxGroup: React.FunctionComponent<SwitchBoxGroupProps> = ({ groupLabel, children, ...rest }) => {
     return (
-        // <Card title={groupLabel} {...rest}>
-        // <Card {...rest}>
-        <Card>
+        <Card title={groupLabel} {...rest}>
             <h3>{groupLabel}</h3>
             {children}
         </Card>

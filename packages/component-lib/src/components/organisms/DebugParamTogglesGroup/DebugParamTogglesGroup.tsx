@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { BlueSwitch as Switch } from '../../atoms';
-import { SwitchProps, SwitchPropTypes } from '../../molecules/SwitchProps/ISwitchProps';
+import { Switch } from '../../atoms';
+import { SwitchProps, SwitchPropTypes } from '../../molecules/SwitchProps/SwitchProps';
 import { SwitchBoxGroup } from '../../molecules/SwitchBoxGroup/SwitchBoxGroup';
 import PropTypes from 'prop-types';
 

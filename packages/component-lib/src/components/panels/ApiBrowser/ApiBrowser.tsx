@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ReactNode } from 'react';
 
 import { ApiPanelLayoutContainer } from './Layout';
 import { HeaderContainer, IHeaderContainerProps } from '../../organisms/Header';
@@ -7,10 +8,15 @@ import { ResultsContainer } from '../../organisms/Results';
 import { IActionBarProps, ActionBar } from '../../organisms/ActionBar';
 import { IActionBarDebugTogglesProps } from '../../organisms/ActionBar/DebugToggles';
 import { ISubmitButtonProps } from '../../molecules/SubmitButton/SubmitButton';
-import { SwitchProps } from '../../molecules/SwitchProps/ISwitchProps';
+import { SwitchProps } from '../../molecules/SwitchProps/SwitchProps';
 import { ApiUrlParametersView } from '../../organisms/Parameters';
-
-export interface IApiBrowserPageState {
+import { Formik, FormikProps } from 'formik';
+import { Card, RkCard, Set, Pane, styled } from '../../atoms';
+import { any } from 'glamor';
+const SectionCard = styled(Card)`
+    margin: 50px 0px 30px 0px;
+`;
+export interface IApiBrowserPageState<TUrlParams, TBodyParams> {
     local: {
         mockApiCall: boolean;
         queryParamDebugForm: boolean;
@@ -19,12 +25,16 @@ export interface IApiBrowserPageState {
         bodyParamViewPanel: boolean;
         [key: string]: any;
     };
+    queryFormData?: Optional<TUrlParams>;
+    bodyFormData?: Optional<TBodyParams>;
     [key: string]: any;
 }
 
-export interface IApiBrowserPageStateFormProps<TApiResponse> {
+export interface IApiBrowserPageStateFormProps<TApiResponse, TUrlParams, TBodyParams> {
     header: IHeaderContainerProps;
-    formData: IApiBrowserPageState;
+    queryForm?: (props: FormikProps<TUrlParams>) => ReactNode;
+    bodyForm?: (props: FormikProps<TBodyParams>) => ReactNode;
+    formData: IApiBrowserPageState<TUrlParams, TBodyParams>;
     fetch: () => Promise<TApiResponse>;
 }
 // import posed from 'react-pose';
@@ -34,14 +44,14 @@ export interface IApiBrowserPageStateFormProps<TApiResponse> {
 //     open: { height: 'auto' },
 // });
 
-export class ApiBrowser<TApiResponse> extends React.Component<
-    IApiBrowserPageStateFormProps<TApiResponse>,
-    IApiBrowserPageState
+export class ApiBrowser<TApiResponse, TUrlParams, TBodyParams> extends React.Component<
+    IApiBrowserPageStateFormProps<TApiResponse, TUrlParams, TBodyParams>,
+    IApiBrowserPageState<TUrlParams, TBodyParams>
 > {
-    state: IApiBrowserPageState;
+    state: IApiBrowserPageState<TUrlParams, TBodyParams>;
     actionBarProps: IActionBarProps;
 
-    constructor(props: IApiBrowserPageStateFormProps<TApiResponse>) {
+    constructor(props: IApiBrowserPageStateFormProps<TApiResponse, TUrlParams, TBodyParams>) {
         super(props);
 
         this.state = {
@@ -52,6 +62,8 @@ export class ApiBrowser<TApiResponse> extends React.Component<
                 bodyParamDebugForm: false,
                 bodyParamViewPanel: false,
             },
+            queryFormData: this.props.formData.queryFormData,
+            bodyFormData: this.props.formData.bodyFormData,
         };
         this.callApi = this.callApi.bind(this);
         this.setLocalState = this.setLocalState.bind(this);
@@ -145,17 +157,33 @@ export class ApiBrowser<TApiResponse> extends React.Component<
             debugToggles.queryParams.debugForm.checked = local.queryParamDebugForm;
             debugToggles.queryParams.viewPanel.checked = local.queryParamViewPanel;
         }
-
+        const onSubmit = (_form: TUrlParams) => {};
+        console.log('@@@@ this.props', this.props);
         const apiUrlParamsView = { formData: {} };
+        // const QF = this.props.queryForm ? (
+        //     <Formik initialState={{}} onSumbmit={onSubmit} render={props => {
+        //         console.log('props:', props);
+        //         // this.props.queryForm!(props)
+        //         return <h1>Hey</h1>
+        //     }} />
+        // ) : null;
+        const QF =
+            this.props.queryForm && this.state.queryFormData ? (
+                <Formik<TUrlParams>
+                    initialValues={this.state.queryFormData}
+                    onSubmit={(values, actions) => {
+                        setTimeout(() => {
+                            alert(JSON.stringify(values, null, 2));
+                            actions.setSubmitting(false);
+                        }, 1000);
+                    }}
+                    render={props => this.props.queryForm!(props)}
+                />
+            ) : null;
         return (
             <ApiPanelLayoutContainer>
                 <HeaderContainer {...this.props.header} />
-                <FormContainer>
-                    {this.props.children}
-                    {/* <GenericApiParamsForm {...formProps}>
-                        {debugForm}
-                    </GenericApiParamsForm> */}
-                </FormContainer>
+                <SectionCard elevation="400">{QF}</SectionCard>
                 <ActionBar {...this.actionBarProps} />
                 {/* <Hidden.Container>
                     {_hidden => (

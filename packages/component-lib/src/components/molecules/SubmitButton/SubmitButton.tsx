@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { BlueButton as Button } from '../../atoms';
+import { Button } from '../../atoms';
 
 import { FloatProperty } from 'csstype';
 
@@ -47,8 +47,8 @@ export class SubmitButton extends React.Component<ISubmitButtonProps, ISubmitBut
             // <div style={buttonDiv}>
                 <Button
                     {...props}
-                    // palette="primary"
-                    // isLoading={this.state.submitting}
+                    palette="primary"
+                    isLoading={this.state.submitting}
                     disabled={this.props.disabled}
                     onClick={this.onClick}
                 >
