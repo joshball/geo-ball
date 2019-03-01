@@ -36,10 +36,17 @@
         // "allowSyntheticDefaultImports": true,
         // "experimentalDecorators": true,
         // "emitDecoratorMetadata": true,
+        "typeRoots": [
+            "./node_modules/@types",
+            "../../node_modules/@types",
+            "./ext-stub-types",
+            "../../ext-stub-types",
+        ],
     },
     "include": [
         "./src",
         "./ext-stub-types",
+        "../../ext-stub-types",
         "./fuse.ts",
         ".storybook/views",
     ],

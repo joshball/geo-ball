@@ -65,9 +65,9 @@
         // ]
     },
     "include": [
-        "./src",
-        "./ext-stub-types",
-        "../../ext-stub-types",
+        "src/**/*",
+        "ext-stub-types/**/*",
+        "../../ext-stub-types/**/*",
     ],
     "exclude": [
         "node_modules/**"

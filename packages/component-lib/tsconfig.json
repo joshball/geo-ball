@@ -9,15 +9,25 @@
         { "path": "../ucsd-app" },
         // { "path": "../ucsd-cli" },
         { "path": "../ucsd-core" },
-        { "path": "../utils" },
+        { "path": "../utils" }
     ],
     "compilerOptions": {
         "rootDir": "src",
         "outDir": "./build",
+        "typeRoots": [
+            "./node_modules/@types",
+            "../../node_modules/@types",
+            "./ext-stub-types",
+            "../../ext-stub-types",
+        ],
     },
     "include": [
-        "./src",
-        "./ext-stub-types",
-        "../../ext-stub-types",
-    ]
+        "src/**/*",
+        "ext-stub-types/**/*",
+        "../../ext-stub-types/**/*",
+    ],
+    "exclude": [
+        "node_modules/**"
+    ],
+
 }
