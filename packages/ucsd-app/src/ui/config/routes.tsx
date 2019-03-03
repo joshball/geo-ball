@@ -61,7 +61,7 @@ export const createRouteCoreData = (
                         fontWeight: "bold",
                         color: "white",
                         backgroundColor: "#0d11b5",
-                        padding: '8px 40px',
+                        padding: '4px 20px',
                         // border: "2px solid black"
                     }}
                 >

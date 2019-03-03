@@ -6,7 +6,7 @@ import { GeocodingApiPanel } from "../components/apiPanels/GeocodingApi"
 import { OsmDownalodApiPanel } from "../components/apiPanels/OsmDownalodApiPanel"
 import { Redirect, Switch, Route } from "react-router"
 import { Link } from "react-router-dom"
-import { GenericApiPanel } from "../components/apiPanels/GenericApi"
+import { GenericApiPanel, GenericTestFormPanel, GenericApiFormsPanel } from "../components/apiPanels/GenericApi"
 import { Tabs, Pane } from "@geo-ball/component-lib"
 
 const styles: any = {}
@@ -53,6 +53,12 @@ export const ApiTesterPage = (params: any) => {
         createRouteCoreData(params.match.url + "/generic", GenericApiPanel, {
             linkLabel: "Generic API",
         }),
+        createRouteCoreData(params.match.url + "/gtf", GenericTestFormPanel, {
+            linkLabel: "Generic Test Form",
+        }),
+        createRouteCoreData(params.match.url + "/gaf", GenericApiFormsPanel, {
+            linkLabel: "Generic API Forms",
+        }),
     ]
 
     const theRoutes = routes.map((r, i) => r.getRoute(i))
@@ -75,6 +81,8 @@ export const ApiTesterPage = (params: any) => {
         geocode: `${currentUrl}/geocode`,
         download: `${currentUrl}/download`,
         generic: `${currentUrl}/generic`,
+        gtf: `${currentUrl}/gtf`,
+        gaf: `${currentUrl}/gaf`,
     }
     console.log("params:", params)
     // console.log("params.match:", params.match)

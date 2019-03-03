@@ -18,7 +18,8 @@ import {
 import { withFormik } from "formik"
 import { GenericGetApiCallDefinition } from "./GenericApiDefinition"
 
-import { GenericApiParamsFormView, IGenericApiParamsFormProps } from "./GenericApiParamsFormView"
+import { GenericApiParamsFormView, IGenericApiParamsFormProps } from "./Forms/GenericApiParamsFormView"
+import { GenericUrlParamsForm, getDefaultGenericFormValues, getFormikProps, IGenericUrlParamsFormValues } from "./Forms/index";
 // import { ApiPanelLayoutContainer } from '../common/ApiPanelLayoutContainer';
 // import { HeaderContainer } from '../common/HeaderContainer';
 // import { FormContainer } from '../common/FormContainer';
@@ -29,7 +30,7 @@ import { GenericApiParamsFormView, IGenericApiParamsFormProps } from "./GenericA
 // import { DebugFormix } from '../../common/input/DebugFormix';
 
 export interface IGenericApiPanelState {
-    urlParamsForm: Optional<IGenericGetUrlParams>
+    urlParamsForm: Optional<IGenericUrlParamsFormValues>
     bodyParamsForm: Optional<IGenericGetBodyParams>
     headersForm: Optional<Array<IHttpHeader>>
     apiResponse?: Optional<IGenericGetApiResponse>
@@ -66,7 +67,7 @@ export class GenericApiPanel extends React.Component<IGenericApiPanelProps, IGen
     fetchIt(): Promise<IGenericGetApiResponse> {
         console.log("GenericApiPanel.fetchIt()")
 
-        const urlParams = new HttpUrlParameters<IGenericGetUrlParams>(this.state.urlParamsForm)
+        const urlParams = new HttpUrlParameters<IGenericUrlParamsFormValues>(this.state.urlParamsForm)
         const apiParams = new ApiParameters(urlParams)
         // TODO handle submitting and disabling button - do it lower!
         return this.ApiDef.apiCallback(apiParams).then((apiResponse: IGenericGetApiResponse) => {
@@ -75,7 +76,7 @@ export class GenericApiPanel extends React.Component<IGenericApiPanelProps, IGen
         })
     }
 
-    updateUrlParamsForm(urlParamsForm: IGenericGetUrlParams): void {
+    updateUrlParamsForm(urlParamsForm: IGenericUrlParamsFormValues): void {
         console.log("GenericApiPanel.updateUrlParamsForm:", urlParamsForm)
         this.setState({ urlParamsForm })
     }
@@ -100,28 +101,22 @@ export class GenericApiPanel extends React.Component<IGenericApiPanelProps, IGen
             helpUrl: "https://wiki.openstreetmap.org/wiki/Nominatim",
             openUrlCb: (_url: string) => undefined,
         }
-
-        const foo = (props:IGenericGetUrlParams) => (
-            <form onSubmit={props.handleSubmit}>
-                <input
-                    type="text"
-                    onChange={props.handleChange}
-                    onBlur={props.handleBlur}
-                    value={props.values.query}
-                    name="name"
-                />
-                {props.errors.name && <div id="feedback">{props.errors.name}</div>}
-                <button type="submit">Submit</button>
-            </form>
-        )
+        const formValues = getDefaultGenericFormValues()
+        const formikProps = getFormikProps(formValues)
 
         const pageStateProps: IApiBrowserPageStateFormProps<
             IGenericGetApiResponse,
-            IGenericGetUrlParams,
+            IGenericUrlParamsFormValues,
             IGenericGetBodyParams
         > = {
             header,
-            queryForm: GenericApiParamsFormView,
+            forms: {
+                query: {
+                    form: GenericUrlParamsForm,
+                    initialData: formikProps.urlParams.initialValues,
+                    getData: this.updateUrlParamsForm,
+                }
+            },
             formData: {
                 local: {
                     mockApiCall: false,
