@@ -32,8 +32,15 @@ export interface IApiBrowserPageState<TUrlParams, TBodyParams> {
 
 export interface IApiBrowserPageStateFormProps<TApiResponse, TUrlParams, TBodyParams> {
     header: IHeaderContainerProps;
+    forms: {
+        query?: {
+            form: (props: FormikProps<TUrlParams>) => ReactNode,
+            initialData: TUrlParams,
+            getData: () => TUrlParams,
+        }
+    }
     queryForm?: (props: FormikProps<TUrlParams>) => ReactNode;
-    bodyForm?: (props: FormikProps<TBodyParams>) => ReactNode;
+    // bodyForm?: (props: FormikProps<TBodyParams>) => ReactNode;
     formData: IApiBrowserPageState<TUrlParams, TBodyParams>;
     fetch: () => Promise<TApiResponse>;
 }
