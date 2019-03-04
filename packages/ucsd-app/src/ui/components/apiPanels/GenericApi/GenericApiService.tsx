@@ -1,22 +1,12 @@
 export interface IGenericGetUrlParams {
-    query: {
-        q: string
-        n: number
-    }
-    skip: number
-    take: number
-    debug: boolean
+    id: string
+    count: string
 }
 export type IGenericGetBodyParams = undefined
 
 export const GetDefaultUrlParams = (): IGenericGetUrlParams => ({
-    query: {
-        q: "some query string",
-        n: 3,
-    },
-    skip: 1,
-    take: 2,
-    debug: true,
+    id: '',
+    count: '10'
 })
 
 export interface IGenericGetApiResponse {
@@ -30,7 +20,7 @@ export class GenericApiService {
 
     static FetchWithGet(apiParams: IGenericGetUrlParams): Promise<IGenericGetApiResponse> {
         console.log(
-            "GenericApiService.FetchWithGet() delay:",
+            "**** GenericApiService.FetchWithGet() delay:",
             GenericApiService.DEFAULT_TIMEOUT_MS,
             apiParams,
         )

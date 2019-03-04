@@ -44,6 +44,7 @@ export class GenericGetApiCallDefinition extends ApiCallDefinition<
      * the body as well. And headers are in there.
      */
     static ApiGetCallback: GenericGetApiCallback = (apiParams: GenericGetApiParams) => {
+        console.log("ApiGetCallback.GenericGetApiCallback apiParams:", apiParams)
         const urlParams: Optional<IGenericGetUrlParams> = apiParams.urlParams.getParams()
         // If needed, these are available:
         // const bodyParams: Optional<IGenericGetBodyParams> = apiParams.bodyParams.getParams()

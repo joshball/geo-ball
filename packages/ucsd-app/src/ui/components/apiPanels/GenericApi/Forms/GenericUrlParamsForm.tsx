@@ -1,5 +1,5 @@
 import * as React from "react"
-import { FormikInputField } from "@geo-ball/component-lib"
+import { FormikInputField, ActionFormikProps } from "@geo-ball/component-lib"
 
 import { Form, FormikProps, Field } from "formik"
 
@@ -17,9 +17,10 @@ export class GenericUrlParamsFormValues implements IGenericUrlParamsFormValues {
     }
 }
 
-export const GenericUrlParamsForm = (props: FormikProps<IGenericUrlParamsFormValues>) => {
+export const GenericUrlParamsForm = (props: ActionFormikProps<IGenericUrlParamsFormValues>) => {
     console.log("GenericUrlParamsForm props", props)
-    const { isSubmitting } = props
+    const { isSubmitting } = props;
+    // props.formikActions.bindSubmitForm
     // props.values.name
     return (
         <Form>

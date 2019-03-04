@@ -1,3 +1,63 @@
+import {
+    FormikConfig,
+    withFormik,
+    FormikErrors,
+    FormikBag,
+    WithFormikConfig,
+    FormikActions,
+    FormikProps,
+} from 'formik';
+
+export interface IApiCallbackData<TUrlParams, TBodyParams, THeaderParams> {
+    url: TUrlParams;
+    body: TBodyParams;
+    headers: THeaderParams;
+}
+
+export type OnSubmitCallback<TFormValues> = (values: TFormValues, formikActions: FormikActions<TFormValues>) => void;
+
+export type BindSubmitForm = (submitForm: SubmitFormFunctionType) => void;
+export type BindValidateForm<TFormValues> = (validateForm: ValidateFormFunctionType<TFormValues>) => void;
+export type BindGetFormValues<TFormValues> = (getFormValues: GetFormValuesFunctionType<TFormValues>) => void;
+
+export type SubmitFormFunctionType = () => void;
+export type ValidateFormFunctionType<TFormValues> = () => Promise<FormikErrors<TFormValues>>;
+export type GetFormValuesFunctionType<TFormValues> = () => TFormValues;
+
+export interface AdditionalProps<TFormValues> {
+    bindSubmitForm?: BindSubmitForm;
+    bindValidateForm?: BindValidateForm<TFormValues>;
+    bindGetFormValues?: BindGetFormValues<TFormValues>;
+}
+
+export interface ActionFormikConfig<TFormValues> extends FormikConfig<TFormValues> {
+    additionalProps?: AdditionalProps<TFormValues>;
+}
+export interface ActionFormikProps<TFormValues> extends FormikProps<TFormValues> {
+    additionalProps?: AdditionalProps<TFormValues>;
+}
+
+export const getFormikConfig = <TFormValues>(formValues: TFormValues): FormikConfig<TFormValues> => {
+    return {
+        initialValues: formValues,
+        onSubmit: () => undefined,
+    };
+};
+
+export const getActionFormikConfig = <TFormValues>(
+    formikConfig: FormikConfig<TFormValues>,
+    bindSubmitForm: BindSubmitForm,
+    bindValidateForm: BindValidateForm<TFormValues>
+): ActionFormikConfig<TFormValues> => {
+    return {
+        ...formikConfig,
+        additionalProps: {
+            bindSubmitForm,
+            bindValidateForm,
+        },
+    };
+};
+
 /**
  * All forms must implement this to validate the forms data
  */
@@ -47,7 +107,7 @@ class BaseFormCallbacks implements IBaseFormCallbacks {
     resetDataCallback = () => undefined;
     getFormData = () => this.formData;
     formDataToKeyValues = () => {
-        return {...this.formData};
+        return { ...this.formData };
         // const obj = Object.assign({}, this.formData.data);
         // return obj;
     };
@@ -169,3 +229,112 @@ export class ApiFormData implements IApiFormData {
 //     constructor()
 
 // }
+
+export class ApiFormManager<TFormValues> {
+
+    initialValues: TFormValues;
+    _submitTheForm: Optional<SubmitFormFunctionType>;
+    _validateTheForm: Optional<ValidateFormFunctionType<TFormValues>>;
+    config: ActionFormikConfig<TFormValues>;
+    _getFormValues: Optional<GetFormValuesFunctionType<TFormValues>>;
+
+    constructor(values: TFormValues) {
+        this.initialValues = values;
+        this.bindSubmitForm = this.bindSubmitForm.bind(this);
+        this.bindValidateForm = this.bindValidateForm.bind(this);
+        this.bindGetFormValues = this.bindGetFormValues.bind(this);
+
+        this.submitTheForm = this.submitTheForm.bind(this);
+        this.validateTheForm = this.validateTheForm.bind(this);
+        this.getFormValues = this.getFormValues.bind(this);
+        this.getValidFormData = this.getValidFormData.bind(this);
+
+        this.onSubmit = this.onSubmit.bind(this);
+
+        this.config = this.getActionFormikConfig();
+    }
+
+    // getCurrentValues(): TFormValues {
+    //     console.log("ApiFormProps.getCurrentValues")
+    // }
+
+    onSubmit(values: TFormValues, formikActions: FormikActions<TFormValues>) {
+        console.log('ApiFormProps.onSubmit', values, formikActions);
+    }
+
+    bindSubmitForm(submitFormCallback: SubmitFormFunctionType) {
+        console.log('ApiFormProps.bindSubmitTheForm submitFormCallback:', submitFormCallback);
+        this._submitTheForm = submitFormCallback;
+    }
+
+    bindValidateForm(validateFormCallback: ValidateFormFunctionType<TFormValues>) {
+        console.log('ApiFormProps.bindValidateForm submitFormCallback:', validateFormCallback);
+        this._validateTheForm = validateFormCallback;
+    }
+
+    bindGetFormValues(getFormValuesCallback: GetFormValuesFunctionType<TFormValues>) {
+        console.log('ApiFormProps.bindGetFormValues formValues:', getFormValuesCallback);
+        this._getFormValues = getFormValuesCallback;
+    }
+
+    submitTheForm() {
+        console.log('ApiFormProps.submitTheForm');
+        return this._submitTheForm ? this._submitTheForm() : undefined;
+    }
+
+    getFormValues(): Promise<TFormValues | void> {
+        console.log('ApiFormProps.getFormValues');
+        return this._getFormValues ? Promise.resolve(this._getFormValues()) : Promise.resolve(undefined);
+    }
+
+    validateTheForm(): Promise<FormikErrors<TFormValues> | void> {
+        console.log('ApiFormProps.validateTheForm');
+        return this._validateTheForm ? this._validateTheForm() : Promise.resolve();
+    }
+
+    getValidFormData(): Promise<TFormValues | void> {
+        console.log('ApiFormProps.getValidFormData');
+        const u = undefined;
+        return this.validateTheForm().then(errors => {
+            return errors ? undefined : this.getFormValues();
+        });
+    }
+
+    getFormikConfig(): FormikConfig<TFormValues> {
+        return {
+            initialValues: this.initialValues,
+            onSubmit: this.onSubmit,
+        };
+    }
+
+    getActionFormikConfig(): ActionFormikConfig<TFormValues> {
+        const formikConfig = this.getFormikConfig();
+        return {
+            ...formikConfig,
+            additionalProps: {
+                bindSubmitForm: this.bindSubmitForm,
+                bindValidateForm: this.bindValidateForm,
+                bindGetFormValues: this.bindGetFormValues,
+            },
+        };
+    }
+
+}
+
+export class ApiFullFormManager<TUrlParamsFormValues, TBodyParamsFormValues, THeadersFormValues> {
+
+    urlParams: ApiFormManager<TUrlParamsFormValues>;
+    bodyParams: ApiFormManager<TBodyParamsFormValues>;
+    headers: ApiFormManager<THeadersFormValues>;
+
+    constructor(
+        initUrlValues: TUrlParamsFormValues,
+        initBodyValues: TBodyParamsFormValues,
+        initHeaderValues: THeadersFormValues
+    ) {
+        this.urlParams = new ApiFormManager<TUrlParamsFormValues>(initUrlValues);
+        this.bodyParams = new ApiFormManager<TBodyParamsFormValues>(initBodyValues);
+        this.headers = new ApiFormManager<THeadersFormValues>(initHeaderValues);
+    }
+
+}

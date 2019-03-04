@@ -49,6 +49,7 @@ export class GenericApiFormsPanel extends React.Component<
     render() {
         const formValues = getDefaultGenericFormValues()
         const formikProps = getFormikProps(formValues)
+        console.log('GENERIC-API-FORMS-PANEL')
 
         return (
             <Pane backgroundColor="white700" padding="major-5">
