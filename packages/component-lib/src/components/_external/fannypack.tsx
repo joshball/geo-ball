@@ -59,11 +59,7 @@ export const formikField = (Component: any) => {
             // @ts-ignore
             onChange = (value: any, option: any, newValues: any) => form.setFieldValue(field.name, newValues);
         }
-        // if (typeof field.value === 'number') {
         if (props.type === 'number') {
-            // console.log('**** HERE I AM ', field.value, typeof field.value);
-            // skip formik's number parsing
-            // onChange = (newValue: any) => {
             onChange = (event: any) => {
                 form.setFieldValue(field.name, event.target.value);
             };
