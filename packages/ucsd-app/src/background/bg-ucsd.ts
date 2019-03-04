@@ -34,7 +34,7 @@ export class BackgroundOsmFetchManager {
 export const downloadOsm = async (params: IDownloadOsmParams, _window: any): Promise<IDownloadOsmResult> => {
     console.log('');
     console.log('======================================== downloadOsm ========================================');
-    console.log('params:', params);
+    console.log('downloadOsm.params:', params);
 
     // server
     // query?

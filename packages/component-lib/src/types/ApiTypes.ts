@@ -129,8 +129,6 @@ export class ApiCallDefinition<TApiResponse, TUrlParameterData = any, TBodyParam
         apiCallback: ApiCallback<TApiResponse>,
         mockCallback: ApiCallback<TApiResponse> = ApiCallbackStub,
     ) {
-        console.log("API DEF")
-        console.log("API DEF")
         this.name = name
         this.method = method
         this.url = url

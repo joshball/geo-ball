@@ -40,8 +40,8 @@ styles.tabListItem = {
 
 export const ApiTesterPage = (params: any) => {
     console.log("ApiTesterPage.params", params)
-    console.log("params.match", params.match)
-    console.log("params.location", params.location)
+    // console.log("params.match", params.match)
+    // console.log("params.location", params.location)
     const routes: Array<IRouteCoreData> = [
         createRouteCoreData(params.match.url + "/geocode", GeocodingApiPanel, {
             linkLabel: "Geocode API",
@@ -84,7 +84,7 @@ export const ApiTesterPage = (params: any) => {
         gtf: `${currentUrl}/gtf`,
         gaf: `${currentUrl}/gaf`,
     }
-    console.log("params:", params)
+    // console.log("params:", params)
     // console.log("params.match:", params.match)
     // console.log("params.location.pathname:", params.location.pathname)
     // console.log("urls.base:", urls.base)
@@ -119,8 +119,7 @@ export const ApiTesterPage = (params: any) => {
             </Tabs.Tab>
         )
     }
-    console.log("")
-    console.log("RENDERING")
+    console.log("ApiTesterPage.RENDERING")
     // return (
     //     <React.Fragment>
     //         {maybeRedirect}

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Card } from '../../atoms';
+import { Card, Block, Box, Container, InlineBlock } from '../../atoms';
 import { DebugToggles, IActionBarDebugTogglesProps } from './DebugToggles';
 import { SubmitButton, ISubmitButtonProps } from '../../molecules/SubmitButton/SubmitButton';
 import { cssProps } from '../../../types';
@@ -29,7 +29,7 @@ export const ActionBar = (props: IActionBarProps) => {
     };
 
     const toggleDivStyle = cssProps({
-        float: 'left',
+        float: 'right',
         display: 'inline-block',
     });
     const submitDivStyle = cssProps({
@@ -43,15 +43,24 @@ export const ActionBar = (props: IActionBarProps) => {
     console.log('ActionBar PROPS:', props);
 
     return (
-        <Card>
-            <div style={actionBarDivStyle}>
-                <div style={toggleDivStyle}>
-                    <DebugToggles {...props.debugToggles} />
-                </div>
-                <div style={submitDivStyle}>
-                    <SubmitButton {...props.submitButtonProps} />
-                </div>
-            </div>
-        </Card>
+        <Container align="right" height="fit-content">
+            <InlineBlock float="right" clear="both">
+                <DebugToggles {...props.debugToggles} />
+            </InlineBlock>
+            <InlineBlock float="right" clear="both">
+                <SubmitButton {...props.submitButtonProps} />
+            </InlineBlock>
+            <Box clear="both" />
+        </Container>
     );
+    // return (
+    //     <div style={actionBarDivStyle}>
+    //         <div style={toggleDivStyle}>
+    //             <DebugToggles {...props.debugToggles} />
+    //         </div>
+    //         <div style={submitDivStyle}>
+    //             <SubmitButton {...props.submitButtonProps} />
+    //         </div>
+    //     </div>
+    // );
 };

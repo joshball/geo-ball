@@ -19,13 +19,16 @@ import { GenericGetApiCallDefinition } from "./GenericApiDefinition"
 
 import {
     GenericUrlParamsForm,
+    GenericBodyParamsForm,
     IGenericUrlParamsFormValues,
     GenericBodyParamsFormValues,
     GenericHeadersFormValues,
     IGenericBodyParamsFormValues,
     GenericUrlParamsFormContainer,
+    GenericBodyParamsFormContainer,
 } from "./Forms"
 import { GenericUrlParamsFormValues } from "./Forms/GenericUrlParamsForm"
+import { GenericFormContainer } from "./Forms/GenericFormContainer";
 
 export interface IGenericApiPanelState {
     urlParamsForm: Optional<IGenericUrlParamsFormValues>
@@ -134,8 +137,10 @@ export class GenericApiPanel extends React.Component<IGenericApiPanelProps, IGen
             header,
             apiFFM,
             forms: {
-                query: GenericUrlParamsFormContainer,
-                // body: GenericBodyParamsForm,
+                query: GenericFormContainer(GenericUrlParamsForm),
+                body: GenericFormContainer(GenericBodyParamsForm),
+                // query: GenericUrlParamsFormContainer,
+                // body: GenericBodyParamsFormContainer,
                 // headers: GenericHeadersForm,
             },
             formData: {

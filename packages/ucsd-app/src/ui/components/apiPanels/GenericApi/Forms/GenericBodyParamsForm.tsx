@@ -15,15 +15,15 @@ export class GenericBodyParamsFormValues implements IGenericBodyParamsFormValues
 }
 
 export const GenericBodyParamsForm = (props: FormikProps<IGenericBodyParamsFormValues>) => {
-    console.log("GenericBodyParamsForm props", props)
+    // console.log("GenericBodyParamsForm props", props)
     const { isSubmitting } = props
     // props.values.name
     return (
         <Form>
             <Field component={FormikInputField} name="query" label="Query" />
-            <button type="submit" disabled={isSubmitting}>
+            {/* <button type="submit" disabled={isSubmitting}>
                 Submit
-            </button>
+            </button> */}
         </Form>
     )
 }

@@ -15,16 +15,16 @@ export class GenericHeadersFormValues implements IGenericHeadersFormValues {
 }
 
 export const GenericHeadersForm = (formikProps: FormikProps<IGenericHeadersFormValues>) => {
-    console.log("GenericHeadersForm formikProps", formikProps)
+    // console.log("GenericHeadersForm formikProps", formikProps)
     const { isSubmitting } = formikProps
     // props.submitForm
     // props.values.name
     return (
         <Form>
             <Field component={FormikInputField} name="secret" label="Secret" />
-            <button type="submit" disabled={isSubmitting}>
+            {/* <button type="submit" disabled={isSubmitting}>
                 Submit
-            </button>
+            </button> */}
         </Form>
     )
 }

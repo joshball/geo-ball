@@ -24,14 +24,14 @@ export { Box, Block, Inline, InlineBlock, Flex, InlineFlex, Grid } from 'fannypa
 export { Blockquote, Code, Heading, Link, List, Paragraph, Text } from 'fannypack';
 
 // Layout
-export { Columns, Container, LayoutSet, Pane } from 'fannypack';
+export { Column, Columns, Container, LayoutSet, Pane } from 'fannypack';
 
 // Containers
 // export { Hidden } from 'reakit';
 export { Card as RkCard } from 'reakit';
 
 // Components
-export { Button, Card, Table, Tabs, Tag, Timeline, Toast, Tooltip } from 'fannypack';
+export { Button, Card, Divider, Table, Tabs, Tag, Timeline, Toast, Tooltip } from 'fannypack';
 
 // Forms
 export {

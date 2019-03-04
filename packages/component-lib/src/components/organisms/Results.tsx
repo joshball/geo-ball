@@ -6,10 +6,17 @@ import { cardStyle } from '../themes/ApiStyles';
 
 export class ResultsContainer extends React.Component {
     render() {
+        console.log('this.props.children', this.props.children);
+        console.log('this.props.children', typeof this.props.children);
+        console.log('this.props.children', !this.props.children);
+        console.log('this.props.children', !!this.props.children);
+        const children = this.props.children || {};
+        if (Object.keys(children).length === 0) {
+            return null;
+        }
         return (
-            <Card style={cardStyle} elevation="400">
-                <h4>Results</h4>
-                <pre>{stringify(this.props.children, null, 4)}</pre>
+            <Card style={cardStyle} elevation="400" title="API Response">
+                <pre>{stringify(children, null, 4)}</pre>
             </Card>
         );
     }

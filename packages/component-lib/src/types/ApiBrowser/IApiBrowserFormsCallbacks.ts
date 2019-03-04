@@ -1,3 +1,4 @@
+import { DebugFormixDiv, GenericFormWithDebug } from '../../components/organisms/DebugFormixDiv';
 import {
     FormikConfig,
     withFormik,
@@ -25,9 +26,10 @@ export type ValidateFormFunctionType<TFormValues> = () => Promise<FormikErrors<T
 export type GetFormValuesFunctionType<TFormValues> = () => TFormValues;
 
 export interface AdditionalProps<TFormValues> {
-    bindSubmitForm?: BindSubmitForm;
-    bindValidateForm?: BindValidateForm<TFormValues>;
-    bindGetFormValues?: BindGetFormValues<TFormValues>;
+    bindSubmitForm?: Optional<BindSubmitForm>;
+    bindValidateForm?: Optional<BindValidateForm<TFormValues>>;
+    bindGetFormValues?: Optional<BindGetFormValues<TFormValues>>;
+    showDebugForm: boolean;
 }
 
 export interface ActionFormikConfig<TFormValues> extends FormikConfig<TFormValues> {
@@ -47,13 +49,16 @@ export const getFormikConfig = <TFormValues>(formValues: TFormValues): FormikCon
 export const getActionFormikConfig = <TFormValues>(
     formikConfig: FormikConfig<TFormValues>,
     bindSubmitForm: BindSubmitForm,
-    bindValidateForm: BindValidateForm<TFormValues>
+    bindValidateForm: BindValidateForm<TFormValues>,
+    bindGetFormValues: BindGetFormValues<TFormValues>
 ): ActionFormikConfig<TFormValues> => {
     return {
         ...formikConfig,
         additionalProps: {
             bindSubmitForm,
             bindValidateForm,
+            bindGetFormValues,
+            showDebugForm: false,
         },
     };
 };
@@ -263,17 +268,14 @@ export class ApiFormManager<TFormValues> {
     }
 
     bindSubmitForm(submitFormCallback: SubmitFormFunctionType) {
-        console.log('ApiFormProps.bindSubmitTheForm submitFormCallback:', submitFormCallback);
         this._submitTheForm = submitFormCallback;
     }
 
     bindValidateForm(validateFormCallback: ValidateFormFunctionType<TFormValues>) {
-        console.log('ApiFormProps.bindValidateForm submitFormCallback:', validateFormCallback);
         this._validateTheForm = validateFormCallback;
     }
 
     bindGetFormValues(getFormValuesCallback: GetFormValuesFunctionType<TFormValues>) {
-        console.log('ApiFormProps.bindGetFormValues formValues:', getFormValuesCallback);
         this._getFormValues = getFormValuesCallback;
     }
 
@@ -315,6 +317,7 @@ export class ApiFormManager<TFormValues> {
                 bindSubmitForm: this.bindSubmitForm,
                 bindValidateForm: this.bindValidateForm,
                 bindGetFormValues: this.bindGetFormValues,
+                showDebugForm: false,
             },
         };
     }
@@ -338,3 +341,35 @@ export class ApiFullFormManager<TUrlParamsFormValues, TBodyParamsFormValues, THe
     }
 
 }
+
+export const BindAdditionalPropsToForm = <TFormValues>(
+    formikConfig: ActionFormikConfig<TFormValues>,
+    GenericForm: any
+) => (props: ActionFormikProps<TFormValues>) => {
+    const additionalProps = formikConfig.additionalProps || {
+        bindSubmitForm: undefined,
+        bindValidateForm: undefined,
+        bindGetFormValues: undefined,
+        showDebugForm: false,
+    };
+    // props.additionalProps = additionalProps
+    // console.log("GenericUrlParamsFormContainer ACTION PROPS:", props)
+    // console.log("GenericUrlParamsFormContainer additionalProps:", additionalProps)
+    if (additionalProps) {
+        if (additionalProps.bindSubmitForm) {
+            additionalProps.bindSubmitForm(props.submitForm);
+        }
+        if (additionalProps.bindValidateForm) {
+            additionalProps.bindValidateForm(props.validateForm);
+        }
+        if (additionalProps.bindGetFormValues) {
+            additionalProps.bindGetFormValues(() => props.values);
+        }
+        // additionalProps.showDebugForm;
+    }
+    props.additionalProps = additionalProps;
+    // const gf = GenericForm({ ...props });
+    // console.log('GF', gf);
+    // return gf;
+    return GenericFormWithDebug(GenericForm({ ...props }), props);
+};
