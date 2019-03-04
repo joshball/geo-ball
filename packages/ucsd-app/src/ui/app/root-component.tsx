@@ -7,8 +7,8 @@ import * as React from "react"
 import { HashRouter as Router } from "react-router-dom"
 import { compose } from "glamor"
 import { Provider, observer } from "mobx-react"
-import * as devtron from "devtron"
-devtron.install()
+// import * as devtron from "devtron"
+// devtron.install()
 
 // import DevTools from 'mobx-react-devtools';
 // import { autorun } from "mobx";
@@ -22,6 +22,7 @@ import { RootStore } from "../stores/RootStore"
 
 import state from "../state/State"
 import { MemoryRouterProps, Switch } from "react-router"
+
 
 // import BackgroundTask from '../../background/BackgroundTask';
 const rootStore = new RootStore(state)
