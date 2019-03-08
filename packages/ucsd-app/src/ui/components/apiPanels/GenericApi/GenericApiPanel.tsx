@@ -5,16 +5,11 @@ import {
     IApiBrowserPageStateFormProps,
     ApiParameters,
     IHeaderContainerProps,
-    IHttpHeader,
     ApiFullFormManager,
     IApiCallbackData,
 } from "@geo-ball/component-lib"
 
-import {
-    IGenericGetUrlParams,
-    IGenericGetBodyParams,
-    IGenericGetApiResponse,
-} from "./GenericApiService"
+import { IGenericGetApiResponse } from "./GenericApiService"
 import { GenericGetApiCallDefinition } from "./GenericApiDefinition"
 
 import {
@@ -24,16 +19,16 @@ import {
     GenericBodyParamsFormValues,
     GenericHeadersFormValues,
     IGenericBodyParamsFormValues,
-    GenericUrlParamsFormContainer,
-    GenericBodyParamsFormContainer,
+    IGenericHeadersFormValues,
+    GenericHeadersForm,
 } from "./Forms"
 import { GenericUrlParamsFormValues } from "./Forms/GenericUrlParamsForm"
-import { GenericFormContainer } from "./Forms/GenericFormContainer";
+import { GenericFormContainer } from "./Forms/GenericFormContainer"
 
 export interface IGenericApiPanelState {
     urlParamsForm: Optional<IGenericUrlParamsFormValues>
-    bodyParamsForm: Optional<IGenericGetBodyParams>
-    headersForm: Optional<Array<IHttpHeader>>
+    bodyParamsForm: Optional<IGenericBodyParamsFormValues>
+    headersForm: Optional<IGenericHeadersFormValues>
     apiResponse?: Optional<IGenericGetApiResponse>
 }
 
@@ -46,7 +41,6 @@ export interface IParamFormProps<TParamObj> {
 
 export class GenericApiPanel extends React.Component<IGenericApiPanelProps, IGenericApiPanelState> {
     state: IGenericApiPanelState
-    // ApiDef: ApiCallDefinition<IGenericGetApiResponse, IGenericGetUrlParams, IGenericGetBodyParams>;
     ApiDef: GenericGetApiCallDefinition
     constructor(props: IGenericApiPanelProps) {
         super(props)
@@ -56,23 +50,23 @@ export class GenericApiPanel extends React.Component<IGenericApiPanelProps, IGen
         this.state = {
             urlParamsForm: this.ApiDef.apiParams.urlParams.getInitialValues(),
             bodyParamsForm: this.ApiDef.apiParams.bodyParams.getInitialValues(),
-            headersForm: this.ApiDef.apiParams.headers,
+            headersForm: this.ApiDef.apiParams.headers.getInitialValues(),
             apiResponse: undefined,
         }
 
         this.callTheApi = this.callTheApi.bind(this)
         this.updateUrlParamsForm = this.updateUrlParamsForm.bind(this)
         this.updateBodyParamsForm = this.updateBodyParamsForm.bind(this)
+        this.updateHeadersForm = this.updateHeadersForm.bind(this)
     }
 
-    //     callTheApi: (data: IApiCallbackData<TUrlParams, TBodyParams, TBodyParams>) => Promise<TApiResponse>;
-
+    // callTheApi: (data?: Optional<IApiCallbackData<TUrlParams, TBodyParams, TBodyParams>>) => Promise<TApiResponse>;
     callTheApi(
         data?: Optional<
             IApiCallbackData<
                 IGenericUrlParamsFormValues,
-                GenericBodyParamsFormValues,
-                GenericBodyParamsFormValues
+                IGenericBodyParamsFormValues,
+                IGenericHeadersFormValues
             >
         >,
     ): Promise<IGenericGetApiResponse | void> {
@@ -99,9 +93,13 @@ export class GenericApiPanel extends React.Component<IGenericApiPanelProps, IGen
         this.setState({ urlParamsForm })
     }
 
-    updateBodyParamsForm(bodyParamsForm: IGenericGetBodyParams): void {
+    updateBodyParamsForm(bodyParamsForm: IGenericBodyParamsFormValues): void {
         console.log("GenericApiPanel.updateBodyParamsForm:", bodyParamsForm)
         this.setState({ bodyParamsForm })
+    }
+    updateHeadersForm(headersForm: IGenericHeadersFormValues): void {
+        console.log("GenericApiPanel.updateHeadersForm:", headersForm)
+        this.setState({ headersForm })
     }
 
     // updateHeadersForm(_headersForm: any): void {
@@ -121,27 +119,26 @@ export class GenericApiPanel extends React.Component<IGenericApiPanelProps, IGen
         const apiFFM = new ApiFullFormManager<
             IGenericUrlParamsFormValues,
             IGenericBodyParamsFormValues,
-            IGenericBodyParamsFormValues
+            IGenericHeadersFormValues
         >(
             new GenericUrlParamsFormValues(),
             new GenericBodyParamsFormValues(),
-            new GenericBodyParamsFormValues(),
+            new GenericHeadersFormValues(),
             // new GenericHeadersFormValues(),
         )
 
         const pageStateProps: IApiBrowserPageStateFormProps<
             IGenericGetApiResponse,
             IGenericUrlParamsFormValues,
-            IGenericBodyParamsFormValues
+            IGenericBodyParamsFormValues,
+            IGenericHeadersFormValues
         > = {
             header,
             apiFFM,
             forms: {
                 query: GenericFormContainer(GenericUrlParamsForm),
                 body: GenericFormContainer(GenericBodyParamsForm),
-                // query: GenericUrlParamsFormContainer,
-                // body: GenericBodyParamsFormContainer,
-                // headers: GenericHeadersForm,
+                headers: GenericFormContainer(GenericHeadersForm),
             },
             formData: {
                 local: {
@@ -157,57 +154,19 @@ export class GenericApiPanel extends React.Component<IGenericApiPanelProps, IGen
             callTheApi: this.callTheApi,
         }
 
-        // const queryFormProps: IParamFormProps<IGenericGetUrlParams> = {
-        //     formData: this.state.urlParamsForm!,
-        //     onSubmit: this.updateUrlParamsForm,
-        // }
 
-        // const bodyFormProps: IParamFormProps<IGenericGetBodyParams> = {
-        //     formData: this.state.bodyParamsForm!,
-        //     onSubmit: this.updateBodyParamsForm,
-        // }
-
-        // const x = <GenericApiParamsForm {...formProps} />
         console.log("GENERIC-API-PANEL")
         return (
             <div>
                 <ApiBrowser<
                     IGenericGetApiResponse,
                     IGenericUrlParamsFormValues,
-                    IGenericBodyParamsFormValues
+                    IGenericBodyParamsFormValues,
+                    IGenericHeadersFormValues
                 >
                     {...pageStateProps}
                 />
             </div>
-            //     <ApiPanelLayoutContainer>
-            //         <HeaderContainer {...apiHeaderView} />
-            //         <FormContainer>
-            //             <GenericApiParamsForm {...formProps}>
-            //                 {debugForm}
-            //             </GenericApiParamsForm>
-            //         </FormContainer>
-            //         <ApiUrlParametersView {...apiUrlParamsView}>
-            //         </ApiUrlParametersView>
-            //         <ResultsContainer>
-            //             {this.state.apiResponse}
-            //         </ResultsContainer>
-            //     </ApiPanelLayoutContainer>
         )
     }
 }
-
-// const GenericApiParamsForm = withFormik<IGenericApiParamsFormProps, IParamFormProps<IGenericGetUrlParams>>({
-//     mapPropsToValues: (props: IGenericApiParamsFormProps) => {
-//         // console.log('GenericApiParamsForm================================');
-//         // // console.log('GenericApiParamsForm.this', this);
-//         // console.log('GenericApiParamsForm.props', props);
-//         // console.log('GenericApiParamsForm.props.formData', props.formData);
-//         // console.log('GenericApiParamsForm.props.formData', { ...props.formData });
-//         return { ...props.formData };
-//     },
-//     handleSubmit: (values: IGenericGetUrlParams, other) => {
-//         console.log('GenericApiParamsForm.SUBMIT: values:', values);
-//         console.log('GenericApiParamsForm.SUBMIT: other:', other);
-//         other.props.onSubmit(values);
-//     }
-// })(GenericApiParamsFormView)

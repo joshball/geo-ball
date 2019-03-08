@@ -1,27 +1,20 @@
 import * as React from 'react';
 import { ReactNode } from 'react';
-import { Formik, FormikProps, Form, Field, FormikErrors } from 'formik';
+import { FormikProps, FormikErrors } from 'formik';
 
 import { ApiPanelLayoutContainer } from './Layout';
-import { HeaderContainer, IHeaderContainerProps } from '../../organisms/Header';
-import { ResultsContainer } from '../../organisms/Results';
-import { IActionBarProps, ActionBar } from '../../organisms/ActionBar';
-import { IActionBarDebugTogglesProps } from '../../organisms/ActionBar/DebugToggles';
-import { ISubmitButtonProps } from '../../molecules/SubmitButton/SubmitButton';
-import { SwitchProps } from '../../molecules/SwitchProps/SwitchProps';
-import {
-    ApiFullFormManager,
-    ActionFormikProps,
-    ActionFormikConfig,
-    IApiCallbackData,
-} from '../../../types/ApiBrowser/IApiBrowserFormsCallbacks';
-import { Card, styled, FormikInputField, Hidden } from '../../atoms';
+import { IActionBarProps, ActionBar, ResultsContainer, HeaderContainer, IHeaderContainerProps } from '../../organisms';
+
+import { Switch } from '../..//atoms';
+import { ApiFullFormManager, ActionFormikConfig, IApiCallbackData } from '../../../utils';
+import { Card, styled, Hidden } from '../../atoms';
 import { ApiUrlParametersView } from '../..';
 
 const SectionCard = styled(Card)`
     margin: 30px 0px 20px 0px;
 `;
-export interface IApiBrowserPageState<TUrlParams, TBodyParams> {
+
+export interface IApiBrowserPageState<TUrlParams, TBodyParams, THeaders> {
     local: {
         mockApiCall: boolean;
         queryParamDebugForm: boolean;
@@ -30,42 +23,35 @@ export interface IApiBrowserPageState<TUrlParams, TBodyParams> {
         bodyParamViewPanel: boolean;
         [key: string]: any;
     };
-    formData?: Optional<IApiCallbackData<TUrlParams, TBodyParams, TBodyParams>>;
+    formData?: Optional<IApiCallbackData<TUrlParams, TBodyParams, THeaders>>;
     queryFormData?: Optional<TUrlParams>;
     bodyFormData?: Optional<TBodyParams>;
+    headersData?: Optional<THeaders>;
     apiResults?: Optional<any>;
     [key: string]: any;
 }
 
-export interface IApiBrowserPageStateFormProps<TApiResponse, TUrlParams, TBodyParams> {
+export interface IApiBrowserPageStateFormProps<TApiResponse, TUrlParams, TBodyParams, THeaders> {
     header: IHeaderContainerProps;
-    apiFFM: ApiFullFormManager<TUrlParams, TBodyParams, TBodyParams>;
+    apiFFM: ApiFullFormManager<TUrlParams, TBodyParams, THeaders>;
     forms: {
         query?: (props: ActionFormikConfig<TUrlParams>) => ReactNode;
         body?: (props: ActionFormikConfig<TBodyParams>) => ReactNode;
         headers?: (props: ActionFormikConfig<any>) => ReactNode;
     };
     queryForm?: (props: FormikProps<TUrlParams>) => ReactNode;
-    // bodyForm?: (props: FormikProps<TBodyParams>) => ReactNode;
-    formData: IApiBrowserPageState<TUrlParams, TBodyParams>;
-    callTheApi: (data?: Optional<IApiCallbackData<TUrlParams, TBodyParams, TBodyParams>>) => Promise<TApiResponse>;
+    formData: IApiBrowserPageState<TUrlParams, TBodyParams,THeaders>;
+    callTheApi: (data?: Optional<IApiCallbackData<TUrlParams, TBodyParams, THeaders>>) => Promise<TApiResponse|void>;
 }
-// import posed from 'react-pose';
-import { DebugFormixDiv } from '../../organisms/DebugFormixDiv';
 
-// const Content = posed.div({
-//     closed: { height: 0 },
-//     open: { height: 'auto' },
-// });
-
-export class ApiBrowser<TApiResponse, TUrlParams, TBodyParams> extends React.Component<
-    IApiBrowserPageStateFormProps<TApiResponse, TUrlParams, TBodyParams>,
-    IApiBrowserPageState<TUrlParams, TBodyParams>
+export class ApiBrowser<TApiResponse, TUrlParams, TBodyParams, THeaders> extends React.Component<
+    IApiBrowserPageStateFormProps<TApiResponse, TUrlParams, TBodyParams, THeaders>,
+    IApiBrowserPageState<TUrlParams, TBodyParams, THeaders>
 > {
-    state: IApiBrowserPageState<TUrlParams, TBodyParams>;
+    state: IApiBrowserPageState<TUrlParams, TBodyParams, THeaders>;
     actionBarProps: IActionBarProps;
 
-    constructor(props: IApiBrowserPageStateFormProps<TApiResponse, TUrlParams, TBodyParams>) {
+    constructor(props: IApiBrowserPageStateFormProps<TApiResponse, TUrlParams, TBodyParams, THeaders>) {
         super(props);
 
         this.state = {
@@ -109,38 +95,23 @@ export class ApiBrowser<TApiResponse, TUrlParams, TBodyParams> extends React.Com
         // }));
     }
 
-    createActionBarProps(): IActionBarProps {
-        const connectSwitch = (name: string, label: string): SwitchProps => {
-            return {
-                name,
-                checked: this.state.local[name],
-                onChange: this.setLocalState,
-                label: label,
-            };
-        };
-
-        const debugToggles: IActionBarDebugTogglesProps = {
-            mockApiCall: connectSwitch('mockApiCall', 'Fake API call'),
-            queryParams: {
-                groupLabel: 'Query Parameters',
-                debugForm: connectSwitch('queryParamDebugForm', 'Debug Form'),
-                viewPanel: connectSwitch('queryParamViewPanel', 'Show Params'),
-            },
-            bodyParams: {
-                groupLabel: 'Body Parameters',
-                debugForm: connectSwitch('bodyParamDebugForm', 'Debug Form'),
-                viewPanel: connectSwitch('bodyParamViewPanel', 'Show Params'),
-            },
-        };
-
-        const submitButtonProps: ISubmitButtonProps = {
-            execute: this.submitTheRequest,
-            children: 'Submit request',
-        };
-
+    // connectSwitch = (name: string, label: string): SwitchProps => {
+    connectSwitch = (name: string, label: string): any => {
         return {
-            debugToggles,
-            submitButtonProps,
+            name,
+            checked: this.state.local[name],
+            onChange: this.setLocalState,
+            label: label,
+        };
+    };
+
+    createActionBarProps(): IActionBarProps {
+        return {
+            mockApiCall: this.connectSwitch('mockApiCall', 'Fake API call'),
+            submitButtonProps: {
+                execute: this.submitTheRequest,
+                children: 'Submit request',
+            },
         };
     }
 
@@ -158,29 +129,9 @@ export class ApiBrowser<TApiResponse, TUrlParams, TBodyParams> extends React.Com
                 this.props.callTheApi(data);
                 return undefined;
             });
-        // return (
-        //     this.validateAllFormData()
-        //         .then(e => (e ? this.collectAllFormData() : undefined))
-        //         // .then((data: IApiCallbackData<TUrlParams, TBodyParams, TBodyParams> | undefined) => {
-        //         .then(data => {
-        //             console.log('data', data);
-        //         })
-        //         .then(() => {
-        //             console.log('DONE we need to turn off submitting');
-        //         })
-        // );
     }
 
-    // src/components/panels/ApiBrowser/ApiBrowser.tsx:151:19 -
-    // error TS2345:
-    // Argument of type
-    // '(data: IApiCallbackData<TUrlParams, TBodyParams, TBodyParams> | undefined) => Promise<TApiResponse> | undefined'
-    // is not assignable to parameter of type
-    // '(value: IApiCallbackData<TUrlParams, TBodyParams, TBodyParams> | undefined) => TApiResponse | PromiseLike<TApiResponse>'.
-    // Type 'Promise<TApiResponse> | undefined' is not assignable to type 'TApiResponse | PromiseLike<TApiResponse>'.
-    //   Type 'undefined' is not assignable to type 'TApiResponse | PromiseLike<TApiResponse>'.
-
-    async collectAllFormData(): Promise<IApiCallbackData<TUrlParams, TBodyParams, TBodyParams> | undefined> {
+    async collectAllFormData(): Promise<IApiCallbackData<TUrlParams, TBodyParams, THeaders> | undefined> {
         console.log('collectAllFormData() calling submit the form!!!!!');
         const { getUrlFormValues, getBodyFormValues, getHeadersFormValues } = this.getFormCalls();
         const formData: any = {};
@@ -213,18 +164,6 @@ export class ApiBrowser<TApiResponse, TUrlParams, TBodyParams> extends React.Com
                     return errors;
                 }
             });
-        // return this.props.apiFFM.urlParams
-        //     .validateTheForm()
-        //     .then(e => (e ? (errors.url = e) : null))
-        //     .then(() => this.props.apiFFM.bodyParams.validateTheForm())
-        //     .then(e => (e ? (errors.body = e) : null))
-        //     .then(() => this.props.apiFFM.headers.validateTheForm())
-        //     .then(e => (e ? (errors.headers = e) : null))
-        //     .then(() => {
-        //         if (errors.url || errors.body || errors.headers) {
-        //             return errors;
-        //         }
-        //     });
     }
 
     private getFormCalls() {
@@ -238,53 +177,33 @@ export class ApiBrowser<TApiResponse, TUrlParams, TBodyParams> extends React.Com
         };
     }
 
-    // updateUrlParamsForm(urlParams: any): void {
-    //     console.log('Got form data:', urlParams);
-    //     this.setState({
-    //         urlParams: urlParams,
-    //     });
-    // }
-
     render() {
         // console.log('RENDER', JSON.stringify(this.state, null, 4));
         const { local } = this.state;
-        const { debugToggles } = this.actionBarProps;
+        // const { debugToggles } = this.actionBarProps;
 
         console.log('@@@@ ApiBrowser RENDER(props,state)', this.props, this.state);
         // console.log('this.props', this.props);
         // console.log('this.state', this.state);
-        debugToggles.mockApiCall.checked = local.mockApiCall;
+        // debugToggles.mockApiCall.checked = local.mockApiCall;
 
-        if (debugToggles.bodyParams) {
-            debugToggles.bodyParams.debugForm.checked = local.bodyParamDebugForm;
-            debugToggles.bodyParams.viewPanel.checked = local.bodyParamViewPanel;
-        }
-        if (debugToggles.queryParams) {
-            debugToggles.queryParams.debugForm.checked = local.queryParamDebugForm;
-            debugToggles.queryParams.viewPanel.checked = local.queryParamViewPanel;
-        }
+        // if (debugToggles.bodyParams) {
+        //     debugToggles.bodyParams.debugForm.checked = local.bodyParamDebugForm;
+        //     debugToggles.bodyParams.viewPanel.checked = local.bodyParamViewPanel;
+        // }
+        // if (debugToggles.queryParams) {
+        //     debugToggles.queryParams.debugForm.checked = local.queryParamDebugForm;
+        //     debugToggles.queryParams.viewPanel.checked = local.queryParamViewPanel;
+        // }
 
-        // const formValues = this.props.apiFFM.urlParams.getFormValues();
-        const fvJson = JSON.stringify(this.state.formData, undefined, 4);
-        // console.log('*** this.state.formData:', this.state.formData);
-        // console.log('*** this.state.formData:', fvJson);
-        // const getFormSection = (
-        //     form: any,
-        //     config: ActionFormikConfig<any>,
-        //     title: string,
-        //     _viewPanel: string,
-        //     _debugForm: string
-        // ) => {
-        //     if (form) {
-        //         const fd = this.state.formData ? this.state.formData.url : {};
-        //         return (
-        //             <SectionCard elevation="400" title={title}>
-        //                 {form(config)}
-        //             </SectionCard>
-        //         );
-        //     }
-        //     return null;
+        // const debugToggles: IActionBarDebugTogglesProps = {
+        //     debugSwitches: {
+        //         queryParams: connectSwitch('debugQueryParams', 'Debug Query Params'),
+        //         bodyParams: connectSwitch('debugBodyParams', 'Debug Body Params'),
+        //         headers: connectSwitch('debugHeaders', 'Debug Headers'),
+        //     },
         // };
+
         const getFormSection = (
             form: any,
             config: ActionFormikConfig<any>,
@@ -298,11 +217,13 @@ export class ApiBrowser<TApiResponse, TUrlParams, TBodyParams> extends React.Com
             // console.log('getFormSection debugForm', debugForm);
             // console.log('getFormSection viewPanel', viewPanel);
             // console.log('getFormSection local[debugForm]', local[debugForm]);
+            const debugSwitch = this.connectSwitch('debugQueryParams', 'Debug Query Params');
             if (form) {
                 const fd = this.state.formData ? this.state.formData.url : {};
                 return (
                     <SectionCard elevation="400" title={title}>
                         {form(config)}
+                        <Switch {...debugSwitch} />
                         <Hidden.Container>
                             {_hidden => (
                                 <Hidden isVisible={local[viewPanel]}>
@@ -339,16 +260,24 @@ export class ApiBrowser<TApiResponse, TUrlParams, TBodyParams> extends React.Com
             'bodyParamViewPanel',
             'bodyParamDebugForm'
         );
+        const HeadersForm = getFormSection(
+            this.props.forms.headers,
+            this.props.apiFFM.headers.config,
+            'Headers',
+            'headersViewPanel',
+            'headersDebugForm'
+        );
         return (
             <ApiPanelLayoutContainer>
                 <HeaderContainer {...this.props.header} />
-                <ActionBar {...this.actionBarProps} />
                 {QueryForm}
                 {BodyForm}
+                {HeadersForm}
                 {/* <SectionCard elevation="400">
                     <h2>FormVals:</h2>
                     <pre>{fvJson}</pre>
                 </SectionCard> */}
+                <ActionBar {...this.actionBarProps} />
 
                 <ResultsContainer>{this.state.apiResults}</ResultsContainer>
             </ApiPanelLayoutContainer>

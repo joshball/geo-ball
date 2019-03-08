@@ -5,6 +5,11 @@
         // "target": "es2015",
         "target": "es6",
         "baseUrl": "./packages",
+        "paths": {
+            // "@geo-ball/*": [
+            //     "./*/src"
+            // ]
+        },
         "composite": true,
         "moduleResolution": "node",
         "module": "commonjs",
@@ -22,8 +27,8 @@
         /* sourceMap [false] - Generates corresponding .map file. */
         "sourceMap": true,
 
-        "esModuleInterop": true /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */ ,
-        "strict": true /* Enable all strict type-checking options. */ ,
+        "esModuleInterop": true /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */,
+        "strict": true /* Enable all strict type-checking options. */,
         "experimentalDecorators": true,
         /* Strict Type-Checking Options */
         // "noImplicitAny": true /* Raise error on expressions and declarations with an implied 'any' type. */,
@@ -35,38 +40,28 @@
         /* Additional Checks */
         // "noUnusedLocals": true /* Report errors on unused locals. */,
         "noUnusedLocals": false,
-        "noUnusedParameters": true /* Report errors on unused parameters. */ ,
-        "noImplicitReturns": true /* Report error when not all code paths in function return a value. */ ,
-        "noFallthroughCasesInSwitch": true /* Report errors for fallthrough cases in switch statement. */ ,
+        "noUnusedParameters": true /* Report errors on unused parameters. */,
+        "noImplicitReturns": true /* Report error when not all code paths in function return a value. */,
+        "noFallthroughCasesInSwitch": true /* Report errors for fallthrough cases in switch statement. */,
 
         /* Debugging Options */
         "resolveJsonModule": true,
-        "traceResolution": false /* Report module resolution log messages. */ ,
-        "listEmittedFiles": false /* Print names of generated files part of the compilation. */ ,
-        "listFiles": false /* Print names of files part of the compilation. */ ,
-        "pretty": true /* Stylize errors and messages using color and context. */ ,
+        "traceResolution": false /* Report module resolution log messages. */,
+        "listEmittedFiles": false /* Print names of generated files part of the compilation. */,
+        "listFiles": false /* Print names of files part of the compilation. */,
+        "pretty": true /* Stylize errors and messages using color and context. */,
         /* Experimental Options */
         // "experimentalDecorators": true /* Enables experimental support for ES7 decorators. */,
         // "emitDecoratorMetadata": true /* Enables experimental support for emitting type metadata for decorators. */,
-        "lib": [
-            "es6", "es2015","es2018","es2018.promise", "dom"
-        ],
-        "typeRoots": [
-            "./node_modules/@types",
-            "./ext-stub-types",
-        ],
+        "lib": ["es6", "es2015", "es2018", "es2018.promise", "dom"],
+        "typeRoots": ["./node_modules/@types", "./ext-stub-types", "../../ext-stub-types"]
         // "types":[
         //     ""
         // ]
     },
-    "include": [
-        "src/**/*",
-        "ext-stub-types/**/*",
-        "../../ext-stub-types/**/*",
-    ],
-    "exclude": [
-        "node_modules/**"
-    ],
+    // , "../../ext-stub-types"
+    "include": ["./src", "./ext-stub-types"],
+    "exclude": ["node_modules/**"],
     "compileOnSave": true
 }
 // {

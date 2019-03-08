@@ -1,9 +1,8 @@
 import * as React from "react"
-import { Formik, Form, Field, FormikProps } from "formik"
+import { Form, Field, FormikProps } from "formik"
 import { Card, Elevation, Button, Intent, FormGroup } from "@blueprintjs/core"
 import { styles } from "../../../../config/theme/index"
 import { css } from "glamor"
-import { ApiFormData } from "@geo-ball/component-lib"
 import { FormikTextArea } from "../../../common/input/FormikWrapped"
 import { IGenericGetUrlParams } from "../GenericApiService"
 
@@ -49,14 +48,9 @@ const queryColStyle = css({
 // onSubmit
 //
 
+class IApiBrowserFormsCallbacks implements IApiBrowserFormsCallbacks {}
 
-class IApiBrowserFormsCallbacks implements IApiBrowserFormsCallbacks{
-
-}
-
-const wrapIt = (component:any) => {
-
-}
+const wrapIt = (component: any) => {}
 const foo = () => {
     // const x = new ApiFormData(wrapIt(GenericApiParamsFormView));
 }

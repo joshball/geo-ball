@@ -1,28 +1,10 @@
 import * as React from "react"
-
-import { Formik, FormikConfig } from "formik"
-import { GenericUrlParamsForm, IGenericUrlParamsFormValues } from "./GenericUrlParamsForm"
+import { Formik } from "formik"
 import {
     ActionFormikConfig,
-    ActionFormikProps,
     DebugFormixDiv,
     BindAdditionalPropsToForm,
 } from "@geo-ball/component-lib"
-
-// export const GenericFormContainerInner = <TFormValues>(
-//     formikConfig: ActionFormikConfig<TFormValues>,
-//     GenericForm: any
-// ) => {
-//     // console.log("GenericFormContainer formikConfig:", formikConfig)
-//     return (
-//         <div>
-//             {/* <h1>GenericUrlParamsFormContainer</h1> */}
-//             <Formik {...formikConfig}>
-//                 {BindAdditionalPropsToForm(formikConfig, GenericForm)}
-//             </Formik>
-//         </div>
-//     )
-// }
 
 export function GenericFormEx(GenericForm: any) {
     return (

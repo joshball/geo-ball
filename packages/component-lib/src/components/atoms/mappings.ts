@@ -46,17 +46,18 @@ export {
     Select,
     SelectMenu,
     Switch,
+    SwitchField,
     Textarea,
 } from 'fannypack';
 
 // Props
 // export { buttonPropTypes, buttonDefaultProps } from 'fannypack/ts/Button/Button';
-export { ButtonProps, LocalButtonProps } from 'fannypack/ts/Button/Button';
-export { CardProps } from 'fannypack/ts/Card/Card';
+// export { ButtonProps, LocalButtonProps } from 'fannypack';
+// export { Card } from 'fannypack/ts/Card';
+// export { SwitchProps } from 'fannypack/ts/Switch/Switch';
 
 // Formik Field Adaptor
 // https://fannypack.style/form/form-libraries
-export { formikField } from '../_external/fannypack';
 
 import {
     CheckboxField,
@@ -70,6 +71,8 @@ import {
 } from 'fannypack';
 
 import { formikField } from '../_external/fannypack';
+// export { formikField };
+
 export const FormikCheckboxField = formikField(CheckboxField);
 export const FormikInputField = formikField(InputField);
 // export const FormikRadioField = formikField(RadioField);

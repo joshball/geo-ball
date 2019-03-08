@@ -1,66 +1,54 @@
 import * as React from 'react';
-import { Card, Block, Box, Container, InlineBlock } from '../../atoms';
-import { DebugToggles, IActionBarDebugTogglesProps } from './DebugToggles';
-import { SubmitButton, ISubmitButtonProps } from '../../molecules/SubmitButton/SubmitButton';
-import { cssProps } from '../../../types';
-
+import { Box, Container, InlineBlock, Switch, SwitchField, styled } from '../../atoms';
+import { SubmitButton, ISubmitButtonProps } from '../../molecules';
+import use from "reuse";
 /** These are the props for the action bar */
 export interface IActionBarProps {
-    /**
-     * This is the debug toggles description
-     */
-    debugToggles: IActionBarDebugTogglesProps;
-
-    /** This is the request button description */
+    mockApiCall: any; // SwitchProps;
     submitButtonProps: ISubmitButtonProps;
 }
+
+const ActionToolbarOuterContainer = styled(Box)`
+    display: flex;
+`;
+
+const ActionToolbarInnerContainer = styled(Box)`
+    border-radius: 0.25em;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-left: auto;
+    margin-right: 10px;
+`;
+
+const SwitchWrapper = styled(Box)`
+    display: flex;
+    margin-right: 60px;
+    margin-left: 20px;
+`;
+
+const SwitchWrapperEx = use(SwitchWrapper, Switch);
+
+const FlexSubmitButton = styled(SubmitButton)`
+    margin-left: 10px;
+`;
 
 /**
  * This bar holds all the actions
  * @param props IActionBarProps
  */
 export const ActionBar = (props: IActionBarProps) => {
-    const actionBarDivStyle = {
-        overflow: 'hidden',
-        // minHeight: '30px',
-        // height: '100%',
-        // float: 'right',
-        // display: 'flex',
-    };
-
-    const toggleDivStyle = cssProps({
-        float: 'right',
-        display: 'inline-block',
-    });
-    const submitDivStyle = cssProps({
-        float: 'right',
-        display: 'flex',
-        height: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-    });
-
-    console.log('ActionBar PROPS:', props);
-
+    const { mockApiCall, submitButtonProps } = props;
     return (
-        <Container align="right" height="fit-content">
-            <InlineBlock float="right" clear="both">
-                <DebugToggles {...props.debugToggles} />
-            </InlineBlock>
-            <InlineBlock float="right" clear="both">
-                <SubmitButton {...props.submitButtonProps} />
-            </InlineBlock>
-            <Box clear="both" />
-        </Container>
+        <ActionToolbarOuterContainer>
+            <ActionToolbarInnerContainer>
+                <SwitchWrapper>
+                    <Switch {...mockApiCall} />
+                </SwitchWrapper>
+                <SwitchWrapperEx {...mockApiCall} />
+
+                <FlexSubmitButton {...submitButtonProps} />
+            </ActionToolbarInnerContainer>
+        </ActionToolbarOuterContainer>
     );
-    // return (
-    //     <div style={actionBarDivStyle}>
-    //         <div style={toggleDivStyle}>
-    //             <DebugToggles {...props.debugToggles} />
-    //         </div>
-    //         <div style={submitDivStyle}>
-    //             <SubmitButton {...props.submitButtonProps} />
-    //         </div>
-    //     </div>
-    // );
 };

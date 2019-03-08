@@ -1,18 +1,30 @@
 import * as React from 'react';
 import { FormikConsumer } from 'formik';
-import { Hidden, Tabs, Pane, Card, Columns, Column, Box, Divider } from '../atoms';
+import { Hidden, Tabs, Pane, Card, Columns, Column, Box, Divider, Switch } from '../atoms';
 
 export const GenericFormWithDebug = (GenericForm: any, topProps: any) => {
     // console.log('topProps', topProps);
     // console.log('topProps.additionalProps', topProps.additionalProps);
+    // const debugSwitch = {
+    //     name: 'Show',
+    //     checked: this.state.local[name],
+    //     onChange: this.setLocalState,
+    //     label: label,
+    // };
     return (
-        <div>
-            {GenericForm}
-            <Hidden.Container>
-                {_hidden => {
-                    const visible = (topProps.additionalProps && topProps.additionalProps.showDebugForm) == true;
-                    // console.log('DEBUG: visible', visible);
-                    return (
+        <Hidden.Container>
+            {(_hidden:any) => {
+                const visible = (topProps.additionalProps && topProps.additionalProps.showDebugForm) == true;
+                console.log('DEBUG: visible', _hidden);
+                // _hidden.show()
+                console.log('DEBUG: visible', visible);
+                return (
+                    <div>
+                        {GenericForm}
+                        <Switch
+                            label="Debug Formik"
+                            onClick={_hidden.toggle}
+                        />
                         <Hidden isVisible={visible}>
                             <Divider marginTop="major-4" />
                             <Box marginTop="major-4">
@@ -35,10 +47,10 @@ export const GenericFormWithDebug = (GenericForm: any, topProps: any) => {
                                 </Columns>
                             </Box>
                         </Hidden>
-                    );
-                }}
-            </Hidden.Container>
-        </div>
+                    </div>
+                );
+            }}
+        </Hidden.Container>
     );
 };
 

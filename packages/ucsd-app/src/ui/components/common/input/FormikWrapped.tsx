@@ -1,24 +1,31 @@
-import * as React from 'react'
-import { Field, FieldProps } from "formik";
-import { FormGroup, InputGroup, Label, ITextAreaProps, TextArea, ISwitchProps, Switch, ControlGroup, IInputGroupProps, INumericInputProps, NumericInput } from '@blueprintjs/core';
-import { css } from 'glamor';
-import { colors, styles } from '../../../config/theme';
-import { IRadioButtonGroupProps, RadioButtonGroup } from './RadioButtonGroup';
-
-
+import * as React from "react"
+import { FieldProps } from "formik"
+import { IRadioButtonGroupProps } from "@geo-ball/component-lib/src"
+import {
+    InputGroup,
+    ITextAreaProps,
+    TextArea,
+    ISwitchProps,
+    Switch,
+    IInputGroupProps,
+    INumericInputProps,
+    NumericInput,
+} from "@blueprintjs/core"
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
-interface ITextAreaWithoutFormProps extends Omit<ITextAreaProps, 'form'> { }
+interface ITextAreaWithoutFormProps extends Omit<ITextAreaProps, "form"> {}
 
 interface IFormikTextAreaProps<TForm> extends FieldProps<TForm>, ITextAreaWithoutFormProps {
-    outerDivProps: any;
+    outerDivProps: any
 }
 
-export class FormikTextArea<TFormProps> extends React.PureComponent<IFormikTextAreaProps<TFormProps>> {
+export class FormikTextArea<TFormProps> extends React.PureComponent<
+    IFormikTextAreaProps<TFormProps>
+> {
     render() {
         // field, // { name, value, onChange, onBlur }
         // form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-        const { field, form, outerDivProps, ...props } = this.props;
+        const { field, form, outerDivProps, ...props } = this.props
         return (
             <div {...outerDivProps}>
                 <TextArea
@@ -32,28 +39,22 @@ export class FormikTextArea<TFormProps> extends React.PureComponent<IFormikTextA
                     {...props}
                 />
             </div>
-        );
+        )
     }
 }
 
-interface ISwitchWithoutFormProps extends Omit<ISwitchProps, 'form'> { }
+interface ISwitchWithoutFormProps extends Omit<ISwitchProps, "form"> {}
 
 interface IFormikSwitchProps<TForm> extends FieldProps<TForm>, ISwitchWithoutFormProps {
-    outerDivProps: any;
-    switchProps: any;
+    outerDivProps: any
+    switchProps: any
 }
 
-const toggleItem = css({
-    boxSizing: 'border-box',
-    padding: '5px 20px 5px 20px',
-    backgroundColor: colors.white,
-    writingMode: 'horizontal-tb',
-});
 export class FormikSwitch<TFormProps> extends React.PureComponent<IFormikSwitchProps<TFormProps>> {
     render() {
         // field, // { name, value, onChange, onBlur }
         // form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-        const { field, form, label, outerDivProps, switchProps, ...props } = this.props;
+        const { field, form, label, outerDivProps, switchProps, ...props } = this.props
         return (
             <div {...outerDivProps}>
                 <Switch
@@ -66,10 +67,9 @@ export class FormikSwitch<TFormProps> extends React.PureComponent<IFormikSwitchP
                     {...props}
                 />
             </div>
-        );
+        )
     }
 }
-
 
 // const FormikRadioButtonGroup = ({
 //     field, // { name, value, onChange, onBlur }
@@ -84,14 +84,16 @@ export class FormikSwitch<TFormProps> extends React.PureComponent<IFormikSwitchP
 //         </RadioButtonGroup>
 //     );
 interface IFormikRadioButtonGroupProps<TForm> extends FieldProps<TForm>, IRadioButtonGroupProps {
-    outerDivProps: any;
+    outerDivProps: any
 }
 
-export class FormikRadioButtonGroup<TFormProps> extends React.PureComponent<IFormikRadioButtonGroupProps<TFormProps>> {
+export class FormikRadioButtonGroup<TFormProps> extends React.PureComponent<
+    IFormikRadioButtonGroupProps<TFormProps>
+> {
     render() {
         // field, // { name, value, onChange, onBlur }
         // form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-        const { field, form, outerDivProps, children, ...props } = this.props;
+        const { field, form, outerDivProps, children, ...props } = this.props
         return (
             <div {...outerDivProps}>
                 <RadioButtonGroup
@@ -104,7 +106,7 @@ export class FormikRadioButtonGroup<TFormProps> extends React.PureComponent<IFor
                     {children}
                 </RadioButtonGroup>
             </div>
-        );
+        )
     }
 }
 
@@ -125,11 +127,13 @@ interface IFormikInputGroupProps<TForm> extends FieldProps<TForm>, IInputGroupPr
 //         />
 //     </ControlGroup>
 // );
-export class FormikInputGroup<TFormProps> extends React.PureComponent<IFormikInputGroupProps<TFormProps>> {
+export class FormikInputGroup<TFormProps> extends React.PureComponent<
+    IFormikInputGroupProps<TFormProps>
+> {
     render() {
         // field, // { name, value, onChange, onBlur }
         // form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-        const { field, form, ...props } = this.props;
+        const { field, form, ...props } = this.props
         return (
             <InputGroup
                 name={field.name}
@@ -139,7 +143,7 @@ export class FormikInputGroup<TFormProps> extends React.PureComponent<IFormikInp
                 {...field}
                 {...props}
             />
-        );
+        )
     }
 }
 
@@ -156,44 +160,42 @@ export class FormikInputGroup<TFormProps> extends React.PureComponent<IFormikInp
 //         <InputGroup name={field.name} onChange={field.onChange} value={field.value} placeholder={field.name}/>
 //     )};
 
-
 interface IFormikNumericInputProps<TForm> extends FieldProps<TForm>, INumericInputProps {
     min?: number
     max?: number
 }
-export class FormikNumericInput<TFormProps> extends React.PureComponent<IFormikNumericInputProps<TFormProps>> {
-
+export class FormikNumericInput<TFormProps> extends React.PureComponent<
+    IFormikNumericInputProps<TFormProps>
+> {
     render() {
         // field, // { name, value, onChange, onBlur }
         // form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-        const { field, form, min, max, ...props } = this.props;
+        const { field, form, min, max, ...props } = this.props
         // console.log('NUMBER:')
         // console.log('NUMBER.field:', field)
         // console.log('NUMBER field.name:', field.name)
         // console.log('NUMBER field.value:', field.value)
 
-
         const onChange = (_valueAsNumber: number, valueAsString: string) => {
             // console.log("Value as number:", valueAsNumber);
             // console.log("Value as string:", valueAsString);
             // console.log('NUMBER. onCHANGE valueAsString:', valueAsString)
-            const cleanVal = valueAsString.trim();
+            const cleanVal = valueAsString.trim()
             // console.log('NUMBER. onCHANGE cleanVal:', cleanVal)
             if (cleanVal === "") {
-                form.setFieldValue(field.name, cleanVal);
-                return;
+                form.setFieldValue(field.name, cleanVal)
+                return
             }
 
-            let changeVal = Number(cleanVal);
+            let changeVal = Number(cleanVal)
             // console.log('NUMBER. onCHANGE changeVal:', changeVal)
             if (min !== undefined && changeVal < min) {
-                changeVal = min;
-            }
-            else if (max !== undefined && changeVal > max) {
-                changeVal = max;
+                changeVal = min
+            } else if (max !== undefined && changeVal > max) {
+                changeVal = max
             }
             // console.log('NUMBER. onCHANGE FINAL changeVal:', changeVal)
-            form.setFieldValue(field.name, changeVal);
+            form.setFieldValue(field.name, changeVal)
         }
 
         return (
@@ -205,6 +207,6 @@ export class FormikNumericInput<TFormProps> extends React.PureComponent<IFormikN
                 {...field}
                 {...props}
             />
-        );
+        )
     }
 }

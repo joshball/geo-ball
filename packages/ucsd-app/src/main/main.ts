@@ -4,7 +4,6 @@
 // It is responsible for launching a renderer window.
 
 // https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&client=YOUR_CLIENT_ID&signature=SIGNATURE
-
 import { app, dialog, ipcMain, BrowserWindow } from "electron"
 import { createUiWindow } from "./ui-renderer-window"
 import { createBackgroundWindow } from "./background-renderer-window"

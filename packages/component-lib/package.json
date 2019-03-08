@@ -23,8 +23,14 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "build:clean": "tsc --build tsconfig.json --clean",
     "build:watch": "tsc -p tsconfig.json --watch",
+    "build:parcel:watch": "parcel watch ./src/index.ts --bundle-node-modules --target node --out-dir ./build",
+    "build:parcel": "parcel build ./src/index.ts --no-minify --out-dir ./build",
+    "build:parcel:nocache": "parcel build ./src/index.ts --no-cache --out-dir ./build",
+    "build:tsc:types": "tsc -p tsconfig.json --emitDeclarationOnly",
+    "build:tsc:types:watch": "tsc -p tsconfig.json --emitDeclarationOnly --watch",
+    "build:tsc:clean": "tsc --build tsconfig.json --clean",
+    "build:tsc:watch": "tsc -p tsconfig.json --watch",
     "clean": "rimraf build .nyc_output",
     "clean:node_modules": "rimraf node_modules",
     "cleanup:packages": "yarn run prettier-package-json --write",
@@ -33,6 +39,36 @@
     "sg": "styleguidist server",
     "test": "yarn run build && yarn run nyc ava --verbose",
     "test:watch": "yarn run build && yarn run ava --watch"
+  },
+  "parcel-plugin-typescript": {
+    "transpileOnly": false
+  },
+  "babel": {
+    "presets": [
+      "@babel/env",
+      "@babel/react",
+      "@babel/typescript"
+    ],
+    "sourceMaps": "inline",
+    "plugins": [
+      "@babel/proposal-class-properties",
+      [
+        "module-resolver",
+        {
+          "root": [
+            "./src"
+          ],
+          "alias": {
+            "CL": "./src"
+          }
+        }
+      ]
+    ]
+  },
+  "_moduleAliases": {
+    "CL": [
+      "src"
+    ]
   },
   "ava": {
     "snapshotDir": "./snapshots",
@@ -46,9 +82,15 @@
   },
   "devDependencies": {
     "@babel/core": "^7.3.3",
-    "@babel/plugin-proposal-class-properties": "^7.3.3",
-    "@babel/preset-env": "^7.3.1",
+    "@babel/plugin-proposal-class-properties": "^7.3.4",
+    "@babel/plugin-proposal-export-default-from": "^7.2.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.3.4",
+    "@babel/plugin-transform-regenerator": "^7.3.4",
+    "@babel/plugin-transform-typescript": "^7.3.2",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
+    "@babel/preset-stage-0": "^7.0.0",
     "@babel/preset-stage-3": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
     "@types/json-stringify-safe": "^5.0.0",
@@ -60,6 +102,7 @@
     "ava-ts": "^0.25.2",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.5",
+    "babel-plugin-module-resolver": "^3.2.0",
     "create-index": "^2.4.0",
     "css-loader": "^2.1.0",
     "eslint": "^5.14.1",
@@ -71,6 +114,8 @@
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
     "nyc": "^13.1.0",
+    "parcel-bundler": "^1.11.0",
+    "parcel-plugin-typescript": "^1.0.0",
     "prettier": "^1.16.4",
     "react-docgen-typescript": "^1.12.3",
     "react-styleguidist": "^9.0.1",
@@ -78,17 +123,18 @@
     "style-loader": "^0.23.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.0.1",
-    "typescript": "^3.3.3333",
+    "typescript": "^3.3.x",
     "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3"
   },
   "dependencies": {
     "@blueprintjs/core": "^3.13.0",
+    "fannypack": "^4.11.26",
     "formik": "^1.5.1",
     "glamor": "^2.20.40",
     "json-stringify-safe": "^5.0.1",
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2",
+    "react": "16.x",
+    "react-dom": "16.x",
     "reakit": "^0.16.0"
   }
 }

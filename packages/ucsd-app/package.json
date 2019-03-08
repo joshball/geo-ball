@@ -40,6 +40,11 @@
       ]
     }
   },
+  "_moduleAliases": {
+    "@root": [
+      "../componet-lib/src"
+    ]
+  },
   "scripts": {
     "build-storybook": "build-storybook",
     "clean": "rm -rf .fusebox out dist coverage .nyc_output",
@@ -139,8 +144,6 @@
     "@types/storybook__react": "^4.0.1",
     "@types/uuid": "^3.4.4",
     "awesome-typescript-loader": "^5.2.1",
-    "babel-loader": "^8.0.5",
-    "babel-preset-react": "^6.24.1",
     "coveralls": "^3.0.2",
     "devtron": "^1.4.0",
     "electron": "^4.0.3",
@@ -151,6 +154,7 @@
     "jest": "^24.1.0",
     "jest-expect-contain-deep": "^1.0.1",
     "lint-staged": "^8.1.0",
+    "module-alias": "^2.2.0",
     "node-sass": "^4.11.0",
     "npm-run-all": "^4.1.5",
     "postcss-modules": "^1.4.1",

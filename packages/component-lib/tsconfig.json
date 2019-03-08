@@ -12,22 +12,45 @@
         { "path": "../utils" }
     ],
     "compilerOptions": {
-        "rootDir": "src",
+        "baseUrl": "./src",
+        "rootDir": "./src",
         "outDir": "./build",
-        "typeRoots": [
-            "./node_modules/@types",
-            "../../node_modules/@types",
-            "./ext-stub-types",
-            "../../ext-stub-types",
-        ],
-    },
-    "include": [
-        "src/**/*",
-        "ext-stub-types/**/*",
-        "../../ext-stub-types/**/*",
-    ],
-    "exclude": [
-        "node_modules/**"
-    ],
+        "typeRoots": ["./node_modules/@types", "../../node_modules/@types", "./ext-stub-types", "../../ext-stub-types"],
+        "paths": {
+            /* Make sure webpack/fuse know about these too! */
+            // "CL/*": ["*"]
+            // "@types/*": ["types/*"],
+            // "@components/*": ["components/*"],
 
+            // "@root": ["."],
+            // "@types": ["types"],
+            // "@components": ["components"],
+            // "@atoms": ["components/atoms"],
+            // "@molecules": ["components/molecules"],
+            // "@organisms": ["components/organisms"],
+            // "@panels": ["components/panels"],
+            // "@themes": ["components/themes"],
+
+            // "@atoms/*": ["components/atoms/*"],
+            // "@molecules/*": ["components/molecules/*"],
+            // "@organisms/*": ["components/organisms/*"],
+            // "@panels/*": ["components/panels/*"],
+            // "@themes/*": ["components/themes/*"]
+        }
+    },
+    "parcel-plugin-typescript": {
+        // If true type-checking is disabled
+        "transpileOnly": false
+    },
+    "include": ["src/**/*", "ext-stub-types/**/*", "../../ext-stub-types/**/*"],
+    "exclude": ["node_modules/**"]
 }
+
+// "@root": ["build/."],
+// "@types": ["build/types"],
+// "@components": ["build/components"],
+// "@atoms": ["build/components/atoms"],
+// "@molecules": ["build/components/molecules"],
+// "@organisms": ["build/components/organisms"],
+// "@panels": ["build/components/panels"],
+// "@themes": ["build/components/themes"]

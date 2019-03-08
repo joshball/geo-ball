@@ -1,54 +1,57 @@
 {
     "extends": "../../tsconfig.common.json",
-    "references": [
-        { "path": "../component-lib" },
-        { "path": "../geo-core" },
-        { "path": "../graph-core" },
-        // { "path": "../osm-cli" },
-        { "path": "../osm-data" },
-        // { "path": "../ucsd-app" },
-        // { "path": "../ucsd-cli" },
-        { "path": "../ucsd-core" },
-        { "path": "../utils" },
-    ],
+    // "references": [
+    //     { "path": "../component-lib" },
+    //     { "path": "../geo-core" },
+    //     { "path": "../graph-core" },
+    //     // { "path": "../osm-cli" },
+    //     { "path": "../osm-data" },
+    //     // { "path": "../ucsd-app" },
+    //     // { "path": "../ucsd-cli" },
+    //     { "path": "../ucsd-core" },
+    //     { "path": "../utils" }
+    // ],
     "compilerOptions": {
-        "rootDirs": ["src", ".storybook/views"],
+        "rootDir": "src",
+        // "rootDirs": ["src", ".storybook/views"],
         "outDir": "build/lib",
-        "baseUrl": ".",
-        // "paths": {
-        //     // "*": ["ext-stub-types/*"]
-        // },
-        // "module": "commonjs",
-        // "target": "es5",
-        // "lib": ["es5", "es6", "es7", "es2017", "dom"],
-        // "sourceMap": true,
-        // "allowJs": false,
-        // "jsx": "react",
-        // "moduleResolution": "node",
-        // "forceConsistentCasingInFileNames": true,
-        // "noImplicitReturns": true,
-        // "noImplicitThis": true,
-        // "noImplicitAny": true,
-        // "strictNullChecks": true,
-        // "suppressImplicitAnyIndexErrors": true,
-        // "noUnusedLocals": true,
-        // "declaration": true,
-        // "allowSyntheticDefaultImports": true,
-        // "experimentalDecorators": true,
-        // "emitDecoratorMetadata": true,
+        // "baseUrl": ".",
+        "baseUrl": "src",
+        // "rootDir": "src",
         "typeRoots": [
             "./node_modules/@types",
             "../../node_modules/@types",
             "./ext-stub-types",
-            "../../ext-stub-types",
+            "../../ext-stub-types"
         ],
+        "paths": {
+            /* Make sure webpack/fuse know about these too! */
+            // "CL/*": ["../component-lib/src/*"],
+            // "@types/*": ["../component-lib/src/types/*"],
+            // "@components/*": ["../component-lib/src/components/*"],
+
+            // "@root": ["../component-lib/src/."],
+            // "@types": ["../component-lib/src/types"],
+            // "@components": ["../component-lib/src/components"],
+            // "@atoms": ["../component-lib/src/components/atoms"],
+            // "@molecules": ["../component-lib/src/components/molecules"],
+            // "@organisms": ["../component-lib/src/components/organisms"],
+            // "@panels": ["../component-lib/src/components/panels"],
+            // "@themes": ["../component-lib/src/components/themes"],
+
+            // "@atoms/*": ["../component-lib/src/components/atoms/*"],
+            // "@molecules/*": ["../component-lib/src/components/molecules/*"],
+            // "@organisms/*": ["../component-lib/src/components/organisms/*"],
+            // "@panels/*": ["../component-lib/src/components/panels/*"],
+            // "@themes/*": ["../component-lib/src/components/themes/*"]
+        }
     },
     "include": [
         "./src",
         "./ext-stub-types",
         "../../ext-stub-types",
-        "./fuse.ts",
-        ".storybook/views",
+        // "./fuse.ts",
+        // ".storybook/views"
     ],
     // "include": ["src/**/*", "ext-stub-types/**/*", "fuse.ts", ".storybook/views"],
     "exclude": ["node_modules", "build", "scripts"]

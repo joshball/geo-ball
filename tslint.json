@@ -15,17 +15,17 @@
 		"max-classes-per-file": false,
 		"member-access": false,
 		"member-ordering": false,
+		"no-bitwise": false,
 		"no-console": false,
+		"no-duplicate-imports": false,
+		"no-empty-interface": false,
 		"no-internal-module": false,
 		"no-namespace": false,
+		"variable-name": false,
         "object-literal-sort-keys": false,
         "one-variable-per-declaration":false,
         "ordered-imports": false,
         "prefer-for-of":false,
-		"variable-name": false,
-		"no-bitwise": false,
-		"no-duplicate-imports": false,
-		"no-empty-interface": false,
 		// TODO: allow devDependencies only in **/*.spec.ts files:
 		// waiting on https://github.com/palantir/tslint/pull/3708
 		"no-implicit-dependencies": [

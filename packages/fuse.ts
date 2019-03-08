@@ -1,17 +1,21 @@
 // import { FuseBox, CSSModules, CSSPlugin, SassPlugin, Sparky, CopyPlugin, ReplacePlugin } from "fuse-box"
 import { FuseBox, CSSPlugin, SassPlugin, Sparky, CopyPlugin, ReplacePlugin } from "fuse-box"
 import { spawn } from "child_process"
-import * as pjson from "./package.json"
+import * as pjson from "./ucsd-app/package.json"
+import { resolve, join } from "path"
 
 const DEV_PORT = 4445
-const OUTPUT_DIR = "out"
+const UCSD_APP = 'ucsd-app';
+const UCSD_APP_OUT_DIR = `${UCSD_APP}/out`
+const UCSD_APP_SRC_DIR = `${UCSD_APP}/src`
+const UCSD_APP_PATH = resolve(join(__dirname, UCSD_APP));
+
+const COMP_LIB = 'component-lib';
+const COMP_LIB_OUT_DIR = `${COMP_LIB}/build`
+const COMP_LIB_SRC_DIR = `${COMP_LIB}/src`
+
+
 const ASSETS = ["*.jpg", "*.png", "*.jpeg", "*.gif", "*.svg"]
-const path = require('path');
-function srcPath(subdir:string) {
-    const p = path.join(__dirname, '../component-lib/src', subdir);
-    console.log('p', p);
-    return p;
-}
 
 // are we running in production mode?
 const isProduction = process.env.NODE_ENV === "production"
@@ -19,30 +23,25 @@ const isProduction = process.env.NODE_ENV === "production"
 // copy the renderer's html file into the right place
 Sparky.task("copy-html", () => {
     // return Sparky.src("src/main/index.html").dest(`${OUTPUT_DIR}/$name`)
-    return Sparky.src("src/main/*.html").dest(`${OUTPUT_DIR}/$name`)
+    return Sparky.src(`${UCSD_APP_SRC_DIR}/main/*.html`).dest(`${UCSD_APP_OUT_DIR}/$name`)
 })
 
 // the default task
 Sparky.task("default", ["copy-html"], () => {
     // setup the producer with common settings
     const fuse = FuseBox.init({
-        homeDir: "src",
-        output: `${OUTPUT_DIR}/$name.js`,
+        homeDir: ".",
+        // output: `${UCSD_APP_OUT_DIR}/$name.js`,
+        output: "ucsd-app/out/$name.js",
         target: "electron",
         log: isProduction,
         cache: !isProduction,
         sourceMaps: true,
-        tsConfig: "tsconfig.json",
+        debug: true,
         alias: {
-            // 'CL': srcPath('.'),
-            // '@types': srcPath('types'),
-            // '@components': srcPath('components'),
-            // '@atoms': srcPath('components/atoms'),
-            // '@molecules': srcPath('components/molecules'),
-            // '@organisms': srcPath('components/organisms'),
-            // '@panels': srcPath('components/panels'),
-            // '@themes': srcPath('components/themes'),
+            hack: `${COMP_LIB_OUT_DIR}/index.js`,
         },
+        tsConfig: "ucsd-app/tsconfig.json",
     })
 
     // start the hot reload server
@@ -54,7 +53,8 @@ Sparky.task("default", ["copy-html"], () => {
     const mainBundle = fuse
         .bundle("main")
         .target("server")
-        .instructions("> [main/main.ts]")
+        // .instructions(`> [${UCSD_APP_SRC_DIR}/main/main.ts]`)
+        .instructions("> [ucsd-app/src/main/main.ts]")
         // inject in some configuration
         .plugin(
             ReplacePlugin({
@@ -70,16 +70,18 @@ Sparky.task("default", ["copy-html"], () => {
     // bundle the electron renderer code
     const rendererBundle = fuse
         .bundle("ui-renderer")
-        .instructions("> [ui/app/index.tsx] +fuse-box-css")
+        // .instructions(`> [${UCSD_APP_SRC_DIR}/ui/app/index.tsx] +fuse-box-css`)
+        .instructions("> [ucsd-app/src/ui/app/index.tsx] +fuse-box-css")
         .plugin(SassPlugin())
         // .plugin(CSSResourcePlugin({ dist: "dist/css-resources" }))
         .plugin(CSSPlugin())
-        .plugin(CopyPlugin({ useDefault: false, files: ASSETS, dest: "assets", resolve: "assets/" }))
+        .plugin(
+            CopyPlugin({ useDefault: false, files: ASSETS, dest: "assets", resolve: "assets/" }),
+        )
 
     const backgroundBundle = fuse
         .bundle("background-renderer")
-        .instructions("> [background/index.ts]");
-
+        .instructions(`> [${UCSD_APP_SRC_DIR}/background/index.ts]`)
 
     // and watch & hot reload unless we're bundling for production
     if (!isProduction) {
@@ -88,17 +90,21 @@ Sparky.task("default", ["copy-html"], () => {
         backgroundBundle.watch()
         backgroundBundle.hmr()
     }
+    console.log('AAAA')
 
     // when we are finished bundling...
     return fuse.run().then(() => {
+        console.log('BBB')
         if (!isProduction) {
             // startup electron
-            spawn("node", [`${__dirname}/node_modules/electron/cli.js`, __dirname], {
+            console.log('UCSD_APP_PATH:')
+            console.log('UCSD_APP_PATH:',UCSD_APP_PATH)
+            spawn("node", [`${UCSD_APP_PATH}/node_modules/electron/cli.js`, UCSD_APP_PATH], {
                 stdio: "inherit",
             }).on("exit", code => {
                 console.log(`electron process exited with code ${code}`)
                 process.exit(code || 0)
             })
         }
-    })
+    }).catch(e => console.error(e));
 })

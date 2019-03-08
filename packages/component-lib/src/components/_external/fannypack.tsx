@@ -1,9 +1,9 @@
-import * as FP from 'fannypack';
-export { FP };
-export default FP;
+// import * as FP from 'fannypack';
+// export { FP };
+// export default FP;
 
 import * as React from 'react';
-import { Value } from 'react-powerplug';
+// import { Value } from 'react-powerplug';
 
 // export { Button as FpButton, Switch as FpSwitch, Card as FpCard } from 'fannypack';
 
