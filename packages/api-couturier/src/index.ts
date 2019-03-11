@@ -3,11 +3,6 @@
 // ...
 // require('module-alias/register')
 // import "@babel/polyfill";
-export * from './atoms';
-export * from './layout';
-export * from './molecules';
-// export * from './organisms';
-// export * from './panels';
-export * from './themes';
-// export * from './types';
+export * from './components';
+export * from './types';
 export * from './utils';

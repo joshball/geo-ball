@@ -2,7 +2,7 @@
     "extends": "../../tsconfig.common.json",
     "references": [
         // { "path": "../api-couturier" },
-        // { "path": "../component-lib" },
+        { "path": "../component-lib" },
         { "path": "../geo-core" },
         // { "path": "../graph-core" },
         // { "path": "../osm-cli" },

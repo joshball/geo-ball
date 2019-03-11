@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@geo-ball/component-lib",
+  "name": "@geo-ball/api-couturier",
   "description": "Library for React Components",
   "license": "ISC",
   "author": "Joshua Ball <joshua.g.s.ball@gmail.com>",
@@ -135,7 +135,7 @@
     "typescript": "^3.x"
   },
   "dependencies": {
-    "fannypack": "^4.x",
+    "@geo-ball/component-lib": "^1.0.0",
     "formik": "^1.x",
     "json-stringify-safe": "^5.x",
     "prop-types": "^15.x",
