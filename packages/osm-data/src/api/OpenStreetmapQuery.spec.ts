@@ -3,7 +3,6 @@ import test from 'ava';
 import { OpenStreetmapQuery, IOpenStreetmapQuery } from './OpenStreetmapQuery';
 import { LatLngBounds, LatLng } from '@geo-ball/geo-core';
 
-
 // 40.71490728626142, -111.8545264005661, 40.71946109443547, -111.84929072856903
 const sw = new LatLng(40.71490728626142, -111.8545264005661);
 const ne = new LatLng(40.71946109443547, -111.84929072856903);
@@ -12,7 +11,7 @@ const ne = new LatLng(40.71946109443547, -111.84929072856903);
 // const sw = new LatLng(32.859375, -117.27233)
 // const ne = new LatLng(32.902622, -117.20367)
 const latLngBounds = new LatLngBounds(sw, ne);
-const osmQuery:IOpenStreetmapQuery = { latLngBounds };
+const osmQuery: IOpenStreetmapQuery = { latLngBounds };
 
 // test('OpenStreetmapQuery is instantiable', t => {
 //     t.is(new OpenStreetmapQuery(latLngBounds)).toBeInstanceOf(OpenStreetmapQuery)

@@ -1,13 +1,8 @@
-
-
-
-
-
 export interface ILatLngFmt {
     quickFmt?: LatLngQuickFmt; // quick codes
-    coordFmt?: string;   // 'ddC'
-    labelFmt?: string;   // 'L:n', 'l:n', 'n l', 'n L
-    tupleFmt?: string;   // 'lat, lng' 'lat, lng'
+    coordFmt?: string; // 'ddC'
+    labelFmt?: string; // 'L:n', 'l:n', 'n l', 'n L
+    tupleFmt?: string; // 'lat, lng' 'lat, lng'
     precision?: number;
 }
 
@@ -38,38 +33,46 @@ const defLatLngFmt: ILatLngFmt = {
     coordFmt: 'dd',
     labelFmt: '$n $l',
     tupleFmt: 'lat, lng',
-    precision: 5
+    precision: 5,
 };
 
-export type LatLngQuickFmt = 'array' | 'short' | 'shortLon' | 'long' | 'kvpShort'| 'kvpLong' | 'htmlShort' | 'htmlLong';
+export type LatLngQuickFmt =
+    | 'array'
+    | 'short'
+    | 'shortLon'
+    | 'long'
+    | 'kvpShort'
+    | 'kvpLong'
+    | 'htmlShort'
+    | 'htmlLong';
 
 export const quickFormatToFullFormat = (fmt: ILatLngFmt) => {
     switch (fmt.quickFmt) {
         case 'array':
-            fmt.labelFmt = ''
+            fmt.labelFmt = '';
             break;
         case 'shortLon':
-            fmt.labelFmt = '$n $o'
+            fmt.labelFmt = '$n $o';
             break;
         case 'long':
-            fmt.labelFmt = '$n $L'
+            fmt.labelFmt = '$n $L';
             break;
         case 'kvpShort':
-            fmt.labelFmt = '$l: $n'
+            fmt.labelFmt = '$l: $n';
             break;
         case 'kvpLong':
-            fmt.labelFmt = '$L: $n'
+            fmt.labelFmt = '$L: $n';
             break;
         case 'htmlShort':
-            fmt.labelFmt = '<code>$n</code> $l'
+            fmt.labelFmt = '<code>$n</code> $l';
             break;
         case 'htmlLong':
-            fmt.labelFmt = '<b>$L:</b> <code>$n</code>'
+            fmt.labelFmt = '<b>$L:</b> <code>$n</code>';
             break;
         case 'short':
-        break;
+            break;
     }
-}
+};
 
 // export const toPrecision = (coord: number, precision:number): number => coord.toString().toFixed()
 export const formatCoord = (coord: number, llFmt: ILatLngFmt, lng: boolean): string => {
@@ -77,17 +80,17 @@ export const formatCoord = (coord: number, llFmt: ILatLngFmt, lng: boolean): str
     const o = {
         original: coord,
         precision: coord.toFixed(llFmt.precision),
-        cardinalDir: lng ? (neg ? 'W' : 'E') : (neg ? 'S' : 'N')
+        cardinalDir: lng ? (neg ? 'W' : 'E') : neg ? 'S' : 'N',
     };
     let s = llFmt.coordFmt!;
     s = s.replace(/dd/, o.precision.toString());
     s = s.replace(/C/, o.cardinalDir);
     s = s.replace(/c/, o.cardinalDir.toLowerCase());
     return s;
-}
+};
 
 export const formatLabel = (coord: string, llFmt: ILatLngFmt, lng: boolean): string => {
-    let s = llFmt.labelFmt!;// + ' ';
+    let s = llFmt.labelFmt!; // + ' ';
     if (!s) {
         return coord;
     }
@@ -102,7 +105,7 @@ export const formatLabel = (coord: string, llFmt: ILatLngFmt, lng: boolean): str
     s = s.replace(/\$L(?![aon])/g, lng ? 'Longitude' : 'Latitude');
     // console.log(`formatLabel s.L: [${s}]`);
     return s;
-}
+};
 
 export const formatTuple = (lat: string, lng: string, llFmt: ILatLngFmt): string => {
     let s = llFmt.tupleFmt!;
@@ -113,11 +116,11 @@ export const formatTuple = (lat: string, lng: string, llFmt: ILatLngFmt): string
     s = s.replace(/lng/, lng);
     // console.log('formatTuple s.lng:', s);
     return s;
-}
+};
 
 export const formatLatLng = (lat: number, lng: number, llFmt?: ILatLngFmt | undefined): string => {
     const fmt = { ...defLatLngFmt, ...llFmt };
-    if(fmt.quickFmt){
+    if (fmt.quickFmt) {
         quickFormatToFullFormat(fmt);
     }
     const latCoordStr = formatCoord(lat, fmt, false);
@@ -137,11 +140,7 @@ export const formatLatLng = (lat: number, lng: number, llFmt?: ILatLngFmt | unde
     // console.log('');
     // console.log('finalStr:', finalStr);
     return finalStr;
-}
-
-
-
-
+};
 
 // export type LatLngLabelLength = 'Full' | 'Abbrev' | 'None';
 // export type LatLngLabelPos = 'Before' | 'After' | 'None';
@@ -169,7 +168,6 @@ export const formatLatLng = (lat: number, lng: number, llFmt?: ILatLngFmt | unde
 // DD5C => 79.98219W        // Degrees Decimal, 5 decimal places (1m), Use Cardinal Directions (N,S,E,W)
 // DD2_C => 79.98 W         // Degrees Decimal, 2 decimal places (1km), SPACE, Use Cardinal Directions (N,S,E,W)
 
-
 // Given
 //   Latitude: 40.7160335695977551
 //  Longitude: -111.8504939999999976
@@ -178,7 +176,6 @@ export const formatLatLng = (lat: number, lng: number, llFmt?: ILatLngFmt | unde
 
 // LatLngArrayStr:      "40.7160, -111.8505"
 // LngLatArrayStr:      "-111.8505, 40.7160"
-
 
 // LatLngCardArrayStr:      "40.7160 N, 111.8505 W"
 // LngLatCardArrayStr:      "111.8505 W, 40.7160 N"
@@ -223,7 +220,6 @@ export const formatLatLng = (lat: number, lng: number, llFmt?: ILatLngFmt | unde
 //     labelPos: LatLngLabelPos;
 //     labelLen: LatLngLabelLength;
 // }
-
 
 // export class LatLngFormatOptions implements ILatLngFormatOptions {
 //     coordinate: ICoordinate;

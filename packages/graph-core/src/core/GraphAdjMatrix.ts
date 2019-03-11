@@ -1,5 +1,5 @@
-import { Graph } from "./Graph";
-import { flatten } from "../utils/array";
+import { Graph } from './Graph';
+import { flatten } from '../utils/array';
 
 // type VertexLabel = Map<Integer,String>
 
@@ -23,7 +23,6 @@ import { flatten } from "../utils/array";
 //          for i = 0, j = 0..<1
 //              neighbor.add(0)
 export class GraphAdjMatrix extends Graph {
-
     public adjMatrix: Array<Array<number>>;
     private matrixGrowthFactor: number;
 
@@ -40,7 +39,7 @@ export class GraphAdjMatrix extends Graph {
                 return oldMatrix[i][j];
             }
             return 0;
-        }
+        };
         for (let i = 0; i < newSize; i++) {
             newAdjMatrix[i] = new Array<number>();
             for (let j = 0; j < newSize; j++) {
@@ -50,16 +49,19 @@ export class GraphAdjMatrix extends Graph {
         return newAdjMatrix;
     }
 
-    /** 
+    /**
      * Implement the abstract method for adding a vertex.
      * If need to increase dimensions of matrix, double them
-     * to amortize cost. 
+     * to amortize cost.
      */
     _implementAddVertex() {
         const numVerticies = this.getNumVertices();
         const currentSize = this.adjMatrix.length;
         if (currentSize <= numVerticies + 1) {
-            this.adjMatrix = this.createMatrix(currentSize * this.matrixGrowthFactor, this.adjMatrix);
+            this.adjMatrix = this.createMatrix(
+                currentSize * this.matrixGrowthFactor,
+                this.adjMatrix,
+            );
         }
     }
 
@@ -80,12 +82,12 @@ export class GraphAdjMatrix extends Graph {
     //     }
     // }
 
-    /** 
+    /**
      * Implement the abstract method for adding an edge.
      * Allows for multiple edges between two points:
      * the entry at row v, column w stores the number of such edges.
      * @param v the index of the start point for the edge.
-     * @param w the index of the end point for the edge.  
+     * @param w the index of the end point for the edge.
      */
     _implementAddEdge(v: number, w: number): void {
         this.dumpAndCheck('_implementAddEdge', v, w);
@@ -108,25 +110,37 @@ export class GraphAdjMatrix extends Graph {
 
     throwErrorWithDump(error: string, method: string): void {
         console.log('\n');
-        console.log('====================================================================================');
+        console.log(
+            '====================================================================================',
+        );
         console.log(`error: ${error}  ${method ? `method ${method}()` : ''}`);
-        console.log('====================================================================================');
-        console.log(`GraphMatrix: numVertices: ${this.getNumVertices()}  currentSize: ${this.adjMatrix.length}`);
-        console.log('====================================================================================');
+        console.log(
+            '====================================================================================',
+        );
+        console.log(
+            `GraphMatrix: numVertices: ${this.getNumVertices()}  currentSize: ${
+                this.adjMatrix.length
+            }`,
+        );
+        console.log(
+            '====================================================================================',
+        );
         this.dump();
-        console.log('====================================================================================');
+        console.log(
+            '====================================================================================',
+        );
         throw new Error(error);
     }
 
-    /** 
-     * Implement the abstract method for finding all 
+    /**
+     * Implement the abstract method for finding all
      * out-neighbors of a vertex.
      * If there are multiple edges between the vertex
      * and one of its out-neighbors, this neighbor
      * appears once in the list for each of these edges.
-     * 
+     *
      * @param v the index of vertex.
-     * @return List<Integer> a list of indices of vertices.  
+     * @return List<Integer> a list of indices of vertices.
      */
     getNeighbors(v: number): Array<number> {
         const numVertices = this.getNumVertices();
@@ -140,15 +154,15 @@ export class GraphAdjMatrix extends Graph {
         return neigbors;
     }
 
-    /** 
-     * Implement the abstract method for finding all 
+    /**
+     * Implement the abstract method for finding all
      * in-neighbors of a vertex.
      * If there are multiple edges from another vertex
      * to this one, the neighbor
      * appears once in the list for each of these edges.
-     * 
+     *
      * @param v the index of vertex.
-     * @return List<Integer> a list of indices of vertices.  
+     * @return List<Integer> a list of indices of vertices.
      */
     getInNeighbors(v: number): Array<number> {
         const numVertices = this.getNumVertices();
@@ -162,14 +176,13 @@ export class GraphAdjMatrix extends Graph {
         return neigbors;
     }
 
-
-    /** 
-     * Implement the abstract method for finding all 
+    /**
+     * Implement the abstract method for finding all
      * vertices reachable by two hops from v.
      * Use matrix multiplication to record length 2 paths.
-     * 
+     *
      * @param v the index of vertex.
-     * @return List<Integer> a list of indices of vertices.  
+     * @return List<Integer> a list of indices of vertices.
      */
     getDistance2(v: number): Array<number> {
         const oneStepVertices = this.getNeighbors(v);
@@ -177,7 +190,7 @@ export class GraphAdjMatrix extends Graph {
         return flatten(twoStepVertices);
     }
 
-    /** 
+    /**
      * Return a String representation of the graph
      * @return A string representation of the graph
      */
@@ -195,19 +208,18 @@ export class GraphAdjMatrix extends Graph {
      * @return the String
      */
     adjacencyString(): string {
-        console.log('adjacencyString')
+        console.log('adjacencyString');
         const dim = this.getNumVertices();
-        let s = "Adjacency matrix";
-        s += " (size " + dim + "x" + dim + " = " + dim * dim + " integers):";
+        let s = 'Adjacency matrix';
+        s += ' (size ' + dim + 'x' + dim + ' = ' + dim * dim + ' integers):';
         for (let i = 0; i < dim; i++) {
-            s += "\n\t" + i + ": ";
+            s += '\n\t' + i + ': ';
             for (let j = 0; j < dim; j++) {
-                s += this.adjMatrix[i][j] + ", ";
+                s += this.adjMatrix[i][j] + ', ';
             }
         }
         return s;
     }
-
 
     dump() {
         console.log('Graph Dump:');
@@ -215,7 +227,7 @@ export class GraphAdjMatrix extends Graph {
         console.log(' - Vert:', v);
         console.log(' - Edges:', this.getNumEdges());
         for (let i = 0; i < v; i++) {
-            console.log(`    [${this.adjMatrix[i].join(',')}]`)
+            console.log(`    [${this.adjMatrix[i].join(',')}]`);
         }
     }
 }

@@ -3,7 +3,10 @@ import { resolve } from 'path';
 import { writeFileSync, existsSync } from 'fs';
 import { OpenStreetmapQuery } from './OpenStreetmapQuery';
 import { OpenStreetmapFile } from '../files/OpenStreetmapFile';
-import { OpenStreetmapFileMetaData, IOpenStreetmapFileMetaData } from "../files/OpenStreetmapFileMetaData";
+import {
+    OpenStreetmapFileMetaData,
+    IOpenStreetmapFileMetaData,
+} from '../files/OpenStreetmapFileMetaData';
 import { IOpenStreetmapQueryResponse } from './IOpenStreetmapQueryResponse';
 import * as FAKE from '../test/FakeData';
 import { LocalDateTime } from '@geo-ball/utils';
@@ -24,12 +27,14 @@ export interface IFetchAndSaveResult {
 }
 // const osmMetaData = new OpenStreetmapFileMetaData(this.endpoint, osmQuery);
 
-
 export class OpenStreetmapDownloader {
-
     public static DEFAULT_ENDPOINT = OverPassApiEndpoints.main;
 
-    public static Fetch(query: OpenStreetmapQuery, endpoint: string = OpenStreetmapDownloader.DEFAULT_ENDPOINT, fakeTheDownload: boolean = false): Promise<IOpenStreetmapQueryResponse> {
+    public static Fetch(
+        query: OpenStreetmapQuery,
+        endpoint: string = OpenStreetmapDownloader.DEFAULT_ENDPOINT,
+        fakeTheDownload: boolean = false,
+    ): Promise<IOpenStreetmapQueryResponse> {
         if (!query.latLngBounds || !query.latLngBounds.valid()) {
             throw new Error('OpenStreetmapDownloader.fetch() query requires valid latLngBounds');
         }
@@ -37,13 +42,12 @@ export class OpenStreetmapDownloader {
         const osmFormattedQuery = query.toString();
 
         // const url = 'http://localhost:1234';
-        console.log('overpass query:', osmFormattedQuery)
+        console.log('overpass query:', osmFormattedQuery);
         console.log('\noverpass url:', url);
         if (fakeTheDownload) {
-            console.log('Faking the download ;-)')
+            console.log('Faking the download ;-)');
             return Promise.resolve(FAKE.osmQueryResp);
-        }
-        else {
+        } else {
             return axios.post(url, osmFormattedQuery).then(response => {
                 // console.log('axios.post:', response.status);
                 // console.log('axios.post response.data:', response.data);
@@ -53,20 +57,28 @@ export class OpenStreetmapDownloader {
         }
     }
 
-    public static FetchAndSave(osmQueryMeta: OpenStreetmapFileMetaData, osmDataFilePath: string, overwriteFile: boolean = false, fakeTheDownload: boolean = false): Promise<IFetchAndSaveResult> {
+    public static FetchAndSave(
+        osmQueryMeta: OpenStreetmapFileMetaData,
+        osmDataFilePath: string,
+        overwriteFile: boolean = false,
+        fakeTheDownload: boolean = false,
+    ): Promise<IFetchAndSaveResult> {
         osmDataFilePath = resolve(osmDataFilePath);
         if (!overwriteFile && existsSync(osmDataFilePath)) {
             throw new Error(`File exists [${osmDataFilePath}]`);
         }
-        return OpenStreetmapDownloader.Fetch(osmQueryMeta.osmQuery, osmQueryMeta.osmServer, fakeTheDownload)
-            .then((osmQueryResp: IOpenStreetmapQueryResponse) => {
-                const osmDataFile = new OpenStreetmapFile(osmQueryMeta, osmQueryResp);
-                writeFileSync(osmDataFilePath, JSON.stringify(osmDataFile, undefined, 4));
-                return {
-                    osmDataFile,
-                    osmDataFilePath,
-                };
-            });
+        return OpenStreetmapDownloader.Fetch(
+            osmQueryMeta.osmQuery,
+            osmQueryMeta.osmServer,
+            fakeTheDownload,
+        ).then((osmQueryResp: IOpenStreetmapQueryResponse) => {
+            const osmDataFile = new OpenStreetmapFile(osmQueryMeta, osmQueryResp);
+            writeFileSync(osmDataFilePath, JSON.stringify(osmDataFile, undefined, 4));
+            return {
+                osmDataFile,
+                osmDataFilePath,
+            };
+        });
     }
 
     // public static FetchAndSaveEx(params: IOsmFetchAndSaveParams): Promise<IFetchAndSaveResult> {

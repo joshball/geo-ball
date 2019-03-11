@@ -1,7 +1,7 @@
-import { NominatimFormat, INominatimQueryParamObj } from "./INominatimQueryParamObj";
+import { NominatimFormat, INominatimQueryParamObj } from './INominatimQueryParamObj';
 
 export interface INominatimStringQuery {
-    q: string
+    q: string;
     [key: string]: string;
 }
 export interface INominatimStructuredQuery {
@@ -16,8 +16,8 @@ export interface INominatimStructuredQuery {
 
 export interface INominatimQuery {
     useStructured: boolean;
-    stringQuery: INominatimStringQuery
-    structuredQuery: INominatimStructuredQuery
+    stringQuery: INominatimStringQuery;
+    structuredQuery: INominatimStructuredQuery;
     [key: string]: any;
 }
 
@@ -49,8 +49,8 @@ export interface INominatimToggles {
 
 export interface INominatimParams {
     query: INominatimQuery;
-    settings: INominatimSettings
-    toggles: INominatimToggles
+    settings: INominatimSettings;
+    toggles: INominatimToggles;
 }
 
 export const createNominatimParams = (params?: INominatimParams): INominatimParams => {
@@ -59,7 +59,7 @@ export const createNominatimParams = (params?: INominatimParams): INominatimPara
         query: {
             useStructured: false,
             stringQuery: {
-                q: ''
+                q: '',
             },
             structuredQuery: {
                 street: '',
@@ -91,10 +91,10 @@ export const createNominatimParams = (params?: INominatimParams): INominatimPara
             polygon_kml: false,
             polygon_svg: false,
             polygon_text: false,
-        }
+        },
     };
     return { ...defParams, ...paramsAny };
-}
+};
 
 export const flattenNominatimParams = (params: INominatimParams): INominatimQueryParamObj => {
     const queryParamObj: any = {};
@@ -105,9 +105,8 @@ export const flattenNominatimParams = (params: INominatimParams): INominatimQuer
             if (val) {
                 queryParamObj[key] = val;
             }
-        })
-    }
-    else {
+        });
+    } else {
         queryParamObj.q = params.query.stringQuery;
     }
 
@@ -119,29 +118,27 @@ export const flattenNominatimParams = (params: INominatimParams): INominatimQuer
             }
             if (key === 'accept_language') {
                 queryParamObj['accept-language'] = val;
-            }
-            else {
+            } else {
                 queryParamObj[key] = val;
             }
         }
-    })
+    });
 
     Object.keys(params.toggles).forEach(key => {
         const val: any = params.toggles[key];
         if (val) {
             queryParamObj[key] = 1;
         }
-    })
-
+    });
 
     return queryParamObj as INominatimQueryParamObj;
-}
+};
 
 export const getQueryParamEncodedString = (qpObj: INominatimQueryParamObj): string => {
     return Object.keys(qpObj)
         .map(k => encodeURIComponent(k) + '=' + encodeURIComponent((qpObj as any)[k]))
         .join('&');
-}
+};
 
 // export class NominatimParams {
 
@@ -192,7 +189,6 @@ export const getQueryParamEncodedString = (qpObj: INominatimQueryParamObj): stri
 //         })
 //     }
 
-
 //     buildQueryParamObject(): INominatimQueryParamObj {
 //         const queryParams: any = {};
 
@@ -210,4 +206,3 @@ export const getQueryParamEncodedString = (qpObj: INominatimQueryParamObj): stri
 //             .join('&');
 //     }
 // }
-

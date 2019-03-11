@@ -1,6 +1,6 @@
 // import { join, resolve } from 'path';
 // import { join, resolve } from 'path';
-import { Command, flags } from '@oclif/command'
+import { Command, flags } from '@oclif/command';
 import { OpenStreetmapFile } from '@geo-ball/osm-data';
 import {
     RoadSegmentsFile,
@@ -12,8 +12,7 @@ import {
     // resolveOsmAndRsdFiles,
     UcsdDataFiles,
     PointMapsFile,
-    IntersectionsFile
-
+    IntersectionsFile,
 } from '@geo-ball/ucsd-core';
 // import { LatLngBounds } from '@geo-ball/geo-core';
 // import { OverpassHighwayFile, ConvertToRoadSegmentsMap, RoadSegmentsFile, OpenStreetmapFile } from '@geo-ball/ucsd-core';
@@ -30,28 +29,30 @@ import { OutputArgs, OutputFlags } from '@oclif/parser';
 // import { OutputArgs } from '@oclif/parser';
 // import { dataDir } from '../../../ucsd-core/src/test/TestData';
 
-
 const FormatOptions = OutputFormats.concat('both');
 class GenerateIntersectionsFileCommand extends Command {
-
-    static description = 'Generates INT (intersections) files from RSD (Road Segment Data) Files'
+    static description = 'Generates INT (intersections) files from RSD (Road Segment Data) Files';
 
     static examples = [
         '$ ucsd-cli generate:int --all',
         '$ ucsd-cli generate:int roadSegmentsFile',
         '$ ucsd-cli generate:int roadSegmentsFile --out alternative-int-file-path',
-    ]
+    ];
 
     static flags = {
         help: flags.help({ char: 'h' }),
         dataDir: flags.string({ char: 'd', description: `Map Data Directory` }),
         out: flags.string({ char: 'o', description: `Alternative path to int file to generate` }),
         overwrite: flags.boolean({ char: 'o' }),
-    }
+    };
 
     static args = [
-        { name: 'roadSegementsFile', description: 'Road Segments file for UCSD Graph', required: false },
-    ]
+        {
+            name: 'roadSegementsFile',
+            description: 'Road Segments file for UCSD Graph',
+            required: false,
+        },
+    ];
 
     args!: OutputArgs<any>;
     flags!: OutputFlags<any>;
@@ -106,10 +107,8 @@ class GenerateIntersectionsFileCommand extends Command {
             // console.log('Loaded RSF metaData:', rsfJson.metaData);
             // console.log('Loaded RSF Json with len:', rsfJson.segmentsData.length);
         });
-        console.log('EXITING')
+        console.log('EXITING');
         this.exit(0);
     }
-
 }
 export default GenerateIntersectionsFileCommand;
-

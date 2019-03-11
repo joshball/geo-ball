@@ -11,14 +11,12 @@ export interface IGeographicBoundsDescription {
 }
 
 export class GeographicBoundsDescription implements IGeographicBoundsDescription {
-
     date: LocalDateTime;
     name: string;
     description: string | undefined;
     latLngBoundsArea: ILatLngBoundsArea;
     address: string | undefined;
     geocodedAddress: string | undefined;
-
 
     constructor(geoBoundsDescr: IGeographicBoundsDescription) {
         this.date = geoBoundsDescr.date;

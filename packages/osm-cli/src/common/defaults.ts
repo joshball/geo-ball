@@ -12,4 +12,3 @@ if (SouthWestLat >= NorthEastLat) {
 if (SouthWestLon >= NorthEastLon) {
     throw new Error('Your SW Lon is more east and your NE Lon');
 }
-

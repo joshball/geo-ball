@@ -37,7 +37,6 @@ export class LatLngBounds implements ILatLngBoundsArea {
         return new LatLng(this.southEast.lat, this.northEast.lng);
     }
 
-
     get center(): LatLng {
         return new LatLng(this.centerLat, this.centerLng);
     }
@@ -50,7 +49,6 @@ export class LatLngBounds implements ILatLngBoundsArea {
         return this.northEast.lng - this.lngDelta;
     }
 
-
     get latDelta(): number {
         return Math.abs(this.northEast.lat - this.southWest.lat) / 2;
     }
@@ -59,20 +57,17 @@ export class LatLngBounds implements ILatLngBoundsArea {
         return Math.abs(this.northEast.lng - this.southWest.lng) / 2;
     }
 
-
-
     get areaInMeters(): number {
         return this.latDistInMeters * this.lngDistInMeters;
     }
 
     get latDistInMeters(): number {
-        return distance(this.northWest, this.southWest)
+        return distance(this.northWest, this.southWest);
     }
 
     get lngDistInMeters(): number {
-        return distance(this.northWest, this.southWest)
+        return distance(this.northWest, this.southWest);
     }
-
 
     constructor(southwest: LatLng, northeast: LatLng) {
         if (!(southwest instanceof LatLng)) {
@@ -117,16 +112,18 @@ export class LatLngBounds implements ILatLngBoundsArea {
     }
 
     hashCode(): number {
-        return Array.from(JSON.stringify(this))
-            // tslint:disable-next-line:no-bitwise
-            .reduce((s, c) => Math.imul(31, s) + c.charCodeAt(0) | 0, 0);
+        return (
+            Array.from(JSON.stringify(this))
+                // tslint:disable-next-line:no-bitwise
+                .reduce((s, c) => (Math.imul(31, s) + c.charCodeAt(0)) | 0, 0)
+        );
         // return fieldsHashCode(this.latitude, this.longitude);
     }
 
     static FromArray(bounds: Array<number>) {
         if (bounds.length !== 4) {
             throw new Error(
-                `bounds array must be four elements (south[lat], west[lon], north[lat], east[lon])`
+                `bounds array must be four elements (south[lat], west[lon], north[lat], east[lon])`,
             );
         }
         const southLat = bounds[0];

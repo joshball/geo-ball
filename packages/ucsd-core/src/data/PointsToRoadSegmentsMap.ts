@@ -17,24 +17,26 @@ export class IncomingAndOutgoingRoadSegments {
     toString = (): string => `Outgoing: ${this.outgoing.length}, Incoming: ${this.incoming.length}`;
 
     dump = (tab: string = '    '): void => {
-        const dumpLine = (rli: RoadSegmentLine): void => console.log(`${tab}  - RL: ${rli.name} => P1:[${rli.start}] P2:[${rli.end}]`);
-        console.log(`${tab}RoadSegments: out: ${this.outgoing.length}, in: ${this.incoming.length}`)
-        console.log(`${tab} OUTGOING:`)
-        this.outgoing.forEach(dumpLine)
-        console.log(`${tab} INCOMING:`)
-        this.incoming.forEach(dumpLine)
+        const dumpLine = (rli: RoadSegmentLine): void =>
+            console.log(`${tab}  - RL: ${rli.name} => P1:[${rli.start}] P2:[${rli.end}]`);
+        console.log(
+            `${tab}RoadSegments: out: ${this.outgoing.length}, in: ${this.incoming.length}`,
+        );
+        console.log(`${tab} OUTGOING:`);
+        this.outgoing.forEach(dumpLine);
+        console.log(`${tab} INCOMING:`);
+        this.incoming.forEach(dumpLine);
     };
 }
 
-
-
 export class PointsToRoadSegmentsMap {
-
     private _map: SerializedKeyMap<LatLng, IncomingAndOutgoingRoadSegments>;
 
     constructor() {
-        this._map = new SerializedKeyMap<LatLng, IncomingAndOutgoingRoadSegments>
-            (LatLng.Serialize, LatLng.DeSerialize);
+        this._map = new SerializedKeyMap<LatLng, IncomingAndOutgoingRoadSegments>(
+            LatLng.Serialize,
+            LatLng.DeSerialize,
+        );
         // console.log('PointsToRoadSegmentsMap._map.size', this._map.size)
     }
 
@@ -76,19 +78,23 @@ export class PointsToRoadSegmentsMap {
     public toString = (): string => `PTRLMap has ${this.size} entries`;
 
     public dump = (tab: string = '    '): void => {
-
-        console.log(`================================================================================`);
-        console.log(`${tab}!DUMP! PointsToRoadSegmentsMap: has: ${this.size} entries:`)
-        console.log(`================================================================================`);
+        console.log(
+            `================================================================================`,
+        );
+        console.log(`${tab}!DUMP! PointsToRoadSegmentsMap: has: ${this.size} entries:`);
+        console.log(
+            `================================================================================`,
+        );
 
         for (const [pointString, roadsInAndOut] of this._map.entries()) {
             console.log('POINT: ', pointString);
             roadsInAndOut.dump();
         }
         // console.log(`--------------------------------------------------------------------------------`);
-        console.log(`================================================================================`);
+        console.log(
+            `================================================================================`,
+        );
     };
-
 
     private _getOrAddIoRoadSegments(point: LatLng): IncomingAndOutgoingRoadSegments {
         let ioRoadSegments: IncomingAndOutgoingRoadSegments | undefined = this.get(point);
@@ -104,9 +110,8 @@ export class PointsToRoadSegmentsMap {
             // ioRoadSegments = [[], []];
             ioRoadSegments = new IncomingAndOutgoingRoadSegments();
             // console.log('addToPointsMapOneWay.pt1Infos.n:', ioRoadSegments)
-            this.set(point, ioRoadSegments)
+            this.set(point, ioRoadSegments);
         }
         return ioRoadSegments;
     }
-
 }

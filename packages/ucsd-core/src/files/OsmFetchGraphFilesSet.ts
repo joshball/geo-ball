@@ -7,7 +7,6 @@
 // export type ReadDirCallback = (path: string) => Promise<Array<string>>
 // export type ReadFileCallback = (path: string) => Promise<any>
 
-
 // export interface IOsmFetchGraphFilesSet {
 //     fetchDirPath: string;
 //     fetchDate: string;
@@ -124,7 +123,6 @@
 //     }
 // }
 
-
 //     // /**
 //     //  *
 //     //  * @param rootFetchDirPath - the root of the managed fetch dataDirectory
@@ -161,7 +159,6 @@
 //     //             })
 
 // //     }));
-
 
 // // const getFileTypesFromArrayEx = (osmRunDirectoryPath: string, osmRunFilePaths: Array<string>): IMapDataFileSetEx => {
 // //     console.log('---------------------------------------------------------------')
@@ -217,9 +214,6 @@
 // //     })
 // //     return mdf;
 // // }
-
-
-
 
 // // const getFileTypesFromArray = (osmRunDirectoryPath: string, osmRunFilePaths: Array<string>): IMapDataFileSet => {
 // //     console.log('---------------------------------------------------------------')
@@ -297,7 +291,6 @@
 // //     int: IntersectionsFile | undefined;
 // //     unknownPaths: Array<string>;
 // // }
-
 
 // // const handleIt = (path: string, extChecker: () => boolean, ) => {
 // //     if (OpenStreetmapFile.HasCorrectExtension(osmSingleRunFilePath)) {

@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import * as fs from 'fs';
 export declare const readdir: typeof fs.readdir.__promisify__;
 export declare const lstat: typeof fs.lstat.__promisify__;

@@ -6,7 +6,6 @@ import { RoadSegmentsFile } from '../RoadSegmentsFile';
 import { PointMapsFile } from '../PointMapsFile';
 import { IntersectionsFile } from '../IntersectionsFile';
 
-
 export interface IOsmFetchDir {
     fetchDirPath: string;
     fetchLocalDateTime: ILocalDateTime;
@@ -35,7 +34,6 @@ export class OsmFetchDir {
     int: IOsmFetchFile<IntersectionsFile> | undefined;
     unknownPaths: Array<string>;
 
-
     constructor(fetchDirPath: string) {
         this.fetchDirPath = resolve(fetchDirPath);
         const ldt = LocalDateTime.ParseFilenameFormat(fetchDirPath);
@@ -55,37 +53,38 @@ export class OsmFetchDir {
         return LocalDateTime.ParseFilenameFormat(this.dirName);
     }
 
-
     public async getOsmFetchFilePaths(): Promise<Array<string>> {
         return readdir(this.fetchDirPath)
-            .then(data => { console.log('fetchDirs:', data); return data })
+            .then(data => {
+                console.log('fetchDirs:', data);
+                return data;
+            })
             .then(fetchDirs => fetchDirs.map(fetchDir => join(this.fetchDirPath, fetchDir)));
     }
 
     public async load(): Promise<Array<string>> {
-        console.log('')
-        console.log('======================================================================')
-        console.log('OsmFetchDir.load this.fetchDirPath', this.fetchDirPath)
+        console.log('');
+        console.log('======================================================================');
+        console.log('OsmFetchDir.load this.fetchDirPath', this.fetchDirPath);
         return this.getOsmFetchFilePaths()
-            .then(data => { console.log('files:', data); return data })
-            .then(files => this.subFiles = files)
-            .then(files => this.setPaths(files))
+            .then(data => {
+                console.log('files:', data);
+                return data;
+            })
+            .then(files => (this.subFiles = files))
+            .then(files => this.setPaths(files));
     }
 
     setPath(osmSingleRunFilePath: string): void {
         if (OpenStreetmapFile.HasCorrectExtension(osmSingleRunFilePath)) {
             this.osm = new OsmFetchFile(OpenStreetmapFile.Load, osmSingleRunFilePath);
-        }
-        else if (RoadSegmentsFile.HasCorrectExtension(osmSingleRunFilePath)) {
+        } else if (RoadSegmentsFile.HasCorrectExtension(osmSingleRunFilePath)) {
             this.rsd = new OsmFetchFile(RoadSegmentsFile.Load, osmSingleRunFilePath);
-        }
-        else if (PointMapsFile.HasCorrectExtension(osmSingleRunFilePath)) {
+        } else if (PointMapsFile.HasCorrectExtension(osmSingleRunFilePath)) {
             this.pmf = new OsmFetchFile(PointMapsFile.Load, osmSingleRunFilePath);
-        }
-        else if (IntersectionsFile.HasCorrectExtension(osmSingleRunFilePath)) {
+        } else if (IntersectionsFile.HasCorrectExtension(osmSingleRunFilePath)) {
             this.int = new OsmFetchFile(IntersectionsFile.Load, osmSingleRunFilePath);
-        }
-        else {
+        } else {
             this.unknownPaths.push(osmSingleRunFilePath);
         }
     }
@@ -95,11 +94,8 @@ export class OsmFetchDir {
         return osmRunFilePaths;
     }
 
-
     // public static CreateFetchDirPath(fetchRootPath: string, ldt: LocalDateTime): string {
     //     fetchRootPath = resolve(fetchRootPath);
     //     return join(fetchRootPath, ldt.toFilenameTimestamp());
     // }
 }
-
-

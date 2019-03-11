@@ -1,20 +1,17 @@
-
-export type LoadFileCallback<TFileType> = (path: string) => Promise<TFileType>
-
+export type LoadFileCallback<TFileType> = (path: string) => Promise<TFileType>;
 
 export interface IOsmFetchFile<TFileType> {
     path: string;
     file: TFileType | undefined;
 }
 
-export type OsmFetchFileType = 'osm' | 'rsd' | 'pmf' | 'int' ;
+export type OsmFetchFileType = 'osm' | 'rsd' | 'pmf' | 'int';
 
 export interface IOsmFetchFileMeta {
     path: string;
     type: OsmFetchFileType;
     size: number;
 }
-
 
 export class OsmFetchFile<TFileType> implements IOsmFetchFile<TFileType> {
     path: string;
@@ -26,7 +23,6 @@ export class OsmFetchFile<TFileType> implements IOsmFetchFile<TFileType> {
     }
     public async loadFile(path: string): Promise<TFileType> {
         this.path = path;
-        return this.loadCb(path)
-            .then(file => this.file = file);
+        return this.loadCb(path).then(file => (this.file = file));
     }
 }

@@ -1,6 +1,6 @@
 // import { join, resolve } from 'path';
 // import { join, resolve } from 'path';
-import { Command, flags } from '@oclif/command'
+import { Command, flags } from '@oclif/command';
 import { OpenStreetmapFile } from '@geo-ball/osm-data';
 import {
     RoadSegmentsFile,
@@ -10,8 +10,7 @@ import {
     // resolveDataDir,
     // resolveOsmFiles,
     // resolveOsmAndRsdFiles,
-    UcsdDataFiles
-
+    UcsdDataFiles,
 } from '@geo-ball/ucsd-core';
 // import { LatLngBounds } from '@geo-ball/geo-core';
 // import { OverpassHighwayFile, ConvertToRoadSegmentsMap, RoadSegmentsFile, OpenStreetmapFile } from '@geo-ball/ucsd-core';
@@ -28,29 +27,31 @@ import { OutputArgs, OutputFlags } from '@oclif/parser';
 // import { OutputArgs } from '@oclif/parser';
 // import { dataDir } from '../../../ucsd-core/src/test/TestData';
 
-
 const FormatOptions = OutputFormats.concat('both');
 class GenerateOsmDatFileFromQueryCommand extends Command {
-
-    static description = 'Generates an OSM (OpenStreetMap) data files by sending an OSM query to an OSM server'
+    static description =
+        'Generates an OSM (OpenStreetMap) data files by sending an OSM query to an OSM server';
 
     static examples = [
         '$ ucsd-cli generate:osm --all',
         '$ ucsd-cli generate:osm osmQueryFile',
         '$ ucsd-cli generate:osm osmQueryFile --out alternative-osm-data-path',
-    ]
+    ];
 
     static flags = {
         help: flags.help({ char: 'h' }),
-        format: flags.string({ char: 'f', description: `Output format (${FormatOptions})`, options: FormatOptions, default: 'json' }),
+        format: flags.string({
+            char: 'f',
+            description: `Output format (${FormatOptions})`,
+            options: FormatOptions,
+            default: 'json',
+        }),
         dataDir: flags.string({ char: 'd', description: `Data Directory` }),
         // format: formatFlag(),
         overwrite: flags.boolean({ char: 'o' }),
-    }
+    };
 
-    static args = [
-        { name: 'osmQueryFile', description: 'OSM Query file', required: false },
-    ]
+    static args = [{ name: 'osmQueryFile', description: 'OSM Query file', required: false }];
 
     args!: OutputArgs<any>;
     flags!: OutputFlags<any>;
@@ -64,20 +65,20 @@ class GenerateOsmDatFileFromQueryCommand extends Command {
 
         const dataFiles = new UcsdDataFiles(this.flags.dataDir);
         const osmFiles = dataFiles.getOsmBasedFilePaths(this.args.osmDataFile);
-        console.log('osmFiles', osmFiles)
+        console.log('osmFiles', osmFiles);
         // const dataDir = resolveDataDir(this.flags.dataDir);
         // const osmFiles = resolveOsmFiles(dataDir, this.args.osmDataFile);
         // const osmRsdFiles = resolveOsmAndRsdFiles(dataDir, osmFiles, overwriteRsFiles);
 
         osmFiles.forEach(orf => {
-            console.log('-------------------------------------------------')
-            console.log('OSM:', orf.osmFilePath)
+            console.log('-------------------------------------------------');
+            console.log('OSM:', orf.osmFilePath);
             console.log('RSD:', orf.rsdJsonFilePath);
-            if(!overwriteRsFiles && (orf.rsdJsonFilePath.exists || orf.rsdTextFilePath.exists)){
+            if (!overwriteRsFiles && (orf.rsdJsonFilePath.exists || orf.rsdTextFilePath.exists)) {
                 throw new Error(`RSD file exists. Use overwrite! ${orf.rsdJsonFilePath.path}`);
             }
             const osmFile = OpenStreetmapFile.LoadSync(orf.osmFilePath.path);
-            console.log('-------------------------------------------------')
+            console.log('-------------------------------------------------');
             const osmElements = osmFile.getElements();
             const osmStats = osmElements.getStats();
             console.log('osmStats', JSON.stringify(osmStats, undefined, 4));
@@ -92,9 +93,8 @@ class GenerateOsmDatFileFromQueryCommand extends Command {
             const rsfJson = RoadSegmentsFile.Load(orf.rsdJsonFilePath.path);
             console.log('Loaded RSF metaData:', rsfJson.metaData);
             console.log('Loaded RSF Json with len:', rsfJson.segmentsData.length);
-        })
+        });
         // const { osmDataFilePath, rsTextPath, rsJsonPath } = this.getFilePaths(overwriteRsFiles);
-
 
         // const osmFile = OpenStreetmapFile.LoadSync(osmDataFilePath);
         // const osmElements = osmFile.getElements();
@@ -113,10 +113,10 @@ class GenerateOsmDatFileFromQueryCommand extends Command {
         this.exit(0);
     }
 
-	/**
-	 * This method cleans up the args/flags, and returns the paths
-	 * of the files needed to do the conversion.
-	 */
+    /**
+     * This method cleans up the args/flags, and returns the paths
+     * of the files needed to do the conversion.
+     */
     // getFilePaths(overwriteRsFiles: boolean = false) {
     //     const osmDataFilePath = this._resolveOsmFile();
 
@@ -127,9 +127,9 @@ class GenerateOsmDatFileFromQueryCommand extends Command {
     //     return { osmDataFilePath, rsTextPath, rsJsonPath };
     // }
 
-	/**
-	 * Resolve the OSM data file path from the args, and ensure it exists
-	 */
+    /**
+     * Resolve the OSM data file path from the args, and ensure it exists
+     */
     // private _resolveOsmFile() {
     //     // Grab the OSM Data file and make sure it exists
     //     let osmDataFilePath = resolve(this.args.osmDataFile);
@@ -149,20 +149,29 @@ class GenerateOsmDatFileFromQueryCommand extends Command {
     //     return osmDataFilePath;
     // }
 
-	/**
-	 * This function takes a format type (json or text) and will return
-	 * @param  {string} formatType string - the format of the file, either `json` or `txt`
-	 * @param  {string} osmDataFilePath - If provided, the path used to check
-	 */
-    private _getRoadSegmentFileName(formatType: OutputFormatType, osmDataFilePath: string): string | undefined {
+    /**
+     * This function takes a format type (json or text) and will return
+     * @param  {string} formatType string - the format of the file, either `json` or `txt`
+     * @param  {string} osmDataFilePath - If provided, the path used to check
+     */
+    private _getRoadSegmentFileName(
+        formatType: OutputFormatType,
+        osmDataFilePath: string,
+    ): string | undefined {
         // if (flags.format === 'both' && args.roadSegementsFile) {
         // 	throw new Error(`You cannot specify two formats and `)
         const ONLY_ONE_FORMAT = this.flags.format !== 'both';
-        const SHOULD_WE_CREATE_THIS_FORMAT = this.flags.format === formatType || this.flags.format === 'both';
+        const SHOULD_WE_CREATE_THIS_FORMAT =
+            this.flags.format === formatType || this.flags.format === 'both';
         const WAS_FILENAME_PROVIDED = this.args.roadSegementsFile;
-        const VALID_EXTENSIONS: Array<string> = Object.keys(OutputFormatExtensions).map((key: string) => `.OutputFormatExtensions[${key}]`);
-        const PROVIDED_FILENAME_EXTENSION = this.args.roadSegementsFile && extname(this.args.roadSegementsFile);
-        const HAS_JSON_OR_TXT_EXTENSION = VALID_EXTENSIONS.some((ext: string) => PROVIDED_FILENAME_EXTENSION === ext);
+        const VALID_EXTENSIONS: Array<string> = Object.keys(OutputFormatExtensions).map(
+            (key: string) => `.OutputFormatExtensions[${key}]`,
+        );
+        const PROVIDED_FILENAME_EXTENSION =
+            this.args.roadSegementsFile && extname(this.args.roadSegementsFile);
+        const HAS_JSON_OR_TXT_EXTENSION = VALID_EXTENSIONS.some(
+            (ext: string) => PROVIDED_FILENAME_EXTENSION === ext,
+        );
 
         if (!SHOULD_WE_CREATE_THIS_FORMAT) {
             return;
@@ -173,7 +182,12 @@ class GenerateOsmDatFileFromQueryCommand extends Command {
 
         if (!WAS_FILENAME_PROVIDED()) {
             // return the OSM name with either a txt or json extension
-            return resolve(join(dirname(osmDataFilePath), basename(osmDataFilePath).replace('.osm-data.json', ending)));
+            return resolve(
+                join(
+                    dirname(osmDataFilePath),
+                    basename(osmDataFilePath).replace('.osm-data.json', ending),
+                ),
+            );
         }
 
         // OK, so now we have a filename. The tricky part here is if they asked for TWO formats, but gave
@@ -186,27 +200,31 @@ class GenerateOsmDatFileFromQueryCommand extends Command {
         // and extensions. To make this simpler, lets just assert that they should not have a .json or .txt
         // exentsion, so we can add it.
         if (HAS_JSON_OR_TXT_EXTENSION) {
-            throw new Error(`If you are providing a filename and multiple formats, make sure filename does not end in [${VALID_EXTENSIONS}]`);
+            throw new Error(
+                `If you are providing a filename and multiple formats, make sure filename does not end in [${VALID_EXTENSIONS}]`,
+            );
         }
 
         // OK, now we can just return with te correct extension;
         return resolve(this.args.roadSegementsFile + extension);
     }
 
-	/**
-	 * This function takes a format type (json or text) and will return
-	 * @param  {string} formatType string - the format of the file, either `json` or `txt`
-	 * @param  {string} osmDataFilePath - If provided, the path used to check
-	 * @param  {boolean} [overwriteRsFiles=false] - if file exists, will throw if not set to true
-	 */
-    private _resolveRoadSegmentFileName(formatType: OutputFormatType, osmDataFilePath: string, overwriteRsFiles: boolean): string | undefined {
+    /**
+     * This function takes a format type (json or text) and will return
+     * @param  {string} formatType string - the format of the file, either `json` or `txt`
+     * @param  {string} osmDataFilePath - If provided, the path used to check
+     * @param  {boolean} [overwriteRsFiles=false] - if file exists, will throw if not set to true
+     */
+    private _resolveRoadSegmentFileName(
+        formatType: OutputFormatType,
+        osmDataFilePath: string,
+        overwriteRsFiles: boolean,
+    ): string | undefined {
         const roadSegmentsFileName = this._getRoadSegmentFileName(formatType, osmDataFilePath);
         if (roadSegmentsFileName && !overwriteRsFiles && existsSync(roadSegmentsFileName)) {
             throw new Error('Road Segments File exists (use overwrite if needed');
         }
         return roadSegmentsFileName;
     }
-
 }
 export default GenerateOsmDatFileFromQueryCommand;
-

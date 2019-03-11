@@ -1,4 +1,4 @@
-import { OpenStreetMapTagObject } from "./OpenStreetMapTag";
+import { OpenStreetMapTagObject } from './OpenStreetMapTag';
 
 /**
  * From: https://wiki.openstreetmap.org/wiki/Elements

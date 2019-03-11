@@ -12,14 +12,16 @@ const CONSTANTS = {
 };
 const PATHS = {
     ucsdDataPath: normalize(`${CONSTANTS.usersHomePath}/${CONSTANTS.ucsdDataDir}`),
-    osmFetchPath: normalize(`${CONSTANTS.usersHomePath}/${CONSTANTS.ucsdDataDir}/${CONSTANTS.osmFetchDir}`),
-}
+    osmFetchPath: normalize(
+        `${CONSTANTS.usersHomePath}/${CONSTANTS.ucsdDataDir}/${CONSTANTS.osmFetchDir}`,
+    ),
+};
 
 // console.log('PATHS:', PATHS)
 // const ucsdDataPath = `${ucsdDataPath}\\osm-fetches`;
 export interface ICreateFetchOptions {
-    extraFiles: Array<string>
-    removeFiles: Array<string>
+    extraFiles: Array<string>;
+    removeFiles: Array<string>;
 }
 interface IOsmFetchFiles {
     osm: IOsmFetchFile<OpenStreetmapFile> | undefined;
@@ -29,26 +31,28 @@ interface IOsmFetchFiles {
     [key: string]: any | undefined;
 }
 
-
 const createExtraFile = (fetchDirPath: string, filename: string): string => {
-    return normalize(`${fetchDirPath}/${filename}`)
-}
+    return normalize(`${fetchDirPath}/${filename}`);
+};
 
 const createExtraFiles = (fetchDirPath: string, fileNames: Array<string> = []): Array<string> => {
-    return fileNames.map(filename => createExtraFile(fetchDirPath, filename))
-}
+    return fileNames.map(filename => createExtraFile(fetchDirPath, filename));
+};
 
-const removeStandardFiles = (standardFiles: IOsmFetchFiles, standardFileTypes: Array<string> = []) => {
+const removeStandardFiles = (
+    standardFiles: IOsmFetchFiles,
+    standardFileTypes: Array<string> = [],
+) => {
     // standardFileTypes.forEach((sft: string) => console.log('deleting standardFiles[sft]: ', sft, standardFiles[sft]))
     // standardFileTypes.forEach((sft: string) => delete standardFiles[sft]);
-    standardFileTypes.forEach((sft: string) => standardFiles[sft] = { path: null, file: null });
-}
+    standardFileTypes.forEach((sft: string) => (standardFiles[sft] = { path: null, file: null }));
+};
 const createFileNode = (fetchDirPath: string, fileDateStr: string, extension: string) => {
     return {
-        "path": normalize(`${fetchDirPath}/${fileDateStr}.${extension}`),
-        "file": undefined
-    }
-}
+        path: normalize(`${fetchDirPath}/${fileDateStr}.${extension}`),
+        file: undefined,
+    };
+};
 const createStandardFiles = (fetchDirPath: string, fileDateStr: string): IOsmFetchFiles => {
     return {
         qry: createFileNode(fetchDirPath, fileDateStr, 'osm-qry.json'),
@@ -56,15 +60,14 @@ const createStandardFiles = (fetchDirPath: string, fileDateStr: string): IOsmFet
         int: createFileNode(fetchDirPath, fileDateStr, 'ucsd-int.json'),
         pmf: createFileNode(fetchDirPath, fileDateStr, 'ucsd-pmf.json'),
         rsd: createFileNode(fetchDirPath, fileDateStr, 'ucsd-rsd.json'),
-    }
-}
+    };
+};
 const getStandardFilesAsArray = (standardFiles: IOsmFetchFiles): Array<string> => {
     // console.log('Object.keys(standardFiles)', Object.keys(standardFiles));
     return Object.keys(standardFiles)
         .filter((key: string) => standardFiles[key].path)
         .map((key: string) => standardFiles[key].path);
-}
-
+};
 
 const createFetch = (fileDateStr: string, options: ICreateFetchOptions) => {
     const ldt = LocalDateTime.ParseFilenameFormat(fileDateStr);
@@ -86,47 +89,47 @@ const createFetch = (fileDateStr: string, options: ICreateFetchOptions) => {
     // console.log('subFiles', JSON.stringify(subFiles, undefined, 4));
 
     const osmFetchDir: any = {
-        "fetchDirPath": fetchDirPath,
-        "fetchLocalDateTime": {
-            "unixUtcEpochMs": ldt.unixUtcEpochMs,
-            "timezoneOffsetMin": ldt.timezoneOffsetMin,
-            "timezoneName": ldt.timezoneName,
-            "MTZ": ldt.MTZ.toString()
+        fetchDirPath: fetchDirPath,
+        fetchLocalDateTime: {
+            unixUtcEpochMs: ldt.unixUtcEpochMs,
+            timezoneOffsetMin: ldt.timezoneOffsetMin,
+            timezoneName: ldt.timezoneName,
+            MTZ: ldt.MTZ.toString(),
         },
-        "dirName": `${fileDateStr}`,
-        "rootPath": normalize(`${PATHS.osmFetchPath}`),
-        "subFiles": subFiles,
-        "unknownPaths": extraFiles,
+        dirName: `${fileDateStr}`,
+        rootPath: normalize(`${PATHS.osmFetchPath}`),
+        subFiles: subFiles,
+        unknownPaths: extraFiles,
     };
     const done = { ...osmFetchDir, ...standardFiles };
     return done;
-}
+};
 
 const noOptions: ICreateFetchOptions = {
     extraFiles: [],
     removeFiles: [],
-}
+};
 const extraFilesOptions: ICreateFetchOptions = {
     extraFiles: ['foo.json', 'bar.json'],
     removeFiles: [],
-}
+};
 const removeOptions: ICreateFetchOptions = {
     extraFiles: [],
     removeFiles: ['rsd', 'int'],
-}
+};
 const bothOptions: ICreateFetchOptions = {
     extraFiles: ['foo.json', 'bar.json'],
     removeFiles: ['rsd', 'int'],
-}
-export const OsmFetchData:IOsmFetchManager = {
-    "fetchRootPath": `${PATHS.osmFetchPath}`,
-    "osmFetchDirs": [
+};
+export const OsmFetchData: IOsmFetchManager = {
+    fetchRootPath: `${PATHS.osmFetchPath}`,
+    osmFetchDirs: [
         createFetch('2017-01-01 0800-10', noOptions),
         createFetch('2018-01-01 0800-10', extraFilesOptions),
         createFetch('2019-01-01 0800-10', removeOptions),
         createFetch('2020-01-01 0800-10', bothOptions),
-    ]
-}
+    ],
+};
 
 // console.log('OsmFetchData')
 // console.log(JSON.stringify(OsmFetchData, undefined, 4));

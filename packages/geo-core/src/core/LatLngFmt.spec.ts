@@ -2,7 +2,6 @@ import { ILatLngFmt, formatLatLng } from './LatLngFmt';
 import test from 'ava';
 import { LatLng } from './LatLng';
 
-
 // test('LatLng(32.859375, -117.27233) is has correct lat/lon', t => {
 //     const p = new LatLng(32.859375, -117.27233);
 //     t.is(p.lat, 32.859375);
@@ -47,34 +46,51 @@ test('formatLatLng handles quickFmt: shortlon', t => {
 
 test('formatLatLng handles quickFmt: long', t => {
     const p = new LatLng(40.7160335695977551, -111.8504939999999976);
-    t.is(formatLatLng(p.lat, p.lng, { quickFmt: 'long' }), '40.71603 Latitude, -111.85049 Longitude');
+    t.is(
+        formatLatLng(p.lat, p.lng, { quickFmt: 'long' }),
+        '40.71603 Latitude, -111.85049 Longitude',
+    );
 });
 
 test('formatLatLng handles quickFmt: kvpLong', t => {
     const p = new LatLng(40.7160335695977551, -111.8504939999999976);
-    t.is(formatLatLng(p.lat, p.lng, { quickFmt: 'kvpLong' }), 'Latitude: 40.71603, Longitude: -111.85049');
+    t.is(
+        formatLatLng(p.lat, p.lng, { quickFmt: 'kvpLong' }),
+        'Latitude: 40.71603, Longitude: -111.85049',
+    );
 });
 
 test('formatLatLng handles quickFmt: wrap label in <b></b>', t => {
     const p = new LatLng(40.7160335695977551, -111.8504939999999976);
-    t.is(formatLatLng(p.lat, p.lng, { labelFmt: '<b>$L:</b> $n' }), '<b>Latitude:</b> 40.71603, <b>Longitude:</b> -111.85049');
+    t.is(
+        formatLatLng(p.lat, p.lng, { labelFmt: '<b>$L:</b> $n' }),
+        '<b>Latitude:</b> 40.71603, <b>Longitude:</b> -111.85049',
+    );
 });
 
 test('formatLatLng handles quickFmt: wrap label in <b></b>', t => {
     const p = new LatLng(40.7160335695977551, -111.8504939999999976);
-    t.is(formatLatLng(p.lat, p.lng, { labelFmt: '<b>$L:</b> <code>$n</code>' }), '<b>Latitude:</b> <code>40.71603</code>, <b>Longitude:</b> <code>-111.85049</code>');
+    t.is(
+        formatLatLng(p.lat, p.lng, { labelFmt: '<b>$L:</b> <code>$n</code>' }),
+        '<b>Latitude:</b> <code>40.71603</code>, <b>Longitude:</b> <code>-111.85049</code>',
+    );
 });
 
 test('formatLatLng handles quickFmt: htmlShort', t => {
     const p = new LatLng(40.7160335695977551, -111.8504939999999976);
-    t.is(formatLatLng(p.lat, p.lng, { quickFmt: 'htmlShort' }), '<code>40.71603</code> Lat, <code>-111.85049</code> Lng');
+    t.is(
+        formatLatLng(p.lat, p.lng, { quickFmt: 'htmlShort' }),
+        '<code>40.71603</code> Lat, <code>-111.85049</code> Lng',
+    );
 });
 
 test('formatLatLng handles quickFmt: htmlLong', t => {
     const p = new LatLng(40.7160335695977551, -111.8504939999999976);
-    t.is(formatLatLng(p.lat, p.lng, { quickFmt: 'htmlLong' }), '<b>Latitude:</b> <code>40.71603</code>, <b>Longitude:</b> <code>-111.85049</code>');
+    t.is(
+        formatLatLng(p.lat, p.lng, { quickFmt: 'htmlLong' }),
+        '<b>Latitude:</b> <code>40.71603</code>, <b>Longitude:</b> <code>-111.85049</code>',
+    );
 });
-
 
 //   Latitude: 40.7160335695977551
 //  Longitude: -111.8504939999999976
@@ -83,9 +99,6 @@ test('formatLatLng handles quickFmt: htmlLong', t => {
 
 // LatLngArrayStr:      "40.7160, -111.8505"
 // LngLatArrayStr:      "-111.8505, 40.7160"
-
-
-
 
 // There are three basic forms of a coordinate
 // DMS: Degrees, Minutes, Seconds => W079°58′56″
@@ -104,7 +117,6 @@ test('formatLatLng handles quickFmt: htmlLong', t => {
 // DD5C => 79.98219W        // Degrees Decimal, 5 decimal places (1m), Use Cardinal Directions (N,S,E,W)
 // DD2_C => 79.98 W         // Degrees Decimal, 2 decimal places (1km), SPACE, Use Cardinal Directions (N,S,E,W)
 
-
 // Given
 //   Latitude: 40.7160335695977551
 //  Longitude: -111.8504939999999976
@@ -113,7 +125,6 @@ test('formatLatLng handles quickFmt: htmlLong', t => {
 
 // LatLngArrayStr:      "40.7160, -111.8505"
 // LngLatArrayStr:      "-111.8505, 40.7160"
-
 
 // LatLngCardArrayStr:      "40.7160 N, 111.8505 W"
 // LngLatCardArrayStr:      "111.8505 W, 40.7160 N"

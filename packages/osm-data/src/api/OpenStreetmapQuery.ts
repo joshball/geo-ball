@@ -1,14 +1,18 @@
 import { LatLngBounds, ILatLngBounds } from '@geo-ball/geo-core';
-import { OSMFeatureKeyValuePair, OSMOutputFormat, OSMFeatureKey, IOSMFeatureKeyValuePair } from '../data/OpenStreetmapFeatures';
+import {
+    OSMFeatureKeyValuePair,
+    OSMOutputFormat,
+    OSMFeatureKey,
+    IOSMFeatureKeyValuePair,
+} from '../data/OpenStreetmapFeatures';
 
-export interface IOpenStreetmapQuery{
+export interface IOpenStreetmapQuery {
     latLngBounds?: ILatLngBounds;
     outFormat?: OSMOutputFormat;
     timeoutInSec?: number;
     bds?: Array<string>;
     features?: Array<IOSMFeatureKeyValuePair>;
 }
-
 
 export class OpenStreetmapQuery {
     latLngBounds: LatLngBounds;
@@ -28,9 +32,10 @@ export class OpenStreetmapQuery {
         this.timeoutInSec = osmQueryObj.timeoutInSec || 180;
         this.bds = osmQueryObj.bds || ['node', 'way', 'rel'];
         if (osmQueryObj.features) {
-            this.features = osmQueryObj.features.map((kvp: OSMFeatureKeyValuePair) => new OSMFeatureKeyValuePair(kvp.key, kvp.values));
-        }
-        else {
+            this.features = osmQueryObj.features.map(
+                (kvp: OSMFeatureKeyValuePair) => new OSMFeatureKeyValuePair(kvp.key, kvp.values),
+            );
+        } else {
             const defaultFeatureKeys = ['highway', 'addr'] as Array<OSMFeatureKey>;
             this.features = defaultFeatureKeys.map(key => new OSMFeatureKeyValuePair(key));
         }
@@ -55,7 +60,6 @@ export class OpenStreetmapQuery {
         const featuresString = this.getFeaturesString();
         return `${header}\n(\n${featuresString}\n);\n${resultsString}`;
     }
-
 
     // qt: Sort by quadtile index; this is roughly geographical and significantly faster than order by ids
     private getResultsString(): string {
@@ -97,5 +101,4 @@ export class OpenStreetmapQuery {
         });
         return featuresStrings.join('\n');
     }
-
 }

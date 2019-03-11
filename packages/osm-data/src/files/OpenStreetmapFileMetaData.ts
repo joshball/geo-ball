@@ -19,7 +19,6 @@ export class OpenStreetmapFileMetaData {
     originalFilePath: string;
 
     constructor(osmFileMetaData: IOpenStreetmapFileMetaData) {
-
         this.osmServer = osmFileMetaData.osmServer;
         this.osmQuery = osmFileMetaData.osmQuery;
         this.queryDate = osmFileMetaData.queryDate;

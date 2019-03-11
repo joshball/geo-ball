@@ -17,7 +17,7 @@ test('LatLng(32.859375, -117.27233) reports correct precision', t => {
 
     t.deepEqual(p.precision(), {
         decPlaces: 5,
-        precision: '1.11 m'
+        precision: '1.11 m',
     });
 });
 
@@ -25,12 +25,11 @@ test('LatLng(32.859375, -117.27233) reports correct 9 place precision', t => {
     const p = new LatLng(32.123456789, -117.123456789);
     t.deepEqual(p.precision(), {
         decPlaces: 9,
-        precision: '< 1.11 mm'
+        precision: '< 1.11 mm',
     });
 });
 
-
 test('LatLng.format returns simple precision', t => {
     const p = new LatLng(40.7160335695977551, -111.8504939999999976);
-    t.is(p.format({ labelFmt: '', precision: 2}), '40.72, -111.85');
+    t.is(p.format({ labelFmt: '', precision: 2 }), '40.72, -111.85');
 });

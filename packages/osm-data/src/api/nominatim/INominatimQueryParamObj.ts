@@ -1,10 +1,7 @@
-
 export type NominatimFormat = 'html' | 'json' | 'xml' | 'jsonv2';
 export type ZeroOrOne = 0 | 1;
 
 export interface INominatimQueryParamObj {
-
-
     /**
      * format=[html|xml|json|jsonv2]
      *
@@ -13,14 +10,12 @@ export interface INominatimQueryParamObj {
      */
     format?: NominatimFormat;
 
-
     /**
      * json_callback=<string>
      *
      * Wrap json output in a callback function (JSONP) i.e. <string>(<json>)
      */
     json_callback?: string;
-
 
     /**
      * accept-language=<browser language string>
@@ -30,7 +25,6 @@ export interface INominatimQueryParamObj {
      */
     'accept-language'?: string;
 
-
     /**
      * q=<query>
      *
@@ -38,7 +32,6 @@ export interface INominatimQueryParamObj {
      */
     q?: string;
     // **** OR ****
-
 
     /**
      * street=<housenumber> <streetname>
@@ -60,8 +53,6 @@ export interface INominatimQueryParamObj {
     country?: string;
     postalcode?: string;
 
-
-
     /**
      * countrycodes=<countrycode>[,<countrycode>][,<countrycode>]...
      *
@@ -70,15 +61,12 @@ export interface INominatimQueryParamObj {
      */
     countrycodes?: string;
 
-
     /**
      * viewbox=<x1>,<y1>,<x2>,<y2>
      *
      * The preferred area to find search results. Any two corner points of the box are accepted in any order as long as they span a real box.
      */
     viewbox?: string;
-
-
 
     /**
      * bounded=[0|1]
@@ -89,7 +77,6 @@ export interface INominatimQueryParamObj {
      */
     bounded?: ZeroOrOne;
 
-
     // /**
     //  * polygon=[0|1]
     //  * Output polygon outlines for items found
@@ -99,14 +86,12 @@ export interface INominatimQueryParamObj {
     //  */
     // DEPRECATED_polygon?:ZeroOrOne;
 
-
     /**
      * addressdetails=[0|1]
      *
      * Include a breakdown of the address into elements
      */
     addressdetails?: ZeroOrOne;
-
 
     /**
      * email=<valid email address>
@@ -116,14 +101,12 @@ export interface INominatimQueryParamObj {
      */
     email?: string;
 
-
     /**
      * exclude_place_ids=<place_id,[place_id],[place_id]>
      *
      * If you do not want certain openstreetmap objects to appear in the search result, give a comma separated list of the place_id's you want to skip. This can be used to broaden search results. For example, if a previous query only returned a few results, then including those here would cause the search to return other, less accurate, matches (if possible)
      */
     exclude_place_ids?: string;
-
 
     /**
      * limit=<integer>
@@ -132,7 +115,6 @@ export interface INominatimQueryParamObj {
      */
     limit?: number;
 
-
     /**
      * dedupe=[0|1]
      *
@@ -140,7 +122,6 @@ export interface INominatimQueryParamObj {
      * Nominatim will attempt to detect such duplicates and only return one match; this is controlled by the dedupe parameter which defaults to 1. Since the limit is, for reasons of efficiency, enforced before and not after de-duplicating, it is possible that de-duplicating leaves you with less results than requested.
      */
     dedupe?: ZeroOrOne;
-
 
     /**
      * debug=[0|1]
@@ -151,14 +132,12 @@ export interface INominatimQueryParamObj {
      */
     debug?: ZeroOrOne;
 
-
     /**
      * polygon_geojson=1
      *
      * Output geometry of results in geojson format.
      */
     polygon_geojson?: ZeroOrOne;
-
 
     /**
      * polygon_kml=1
@@ -167,14 +146,12 @@ export interface INominatimQueryParamObj {
      */
     polygon_kml?: ZeroOrOne;
 
-
     /**
      * polygon_svg=1
      *
      * Output geometry of results in svg format.
      */
     polygon_svg?: ZeroOrOne;
-
 
     /**
      * polygon_text=1
@@ -183,14 +160,12 @@ export interface INominatimQueryParamObj {
      */
     polygon_text?: ZeroOrOne;
 
-
     /**
      * extratags=1
      *
      * Include additional information in the result if available, e.g. wikipedia link, opening hours.
      */
     extratags?: ZeroOrOne;
-
 
     /**
      * namedetails=1

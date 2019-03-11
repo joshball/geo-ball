@@ -1,10 +1,15 @@
 import { resolve, basename } from 'path';
 import { readFileSync, writeFileSync } from 'fs';
-import { fileNamify, LocalDateTime, ParsedFilenameTimestamp, readFile, writeFile } from '@geo-ball/utils';
+import {
+    fileNamify,
+    LocalDateTime,
+    ParsedFilenameTimestamp,
+    readFile,
+    writeFile,
+} from '@geo-ball/utils';
 import { IOpenStreetmapQueryResponse } from '../api/IOpenStreetmapQueryResponse';
 import { OpenStreetMapElements } from '../data/OpenStreetMapElements';
 import { IOpenStreetmapFileMetaData, OpenStreetmapFileMetaData } from './OpenStreetmapFileMetaData';
-
 
 // OSM File will have
 // - OSM Server
@@ -12,16 +17,17 @@ import { IOpenStreetmapFileMetaData, OpenStreetmapFileMetaData } from './OpenStr
 // - OSM Query Response
 // - Date
 
-
 export interface IFileCreator {
-    Load(path: string): any
+    Load(path: string): any;
 }
 export class OpenStreetmapFile {
-
     osmMetaData: OpenStreetmapFileMetaData;
     osmQueryResp: IOpenStreetmapQueryResponse;
 
-    constructor(osmMetaData: IOpenStreetmapFileMetaData, osmQueryResp: IOpenStreetmapQueryResponse) {
+    constructor(
+        osmMetaData: IOpenStreetmapFileMetaData,
+        osmQueryResp: IOpenStreetmapQueryResponse,
+    ) {
         this.osmMetaData = new OpenStreetmapFileMetaData(osmMetaData);
         this.osmQueryResp = osmQueryResp;
     }
@@ -38,8 +44,7 @@ export class OpenStreetmapFile {
     // osmd.QUERYNAME[.TS?].json
     static async Load(filePath: string): Promise<OpenStreetmapFile> {
         console.log('OpenStreetmapFile.Load', filePath);
-        return readFile(filePath, 'utf8')
-            .then(file => OpenStreetmapFile.CreateFromFileJson(file))
+        return readFile(filePath, 'utf8').then(file => OpenStreetmapFile.CreateFromFileJson(file));
     }
 
     static LoadSync(filePath: string): OpenStreetmapFile {
@@ -56,13 +61,14 @@ export class OpenStreetmapFile {
         throw new Error('Invalid file structure');
     }
 
-
     static IsOsmData(osmData: OpenStreetmapFile): boolean {
-        return !!osmData.osmMetaData
-            && !!osmData.osmMetaData.osmServer
-            && !!osmData.osmMetaData.osmQuery
-            && !!osmData.osmMetaData.queryDate
-            && !!osmData.osmQueryResp;
+        return (
+            !!osmData.osmMetaData &&
+            !!osmData.osmMetaData.osmServer &&
+            !!osmData.osmMetaData.osmQuery &&
+            !!osmData.osmMetaData.queryDate &&
+            !!osmData.osmQueryResp
+        );
     }
 
     static Save(path: string, osmFile: OpenStreetmapFile): string {
@@ -73,7 +79,9 @@ export class OpenStreetmapFile {
 
     static CreateDescriptiveFileName(fileQueryName: string, date: Date | undefined): string {
         const ts = date ? '.' + LocalDateTime.FromDate(date).filename : '';
-        return `${fileNamify(fileQueryName, { replacement: '_' })}${ts}.${OpenStreetmapFile.Extension}`;
+        return `${fileNamify(fileQueryName, { replacement: '_' })}${ts}.${
+            OpenStreetmapFile.Extension
+        }`;
     }
 
     static ParseOpenStreetmapFileName(filePath: string): ParsedFilenameTimestamp | undefined {

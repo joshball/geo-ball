@@ -1,4 +1,4 @@
-import { ILatLngFmt, formatLatLng } from "./LatLngFmt";
+import { ILatLngFmt, formatLatLng } from './LatLngFmt';
 
 export interface ILatLng {
     lat: number;
@@ -40,9 +40,9 @@ export class LatLng {
         const numDec = Math.min(countDecimalPlace(this.lat), countDecimalPlace(this.lng));
         return {
             decPlaces: numDec,
-            precision: getPrecisionString(numDec)
+            precision: getPrecisionString(numDec),
         };
-    }
+    };
 
     equals(rhs: ILatLng): boolean {
         if (!rhs) {
@@ -53,12 +53,13 @@ export class LatLng {
     }
 
     hashCode(): number {
-        return Array.from(JSON.stringify(this))
-            // tslint:disable-next-line:no-bitwise
-            .reduce((s, c) => Math.imul(31, s) + c.charCodeAt(0) | 0, 0);
+        return (
+            Array.from(JSON.stringify(this))
+                // tslint:disable-next-line:no-bitwise
+                .reduce((s, c) => (Math.imul(31, s) + c.charCodeAt(0)) | 0, 0)
+        );
         // return fieldsHashCode(this.latitude, this.longitude);
     }
-
 
     /** Convenience methods for mapping later */
     static Serialize(latLngObj: ILatLng): string {
@@ -83,7 +84,7 @@ const countDecimalPlace = (num: number): number => {
         return split[1].length;
     }
     throw new Error('Bad lat/lng number!');
-}
+};
 
 const decPrecision: any = {
     0: '111 km',
@@ -95,7 +96,7 @@ const decPrecision: any = {
     6: '0.111 m',
     7: '1.11 cm',
     8: '1.11 mm',
-}
+};
 const getPrecisionString = (decPlaces: number): string => {
     if (decPlaces >= 0 && decPlaces <= 8) {
         return decPrecision[decPlaces];
@@ -104,7 +105,7 @@ const getPrecisionString = (decPlaces: number): string => {
         return '< ' + decPrecision[8];
     }
     return 'Unknown precision';
-}
+};
 // Lat Lng Precision:
 // decimal  degrees    distance
 // places

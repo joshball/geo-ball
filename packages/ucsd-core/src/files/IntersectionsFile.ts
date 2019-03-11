@@ -1,4 +1,4 @@
-import { writeFileSync, readFileSync } from 'fs'
+import { writeFileSync, readFileSync } from 'fs';
 
 import { LatLng } from '@geo-ball/geo-core';
 import { GeoFileMetaData } from '..';
@@ -6,7 +6,6 @@ import { PointMapsFile } from './PointMapsFile';
 import { findIntersections } from '../data/Intersections';
 import { basename } from 'path';
 import { readFile } from '@geo-ball/utils';
-
 
 export class IntersectionsFile {
     metaData: GeoFileMetaData;
@@ -23,7 +22,7 @@ export class IntersectionsFile {
     }
 
     static CreateFromPointsFile(pointsFile: PointMapsFile): IntersectionsFile {
-        const metaData = IntersectionsFile.CreateMetaDataFromPoints(pointsFile)
+        const metaData = IntersectionsFile.CreateMetaDataFromPoints(pointsFile);
         const intersections = findIntersections(pointsFile.pointsMap);
         return new IntersectionsFile(metaData, intersections);
     }
@@ -65,11 +64,10 @@ export class IntersectionsFile {
     // }
     static async Load(filePath: string): Promise<IntersectionsFile> {
         console.log('IntersectionsFile.Load', filePath);
-        return readFile(filePath, 'utf8')
-            .then(file => IntersectionsFile.CreateFromFileJson(file))
+        return readFile(filePath, 'utf8').then(file => IntersectionsFile.CreateFromFileJson(file));
     }
 
-     static LoadSync(filePath: string): IntersectionsFile {
+    static LoadSync(filePath: string): IntersectionsFile {
         console.log('IntersectionsFile.Load', filePath);
         return IntersectionsFile.CreateFromFileJson(readFileSync(filePath, 'utf8'));
     }
@@ -80,11 +78,8 @@ export class IntersectionsFile {
         return new IntersectionsFile(file.metaData, file.intersections);
     }
 
-
-
     // // ORIG: 32.8769858 -117.2359995 32.8771038 -117.2360337 "Myers Drive" residential
     // /// NEW: 32.8769858 -117.2359995 32.8771038 -117.2360337 "Myers Drive" residential
-
 
     // static SaveJsonFile(filePath: string, roadSegmentsFile: IntersectionsFile): void {
     //     return writeFileSync(filePath, JSON.stringify(roadSegmentsFile));
@@ -105,5 +100,4 @@ export class IntersectionsFile {
     //     })
     //     return writeFileSync(filePath, lines.join('\r\n'));
     // }
-
 }

@@ -1,4 +1,4 @@
-import { OpenStreetMapTagObject } from "./OpenStreetMapTag";
+import { OpenStreetMapTagObject } from './OpenStreetMapTag';
 
 /**
  * From: https://wiki.openstreetmap.org/wiki/Elements
@@ -22,9 +22,9 @@ import { OpenStreetMapTagObject } from "./OpenStreetMapTag";
  * More details: https://wiki.openstreetmap.org/wiki/Node
  */
 export interface IOpenStreetMapNode {
-	id: number;
-	type: 'node';
-	lat: number;
-	lon: number;
-	tags?: OpenStreetMapTagObject;
+    id: number;
+    type: 'node';
+    lat: number;
+    lon: number;
+    tags?: OpenStreetMapTagObject;
 }

@@ -1,4 +1,3 @@
-
 // type VertexLabel = Map<Integer,String>
 
 export class VertexLabelMaps {
@@ -24,7 +23,7 @@ export class VertexLabelMaps {
     }
 
     /**
-     * Test whether some vertex in the graph is labeled 
+     * Test whether some vertex in the graph is labeled
      * with a given String label
      * @param The String label being checked
      * @return True if there's a vertex in the graph with this label; false otherwise.
@@ -36,7 +35,7 @@ export class VertexLabelMaps {
     /**
      * Report label of vertex with given index
      * @param The integer index of the vertex
-     * @return The String label of this vertex 
+     * @return The String label of this vertex
      */
     getLabel(vertex: number): string | undefined {
         return this.verticeLabels.get(vertex);
@@ -46,7 +45,7 @@ export class VertexLabelMaps {
      * Report index of vertex with given label.
      * (Assume distinct labels for vertices.)
      * @param The String label of the vertex
-     * @return The integer index of this vertex 
+     * @return The integer index of this vertex
      */
     getIndex(s: string): number {
         const v = this.labelVertices.get(s);

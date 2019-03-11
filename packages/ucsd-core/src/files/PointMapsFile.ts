@@ -1,11 +1,10 @@
-import { writeFileSync, readFileSync } from 'fs'
-import {  IOpenStreetMapNode } from '@geo-ball/osm-data';
+import { writeFileSync, readFileSync } from 'fs';
+import { IOpenStreetMapNode } from '@geo-ball/osm-data';
 import { GeoFileMetaData } from './GeoFileMetaData';
 import { RoadSegmentsFile } from './RoadSegmentsFile';
 import { PointsToRoadSegmentsMap } from '../data/PointsToRoadSegmentsMap';
 import { basename } from 'path';
 import { readFile } from '@geo-ball/utils';
-
 
 export class PointMapsFile {
     metaData: GeoFileMetaData;
@@ -22,8 +21,7 @@ export class PointMapsFile {
 
     static async Load(filePath: string): Promise<PointMapsFile> {
         console.log('PointMapsFile.Load', filePath);
-        return readFile(filePath, 'utf8')
-            .then(file => PointMapsFile.CreateFromFileJson(file))
+        return readFile(filePath, 'utf8').then(file => PointMapsFile.CreateFromFileJson(file));
     }
 
     static LoadSync(filePath: string): PointMapsFile {
@@ -51,7 +49,9 @@ export class PointMapsFile {
         return node;
     }
 
-    static CreatePointsToRoadSegmentsMapFromRsdFile(rsdFile: RoadSegmentsFile): PointsToRoadSegmentsMap {
+    static CreatePointsToRoadSegmentsMapFromRsdFile(
+        rsdFile: RoadSegmentsFile,
+    ): PointsToRoadSegmentsMap {
         const pointMap = new PointsToRoadSegmentsMap();
         // let i = 0;
         rsdFile.segmentsData.forEach(rsl => {
@@ -67,7 +67,6 @@ export class PointMapsFile {
     static CreateMetaDataFromRsd(rsdFile: RoadSegmentsFile): GeoFileMetaData {
         return new GeoFileMetaData(rsdFile.metaData.bounds, rsdFile.metaData.timestamp);
     }
-
 
     // static LoadFromTextFile(filePath: string): PointMapsFile {
     //     const lines = readFileSync(filePath, 'utf8')
@@ -91,11 +90,10 @@ export class PointMapsFile {
     // // ORIG: 32.8769858 -117.2359995 32.8771038 -117.2360337 "Myers Drive" residential
     // /// NEW: 32.8769858 -117.2359995 32.8771038 -117.2360337 "Myers Drive" residential
 
-
     static SaveJsonFile(filePath: string, pointsMapFile: PointMapsFile): void {
         const pmf = {
             metaData: JSON.parse(JSON.stringify(pointsMapFile.metaData)),
-            pointsMap: JSON.parse(pointsMapFile.pointsMap.serialize())
+            pointsMap: JSON.parse(pointsMapFile.pointsMap.serialize()),
         };
         // console.log(JSON.stringify(pmf.pointsMap, undefined, 4));
         return writeFileSync(filePath, JSON.stringify(pmf));
@@ -109,5 +107,4 @@ export class PointMapsFile {
     //     })
     //     return writeFileSync(filePath, lines.join('\r\n'));
     // }
-
 }

@@ -32,7 +32,7 @@ export type OSMFeatureKey =
     | 'railway'
     | 'route'
     | 'shop'
-    | 'waterway'
+    | 'waterway';
 
 /**
  * https://wiki.openstreetmap.org/wiki/Elements
@@ -41,6 +41,5 @@ export type OSMFeatureKey =
  *  - relations (which are sometimes used to explain how other elements work together).
  */
 export type OsmElementType = 'nodes' | 'ways' | 'relations';
-
 
 export type OSMOutputFormat = 'json' | 'xml' | 'csv' | 'custom' | 'popup';

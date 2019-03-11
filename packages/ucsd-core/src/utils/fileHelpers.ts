@@ -10,23 +10,23 @@ export const findFilePathIn = (filepath: string, dirsToTry: Array<string>): stri
             return resolvedPath;
         }
     }
-    throw new Error(`Could not find any files matching path from [${filepath}]`)
-}
+    throw new Error(`Could not find any files matching path from [${filepath}]`);
+};
 
 export const findFilePath = (filepath: string): string => {
     if (isAbsolute(filepath)) {
         return assertFileExists(filepath);
     }
-    return findFilePathIn(filepath, [process.cwd(), /*BaseDataPath*/]);
-}
+    return findFilePathIn(filepath, [process.cwd() /*BaseDataPath*/]);
+};
 
 export const assertFileExists = (filepath: string): string => {
     const resolvedPath = resolve(filepath);
     if (!existsSync(resolvedPath)) {
-        throw new Error(`File [${resolvedPath}] does not exist`)
+        throw new Error(`File [${resolvedPath}] does not exist`);
     }
     return resolvedPath;
-}
+};
 
 export interface FormatExtension {
     format: OutputFormatType;
@@ -45,8 +45,6 @@ export const OutputFormats = Object.keys(OutputFormatExtensions);
 /** Create a Type */
 export type OutputFormatType = keyof typeof OutputFormatExtensions;
 
-
-
 export const isCorrectExt = (filename: string, format: string): boolean => {
     if (filename) {
         const extWithPeriod = '.' + format.toLowerCase();
@@ -55,7 +53,7 @@ export const isCorrectExt = (filename: string, format: string): boolean => {
         }
     }
     return false;
-}
+};
 
 export const ensureCorrectEnding = (filename: string, ending: string): string | undefined => {
     if (filename) {
@@ -64,14 +62,14 @@ export const ensureCorrectEnding = (filename: string, ending: string): string | 
         const eLen = ending.length;
         const startOfEnding = fLen - eLen;
         const filenameStrTooSmall = () => fLen < eLen;
-        const endOfFilenameNotExtName = () => filename.slice(startOfEnding).toLowerCase() !== extWithPeriod;
+        const endOfFilenameNotExtName = () =>
+            filename.slice(startOfEnding).toLowerCase() !== extWithPeriod;
         if (filenameStrTooSmall() || endOfFilenameNotExtName()) {
             return filename + extWithPeriod;
         }
     }
     return undefined;
-}
-
+};
 
 // export const resolveDataDir = (dataDirPath: string | undefined): string => {
 //     if (!dataDirPath) {
@@ -98,7 +96,6 @@ export const ensureCorrectEnding = (filename: string, ending: string): string | 
 //         .filter(f => f.endsWith('.osm-data.json'))
 //         .map(f => join(osmDir, f));
 // }
-
 
 // // export const resolveOsmAndRsdFiles = (dataDirPath: string, osmFiles: string[], overwriteRsFiles: boolean): Array<IOsmRsFiles> => {
 //     // const osmDir = join(dataDirPath, 'osm');

@@ -1,4 +1,3 @@
-
 export interface IOpenStreetMapElementsStats {
-	elementCount: number;
+    elementCount: number;
 }

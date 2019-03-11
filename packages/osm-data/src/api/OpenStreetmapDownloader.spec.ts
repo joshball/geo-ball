@@ -7,7 +7,6 @@ import { OpenStreetmapDownloader } from './OpenStreetmapDownloader';
 import { OpenStreetmapQuery, IOpenStreetmapQuery } from './OpenStreetmapQuery';
 import { createNewBounds, createOsmFileMetaData, osmJsonResp, IOsmQuery } from '../test/TestData';
 
-
 // test.beforeEach(_t => {
 // 	mockAxios.reset();
 // });
@@ -27,7 +26,7 @@ test('OpenStreetmapDownloader is instantiable', t => {
 test('OpenStreetmapDownloader should throw if missing bounds in query', async t => {
     // const { latLngBounds } = createNewBounds();
     const { objBounds } = createNewBounds();
-    const osmQuery:IOpenStreetmapQuery = { latLngBounds: objBounds };
+    const osmQuery: IOpenStreetmapQuery = { latLngBounds: objBounds };
     const missingBoundsQuery = new OpenStreetmapQuery(osmQuery);
     delete missingBoundsQuery.latLngBounds;
     t.plan(1);
@@ -43,7 +42,7 @@ test('OpenStreetmapDownloader should throw if bad bounds in query', async t => {
     // latLngBounds.ne.lat = 200;
     const { objBounds } = createNewBounds();
     objBounds.northEast.lat = 200;
-    const osmQuery:IOpenStreetmapQuery = { latLngBounds: objBounds };
+    const osmQuery: IOpenStreetmapQuery = { latLngBounds: objBounds };
     // set lat to out of bounds (can't be bigger than 180)
     const badBoundsQuery = new OpenStreetmapQuery(osmQuery);
     t.plan(1);
@@ -62,13 +61,13 @@ test('OpenStreetmapDownloader should throw if API post fails', async t => {
     t.plan(1);
     try {
         await OpenStreetmapDownloader.Fetch(osmQuery); // .then(r => console.log('rrrr', r)).catch(e => console.log('EEEEE:', e));
-        console.log('GOT HREERERERE')
+        console.log('GOT HREERERERE');
     } catch (e) {
         t.is(e.message, 'Network Error');
     }
 });
 
-test('OpenStreetmapDownloader fetch() valid data', async (t) => {
+test('OpenStreetmapDownloader fetch() valid data', async t => {
     const { osmQuery } = createOsmFileMetaData();
     const mockAxios = new MockAdapter(axios);
     mockAxios.onPost().replyOnce(200, osmJsonResp);
@@ -76,7 +75,7 @@ test('OpenStreetmapDownloader fetch() valid data', async (t) => {
     // console.log('data:', JSON.stringify(data, undefined, 4));
     // console.log('osmR:', JSON.stringify(osmJsonResp, undefined, 4));
     t.deepEqual(data, osmJsonResp);
-})
+});
 
 // test('OpenStreetmapDownloader fetches and saves', async (t) => {
 //     const queryName = 'query-name';

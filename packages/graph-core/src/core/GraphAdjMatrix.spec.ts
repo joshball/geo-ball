@@ -29,4 +29,3 @@ test('GraphAdjMatrix grows correctly', t => {
     t.is(g.getNumVertices(), 3);
     t.is(g.adjMatrix.length, 4);
 });
-

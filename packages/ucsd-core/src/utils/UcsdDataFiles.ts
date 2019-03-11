@@ -31,7 +31,6 @@ export interface IOsmBasedFilePaths {
 //     rsdTextFilePath: string;
 // }
 
-
 export class UcsdDataFiles {
     mapDataRoot: string;
     osmDir: string = 'osm';
@@ -68,18 +67,18 @@ export class UcsdDataFiles {
             try {
                 console.log(`UcsdDataFiles.EnsurePathSync() about to mkdirSync ${path}`);
                 mkdirSync(path, { recursive: true });
-            }
-            catch (e) {
+            } catch (e) {
                 console.error(`UcsdDataFiles.EnsurePathSync() about to mkdirSync ${path}`, e);
             }
         }
     }
 
     static async EnsurePath(path: string) {
-        return promises.access(path, constants.F_OK | constants.W_OK)
+        return promises
+            .access(path, constants.F_OK | constants.W_OK)
             .then(() => path)
             .catch(() => promises.mkdir(path, { recursive: true }))
-            .then(() => path)
+            .then(() => path);
     }
 
     getOpenStreetMapDataFiles() {
@@ -124,8 +123,7 @@ export class UcsdDataFiles {
     }
 
     getOsmBasedFilePaths(osmFile?: string | undefined): Array<IOsmBasedFilePaths> {
-        const files = this.getOpenStreetMapDataFiles()
-            .map(f => this.getOsmAndRsdMapping(f));
+        const files = this.getOpenStreetMapDataFiles().map(f => this.getOsmAndRsdMapping(f));
         if (osmFile) {
             return files.filter(f => f.osmFilePath.name === osmFile);
         }

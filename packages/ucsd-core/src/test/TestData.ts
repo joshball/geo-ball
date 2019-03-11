@@ -55,9 +55,7 @@
 // 	};
 // };
 
-
 // export const dataDir = '.';
-
 
 // export const osmJsonResp: IOpenStreetmapQueryResponse = {
 // 	"version": 0.6,

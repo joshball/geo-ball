@@ -1,6 +1,5 @@
 // import { INominatimQueryParamObj, NominatimFormat, ZeroOrOne } from "./INominatimQueryParamObj";
 
-
 // export interface INominatimParams extends INominatimQueryParamObj {
 //     /**
 //      * Note, because JS can't have a dash/minus in property (without quotes)
@@ -35,7 +34,6 @@
 //     [key: string]: any;
 // }
 
-
 // export class NominatimParams implements INominatimParams {
 //     [key: string]: any;
 
@@ -43,7 +41,6 @@
 
 //     json_callback?: string | undefined = undefined;
 //     _accept_language?: string | undefined = undefined;
-
 
 //     q?: string;
 
@@ -108,10 +105,8 @@
 //                 !!obj.county || !!obj.state ||
 //                  !!obj.country || !!obj.postalcode;
 
-
 //             const qQuery = (obj: any) => !!obj.q;
 //             const eQuery = checkExperimentalQuery;
-
 
 //             if (eQuery(params) && qQuery(params)) {
 //                 throw new Error('you cannot have both q and experimental query params set');
@@ -172,4 +167,3 @@
 //             .join('&');
 //     }
 // }
-

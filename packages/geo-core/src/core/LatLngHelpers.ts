@@ -1,7 +1,7 @@
 // import { fieldsHashCode, areEqual } from "prelude.ts";
 import { LatLng, ILatLng } from './LatLng';
 // export const deg2rad = (degrees: number): number => degrees * Math.PI / 180.0;
-export const degreesToRadians = (degrees: number): number => degrees / 180.0 * Math.PI;
+export const degreesToRadians = (degrees: number): number => (degrees / 180.0) * Math.PI;
 
 export const RADIUS_OF_EARTH = 6373; // radius of the earth in kilometres
 
@@ -13,13 +13,11 @@ export const RADIUS_OF_EARTH = 6373; // radius of the earth in kilometres
  */
 export const distance = (lhs: ILatLng, rhs: ILatLng): number => {
     return getDist(lhs.lat, lhs.lng, rhs.lat, rhs.lng);
-}
-
+};
 
 //
 // We can use this if we need to:
 // const latDistMeters = leaflet.distance([northWest.lng, northWest.lat], [this.southWest.lng, this.southWest.lat], { units: 'meters' });
-
 
 export const getDist = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
     const lat1rad: number = degreesToRadians(lat1);
@@ -27,15 +25,14 @@ export const getDist = (lat1: number, lon1: number, lat2: number, lon2: number):
     const deltaLat: number = degreesToRadians(lat2 - lat1);
     const deltaLon: number = degreesToRadians(lon2 - lon1);
 
-    const a: number = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
-        Math.cos(lat1rad) * Math.cos(lat2rad) *
-        Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+    const a: number =
+        Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+        Math.cos(lat1rad) * Math.cos(lat2rad) * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
     const c: number = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
     const d: number = RADIUS_OF_EARTH * c;
     return d;
-}
-
+};
 
 // /* FROM LEAFLET node_modules\leaflet\src\geo\crs\CRS.Earth.js
 //  * @namespace CRS
@@ -67,7 +64,6 @@ export const getDist = (lat1: number, lon1: number, lat2: number, lon2: number):
 // 		return this.R * c;
 // 	}
 // });
-
 
 // Calculates the distance between two [points](https://tools.ietf.org/html/rfc7946#section-3.1.2) in degrees, radians,
 // miles, or kilometers. This uses the
@@ -244,12 +240,6 @@ export const getDist = (lat1: number, lon1: number, lat2: number, lon2: number):
 //     return radiansToDegrees(lengthToRadians(distance, units));
 // }
 
-
-
-
-
-
-
 // /**
 //  * lat1, lon1 Start point lat2, lon2 End point el1 Start altitude in meters
 //  * el2 End altitude in meters
@@ -271,4 +261,3 @@ export const getDist = (lat1: number, lon1: number, lat2: number, lon2: number):
 //     distance = Math.pow(distance, 2) + Math.pow(height, 2);
 //     return Math.sqrt(distance);
 // }
-
