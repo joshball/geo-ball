@@ -1,12 +1,12 @@
-import * as React from 'react'
+import * as React from 'react';
 import { connect, FormikContext } from 'formik';
 
 interface IFormikFormProps<T> {
-  render: (props: FormikContext<T>) => React.ReactElement<any>;
+    render: (props: FormikContext<T>) => React.ReactElement<any>;
 }
 
 interface IFormikFormImplProps<T> extends IFormikFormProps<T> {
-  formik: FormikContext<T>;
+    formik: FormikContext<T>;
 }
 
 /**
@@ -27,14 +27,13 @@ interface IFormikFormImplProps<T> extends IFormikFormProps<T> {
  * ```
  */
 
- const FormikFormImpl = <T extends any>({ render, formik }: IFormikFormImplProps<T>) => render(formik);
+const FormikFormImpl = <T extends any>({ render, formik }: IFormikFormImplProps<T>) =>
+    render(formik);
 
 export const FormikForm: React.ComponentType<IFormikFormImplProps<any>> = connect(FormikFormImpl);
 
-
 // Some examples of wrapping here with Office stuff
 // https://github.com/vadistic/vats/blob/b7c9e08eb45d7fd94af477575adea04df5e06aca/packages/client/src/components/editable/formik.tsx
-
 
 // export interface IFormikFormState {
 //     formData: any;
@@ -55,7 +54,6 @@ export const FormikForm: React.ComponentType<IFormikFormImplProps<any>> = connec
 //             formData: this.props.formData
 //         };
 //     }
-
 
 //     render() {
 //         const debugForm = this.props.showFormStatePanel ? <DebugFormix /> : null;

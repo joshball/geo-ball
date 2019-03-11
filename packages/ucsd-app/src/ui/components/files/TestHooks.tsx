@@ -1,5 +1,3 @@
-
-
 export interface MediaProps {
     query: string;
     children: any;
@@ -8,12 +6,10 @@ export interface MediaState {
     matches: boolean;
 }
 
-
-class Media extends React.Component<MediaProps, MediaState>
-{
+class Media extends React.Component<MediaProps, MediaState> {
     state = {
-        matches: window.matchMedia(this.props.query).matches
-    }
+        matches: window.matchMedia(this.props.query).matches,
+    };
     removeListener?: () => void | undefined;
 
     componentDidMount() {
@@ -54,28 +50,27 @@ const mq = () => {
                     {(large: boolean) => (
                         <div className="Media">
                             <h1>Media</h1>
-                            <p>Small? {small ? "Yep" : "Nope"}</p>
-                            <p>Large? {large ? "Yep" : "Nope"}</p>
+                            <p>Small? {small ? 'Yep' : 'Nope'}</p>
+                            <p>Large? {large ? 'Yep' : 'Nope'}</p>
                         </div>
                     )}
                 </Media>
             )}
         </Media>
-    )
-}
-
+    );
+};
 
 const mqh = () => {
-    const small = useMedia("(max-width: 400px)")
-    const large = useMedia("(min-width: 800px)")
+    const small = useMedia('(max-width: 400px)');
+    const large = useMedia('(min-width: 800px)');
     return (
         <div className="Media">
             <h1>Media</h1>
-            <p>Small? {small ? "Yep" : "Nope"}</p>
-            <p>Large? {large ? "Yep" : "Nope"}</p>
+            <p>Small? {small ? 'Yep' : 'Nope'}</p>
+            <p>Large? {large ? 'Yep' : 'Nope'}</p>
         </div>
-    )
-}
+    );
+};
 
 const useMedia = (query: string) => {
     const [matches, setMatches] = React.useState(window.matchMedia(query).matches);
@@ -84,15 +79,15 @@ const useMedia = (query: string) => {
         if (media.matches !== matches) {
             setMatches(media.matches);
         }
-        const listener = () => setMatches(media.matches)
+        const listener = () => setMatches(media.matches);
         media.addListener(listener);
         return () => media.removeListener(listener);
     }, [query]);
 
     return matches;
-}
+};
 
 const App = () => {
     const [currentIndex, setCurrentIndex] = React.useState(0);
-    return (<div></div>)
-}
+    return <div />;
+};

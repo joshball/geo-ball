@@ -1,10 +1,9 @@
+import * as React from 'react';
+import { StorybookStory as Story, StorybookGroup as Group } from '../../../../../.storybook/views';
+import { storiesOf } from '@storybook/react';
+import { CenteredContent } from './CenteredContent';
 
-import * as React from "react"
-import { StorybookStory as Story, StorybookGroup as Group } from "../../../../../.storybook/views"
-import { storiesOf } from "@storybook/react"
-import { CenteredContent } from "./CenteredContent"
-
-storiesOf("CenteredContent", module).add("default", () => (
+storiesOf('CenteredContent', module).add('default', () => (
     <Story>
         <Group title="default">
             <CenteredContent>
@@ -13,4 +12,4 @@ storiesOf("CenteredContent", module).add("default", () => (
             </CenteredContent>
         </Group>
     </Story>
-))
+));

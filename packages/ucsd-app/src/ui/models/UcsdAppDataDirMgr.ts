@@ -1,6 +1,6 @@
-import { remote } from "electron";
-import { dirname, join, resolve, basename } from "path";
-import { decorate, action, observable } from "mobx";
+import { remote } from 'electron';
+import { dirname, join, resolve, basename } from 'path';
+import { decorate, action, observable } from 'mobx';
 
 export interface IUcsdAppDataDirMgr {
     rootPath: string;
@@ -26,7 +26,6 @@ export class UcsdAppDataDirMgr implements IUcsdAppDataDirMgr {
         return `${join(this.fullPath, UcsdAppDataDirMgr.DEFAULT_OSM_FETCHES_DIRNAME)}`;
     }
 
-
     constructor(...pathArgs: Array<string>) {
         const { rootPath, dirName } = UcsdAppDataDirMgr.GetUcsdAppDataDirMgrFromPath(...pathArgs);
         this.rootPath = rootPath;
@@ -38,7 +37,7 @@ export class UcsdAppDataDirMgr implements IUcsdAppDataDirMgr {
             rootPath: this.rootPath,
             dirName: this.dirName,
             fullPath: this.fullPath,
-        }
+        };
     }
 
     async isValid(): Promise<boolean> {
@@ -54,14 +53,15 @@ export class UcsdAppDataDirMgr implements IUcsdAppDataDirMgr {
      * @param pathArgs zero or more path args
      */
     static GetUcsdAppDataDirMgrFromPath(...pathArgs: Array<string>): IUcsdAppDataDirMgr {
-        const fullPath = pathArgs && pathArgs.length
-            ? resolve(join(...pathArgs))
-            : UcsdAppDataDirMgr.GetDefaultUcsdAppDataDirPath();
+        const fullPath =
+            pathArgs && pathArgs.length
+                ? resolve(join(...pathArgs))
+                : UcsdAppDataDirMgr.GetDefaultUcsdAppDataDirPath();
         return {
             rootPath: dirname(fullPath),
             dirName: basename(fullPath),
-            fullPath
-        }
+            fullPath,
+        };
     }
 
     static GetDefaultUcsdAppDataDirPath(): string {

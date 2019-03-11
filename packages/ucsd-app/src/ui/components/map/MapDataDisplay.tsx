@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { css } from 'glamor'
+import * as React from 'react';
+import { css } from 'glamor';
 
 import { LatLngTxt } from '../common/geo/LatLngTxt';
 import { observer, inject } from 'mobx-react';
@@ -13,28 +13,26 @@ const outerBoxCss = css({
     padding: '15px',
     borderRadius: '6px',
     backgroundColor: '#ebf1f5',
-})
+});
 
 const headingCss = css({
     marginBlockStart: '0',
     marginBlockEnd: '0',
-})
+});
 const rowCss = css({
     marginTop: '10px',
-    marginLeft: '10px'
-})
+    marginLeft: '10px',
+});
 
 export interface MapDataDisplayProps {
     stores?: RootStore;
 }
 
-
-
-@inject("stores")
+@inject('stores')
 @observer
 export class MapDataDisplay extends React.Component<MapDataDisplayProps> {
     constructor(props: MapDataDisplayProps) {
-        super(props)
+        super(props);
         this.downloadOsmFile = this.downloadOsmFile.bind(this);
     }
     downloadOsmFile(osmParams: IDownloadOsmParams) {
@@ -61,10 +59,19 @@ export class MapDataDisplay extends React.Component<MapDataDisplayProps> {
                     <b>Center</b>: <LatLngTxt llt={center} latLngQuickFmt={latLngQuickFmt} />
                     <div>Copy as array or string</div>
                 </div>
-                <div className={`${rowCss}`}><b>Addr</b>: {addrStr}</div>
-                <div className={`${rowCss}`}><b>Zoom</b>: {zoom}</div>
                 <div className={`${rowCss}`}>
-                    <DownloadLatLngBoundsBox bounds={bounds} center={center} latLngQuickFmt={latLngQuickFmt} downloadOsmFile={this.downloadOsmFile} />
+                    <b>Addr</b>: {addrStr}
+                </div>
+                <div className={`${rowCss}`}>
+                    <b>Zoom</b>: {zoom}
+                </div>
+                <div className={`${rowCss}`}>
+                    <DownloadLatLngBoundsBox
+                        bounds={bounds}
+                        center={center}
+                        latLngQuickFmt={latLngQuickFmt}
+                        downloadOsmFile={this.downloadOsmFile}
+                    />
                 </div>
                 <h3 className={`${headingCss}`}>Current Mouse Location</h3>
                 <div className={`${rowCss}`}>
@@ -76,6 +83,6 @@ export class MapDataDisplay extends React.Component<MapDataDisplayProps> {
                     <div>Copy as array or string</div>
                 </div>
             </div>
-        )
+        );
     }
 }

@@ -1,5 +1,4 @@
-import { GeoFileInfo } from "../common/GeoFileInfo";
-
+import { GeoFileInfo } from '../common/GeoFileInfo';
 
 export class OsmRunFiles {
     query: GeoFileInfo;
@@ -20,7 +19,7 @@ export class OsmRunFiles {
         const files = await GeoFileInfo.GetGeoFilesFromDir(runDirPath);
         const both: any = await OsmRunFiles.GetOsmQueryAndDownloadFiles(files);
 
-        return new OsmRunFiles(both.query, both.download)
+        return new OsmRunFiles(both.query, both.download);
     }
     static async GetOsmQueryAndDownloadFiles(files: Array<GeoFileInfo>) {
         const both: any = {};
@@ -31,8 +30,7 @@ export class OsmRunFiles {
             if (f.name.segments.type === 'OSM_DOWNLOAD') {
                 both.download = f;
             }
-        })
+        });
         return both;
     }
 }
-

@@ -1,13 +1,13 @@
-import { css } from "@geo-ball/component-lib"
+import { css } from '@geo-ball/component-lib';
 
 export const fannypackTheme = {
     global: {
         base: css`
-            font-family: "Comic Sans MS";
+            font-family: 'Comic Sans MS';
         `,
     },
     palette: {
-        primary: "blue",
+        primary: 'blue',
     },
     layout: {
         mobileBreakpoint: 520,
@@ -21,4 +21,4 @@ export const fannypackTheme = {
     Text: css`
         font-weight: 300;
     `,
-}
+};

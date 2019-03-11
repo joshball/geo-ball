@@ -8,7 +8,6 @@
 //     };
 // }
 
-
 export interface IServices {
-    fss: IFileStorageService
+    fss: IFileStorageService;
 }

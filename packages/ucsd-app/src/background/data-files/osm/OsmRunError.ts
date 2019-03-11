@@ -1,13 +1,13 @@
 export type OsmRunErrorTxt =
-    'DirFilesHaveBadData' |
-    'DirHasTooFewFiles' |
-    'DirHasTooManyFiles' |
-    'DirHasInconsistentFileNames' |
-    'DirHasNoFiles' |
-    'DirDoesNotExist' |
-    'DirImproperlyNamed' |
-    'PathWasDirNotFile' |
-    'PathWasFileNotDir';
+    | 'DirFilesHaveBadData'
+    | 'DirHasTooFewFiles'
+    | 'DirHasTooManyFiles'
+    | 'DirHasInconsistentFileNames'
+    | 'DirHasNoFiles'
+    | 'DirDoesNotExist'
+    | 'DirImproperlyNamed'
+    | 'PathWasDirNotFile'
+    | 'PathWasFileNotDir';
 
 export class OsmRunError extends Error {
     runError: string;
@@ -18,4 +18,3 @@ export class OsmRunError extends Error {
         Object.setPrototypeOf(this, OsmRunError.prototype);
     }
 }
-

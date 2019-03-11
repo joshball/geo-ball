@@ -1,4 +1,4 @@
-import { MapLocation } from "./MapLocation";
+import { MapLocation } from './MapLocation';
 import { UcsdDataFiles, RoadSegmentsFile, IntersectionsFile } from '@geo-ball/ucsd-core';
 
 export const getIntersectionsEx = (): Promise<Array<MapLocation>> => {
@@ -9,7 +9,7 @@ export const getIntersectionsEx = (): Promise<Array<MapLocation>> => {
         new MapLocation('Seattle', [32.8741164, -117.2382689], 'seattle.map'),
     ];
     return Promise.resolve(intersections);
-}
+};
 
 // export const getIntersectionFiles = (): Promise<Array<string>> => {
 //     const dataFiles = new UcsdDataFiles();
@@ -18,18 +18,18 @@ export const getIntersectionsEx = (): Promise<Array<MapLocation>> => {
 //     return Promise.resolve(obfp.map(f => f.rsdJsonFilePath.path));
 // }
 export const getRoadSegmentsFiles = (): Promise<Array<RoadSegmentsFile>> => {
-    console.log('getRoadSegmentsFiles')
+    console.log('getRoadSegmentsFiles');
     const dataFiles = new UcsdDataFiles();
     const obfp = dataFiles.getOsmBasedFilePaths('sugarhouse.2019-01-13_1552.18.osm-data.json');
-    console.log('getRoadSegmentsFiles.d', obfp.length)
+    console.log('getRoadSegmentsFiles.d', obfp.length);
     // const osmRsdFiles = dataFiles.resolveOsmAndRsdFiles('sugarhouse.2019-01-13_1552.18.osm-data.json');
     return Promise.resolve(obfp.map((f: any) => RoadSegmentsFile.Load(f.rsdJsonFilePath.path)));
-}
+};
 
 export const getIntersectionFiles = (): Promise<Array<IntersectionsFile>> => {
-    console.log('getIntersectionFiles')
+    console.log('getIntersectionFiles');
     const dataFiles = new UcsdDataFiles();
     const obfp = dataFiles.getOsmBasedFilePaths('sugarhouse.2019-01-13_1552.18.osm-data.json');
-    console.log('getIntersectionFiles.d', obfp.length)
+    console.log('getIntersectionFiles.d', obfp.length);
     return Promise.resolve(obfp.map((f: any) => IntersectionsFile.Load(f.intJsonFilePath.path)));
-}
+};

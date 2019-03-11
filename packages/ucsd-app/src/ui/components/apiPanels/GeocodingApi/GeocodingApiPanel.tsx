@@ -1,5 +1,10 @@
-import * as React from 'react'
-import { INominatimParams, createNominatimParams, INominatimResult, INominatimQueryParamObj } from '@geo-ball/osm-data';
+import * as React from 'react';
+import {
+    INominatimParams,
+    createNominatimParams,
+    INominatimResult,
+    INominatimQueryParamObj,
+} from '@geo-ball/osm-data';
 // import { ApiPanelLayoutContainer } from '../common/ApiPanelLayoutContainer';
 // import { HeaderContainer } from '../common/HeaderContainer';
 // import { FormContainer } from '../common/FormContainer';
@@ -24,8 +29,6 @@ import { INominatimParams, createNominatimParams, INominatimResult, INominatimQu
 //     }
 // });
 
-
-
 export interface IReverseGeocodingApiPanelProps {
     formData: INominatimParams;
 }
@@ -40,8 +43,10 @@ export interface IReverseGeocodingApiPanelState {
     debugFormix: any;
 }
 
-export class GeocodingApiPanel extends React.Component<IReverseGeocodingApiPanelProps, IReverseGeocodingApiPanelState> {
-
+export class GeocodingApiPanel extends React.Component<
+    IReverseGeocodingApiPanelProps,
+    IReverseGeocodingApiPanelState
+> {
     constructor(props: IReverseGeocodingApiPanelProps) {
         super(props);
 
@@ -76,7 +81,6 @@ export class GeocodingApiPanel extends React.Component<IReverseGeocodingApiPanel
         });
     }
 
-
     fetchIt(): Promise<Array<INominatimResult>> {
         console.log('MAKE REQUEST');
         return;
@@ -98,15 +102,15 @@ export class GeocodingApiPanel extends React.Component<IReverseGeocodingApiPanel
 
     toggleFakeApiCall = (_event: React.SyntheticEvent) => {
         this.setState(prevState => ({ fakeTheApiCall: !prevState.fakeTheApiCall }));
-    }
+    };
 
     toggleFormStatePanel = (_event: React.SyntheticEvent) => {
         this.setState(prevState => ({ showFormStatePanel: !prevState.showFormStatePanel }));
-    }
+    };
 
     toggleParamStatePanel = (_event: React.SyntheticEvent) => {
         this.setState(prevState => ({ showParamStatePanel: !prevState.showParamStatePanel }));
-    }
+    };
 
     getFormikProps = (formikProps: any) => {
         // console.log('XXXformikPropsthis.formikProps', this.formikProps)
@@ -160,8 +164,6 @@ export class GeocodingApiPanel extends React.Component<IReverseGeocodingApiPanel
         // // const debugForm = this.state.showDebugForm ? <DebugFormix /> : null;
         // // console.log('FORM DATA:', this.state.formData)
 
-
-
         // // const debugFormContainer = this.state.showFormStatePanel ? <DebugFormix /> : null;
         // console.log('RENDER.state.showFormStatePanel', this.state.showFormStatePanel);
         // console.log('RENDER.state.debugFormix', this.state.debugFormix);
@@ -179,9 +181,6 @@ export class GeocodingApiPanel extends React.Component<IReverseGeocodingApiPanel
         //             {/* <ApiUrlParametersView {...apiUrlParamsView}/> */}
         //             <ApiActionsView {...apiActionView} />
         //         </FormContainer>
-
-
-
 
         //         <ResultsContainer>
         //             {this.state.formikProps}
@@ -218,4 +217,3 @@ export class GeocodingApiPanel extends React.Component<IReverseGeocodingApiPanel
 // );
 
 // const ConnectedDisplayFormikState = formikConnect(DisplayFormikState);
-

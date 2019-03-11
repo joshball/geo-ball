@@ -1,26 +1,25 @@
-import * as React from 'react'
-import { css } from 'glamor'
+import * as React from 'react';
+import { css } from 'glamor';
 import { observer, inject } from 'mobx-react';
 import { RootStore } from '../../stores/RootStore';
 import { FileListComponent } from './FileListComponent';
 import { FileStorageService } from '../../services/FileStorageService';
 
-import { OsmFetchManager, IOsmFetchManager } from "@geo-ball/ucsd-core";
+import { OsmFetchManager, IOsmFetchManager } from '@geo-ball/ucsd-core';
 import { OsmFetchesListComponent } from './OsmFetchesListComponent';
 import { SelectedFetchComponent } from './SelectedFetchComponent';
 import { H5 } from '@blueprintjs/core';
 import { loadOsmFetchManager, getOsmFetchData } from '../../services/OsmService';
 import { OsmFetchDir } from '../../../../../ucsd-core/src/files/fetch/OsmFetchDir';
 
-
 const firstLayout = css({
     display: 'flex',
     flex: '1',
     margin: '10px',
     padding: '10px',
-    overflow: "hidden",
-    justifyContent: "center",
-    alignItems: "center",
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
 });
 
 const mainLayout = css({
@@ -30,8 +29,6 @@ const mainLayout = css({
     gridTemplateColumns: '1fr 1fr 1fr 1fr',
     gridTemplateAreas: 'osm rsd pmf int',
 });
-
-
 
 export interface MapDataFilesComponentProps {
     stores?: RootStore;
@@ -46,11 +43,12 @@ export interface MapDataFilesComponentState {
     error?: Error | undefined;
 }
 
-@inject("stores")
+@inject('stores')
 @observer
-export class MapDataFilesComponent extends React.Component<MapDataFilesComponentProps, MapDataFilesComponentState> {
-
-
+export class MapDataFilesComponent extends React.Component<
+    MapDataFilesComponentProps,
+    MapDataFilesComponentState
+> {
     state: MapDataFilesComponentState;
 
     constructor(props: MapDataFilesComponentProps) {
@@ -59,8 +57,8 @@ export class MapDataFilesComponent extends React.Component<MapDataFilesComponent
         const osmFetchDirPath = this.props.stores!.settings.ucsdAppDataDirMgr.osmFetchDirPath;
 
         this.state = { allOsmFetchDirs: [], osmFetchDirPath };
-        console.log('MapDataFilesComponent.refresh(): osmFetchDirPath', osmFetchDirPath)
-        console.log('MapDataFilesComponent.refresh(): ucsdAppDataPath', ucsdAppDataPath)
+        console.log('MapDataFilesComponent.refresh(): osmFetchDirPath', osmFetchDirPath);
+        console.log('MapDataFilesComponent.refresh(): ucsdAppDataPath', ucsdAppDataPath);
 
         this.refreshFiles();
     }
@@ -68,27 +66,33 @@ export class MapDataFilesComponent extends React.Component<MapDataFilesComponent
     async refreshFiles(): Promise<void> {
         // const readdirCallback: ReadDirCallback = (daPath: string) => FileStorageService.ReadDirWithFullPaths(daPath) as Promise<Array<string>>;
 
-
         // return createMapDataFileSetFromPath(ucsdOsmPath)
         return getOsmFetchData(this.state.osmFetchDirPath)
             .then(osmFetchMgr => {
-
                 console.log('*** osmFetchMgr', osmFetchMgr);
                 console.log('*** osmFetchMgr', osmFetchMgr.osmFetchDirs);
                 osmFetchMgr.osmFetchDirs.map(d => {
-                    console.log(` ${d.fetchDirPath}:`)
-                    d.subFiles.map(sd => console.log(`    - ${sd}`))
-                })
-                console.log('###====================================================================================###')
-                console.log('###====================================================================================###')
+                    console.log(` ${d.fetchDirPath}:`);
+                    d.subFiles.map(sd => console.log(`    - ${sd}`));
+                });
+                console.log(
+                    '###====================================================================================###',
+                );
+                console.log(
+                    '###====================================================================================###',
+                );
 
                 return osmFetchMgr;
             })
             .then(osmFetchMgr => this.setState({ osmFetchMgr }))
             .catch(error => {
-                console.error('MapDataFilesComponent.refreshFiles loadOsmFetchManager ERROR:', error.toString(), error);
-                this.setState({ error })
-            })
+                console.error(
+                    'MapDataFilesComponent.refreshFiles loadOsmFetchManager ERROR:',
+                    error.toString(),
+                    error,
+                );
+                this.setState({ error });
+            });
 
         // return loadOsmFetchManager(this.state.osmFetchDirPath)
         //     .then(osmFetchMgr => {
@@ -127,21 +131,21 @@ export class MapDataFilesComponent extends React.Component<MapDataFilesComponent
     }
 
     handleSearch = (e: any) => {
-        e.preventDefault()
-    }
+        e.preventDefault();
+    };
 
     handleFetchClicked = (selectedFetch: OsmFetchDir) => {
         console.log('selectedFetch:', selectedFetch);
         this.setState({
-            selectedFetchDir: selectedFetch
-        })
-    }
+            selectedFetchDir: selectedFetch,
+        });
+    };
 
     render() {
         const { allOsmFetchDirs, selectedFetchDir, osmFetchDirPath, osmFetchMgr } = this.state;
-        console.log('RENDER: MapDataFilesComponent.osmFetchDirPath', osmFetchDirPath)
-        console.log('RENDER: MapDataFilesComponent.allOsmFetchDirs', allOsmFetchDirs)
-        console.log('RENDER: MapDataFilesComponent.selectedFetchDir', selectedFetchDir)
+        console.log('RENDER: MapDataFilesComponent.osmFetchDirPath', osmFetchDirPath);
+        console.log('RENDER: MapDataFilesComponent.allOsmFetchDirs', allOsmFetchDirs);
+        console.log('RENDER: MapDataFilesComponent.selectedFetchDir', selectedFetchDir);
 
         // const { osmFiles, rsdFiles, intFiles, pmfFiles } = this.getFiles(fileSet);
         // console.log('RENDER: MapDataFilesComponent.osmFiles', osmFiles, rsdFiles, pmfFiles, intFiles)
@@ -151,25 +155,28 @@ export class MapDataFilesComponent extends React.Component<MapDataFilesComponent
         const osmFetchDirs = osmFetchMgr ? osmFetchMgr.osmFetchDirs : [];
         return (
             <div style={mainLayout}>
-                <h1>
-                    MAP DATA FILES
-                </h1>
+                <h1>MAP DATA FILES</h1>
                 <div className={`${firstLayout}`}>
-                    <H5>Data Fetch Directory:&nbsp;&nbsp;&nbsp;<code>{osmFetchDirPath}</code></H5>
+                    <H5>
+                        Data Fetch Directory:&nbsp;&nbsp;&nbsp;<code>{osmFetchDirPath}</code>
+                    </H5>
                 </div>
                 <div className={`${firstLayout}`}>
-                    <OsmFetchesListComponent fetches={osmFetchDirs} fetchClicked={this.handleFetchClicked} />
+                    <OsmFetchesListComponent
+                        fetches={osmFetchDirs}
+                        fetchClicked={this.handleFetchClicked}
+                    />
                     {/* <OsmFetchesListComponent fetches={allOsmFetchDirs} fetchClicked={this.handleFetchClicked} /> */}
-                </div >
+                </div>
                 <SelectedFetchComponent fetch={selectedFetchDir} />
                 <div className={`${mainLayout}`}>
                     {/* <FileListComponent files={osmFiles} title="OpenStreetMap Files" />
                     <FileListComponent files={rsdFiles} title="Road Segment Files" />
                     <FileListComponent files={pmfFiles} title="Point Map Files" />
                     <FileListComponent files={intFiles} title="Intersection Files" /> */}
-                </div >
-            </div >
-        )
+                </div>
+            </div>
+        );
     }
     // getFiles(fileSet: Array<OsmFetchDir>): any {
     //     const osmFiles: Array<string> = [];
@@ -222,4 +229,3 @@ export class MapDataFilesComponent extends React.Component<MapDataFilesComponent
     //     }
     // }
 }
-

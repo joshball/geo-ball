@@ -1,7 +1,7 @@
 import { IState, State } from '../state/State';
-import { CommonStore } from "./CommonStore";
+import { CommonStore } from './CommonStore';
 // import { DataStore } from "./DataStore";
-import { MapLocationStore } from "./MapLocationStore";
+import { MapLocationStore } from './MapLocationStore';
 import { SettingsStore } from './SettingsStore';
 
 export class RootStore {

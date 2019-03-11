@@ -6,14 +6,13 @@ export interface IUcsdAppDataDirState {
     path: string;
 }
 
-
 export class DataState implements IDataState {
     ucsdAppDataDir: IUcsdAppDataDirState;
 
     constructor(ucsdAppDataDir?: IUcsdAppDataDirState | undefined) {
-        this.ucsdAppDataDir = new UcsdAppDataDirState(ucsdAppDataDir
-            ? ucsdAppDataDir.path
-            : UcsdAppDataDirMgr.GetDefaultUcsdAppDataDirPath());
+        this.ucsdAppDataDir = new UcsdAppDataDirState(
+            ucsdAppDataDir ? ucsdAppDataDir.path : UcsdAppDataDirMgr.GetDefaultUcsdAppDataDirPath(),
+        );
         // console.log('DataState() this.ucsdAppDataDir', this.ucsdAppDataDir)
     }
 }

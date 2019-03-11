@@ -1,7 +1,7 @@
-import * as React from 'react'
-import { css } from 'glamor'
-import { colors, fonts, fontSizes, cssProps } from "../config/theme"
-import { Button, Intent } from "@blueprintjs/core";
+import * as React from 'react';
+import { css } from 'glamor';
+import { colors, fonts, fontSizes, cssProps } from '../config/theme';
+import { Button, Intent } from '@blueprintjs/core';
 import { MapExplorerPage } from './MapExplorerPage';
 import { CenteredContent } from '../components/common/layout/CenteredContent';
 import { Text } from '../components/common/layout/Text';
@@ -27,7 +27,7 @@ const STYLE = cssProps({
     fontFamily: fonts.default,
     padding: 0,
     margin: 0,
-})
+});
 
 const LSTYLE = cssProps({
     float: 'right',
@@ -36,12 +36,12 @@ const LSTYLE = cssProps({
     fontFamily: fonts.default,
     padding: 0,
     margin: 0,
-})
+});
 
 const buttonBarCss = cssProps({
     // padding: 0,
     margin: '20px',
-})
+});
 
 export const MapDataFilesPage: React.SFC<any> = (props: any) => {
     console.log('MapDataFilesPage');
@@ -56,7 +56,5 @@ export const MapDataFilesPage: React.SFC<any> = (props: any) => {
             {/* <MapDataFilesComponent /> */}
             <OsmFetchManagerComponent />
         </div>
-    )
-}
-
-
+    );
+};

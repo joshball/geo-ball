@@ -1,6 +1,6 @@
 /// <reference types="node" />
-import { Stats } from "fs";
-import { IGeoFileName, GeoFileName } from "./GeoFileName";
+import { Stats } from 'fs';
+import { IGeoFileName, GeoFileName } from './GeoFileName';
 export interface IGeoFileInfo {
     name: IGeoFileName;
     size: number;

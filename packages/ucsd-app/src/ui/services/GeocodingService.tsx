@@ -2,7 +2,6 @@ import { OpenStreetMapProvider } from 'leaflet-geosearch';
 import { ILatLng } from '@geo-ball/geo-core';
 import { INominatimParams, NominatimApi, INominatimResult } from '@geo-ball/osm-data';
 
-
 // const x = {
 //     "x": "-111.979898461856",
 //     "y": "40.7900661",
@@ -52,7 +51,7 @@ export interface IGeocodeResponse {
 }
 export interface IGeocodeRaw {
     boundingbox: Array<string>;
-    class: string
+    class: string;
     display_name: string;
     icon: string;
     importance: string;
@@ -88,53 +87,49 @@ export interface IReverseGeocodeResponse {
     place_id: string;
 }
 
-
 const provider = new OpenStreetMapProvider();
 
-
 export const geocodeSimpleAddress = async (address: string): Promise<Array<IGeocodeResponse>> => {
-    console.log('geocodeSimpleAddress')
-    return provider.search({ query: address })
-        .then((json: Array<IGeocodeResponse>) => {
-            console.log('Array<IGeocodeResponse>:', json)
-            return json;
-        });
-}
-export const geocodeAddress = async (params: INominatimParams): Promise<Array<INominatimResult>> => {
-    console.log('geocodeAddress')
+    console.log('geocodeSimpleAddress');
+    return provider.search({ query: address }).then((json: Array<IGeocodeResponse>) => {
+        console.log('Array<IGeocodeResponse>:', json);
+        return json;
+    });
+};
+export const geocodeAddress = async (
+    params: INominatimParams,
+): Promise<Array<INominatimResult>> => {
+    console.log('geocodeAddress');
 
-    return NominatimApi.search(params)
-        .then((json: Array<INominatimResult>) => {
-            console.log('Array<INominatimResult>:', json)
-            return json;
-        });
-
-}
+    return NominatimApi.search(params).then((json: Array<INominatimResult>) => {
+        console.log('Array<INominatimResult>:', json);
+        return json;
+    });
+};
 
 export const reverseGeocodeLocation = async (p: ILatLng): Promise<IReverseGeocodeResponse> => {
-    console.log('reverseGeocodeLocation')
+    console.log('reverseGeocodeLocation');
     const paramString = getParamString({
         format: 'json',
         lat: p.lat,
         lon: p.lng,
-        addressDetails: 1
+        addressDetails: 1,
     });
     const url = `https://nominatim.openstreetmap.org/reverse?${paramString}`;
-    console.log('url:', url)
+    console.log('url:', url);
     return fetch(url)
-        .then((response) => {
-            console.log('resp:', response)
+        .then(response => {
+            console.log('resp:', response);
             return response.json();
         })
         .then((json: IReverseGeocodeResponse) => {
-            console.log('json:', json)
+            console.log('json:', json);
             return json;
         });
-}
-
+};
 
 const getParamString = (params: any): string => {
-    return Object.keys(params).map(key =>
-        `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`,
-    ).join('&');
-}
+    return Object.keys(params)
+        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+        .join('&');
+};

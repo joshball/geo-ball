@@ -1,6 +1,6 @@
-import * as React from 'react'
-import { css } from 'glamor'
-import { H1 } from "@blueprintjs/core";
+import * as React from 'react';
+import { css } from 'glamor';
+import { H1 } from '@blueprintjs/core';
 import { CenteredContent } from '../components/common/layout/CenteredContent';
 import { UcsdAppDataDirSettingsComponent } from '../components/settings/UcsdAppDataDirSettingsComponent';
 
@@ -14,6 +14,5 @@ export const SettingsPage: React.SFC<any> = () => {
             <H1>Settings</H1>
             <UcsdAppDataDirSettingsComponent />
         </CenteredContent>
-    )
-}
-
+    );
+};

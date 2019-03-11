@@ -7,7 +7,13 @@ export interface IGeoFileName {
     segments: IGeoFileNameSegments;
     error: OsmRunError | undefined;
 }
-export declare type GeoFileType = 'UNKNOWN' | 'INTERSECTIONS' | 'POINT_MAP' | 'ROAD_SEGMENTS' | 'OSM_DOWNLOAD' | 'OSM_QUERY';
+export declare type GeoFileType =
+    | 'UNKNOWN'
+    | 'INTERSECTIONS'
+    | 'POINT_MAP'
+    | 'ROAD_SEGMENTS'
+    | 'OSM_DOWNLOAD'
+    | 'OSM_QUERY';
 export interface IGeoFileNameSegments {
     name: string;
     date: Date;
@@ -25,7 +31,7 @@ export declare class GeoFileName implements IGeoFileName {
     static ParseGeoFileName: (split: string[]) => IGeoFileNameSegments;
     static GetGeoFileNameInterfaceFromPath: (path: string) => IGeoFileName;
 }
-export declare const FILE_DATE_STR = "YYY-MM-DD_HHmmss";
+export declare const FILE_DATE_STR = 'YYY-MM-DD_HHmmss';
 export declare const fileDateStrToDate: (dateString: string) => Date;
 export declare const dataTypeStrToDataType: (dataStr: string) => GeoFileDataType;
 export declare const geoFileTypeStrToGeoType: (typeString: string) => GeoFileType;

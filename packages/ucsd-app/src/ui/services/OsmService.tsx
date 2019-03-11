@@ -1,5 +1,5 @@
 import { CHANNELS } from '../../background/index.new';
-import ipc from "../../background/better-ipc";
+import ipc from '../../background/better-ipc';
 import { IDownloadOsmParams, IDownloadOsmResult } from '../../background/bg-ucsd';
 import { remote, BrowserWindow } from 'electron';
 import { OsmFetchManager, IOsmFetchDir, OsmFetchData, IOsmFetchManager } from '@geo-ball/ucsd-core';
@@ -11,7 +11,7 @@ if (!backgroundWindow) {
 }
 
 export interface OsmFetches {
-    osmFetchDirs:Array<IOsmFetchDir>
+    osmFetchDirs: Array<IOsmFetchDir>;
 }
 
 export const getOsmFetchData = async (_path: string): Promise<IOsmFetchManager> =>

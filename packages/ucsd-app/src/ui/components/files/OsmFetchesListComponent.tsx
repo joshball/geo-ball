@@ -18,18 +18,19 @@ export interface OsmFetchesListComponentState {
     selected: string;
 }
 
-
 export const outerBoxCss = css({
     margin: '10px',
     padding: '10px',
     borderRadius: '6px',
     backgroundColor: '#ebf1f5',
-})
+});
 
-
-@inject("stores")
+@inject('stores')
 @observer
-export class OsmFetchesListComponent extends React.Component<OsmFetchesListComponentProps, OsmFetchesListComponentState> {
+export class OsmFetchesListComponent extends React.Component<
+    OsmFetchesListComponentProps,
+    OsmFetchesListComponentState
+> {
     state: OsmFetchesListComponentState = {
         selected: '',
     };
@@ -41,7 +42,9 @@ export class OsmFetchesListComponent extends React.Component<OsmFetchesListCompo
             <div className={`${outerBoxCss}`}>
                 <H3>OSM Fetches</H3>
                 <div>
-                    {fetches.map((f, i) => <OsmFetchComponent key={i} fetch={f} fetchClicked={fetchClicked} />)}
+                    {fetches.map((f, i) => (
+                        <OsmFetchComponent key={i} fetch={f} fetchClicked={fetchClicked} />
+                    ))}
                 </div>
             </div>
         );

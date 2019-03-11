@@ -4,7 +4,6 @@
 // import { FileStorageService } from '../services/FileStorageService';
 // import { DataDirectory } from '../models/DataDirectory';
 
-
 // export class DataStore {
 //     state!: IState
 //     // FSS: FileStorageService;
@@ -62,8 +61,4 @@
 // //     }
 // // }
 
-
 // // const ucsdDataFiles = new UcsdDataFiles(managed);
-
-
-

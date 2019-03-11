@@ -1,22 +1,23 @@
-import * as React from 'react'
+import * as React from 'react';
 import { v4 as uuid } from 'uuid';
 import { Intent, Button } from '@blueprintjs/core';
 import { css } from 'glamor';
-
 
 export interface IDirectoryChooserButtonComponentProps {
     /**
      * onFileInputDirectorySelected callback
      * It is called when a directory is selected by the user
      */
-    onFileInputDirectorySelected: (file: File) => void
+    onFileInputDirectorySelected: (file: File) => void;
 }
 
-export class DirectoryChooserButtonComponent extends React.Component<IDirectoryChooserButtonComponentProps> {
+export class DirectoryChooserButtonComponent extends React.Component<
+    IDirectoryChooserButtonComponentProps
+> {
     fileInputRef: React.RefObject<any>;
     fileInputId: string;
     inputFileCss: any;
-    inputFileProps: { webkitdirectory: string; };
+    inputFileProps: { webkitdirectory: string };
 
     constructor(props: IDirectoryChooserButtonComponentProps) {
         super(props);
@@ -33,8 +34,8 @@ export class DirectoryChooserButtonComponent extends React.Component<IDirectoryC
 
     onClick(event: any) {
         event.preventDefault();
-        console.log('this.fileInput.current', this.fileInputRef)
-        this.fileInputRef.current.click()
+        console.log('this.fileInput.current', this.fileInputRef);
+        this.fileInputRef.current.click();
     }
 
     onFileInputChange(event: any) {
@@ -50,9 +51,12 @@ export class DirectoryChooserButtonComponent extends React.Component<IDirectoryC
         return (
             <div>
                 <label htmlFor={this.fileInputId}>
-                    <Button icon="folder-open" intent={Intent.PRIMARY} onClick={this.onClick}>Select Dir</Button>
+                    <Button icon="folder-open" intent={Intent.PRIMARY} onClick={this.onClick}>
+                        Select Dir
+                    </Button>
                 </label>
-                <input type='file'
+                <input
+                    type="file"
                     {...this.inputFileCss}
                     {...this.inputFileProps}
                     id={this.fileInputId}

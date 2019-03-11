@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'react';
 import { Formik, Form, Field, FormikConsumer } from 'formik';
 import { Card, Elevation, Button, Intent, Switch } from '@blueprintjs/core';
 import { GetNomantimSearchAddressSection as GetNomantimSearchAddressForm } from '../nominatim/ApiAddressForm';
@@ -12,10 +12,8 @@ import { INominatimParams } from '@geo-ball/osm-data';
 
 const JDR = styles.justifyRight;
 
-
 // Some examples of wrapping here with Office stuff
 // https://github.com/vadistic/vats/blob/b7c9e08eb45d7fd94af477575adea04df5e06aca/packages/client/src/components/editable/formik.tsx
-
 
 export interface IGeocodingApiFormState {
     formData: INominatimParams;
@@ -29,7 +27,10 @@ export interface IGeocodingApiFormProps {
     showFormStatePanel: boolean;
 }
 
-export class GeocodingApiForm extends React.Component<IGeocodingApiFormProps, IGeocodingApiFormState> {
+export class GeocodingApiForm extends React.Component<
+    IGeocodingApiFormProps,
+    IGeocodingApiFormState
+> {
     state: IGeocodingApiFormState;
 
     constructor(props: IGeocodingApiFormProps) {
@@ -41,14 +42,12 @@ export class GeocodingApiForm extends React.Component<IGeocodingApiFormProps, IG
         };
     }
 
-    componentWillUpdate() {
-
-    }
-    cb = (formikProps:any) => {
+    componentWillUpdate() {}
+    cb = (formikProps: any) => {
         console.log('cb.formikProps', formikProps);
         console.log('cb.formikProps', formikProps.values.query.stringQuery.q);
-        this.props.getFormikProps(formikProps)
-    }
+        this.props.getFormikProps(formikProps);
+    };
     render() {
         const mainQueryStyle = css({
             display: 'flex',
@@ -87,13 +86,17 @@ export class GeocodingApiForm extends React.Component<IGeocodingApiFormProps, IG
         return (
             <Formik initialValues={this.state.formData} onSubmit={this.props.onSubmit}>
                 {/* {({ values, isSubmitting, setFieldValue, handleBlur }) => ( */}
-                {(formikProps) => {
+                {formikProps => {
                     this.cb(formikProps);
-                    const x = <FormikConsumer>{(p) => {
-                        console.log('p', p);
-                        console.log('p', p.values.query.stringQuery.q);
-                        return null;
-                    }}</FormikConsumer>
+                    const x = (
+                        <FormikConsumer>
+                            {p => {
+                                console.log('p', p);
+                                console.log('p', p.values.query.stringQuery.q);
+                                return null;
+                            }}
+                        </FormikConsumer>
+                    );
                     // console.log('formiksProps', formikProps)
                     // console.log('formiksProps', JSON.stringify(formikProps, null, 4))
                     // this.props.getFormikProps(formikProps, <DebugFormix/>)
@@ -106,13 +109,21 @@ export class GeocodingApiForm extends React.Component<IGeocodingApiFormProps, IG
                                         <Card interactive={false} elevation={Elevation.TWO}>
                                             {GetNomantimSearchAddressForm(formikProps)}
                                             <div style={JDR}>
-                                                <Button intent={Intent.PRIMARY} type="submit">Submit</Button>
+                                                <Button intent={Intent.PRIMARY} type="submit">
+                                                    Submit
+                                                </Button>
                                             </div>
                                         </Card>
                                     </div>
                                     <div {...mainSettingsStyle}>
-                                        <Card style={{ width: '100%' }} interactive={false} elevation={Elevation.TWO}>
-                                            <SectionHeaderTwo style={{ marginBottom: "15px" }}>Settings</SectionHeaderTwo>
+                                        <Card
+                                            style={{ width: '100%' }}
+                                            interactive={false}
+                                            elevation={Elevation.TWO}
+                                        >
+                                            <SectionHeaderTwo style={{ marginBottom: '15px' }}>
+                                                Settings
+                                            </SectionHeaderTwo>
                                             {GetNomantimSettingsForm()}
 
                                             <SectionHeaderThree>Toggles</SectionHeaderThree>
@@ -123,9 +134,9 @@ export class GeocodingApiForm extends React.Component<IGeocodingApiFormProps, IG
                             </Card>
                             {debugForm}
                         </Form>
-
-                    )
+                    );
                 }}
-            </Formik>);
+            </Formik>
+        );
     }
 }

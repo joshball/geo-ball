@@ -1,8 +1,6 @@
-
 import { IGeocodeResponse } from '../services/GeocodingService';
 import { LatLngBounds, ILatLng, ILatLngBounds } from '@geo-ball/geo-core';
 import { observable, decorate } from 'mobx';
-
 
 // ==========================================================================
 //          DEFAULT STATE
@@ -11,7 +9,7 @@ import { observable, decorate } from 'mobx';
 const defaultState: IMapExplorerState = {
     location: {
         zoom: 19,
-        center: { lat: 40.716847, lng: -111.850494 }
+        center: { lat: 40.716847, lng: -111.850494 },
     },
     display: {
         bounds: null,
@@ -21,16 +19,12 @@ const defaultState: IMapExplorerState = {
     address: {
         selectedAddress: null,
         geoSearchResults: [],
-    }
-}
-
-
-
+    },
+};
 
 // ==========================================================================
 //              MapExplorerState
 // ==========================================================================
-
 
 export interface IMapExplorerState {
     location: IMapLocState;
@@ -55,21 +49,14 @@ decorate(MapExplorerState, {
     address: observable,
 });
 
-
-
-
-
-
 // ==========================================================================
 //              MapLocState
 // ==========================================================================
-
 
 export interface IMapLocState {
     zoom: number;
     center: ILatLng;
 }
-
 
 export class MapLocState implements IMapLocState {
     zoom: number;
@@ -85,11 +72,9 @@ decorate(MapLocState, {
     center: observable,
 });
 
-
 // ==========================================================================
 //              MapAddressState
 // ==========================================================================
-
 
 export interface IMapAddressState {
     selectedAddress: IGeocodeResponse | null;
@@ -111,12 +96,9 @@ decorate(MapAddressState, {
     geoSearchResults: observable,
 });
 
-
-
 // ==========================================================================
 //              MapDisplayState
 // ==========================================================================
-
 
 export interface IMapDisplayState {
     bounds: ILatLngBounds | null;
@@ -140,6 +122,3 @@ decorate(MapDisplayState, {
     clickPos: observable,
     mousePos: observable,
 });
-
-
-

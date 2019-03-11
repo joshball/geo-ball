@@ -4,28 +4,27 @@
 // It is responsible for launching a renderer window.
 
 // https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&client=YOUR_CLIENT_ID&signature=SIGNATURE
-import { app, dialog, ipcMain, BrowserWindow } from "electron"
-import { createUiWindow } from "./ui-renderer-window"
-import { createBackgroundWindow } from "./background-renderer-window"
-import { loadURL } from "./load-url"
-import * as log from "electron-log"
-import * as isDev from "electron-is-dev"
-import { createUpdater } from ".//updater"
-import { createMenu } from "./menu"
+import { app, dialog, ipcMain, BrowserWindow } from 'electron';
+import { createUiWindow } from './ui-renderer-window';
+import { createBackgroundWindow } from './background-renderer-window';
+import { loadURL } from './load-url';
+import * as log from 'electron-log';
+import * as isDev from 'electron-is-dev';
+import { createUpdater } from './/updater';
+import { createMenu } from './menu';
 // import { promisify } from "util"
 // import fs from "fs"
-import { UcsdDataFiles } from "@geo-ball/ucsd-core";
-import { resolve, join } from "path";
+import { UcsdDataFiles } from '@geo-ball/ucsd-core';
+import { resolve, join } from 'path';
 import * as ipc from 'electron-better-ipc';
 import { promises } from 'fs';
 
 // const stat = promisify(fs.stat)
-const appPath = app.getAppPath()
-
+const appPath = app.getAppPath();
 
 // set proper logging level
-log.transports.file.level = isDev ? false : "info"
-log.transports.console.level = isDev ? "debug" : false
+log.transports.file.level = isDev ? false : 'info';
+log.transports.console.level = isDev ? 'debug' : false;
 
 declare global {
     namespace NodeJS {
@@ -34,25 +33,24 @@ declare global {
             uiWindow: null | Electron.BrowserWindow;
         }
     }
-
 }
 
 global.uiWindow = null;
 global.backgroundWindow = null;
 // let uiWindow: Electron.BrowserWindow
 // let backgroundWindow: Electron.BrowserWindow
-let showStorybook = false
+let showStorybook = false;
 
 // usually we'd just use __dirname here, however, the FuseBox
 // bundler rewrites that, so we have to get it from Electron.
 
 // fires when Electron is ready to start
-app.on("ready", () => {
+app.on('ready', () => {
     // // tslint:disable-next-line:no-unused-expression
     // new BrowserWindow({ show: false, });
     // // tslint:disable-next-line:no-unused-expression
     // new BrowserWindow({ show: false, });
-    global.uiWindow = createUiWindow(appPath)
+    global.uiWindow = createUiWindow(appPath);
 
     // // tslint:disable-next-line:no-unused-expression
     // new BrowserWindow({ show: false, });
@@ -68,7 +66,7 @@ app.on("ready", () => {
     // new BrowserWindow({ show: false, });
     global.backgroundWindow = createBackgroundWindow(appPath);
 
-    createMenu(global.uiWindow)
+    createMenu(global.uiWindow);
 
     if (isDev) {
         // global.uiWindow.webContents.on("did-fail-load", () => {
@@ -78,11 +76,10 @@ app.on("ready", () => {
         //     )
         // })
 
-        ipcMain.on("storybook-toggle", () => {
-            showStorybook = !showStorybook
-            loadURL(global.uiWindow!, appPath, "ui-renderer.html", showStorybook)
-        })
-
+        ipcMain.on('storybook-toggle', () => {
+            showStorybook = !showStorybook;
+            loadURL(global.uiWindow!, appPath, 'ui-renderer.html', showStorybook);
+        });
     }
 
     // ipc.answerRenderer('main.AR.lstat', async (appRelPath: string) => {
@@ -96,10 +93,7 @@ app.on("ready", () => {
 });
 
 // fires when all windows are closed
-app.on("window-all-closed", app.quit)
+app.on('window-all-closed', app.quit);
 
 // setup the auto-updater
-createUpdater(app)
-
-
-
+createUpdater(app);

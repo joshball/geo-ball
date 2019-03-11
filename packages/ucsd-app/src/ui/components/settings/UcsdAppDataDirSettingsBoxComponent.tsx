@@ -1,28 +1,25 @@
-import * as React from 'react'
-import { css } from 'glamor'
+import * as React from 'react';
+import { css } from 'glamor';
 import { Button, Intent, H3, ButtonGroup, H5 } from '@blueprintjs/core';
 import { DirectoryChooserButtonComponent } from '../common/input/DirectoryChooserButtonComponent';
 import { SaveCancelHideButtonComponent } from '../common/input/SaveCancelHideButtonComponent';
-
-
-
 
 const dirSettingsBoxCss = css({
     minWidth: '600px',
     border: 'thick double #6B8790',
     margin: '10px auto',
     padding: '20px',
-    overflow: 'hidden'
-})
+    overflow: 'hidden',
+});
 
 const settingsHeaderRowCss = css({
     alignItems: 'center',
     maxWidth: '600px',
-})
+});
 
 const settingsSubHeaderRowCss = css({
     alignItems: 'center',
-})
+});
 
 const settingsStaticValueCss = css({
     backgroundColor: '#E1949430',
@@ -33,7 +30,7 @@ const settingsStaticValueCss = css({
     marginBottom: '10px',
     // height: '3em',
     fontSize: '1em',
-})
+});
 const settingsDynamicValueCss = css({
     backgroundColor: '#B0D9CD20',
     // fontFamily: "'Inconsolata', monospace",
@@ -43,7 +40,7 @@ const settingsDynamicValueCss = css({
     marginBottom: '10px',
     height: '3em',
     fontSize: '1em',
-})
+});
 
 const settingButtonsRowCss = css({
     display: 'flex',
@@ -53,24 +50,19 @@ const settingButtonsRowCss = css({
     alignItems: 'center',
     marginTop: '10px',
     marginBottom: '20px',
-})
+});
 const buttonSpaceCss = css({
     marginLeft: '20px',
-})
-
-
+});
 
 export interface UcsdAppDataDirSettingsBoxProps {
-
     geoballDirName: string;
     geoballDirRootPath: string;
     geoballDirPath: string;
 
-
     setFolderBrowse: (event: any) => void;
     setFolderHome: () => void;
     setFolderAppUserData: () => void;
-
 
     /**
      * When a setting has changed on this page, it becomes dirty
@@ -91,22 +83,24 @@ export interface UcsdAppDataDirSettingsBoxProps {
     onFileInputDirectorySelected: (file: File) => void;
 }
 
-export const UcsdAppDataDirSettingsBoxComponent: React.SFC<UcsdAppDataDirSettingsBoxProps> = (props: UcsdAppDataDirSettingsBoxProps) => {
+export const UcsdAppDataDirSettingsBoxComponent: React.SFC<UcsdAppDataDirSettingsBoxProps> = (
+    props: UcsdAppDataDirSettingsBoxProps,
+) => {
     const saveButton = <SaveCancelHideButtonComponent {...props} />;
     return (
         <div {...dirSettingsBoxCss}>
             <div {...settingsHeaderRowCss}>
                 <H3>Managed Data</H3>
                 <p className={'bp3-running-text'}>
-                    When you download OpenStreetMap data from the servers, that data is placed in
-                    a managed directory. We parse that data into other meta data formats and use
-                    it for the graph algorithms. The data is stored with precise filenames to keep
+                    When you download OpenStreetMap data from the servers, that data is placed in a
+                    managed directory. We parse that data into other meta data formats and use it
+                    for the graph algorithms. The data is stored with precise filenames to keep
                     allow us to move it through its different stages.
                 </p>
                 <p className={'bp3-running-text'}>
                     By default, we also store the data in a directory named <code>.geo-ball</code>.
-                    You can adjust that here as well, but note that any path you select will
-                    append that value to that directory.
+                    You can adjust that here as well, but note that any path you select will append
+                    that value to that directory.
                 </p>
             </div>
             <div {...settingsSubHeaderRowCss}>
@@ -116,10 +110,10 @@ export const UcsdAppDataDirSettingsBoxComponent: React.SFC<UcsdAppDataDirSetting
                     We don't recommend you change this, but if you need to, here you go.
                 </p>
                 <p {...settingsDynamicValueCss}>
-                    <Button style={{ marginRight: '20px' }} intent={Intent.PRIMARY}>Edit</Button>
-                    <code>
-                        {props.geoballDirName}
-                    </code>
+                    <Button style={{ marginRight: '20px' }} intent={Intent.PRIMARY}>
+                        Edit
+                    </Button>
+                    <code>{props.geoballDirName}</code>
                 </p>
             </div>
 
@@ -129,16 +123,23 @@ export const UcsdAppDataDirSettingsBoxComponent: React.SFC<UcsdAppDataDirSetting
                     Where the UCSD Managed Data Directory is stored
                 </p>
                 <p {...settingsDynamicValueCss}>
-                    <code>
-                        {props.geoballDirRootPath}
-                    </code>
+                    <code>{props.geoballDirRootPath}</code>
                 </p>
             </div>
             <div {...settingButtonsRowCss}>
                 <ButtonGroup>
                     <DirectoryChooserButtonComponent {...props} />
-                    <Button {...buttonSpaceCss} intent={Intent.SUCCESS} icon="home" onClick={props.setFolderHome} >Home Dir</Button>
-                    <Button intent={Intent.SUCCESS} icon="box" onClick={props.setFolderAppUserData} >Application User Data Dir</Button>
+                    <Button
+                        {...buttonSpaceCss}
+                        intent={Intent.SUCCESS}
+                        icon="home"
+                        onClick={props.setFolderHome}
+                    >
+                        Home Dir
+                    </Button>
+                    <Button intent={Intent.SUCCESS} icon="box" onClick={props.setFolderAppUserData}>
+                        Application User Data Dir
+                    </Button>
                 </ButtonGroup>
             </div>
 
@@ -147,14 +148,11 @@ export const UcsdAppDataDirSettingsBoxComponent: React.SFC<UcsdAppDataDirSetting
                 <p className={'bp3-running-text'}>
                     This is the final constructed path of the data directory.
                 </p>
-                <p  {...settingsStaticValueCss}>
-                    <code>
-                        {props.geoballDirPath}
-                    </code>
+                <p {...settingsStaticValueCss}>
+                    <code>{props.geoballDirPath}</code>
                 </p>
             </div>
             {saveButton}
         </div>
-    )
-}
-
+    );
+};

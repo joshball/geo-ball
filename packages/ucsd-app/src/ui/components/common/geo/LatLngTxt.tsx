@@ -1,14 +1,13 @@
-import * as React from 'react'
-import { css, StyleAttribute } from 'glamor'
-import { LatLngLiteral as LeafLatLngLiteral} from 'leaflet';
+import * as React from 'react';
+import { css, StyleAttribute } from 'glamor';
+import { LatLngLiteral as LeafLatLngLiteral } from 'leaflet';
 import { LatLng, LatLngQuickFmt, ILatLngFmt } from '@geo-ball/geo-core';
 
 const outerBoxCss = css({
     // height: '100%',
     // width: '100%',
     // margin: '0 auto',
-})
-
+});
 
 export interface LatLngTxtProps {
     llt?: LeafLatLngLiteral | null;
@@ -19,21 +18,23 @@ export interface LatLngTxtProps {
 export const LatLngTxt: React.SFC<LatLngTxtProps> = (props: LatLngTxtProps) => {
     // const [lat, lon] = props.llt;
     if (props.llt) {
-        const latLngFmt = props.latLngQuickFmt ? { quickFmt: props.latLngQuickFmt } : props.latLngFmt || {};
+        const latLngFmt = props.latLngQuickFmt
+            ? { quickFmt: props.latLngQuickFmt }
+            : props.latLngFmt || {};
         const latLngStr = new LatLng(props.llt.lat, props.llt.lng).format(latLngFmt);
         if (latLngStr.indexOf('<') >= 0) {
             return (
-                <span className={`${outerBoxCss}`} dangerouslySetInnerHTML={{__html: latLngStr}}></span>
+                <span
+                    className={`${outerBoxCss}`}
+                    dangerouslySetInnerHTML={{ __html: latLngStr }}
+                />
             );
         }
-        return (
-            <span className={`${outerBoxCss}`}>{latLngStr}</span>
-        );
+        return <span className={`${outerBoxCss}`}>{latLngStr}</span>;
     }
     return null;
-}
+};
 
 export const getLatLngString = (latLng: LatLng, latLngFmt: ILatLngFmt) => {
     return latLng.format(latLngFmt);
-}
-
+};

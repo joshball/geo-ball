@@ -5,7 +5,6 @@ import { LatLng } from '@geo-ball/geo-core';
 import { MapComponent } from './MapComponent';
 import { MapLocation } from '../../services/MapLocation';
 
-
 interface MapContainerState {
     intersections: Array<LatLng>;
 }
@@ -14,9 +13,7 @@ interface MapContainerProps {
     mapLocation: MapLocation;
 }
 
-
 class MapContainer extends React.Component<MapContainerProps, MapContainerState> {
-
     constructor(props: MapContainerProps) {
         super(props);
         this.state = {

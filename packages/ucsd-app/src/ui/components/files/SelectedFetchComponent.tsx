@@ -1,7 +1,7 @@
-import * as React from 'react'
-import { css } from 'glamor'
+import * as React from 'react';
+import { css } from 'glamor';
 import { observer, inject } from 'mobx-react';
-import { colors, fontSizes, fonts } from "../../config/theme"
+import { colors, fontSizes, fonts } from '../../config/theme';
 import { RootStore } from '../../stores/RootStore';
 import { FileComponent } from './FileComponent';
 import { H3 } from '@blueprintjs/core';
@@ -30,8 +30,8 @@ const outerBoxCss = css({
     margin: '10px',
     padding: '10px',
     borderRadius: '6px',
-    backgroundColor:'#8BC34A'
-})
+    backgroundColor: '#8BC34A',
+});
 
 const BaseFileComponent = (title: string, filePath: string) => {
     const backgroundColor = filePath ? '#ebf1f5' : '#FFEB3B50';
@@ -40,41 +40,41 @@ const BaseFileComponent = (title: string, filePath: string) => {
         margin: '10px',
         padding: '10px',
         borderRadius: '6px',
-        backgroundColor
-    })
+        backgroundColor,
+    });
     const name = filePath ? basename(filePath) : 'Missing File';
     return (
         <div className={`${localCss}`}>
             <H3>{title}</H3>
-            <div>
-                {name}
-            </div>
-        </div >
+            <div>{name}</div>
+        </div>
     );
-}
+};
 const BaseFilesComponent = (title: string, filePaths: Array<string>) => {
     if (filePaths && filePaths.length > 0) {
-
         const fileNames = filePaths.map(f => basename(f));
-        const fileDivs = fileNames.map((f,i) => <div key={i}>{f}</div>)
+        const fileDivs = fileNames.map((f, i) => <div key={i}>{f}</div>);
         return (
             <div className={`${outerBoxCss}`}>
                 <H3>{title}</H3>
                 {fileDivs}
-            </div >
+            </div>
         );
     }
     return null;
-}
-const OsmFileComponent = (props: any) => BaseFileComponent("OpenStreetMap Files", props.path);
-const RsdFileComponent = (props: any) => BaseFileComponent("Road Segment Files", props.path);
-const PmfFileComponent = (props: any) => BaseFileComponent("Point Map Files", props.path);
-const IntFileComponent = (props: any) => BaseFileComponent("Intersection Files", props.path);
-const ExtraFileComponent = (props: any) => BaseFilesComponent("Extra Files", props.unknownPaths);
+};
+const OsmFileComponent = (props: any) => BaseFileComponent('OpenStreetMap Files', props.path);
+const RsdFileComponent = (props: any) => BaseFileComponent('Road Segment Files', props.path);
+const PmfFileComponent = (props: any) => BaseFileComponent('Point Map Files', props.path);
+const IntFileComponent = (props: any) => BaseFileComponent('Intersection Files', props.path);
+const ExtraFileComponent = (props: any) => BaseFilesComponent('Extra Files', props.unknownPaths);
 
-@inject("stores")
+@inject('stores')
 @observer
-export class SelectedFetchComponent extends React.Component<SelectedFetchComponentProps, SelectedFetchComponentState> {
+export class SelectedFetchComponent extends React.Component<
+    SelectedFetchComponentProps,
+    SelectedFetchComponentState
+> {
     state: SelectedFetchComponentState = {
         selected: '',
     };

@@ -1,5 +1,5 @@
-import { OsmRunErrorTxt } from "./OsmRunError";
-import { OsmRunFiles } from "./OsmRunFile";
+import { OsmRunErrorTxt } from './OsmRunError';
+import { OsmRunFiles } from './OsmRunFile';
 export declare type OsmRunState = 'Invalid' | 'NotRun' | 'Valid';
 export interface IOsmRunDir {
     name: string;

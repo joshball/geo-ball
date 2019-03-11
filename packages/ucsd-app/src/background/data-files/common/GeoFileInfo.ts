@@ -1,13 +1,10 @@
-import { PathLike, Stats } from "fs";
-import parse = require("date-fns/parse");
-import format = require("date-fns/format");
-import { GeoFileType, IGeoFileName, GeoFileDataType, GeoFileName } from "./GeoFileName";
+import { PathLike, Stats } from 'fs';
+import parse = require('date-fns/parse');
+import format = require('date-fns/format');
+import { GeoFileType, IGeoFileName, GeoFileDataType, GeoFileName } from './GeoFileName';
 import { OsmRunError } from '../osm/OsmRunError';
-import { lstat, readdir } from "../utils/fsp";
-import { join } from "path";
-
-
-
+import { lstat, readdir } from '../utils/fsp';
+import { join } from 'path';
 
 export interface IGeoFileInfo {
     name: IGeoFileName;
@@ -27,7 +24,7 @@ export class GeoFileInfo implements IGeoFileInfo {
     constructor(geoFileName: GeoFileName, stats: Stats) {
         this.name = geoFileName;
         if (!stats.isFile()) {
-            throw new OsmRunError('geoFileName is not a file!', "PathWasDirNotFile")
+            throw new OsmRunError('geoFileName is not a file!', 'PathWasDirNotFile');
         }
 
         this.size = stats.size;
@@ -42,14 +39,12 @@ export class GeoFileInfo implements IGeoFileInfo {
         return new GeoFileInfo(gfn, stats);
     }
 
-
     static async GetGeoFilesFromDir(dirPath: string): Promise<Array<GeoFileInfo>> {
         const files = await readdir(dirPath);
         return Promise.all(
-            files.map((fileName: string) => join(dirPath, fileName))
-                .map((filePath: string) => GeoFileInfo.GetGeoFileInfoFromPath(filePath))
+            files
+                .map((fileName: string) => join(dirPath, fileName))
+                .map((filePath: string) => GeoFileInfo.GetGeoFileInfoFromPath(filePath)),
         );
     }
-
-
 }

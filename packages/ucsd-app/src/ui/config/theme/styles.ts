@@ -1,5 +1,5 @@
-import { CSSProperties } from "react"
-import { fonts } from "./fonts";
+import { CSSProperties } from 'react';
+import { fonts } from './fonts';
 
 /**
  * Typecast objects as CSSProperties.  ¯\\_(ツ)_/¯
@@ -11,10 +11,10 @@ export const cssProps = (props?: CSSProperties): CSSProperties => props as CSSPr
 
 const flexbox = {
     /** Flex the children vertically. */
-    column: cssProps({ display: "flex", flexDirection: "column" }),
+    column: cssProps({ display: 'flex', flexDirection: 'column' }),
 
     /** Flex the children horizontally. */
-    row: cssProps({ display: "flex", flexDirection: "row" }),
+    row: cssProps({ display: 'flex', flexDirection: 'row' }),
 
     /** Grow to the size of our parent. */
     //   flex1: cssProps({ flex: 1 }),
@@ -27,11 +27,11 @@ const flexbox = {
         // flex: 1, => equiv to
         flexGrow: 1,
         flexShrink: 1,
-        flexBasis: 'auto'
+        flexBasis: 'auto',
     }),
     justifyRight: {
         display: 'flex',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
     },
 
     formColumn: {
@@ -39,13 +39,12 @@ const flexbox = {
         margin: '10px',
         padding: '10px',
     },
-
-}
+};
 
 export const BaseFormFont = {
     fontFamily: fonts.forms,
     fontSize: '16px',
-}
+};
 
 export const FormLabelStyle = { ...BaseFormFont, fontSize: '18px' };
 
@@ -53,9 +52,9 @@ const commonSectionHeader = (more: any) => {
     return {
         fontFamily: fonts.forms,
         fontWeight: 700,
-        ...more
-    }
-}
+        ...more,
+    };
+};
 
 export const sectionHeaders = {
     1: commonSectionHeader({ fontSize: '36px' }),
@@ -63,24 +62,23 @@ export const sectionHeaders = {
     3: commonSectionHeader({ fontSize: '24px' }),
     4: commonSectionHeader({ fontSize: '18px' }),
     5: commonSectionHeader({ fontSize: '14px' }),
-}
-
+};
 
 const electron = {
     /** Enable window dragging. */
     // tslint:disable-next-line:no-object-literal-type-assertion
-    windowDrag: cssProps({ WebkitAppRegion: "drag" } as CSSProperties),
+    windowDrag: cssProps({ WebkitAppRegion: 'drag' } as CSSProperties),
     // windowDrag: cssProps({ WebkitAppRegion: "drag" }),
 
     /** Disable window dragging. */
     // tslint:disable-next-line:no-object-literal-type-assertion
-    noWindowDrag: cssProps({ WebkitAppRegion: "no-drag" } as CSSProperties),
-}
+    noWindowDrag: cssProps({ WebkitAppRegion: 'no-drag' } as CSSProperties),
+};
 
 /**
  * Full screen and disable the scrolling.
  */
-const fullScreen = cssProps({ overflow: "hidden", height: "100vh", ...flexbox.column })
+const fullScreen = cssProps({ overflow: 'hidden', height: '100vh', ...flexbox.column });
 
 /**
  * Style presets.
@@ -89,4 +87,4 @@ export const styles = {
     ...flexbox,
     ...electron,
     fullScreen,
-}
+};

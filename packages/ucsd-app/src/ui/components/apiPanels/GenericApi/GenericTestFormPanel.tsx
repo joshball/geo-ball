@@ -1,26 +1,10 @@
-import * as React from "react"
-import {
-    Heading,
-    ApiCallDefinition,
-    HttpUrlParameters,
-    ApiBrowser,
-    IApiBrowserPageStateFormProps,
-    ApiParameters,
-    IHeaderContainerProps,
-    IHttpHeader,
-    InputField,
-    formikField
-} from "@geo-ball/component-lib"
-import {
-    IGenericGetUrlParams,
-    IGenericGetBodyParams,
-    IGenericGetApiResponse,
-} from "./GenericApiService"
+import * as React from 'react';
 
-import {SimpleTypescriptFormContainer, ISimpleFormData} from './Forms/SimpleTypescriptFormComponent';
-import { withFormik, Formik, FormikProps, FormikConfig, FormikActions, Field, FieldProps, FieldAttributes } from "formik"
-
-import { GenericApiParamsFormView, IGenericApiParamsFormProps } from "./Forms/GenericApiParamsFormView"
+import {
+    SimpleTypescriptFormContainer,
+    ISimpleFormData,
+} from './Forms/SimpleTypescriptFormComponent';
+import { FormikConfig, FormikActions } from 'formik';
 
 export interface IGenericTestFormPanelState {}
 
@@ -30,29 +14,29 @@ export class GenericTestFormPanel extends React.Component<
     IGenericTestFormPanelProps,
     IGenericTestFormPanelState
 > {
-    state: IGenericTestFormPanelState
+    state: IGenericTestFormPanelState;
     constructor(props: IGenericTestFormPanelProps) {
-        super(props)
+        super(props);
 
-        this.state = {}
+        this.state = {};
 
-        this.fetchIt = this.fetchIt.bind(this)
-        this.onSubmit = this.onSubmit.bind(this)
+        this.fetchIt = this.fetchIt.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     fetchIt(): Promise<void> {
-        console.log("GenericTestFormPanel.fetchIt()")
-        return Promise.resolve()
+        console.log('GenericTestFormPanel.fetchIt()');
+        return Promise.resolve();
     }
     onSubmit(values: ISimpleFormData, actions: FormikActions<ISimpleFormData>) {
-        console.log("GenericTestFormPanel.onSubmit()", values, actions)
+        console.log('GenericTestFormPanel.onSubmit()', values, actions);
         // console.log("GTFP.onSubmit().values", values)
         // console.log(JSON.stringify(values, null, 4))
         // console.log("GTFP.onSubmit().actions", actions)
         setTimeout(() => {
-            console.log("GTFP.onSubmit().delay. Returning.")
-            actions.setSubmitting(false)
-        }, 1)
+            console.log('GTFP.onSubmit().delay. Returning.');
+            actions.setSubmitting(false);
+        }, 1);
     }
 
     render() {
@@ -71,14 +55,14 @@ export class GenericTestFormPanel extends React.Component<
         // )
         const formikProps: FormikConfig<ISimpleFormData> = {
             initialValues: {
-                firstName: "jared",
+                firstName: 'jared',
                 lastName: '',
-                username: "",
-                email: "jared@foo.com",
-                age: 10
+                username: '',
+                email: 'jared@foo.com',
+                age: 10,
             },
             onSubmit: this.onSubmit,
-        }
+        };
         return (
             <div>
                 {/* <BasicExampleOrig />
@@ -88,23 +72,6 @@ export class GenericTestFormPanel extends React.Component<
                 <BasicExampleWithChildren {...formikProps} /> */}
                 <SimpleTypescriptFormContainer {...formikProps} />
             </div>
-        )
+        );
     }
 }
-
-
-// const GenericApiParamsForm = withFormik<IGenericApiParamsFormProps, IParamFormProps<IGenericGetUrlParams>>({
-//     mapPropsToValues: (props: IGenericApiParamsFormProps) => {
-//         // console.log('GenericApiParamsForm================================');
-//         // // console.log('GenericApiParamsForm.this', this);
-//         // console.log('GenericApiParamsForm.props', props);
-//         // console.log('GenericApiParamsForm.props.formData', props.formData);
-//         // console.log('GenericApiParamsForm.props.formData', { ...props.formData });
-//         return { ...props.formData };
-//     },
-//     handleSubmit: (values: IGenericGetUrlParams, other) => {
-//         console.log('GenericApiParamsForm.SUBMIT: values:', values);
-//         console.log('GenericApiParamsForm.SUBMIT: other:', other);
-//         other.props.onSubmit(values);
-//     }
-// })(GenericApiParamsFormView)

@@ -1,4 +1,3 @@
-
 // ROOT
 //  /osm
 //  /osm/DATE
@@ -11,4 +10,3 @@
 //  /ucsd/DATE/rsd.json
 //  /ucsd/DATE/points.json
 //  /ucsd/DATE/intersections.json
-

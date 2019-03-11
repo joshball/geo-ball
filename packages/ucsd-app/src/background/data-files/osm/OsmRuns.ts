@@ -1,6 +1,6 @@
-import { resolve } from "path";
-import { readdir } from "../utils/fsp";
-import { createOsmRun, IOsmRunDir } from "./OsmRunDir";
+import { resolve } from 'path';
+import { readdir } from '../utils/fsp';
+import { createOsmRun, IOsmRunDir } from './OsmRunDir';
 
 // export interface IOsmFiles {
 //     query: IFileInfo;
@@ -17,7 +17,6 @@ import { createOsmRun, IOsmRunDir } from "./OsmRunDir";
 //     rsd: IFileInfo;
 //     int: IIntFiles;
 // }
-
 
 // export interface IOpenStreetMapDataRun {
 //     name: string;
@@ -57,7 +56,6 @@ export class OsmRuns {
         // const runDirs = await readdir(this.osmRunDirPath);
         // return Promise.all(runDirs.map(fileName => createOsmRun(this.osmRunDirPath, fileName)));
     }
-
 
     fetchRun(_date: Date): IOsmRunDir {
         throw new Error();

@@ -1,6 +1,6 @@
-import * as React from "react";
-import { css } from "glamor";
-import { Button, Intent } from "@blueprintjs/core";
+import * as React from 'react';
+import { css } from 'glamor';
+import { Button, Intent } from '@blueprintjs/core';
 
 export interface SaveCancelHideButtonProps {
     clickCancel: (event: React.MouseEvent<HTMLElement>) => void;
@@ -8,15 +8,23 @@ export interface SaveCancelHideButtonProps {
     saveRequired: boolean;
 }
 
-export const SaveCancelHideButtonComponent: React.SFC<SaveCancelHideButtonProps> = (props: SaveCancelHideButtonProps) => {
+export const SaveCancelHideButtonComponent: React.SFC<SaveCancelHideButtonProps> = (
+    props: SaveCancelHideButtonProps,
+) => {
     // const displayStyle = props.saveRequired ? {} : { display: 'none' };
     console.log('SaveCancelHideButtonComponent props', props);
-    const visibilityStyle = props.saveRequired ? { visibility: 'visible' } : { visibility: 'hidden' };
+    const visibilityStyle = props.saveRequired
+        ? { visibility: 'visible' }
+        : { visibility: 'hidden' };
     const styles = css({ ...visibilityStyle, float: 'right', marginLeft: '20px' });
     return (
         <div>
-            <Button onClick={props.clickSave} {...styles} icon="saved" intent={Intent.SUCCESS}>Make it so!</Button>
-            <Button onClick={props.clickCancel} {...styles} icon="undo" intent={Intent.DANGER}>Cancel</Button>
+            <Button onClick={props.clickSave} {...styles} icon="saved" intent={Intent.SUCCESS}>
+                Make it so!
+            </Button>
+            <Button onClick={props.clickCancel} {...styles} icon="undo" intent={Intent.DANGER}>
+                Cancel
+            </Button>
         </div>
     );
-}
+};

@@ -1,8 +1,7 @@
-import * as React from 'react'
-import { Field, FieldProps } from "formik";
+import * as React from 'react';
+import { Field, FieldProps } from 'formik';
 import { css } from 'glamor';
 import { FormikSwitch } from '../../common/input/FormikWrapped';
-
 
 const toggleItem = css({
     boxSizing: 'border-box',
@@ -28,15 +27,37 @@ const WrappedField = (elem: any) => <div {...toggleItem}>{elem}</div>;
 
 export const getSwitchesFormBox = () => (
     <div {...toggleBox}>
-        {WrappedField(<Field name="toggles.addressdetails" label="Address Details" component={FormikSwitch} />)}
+        {WrappedField(
+            <Field
+                name="toggles.addressdetails"
+                label="Address Details"
+                component={FormikSwitch}
+            />,
+        )}
         {WrappedField(<Field name="toggles.bounded" label="Bounded" component={FormikSwitch} />)}
         {WrappedField(<Field name="toggles.dedupe" label="DeDupe" component={FormikSwitch} />)}
         {WrappedField(<Field name="toggles.debug" label="Debug" component={FormikSwitch} />)}
-        {WrappedField(<Field name="toggles.extratags" label="Extra Tags" component={FormikSwitch} />)}
-        {WrappedField(<Field name="toggles.namedetails" label="Name Details" component={FormikSwitch} />)}
-        {WrappedField(<Field name="toggles.polygon_geojson" label="Polygon GeoJSON" component={FormikSwitch} />)}
-        {WrappedField(<Field name="toggles.polygon_kml" label="Polygon KML" component={FormikSwitch} />)}
-        {WrappedField(<Field name="toggles.polygon_svg" label="Polygon SVG" component={FormikSwitch} />)}
-        {WrappedField(<Field name="toggles.polygon_text" label="Polygon Text" component={FormikSwitch} />)}
+        {WrappedField(
+            <Field name="toggles.extratags" label="Extra Tags" component={FormikSwitch} />,
+        )}
+        {WrappedField(
+            <Field name="toggles.namedetails" label="Name Details" component={FormikSwitch} />,
+        )}
+        {WrappedField(
+            <Field
+                name="toggles.polygon_geojson"
+                label="Polygon GeoJSON"
+                component={FormikSwitch}
+            />,
+        )}
+        {WrappedField(
+            <Field name="toggles.polygon_kml" label="Polygon KML" component={FormikSwitch} />,
+        )}
+        {WrappedField(
+            <Field name="toggles.polygon_svg" label="Polygon SVG" component={FormikSwitch} />,
+        )}
+        {WrappedField(
+            <Field name="toggles.polygon_text" label="Polygon Text" component={FormikSwitch} />,
+        )}
     </div>
 );

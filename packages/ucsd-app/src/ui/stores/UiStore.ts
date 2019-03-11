@@ -29,7 +29,6 @@
 //     // @observable results = []
 //     // @observable selection = 0
 
-
 //     // // HTML
 //     // @observable height = window.innerHeight
 //     // @observable width = window.innerWidth
@@ -74,4 +73,3 @@
 //     //     this.width = window.innerWidth
 //     // }
 // }
-

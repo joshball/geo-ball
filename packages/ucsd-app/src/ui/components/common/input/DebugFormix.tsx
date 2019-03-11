@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { FormikConsumer } from "formik";
+import * as React from 'react';
+import { FormikConsumer } from 'formik';
 
 export const DebugFormix = () => (
     <div
@@ -25,31 +25,28 @@ export const DebugFormix = () => (
             }}
         >
             Formik State
-      </div>
+        </div>
         {/* {({ validationSchema, validate, onSubmit, ...rest }) => ( */}
         <FormikConsumer>
-            {
-                ({ validate, resetForm, ...rest }) => {
-                    console.log('DEBUG:')
-                    // console.log('DEBUG:', validate, resetForm, rest)
-                    // console.log('DEBUG rest...', rest)
-                    // console.log('DEBUG.this:', this)
-                    // console.log('formiksProps', JSON.stringify(formikProps, null, 4))
-                    return (
-                        <pre
-                            style={{
-                                fontSize: '.65rem',
-                                height: '500px',
-                                padding: '.25rem .5rem',
-                                overflowX: 'scroll',
-                            }}
-                        >
-                            {/* {JSON.stringify(rest, null, 2)} */}
-                        </pre>
-                    )
-                }
-            }
+            {({ validate, resetForm, ...rest }) => {
+                console.log('DEBUG:');
+                // console.log('DEBUG:', validate, resetForm, rest)
+                // console.log('DEBUG rest...', rest)
+                // console.log('DEBUG.this:', this)
+                // console.log('formiksProps', JSON.stringify(formikProps, null, 4))
+                return (
+                    <pre
+                        style={{
+                            fontSize: '.65rem',
+                            height: '500px',
+                            padding: '.25rem .5rem',
+                            overflowX: 'scroll',
+                        }}
+                    >
+                        {/* {JSON.stringify(rest, null, 2)} */}
+                    </pre>
+                );
+            }}
         </FormikConsumer>
     </div>
 );
-

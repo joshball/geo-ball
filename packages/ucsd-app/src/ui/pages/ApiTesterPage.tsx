@@ -1,64 +1,64 @@
-import * as React from "react"
-import { Colors } from "@blueprintjs/core"
-import { createRouteCoreData, IRouteCoreData } from "../config/routes"
-import { GeocodingApiPanel } from "../components/apiPanels/GeocodingApi"
+import * as React from 'react';
+import { Colors } from '@blueprintjs/core';
+import { createRouteCoreData, IRouteCoreData } from '../config/routes';
+import { GeocodingApiPanel } from '../components/apiPanels/GeocodingApi';
 // import { ReverseGeocodingApiPanel } from '../components/apiPanels/ReverseGeocodingApiPanel';
-import { OsmDownalodApiPanel } from "../components/apiPanels/OsmDownalodApiPanel"
-import { Redirect, Switch, Route } from "react-router"
-import { Link } from "react-router-dom"
-import { GenericApiPanel, GenericTestFormPanel } from "../components/apiPanels/GenericApi"
-import { Tabs, Pane } from "@geo-ball/component-lib"
+import { OsmDownalodApiPanel } from '../components/apiPanels/OsmDownalodApiPanel';
+import { Redirect, Switch, Route } from 'react-router';
+import { Link } from 'react-router-dom';
+import { GenericApiPanel, GenericTestFormPanel } from '../components/apiPanels/GenericApi';
+import { Tabs, Pane } from '@geo-ball/component-lib';
 
-const styles: any = {}
+const styles: any = {};
 
 styles.tabBarDiv = {
-    display: "block",
+    display: 'block',
     backgroundColor: Colors.LIGHT_GRAY1,
-}
+};
 
 styles.tabBarUl = {
     padding: 0,
     margin: 0,
     //   position: 'absolute',
     top: 0,
-    height: "50px",
-    width: "100%",
-    display: "flex",
-}
+    height: '50px',
+    width: '100%',
+    display: 'flex',
+};
 
 styles.tabLink = {
     color: Colors.BLACK,
-    fontFamily: "sans-serif",
-}
+    fontFamily: 'sans-serif',
+};
 
 styles.tabListItem = {
-    textAlign: "center",
+    textAlign: 'center',
     flex: 1,
-    listStyleType: "none",
-    padding: "15px",
-}
+    listStyleType: 'none',
+    padding: '15px',
+};
 
 export const ApiTesterPage = (params: any) => {
-    console.log("ApiTesterPage.params", params)
+    console.log('ApiTesterPage.params', params);
     // console.log("params.match", params.match)
     // console.log("params.location", params.location)
     const routes: Array<IRouteCoreData> = [
-        createRouteCoreData(params.match.url + "/geocode", GeocodingApiPanel, {
-            linkLabel: "Geocode API",
+        createRouteCoreData(params.match.url + '/geocode', GeocodingApiPanel, {
+            linkLabel: 'Geocode API',
         }),
         // createRouteCoreData(params.match.url + '/reverse-geocode', ReverseGeocodingApiPanel, { linkLabel: 'Reverse Geocode API'}),
-        createRouteCoreData(params.match.url + "/download", OsmDownalodApiPanel, {
-            linkLabel: "OSM Download API",
+        createRouteCoreData(params.match.url + '/download', OsmDownalodApiPanel, {
+            linkLabel: 'OSM Download API',
         }),
-        createRouteCoreData(params.match.url + "/generic", GenericApiPanel, {
-            linkLabel: "Generic API",
+        createRouteCoreData(params.match.url + '/generic', GenericApiPanel, {
+            linkLabel: 'Generic API',
         }),
-        createRouteCoreData(params.match.url + "/gtf", GenericTestFormPanel, {
-            linkLabel: "Generic Test Form",
+        createRouteCoreData(params.match.url + '/gtf', GenericTestFormPanel, {
+            linkLabel: 'Generic Test Form',
         }),
-    ]
+    ];
 
-    const theRoutes = routes.map((r, i) => r.getRoute(i))
+    const theRoutes = routes.map((r, i) => r.getRoute(i));
 
     // theRoutes.unshift(
     //     <Redirect
@@ -71,15 +71,15 @@ export const ApiTesterPage = (params: any) => {
 
     const theLinks = routes.map((r, i) =>
         r.getListItemNavLink(i, styles.tabListItem, styles.tabLink),
-    )
-    const currentUrl = params.match.url
+    );
+    const currentUrl = params.match.url;
     const urls = {
         base: currentUrl,
         geocode: `${currentUrl}/geocode`,
         download: `${currentUrl}/download`,
         generic: `${currentUrl}/generic`,
         gtf: `${currentUrl}/gtf`,
-    }
+    };
     // console.log("params:", params)
     // console.log("params.match:", params.match)
     // console.log("params.location.pathname:", params.location.pathname)
@@ -88,34 +88,34 @@ export const ApiTesterPage = (params: any) => {
     const maybeRedirect =
         urls.base == params.location.pathname ? (
             <Redirect from={urls.base} to={urls.generic} exact={true} />
-        ) : null
+        ) : null;
     // console.log("theLinks", theLinks)
-    console.log("maybeRedirect", maybeRedirect)
+    console.log('maybeRedirect', maybeRedirect);
     const createTab = (routeTag: string, tabTitle: string, tabs: any) => {
-        const fullRoute = `${currentUrl}/${routeTag}`
-        const isActive = params.location.pathname === fullRoute
+        const fullRoute = `${currentUrl}/${routeTag}`;
+        const isActive = params.location.pathname === fullRoute;
         return (
             <Tabs.Tab isActive={isActive} tab={routeTag} {...tabs}>
                 <Link to={fullRoute}>{tabTitle}</Link>
             </Tabs.Tab>
-        )
-    }
+        );
+    };
     const LinkedTab = (props: any) => {
-        const { routeTag, title, ...tabs } = props
-        const fullRoute = `${currentUrl}/${routeTag}`
-        const isActive = params.location.pathname === fullRoute
+        const { routeTag, title, ...tabs } = props;
+        const fullRoute = `${currentUrl}/${routeTag}`;
+        const isActive = params.location.pathname === fullRoute;
         console.log(
             `  - LinkedTab(${routeTag}, ${fullRoute}) active: ${isActive} loc[${
                 params.location.pathname
             }]`,
-        )
+        );
         return (
             <Tabs.Tab isActive={isActive} tab={routeTag} {...tabs}>
                 <Link to={fullRoute}>{title}</Link>
             </Tabs.Tab>
-        )
-    }
-    console.log("ApiTesterPage.RENDERING")
+        );
+    };
+    console.log('ApiTesterPage.RENDERING');
     // return (
     //     <React.Fragment>
     //         {maybeRedirect}
@@ -171,5 +171,5 @@ export const ApiTesterPage = (params: any) => {
             </div>
             <Switch>{theRoutes}</Switch>
         </div>
-    )
-}
+    );
+};

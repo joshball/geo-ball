@@ -1,4 +1,4 @@
-import { GeoFileInfo } from "../common/GeoFileInfo";
+import { GeoFileInfo } from '../common/GeoFileInfo';
 export declare class OsmRunFiles {
     query: GeoFileInfo;
     download: GeoFileInfo;

@@ -1,3 +1,3 @@
 export interface ICommonState {
-    title: string
+    title: string;
 }

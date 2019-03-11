@@ -1,11 +1,13 @@
-import * as React from 'react'
+import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 import { RootStore } from '../../stores/RootStore';
 import { join, basename, dirname, resolve } from 'path';
 import { remote } from 'electron';
-import { UcsdAppDataDirSettingsBoxComponent, UcsdAppDataDirSettingsBoxProps } from './UcsdAppDataDirSettingsBoxComponent';
+import {
+    UcsdAppDataDirSettingsBoxComponent,
+    UcsdAppDataDirSettingsBoxProps,
+} from './UcsdAppDataDirSettingsBoxComponent';
 import { IUcsdAppDataDirMgr } from '../../models/UcsdAppDataDirMgr';
-
 
 export interface IValidateFolder {
     error: boolean;
@@ -22,11 +24,12 @@ export interface UcsdAppDataDirSettingsState {
     // dataDirectory: IDataDirectory;
 }
 
-
-@inject("stores")
+@inject('stores')
 @observer
-export class UcsdAppDataDirSettingsComponent extends React.Component<UcsdAppDataDirSettingsProps, UcsdAppDataDirSettingsState> {
-
+export class UcsdAppDataDirSettingsComponent extends React.Component<
+    UcsdAppDataDirSettingsProps,
+    UcsdAppDataDirSettingsState
+> {
     state: UcsdAppDataDirSettingsState;
 
     originalDataDirectory: IUcsdAppDataDirMgr;
@@ -57,12 +60,10 @@ export class UcsdAppDataDirSettingsComponent extends React.Component<UcsdAppData
 
         this.validateStateSettings = this.validateStateSettings.bind(this);
 
-
         // FORM BUTTONS
         this.clickSave = this.clickSave.bind(this);
         this.clickCancel = this.clickCancel.bind(this);
         this.saveRequired = this.saveRequired.bind(this);
-
 
         this.onFileInputDirectorySelected = this.onFileInputDirectorySelected.bind(this);
     }
@@ -71,14 +72,14 @@ export class UcsdAppDataDirSettingsComponent extends React.Component<UcsdAppData
         console.log('setDirName', dirName);
         // this.dataDirectory.rootPath = rootPath
         this.setState({
-            dirName
+            dirName,
         });
     }
 
     async setRootPathToDir(rootPath: string) {
         console.log('setRootPathToDir', rootPath);
         this.setState({
-            rootPath
+            rootPath,
         });
     }
 
@@ -86,17 +87,13 @@ export class UcsdAppDataDirSettingsComponent extends React.Component<UcsdAppData
         return Promise.resolve({ error: false, reason: '' });
     }
 
-
     async setFolderBrowse(event: any): Promise<IValidateFolder> {
         event.preventDefault();
         this.setRootPathToDir(event.target.value);
         return Promise.resolve({ error: false, reason: '' });
     }
 
-
     // ================================================================================
-
-
 
     async resetSettings() {
         this.setRootPathToDir(this.originalDataDirectory.rootPath);
@@ -105,28 +102,26 @@ export class UcsdAppDataDirSettingsComponent extends React.Component<UcsdAppData
 
     async setRootPathToUsersHomeDir() {
         const homeDir = remote.app.getPath('home');
-        console.log('setRootPathToUsersHomeDir', homeDir)
+        console.log('setRootPathToUsersHomeDir', homeDir);
         this.setRootPathToDir(homeDir);
     }
 
     async setRootPathToAppUsersDir() {
         const userDataDir = remote.app.getPath('userData');
-        console.log('setRootPathToAppUsersDir', userDataDir)
+        console.log('setRootPathToAppUsersDir', userDataDir);
         this.setRootPathToDir(userDataDir);
     }
 
-
     // ================================================================================
-
 
     async clickCancel(event: React.MouseEvent<HTMLElement>) {
         event.preventDefault();
-        console.log('clickCancel', event)
+        console.log('clickCancel', event);
         this.resetSettings();
     }
     async clickSave(event: React.MouseEvent<HTMLElement>) {
         event.preventDefault();
-        console.log('clickSave', event)
+        console.log('clickSave', event);
         // TODO: offer to create if doesn't exist
         // handle permissions
         this.validateStateSettings();
@@ -140,7 +135,10 @@ export class UcsdAppDataDirSettingsComponent extends React.Component<UcsdAppData
         console.log('this.originalDataDirectory.rootPath', this.originalDataDirectory.rootPath);
         console.log('  this.state.dirName', this.state.dirName);
         console.log('  this.state.rootPath', this.state.rootPath);
-        return this.originalDataDirectory.dirName !== this.state.dirName || this.originalDataDirectory.rootPath !== this.state.rootPath;
+        return (
+            this.originalDataDirectory.dirName !== this.state.dirName ||
+            this.originalDataDirectory.rootPath !== this.state.rootPath
+        );
     }
 
     // ================================================================================
@@ -150,10 +148,9 @@ export class UcsdAppDataDirSettingsComponent extends React.Component<UcsdAppData
      * @param file An HTML File Element
      */
     async onFileInputDirectorySelected(file: File): Promise<void> {
-        console.log('DataDirectorySettings.onFileInputDirectorySelected(file)', file)
+        console.log('DataDirectorySettings.onFileInputDirectorySelected(file)', file);
         this.setRootPathToDir(file.path);
     }
-
 
     render() {
         const { dirName: ucsdDirName, rootPath: ucsdDirRootPath } = this.state;
@@ -175,12 +172,8 @@ export class UcsdAppDataDirSettingsComponent extends React.Component<UcsdAppData
             // decorateSelectedFolder: this.decorateSelectedFolder,
             // validateFolder: this.validateFolder,
             // submitNewFolder: this.submitNewFolder,
-        }
+        };
 
-        return (
-            <UcsdAppDataDirSettingsBoxComponent {...props} />
-        );
+        return <UcsdAppDataDirSettingsBoxComponent {...props} />;
     }
 }
-
-

@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { css } from 'glamor'
+import * as React from 'react';
+import { css } from 'glamor';
 import { observer, inject } from 'mobx-react';
 import { MapComponent } from '../components/map/MapComponent';
 import { AddressSearchComponent } from '../components/map/AddressSearchComponent';
@@ -19,15 +19,13 @@ const sideLayout = css({
     marginLeft: '10px',
 });
 
-
 export interface MapProps {
     stores?: RootStore;
 }
 
-@inject("stores")
+@inject('stores')
 @observer
 export class MapExplorerPage extends React.Component<MapProps> {
-
     render() {
         return (
             <div className={`${mainLayout}`}>
@@ -43,7 +41,6 @@ export class MapExplorerPage extends React.Component<MapProps> {
                     </div>
                 </aside>
             </div>
-        )
+        );
     }
-
 }

@@ -1,22 +1,22 @@
-import * as React from "react"
-import { FormikInputField } from "@geo-ball/component-lib"
+import * as React from 'react';
+import { FormikInputField } from '@geo-ball/component-lib';
 
-import { Form, FormikProps, Field } from "formik"
+import { Form, FormikProps, Field } from 'formik';
 
 export interface IGenericBodyParamsFormValues {
-    query: string
+    query: string;
 }
 
 export class GenericBodyParamsFormValues implements IGenericBodyParamsFormValues {
-    query: string
-    constructor(query: string = "") {
-        this.query = query
+    query: string;
+    constructor(query: string = '') {
+        this.query = query;
     }
 }
 
-export const GenericBodyParamsForm = (props: FormikProps<IGenericBodyParamsFormValues>) => {
+export const GenericBodyParamsForm = (_props: FormikProps<IGenericBodyParamsFormValues>) => {
     // console.log("GenericBodyParamsForm props", props)
-    const { isSubmitting } = props
+    // const { isSubmitting } = props
     // props.values.name
     return (
         <Form>
@@ -25,5 +25,5 @@ export const GenericBodyParamsForm = (props: FormikProps<IGenericBodyParamsFormV
                 Submit
             </button> */}
         </Form>
-    )
-}
+    );
+};

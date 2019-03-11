@@ -1,4 +1,4 @@
-import { IOsmRunDir } from "./OsmRunDir";
+import { IOsmRunDir } from './OsmRunDir';
 export declare class OsmRuns {
     osmRunDirPath: string;
     constructor(osmRunDirPath: string);

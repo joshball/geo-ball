@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Stats } from 'fs';
 import { CHANNELS } from './index.old';
 
-
 type State = Readonly<{
     progress: number;
     inProgress: boolean;
@@ -22,12 +21,12 @@ class BackgroundTaskOld extends React.Component<{}, State> {
     };
 
     async componentDidMount() {
-        console.log('BT.OLD.componentDidMount')
+        console.log('BT.OLD.componentDidMount');
         // ipcRenderer.on('progress', this.onProgress);
     }
 
     componentWillUnmount() {
-        console.log('BT.OLD.componentWillUnmount')
+        console.log('BT.OLD.componentWillUnmount');
         // ipcRenderer.removeListener('progress', this.onProgress);
     }
 
@@ -39,7 +38,7 @@ class BackgroundTaskOld extends React.Component<{}, State> {
     };
 
     sendCommand = async () => {
-        console.log('BT.OLD.sendCommand')
+        console.log('BT.OLD.sendCommand');
         this.setState({
             inProgress: true,
             computeDone: false,
@@ -48,7 +47,6 @@ class BackgroundTaskOld extends React.Component<{}, State> {
         // This method will run synchronously, but in a background BrowserWindow process
         // so this browserWindow will not block
         // const t = console.time('BT.OLD.stat');
-
 
         // const ourId = remote.getCurrentWebContents().getOSProcessId();
         const wc = remote.getCurrentWebContents();
@@ -78,22 +76,30 @@ class BackgroundTaskOld extends React.Component<{}, State> {
 
         // const d = await bg.stat();
 
-        console.log('backgroundWindow.id',backgroundWindow.id);
-        console.log('wc.id',wc.id);
-        console.log('@@@ BT.OLD bw.webContents.*SEND*(%s, id:%s, package.json)',CHANNELS.OLD.getLstat, wc.id);
+        console.log('backgroundWindow.id', backgroundWindow.id);
+        console.log('wc.id', wc.id);
+        console.log(
+            '@@@ BT.OLD bw.webContents.*SEND*(%s, id:%s, package.json)',
+            CHANNELS.OLD.getLstat,
+            wc.id,
+        );
         // backgroundWindow.webContents.send('BG.OLD.stat', wc.id, 'package.json')
-        backgroundWindow.webContents.send(CHANNELS.OLD.getLstat, wc.id, 'package.json')
+        backgroundWindow.webContents.send(CHANNELS.OLD.getLstat, wc.id, 'package.json');
     };
 
     render() {
-        console.log('BT.OLD.render')
+        console.log('BT.OLD.render');
         return (
             <div>
                 <h1>Background Task Old</h1>
                 <button onClick={this.sendCommand}>Compute Old School</button>
                 {this.state.inProgress ? <div>Progress: {this.state.progress}</div> : null}
-                {this.state.computeDone ? <div>Compute Result: {this.state.computeResult}</div> : null}
-                {this.state.stat ? <pre>{JSON.stringify(this.state.stat, undefined, 4)}</pre> : null}
+                {this.state.computeDone ? (
+                    <div>Compute Result: {this.state.computeResult}</div>
+                ) : null}
+                {this.state.stat ? (
+                    <pre>{JSON.stringify(this.state.stat, undefined, 4)}</pre>
+                ) : null}
             </div>
         );
     }

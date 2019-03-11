@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { css } from 'glamor'
+import * as React from 'react';
+import { css } from 'glamor';
 import { observer, inject } from 'mobx-react';
 import { MapComponent } from '../components/map/MapComponent';
 import { RootStore } from '../stores/RootStore';
@@ -23,10 +23,9 @@ export interface MapProps {
     stores?: RootStore;
 }
 
-@inject("stores")
+@inject('stores')
 @observer
 export class RoutingPage extends React.Component<MapProps> {
-
     render() {
         console.log('RoutingPage.render():', this.props);
         return (
@@ -42,7 +41,6 @@ export class RoutingPage extends React.Component<MapProps> {
                     </div>
                 </aside>
             </div>
-        )
+        );
     }
-
 }

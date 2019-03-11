@@ -4,9 +4,9 @@ import { ICommonState } from './ICommonState';
 import { IDataState, DataState } from './DataState';
 
 export interface IState {
-    common: ICommonState
-    data: IDataState
-    mapExplorer: IMapExplorerState
+    common: ICommonState;
+    data: IDataState;
+    mapExplorer: IMapExplorerState;
 }
 
 export const defaultState: IState = {
@@ -14,7 +14,7 @@ export const defaultState: IState = {
         title: 'Home',
     },
     data: new DataState(),
-    mapExplorer: new MapExplorerState()
+    mapExplorer: new MapExplorerState(),
 };
 
 /**
@@ -33,7 +33,7 @@ export class State implements IState {
 
 // console.log('process.env.BROWSER', process.env.BROWSER);
 // console.log('window.__STATE  PRE:', (window as any).__STATE);
-export default process.env.BROWSER ? (
-    (window as any).__STATE = new State((window as any).__STATE)
-) : new State();
+export default (process.env.BROWSER
+    ? ((window as any).__STATE = new State((window as any).__STATE))
+    : new State());
 // console.log('window.__STATE POST:', (window as any).__STATE);

@@ -1,25 +1,28 @@
-import { app, BrowserWindow, DevToolsExtensions } from "electron"
+import { app, BrowserWindow, DevToolsExtensions } from 'electron';
 // tslint:disable-next-line:no-var-requires
-const WindowStateManager = require("electron-window-state-manager")
-import { loadURL } from "./load-url"
-import installExtension, { REACT_DEVELOPER_TOOLS, MOBX_DEVTOOLS } from "electron-devtools-installer"
-const path = require("path")
-const os = require("os")
+const WindowStateManager = require('electron-window-state-manager');
+import { loadURL } from './load-url';
+import installExtension, {
+    REACT_DEVELOPER_TOOLS,
+    MOBX_DEVTOOLS,
+} from 'electron-devtools-installer';
+const path = require('path');
+const os = require('os');
 
 // tslint:disable-next-line:no-var-requires
-require("electron-context-menu")({
+require('electron-context-menu')({
     prepend: (params: any, _browserWindow: any) => [
         {
-            label: "Rainbow",
+            label: 'Rainbow',
             // Only show it when right-clicking images
-            visible: params.mediaType === "image",
+            visible: params.mediaType === 'image',
         },
     ],
-})
+});
 
 // default dimensions
 // export const DIMENSIONS = { width: 1800, height: 1500, minWidth: 200, minHeight: 200 }
-export const DIMENSIONS = { width: 1200, height: 1500, minWidth: 1200, minHeight: 1500 }
+export const DIMENSIONS = { width: 1200, height: 1500, minWidth: 1200, minHeight: 1500 };
 
 /**
  * Creates the main window.
@@ -50,11 +53,11 @@ export function createUiWindow(appPath: string, showDelay: number = 100): Browse
         maximizable: true,
         frame: true,
         // useContentSize: true,
-        titleBarStyle: "hiddenInset",
+        titleBarStyle: 'hiddenInset',
         autoHideMenuBar: true,
         // backgroundColor: '#fff',
         thickFrame: true,
-        vibrancy: "light",
+        vibrancy: 'light',
         // transparent: true,
         title: app.getName(),
         webPreferences: {
@@ -62,15 +65,15 @@ export function createUiWindow(appPath: string, showDelay: number = 100): Browse
             backgroundThrottling: false,
             textAreasAreResizable: true,
         },
-    })
+    });
 
-    window.setResizable(true)
+    window.setResizable(true);
 
-    window.setMaximizable(true)
+    window.setMaximizable(true);
     // window.setSize(100,100, true)
     // LETS OPEN THE DEV TOOLS
-    window.webContents.openDevTools()
-    console.log("opened dev tools:")
+    window.webContents.openDevTools();
+    console.log('opened dev tools:');
 
     // maximize if we did before
     // if (windowState.maximized) {
@@ -81,41 +84,41 @@ export function createUiWindow(appPath: string, showDelay: number = 100): Browse
     // window.on("close", () => windowState.saveState(window))
     // window.on("move", () => windowState.saveState(window))
     // window.on("resize", () => windowState.saveState(window))
-    window.on("app-command", (e, cmd) => {
-        console.log("app-command", cmd)
-        console.log("app-window.webContents.canGoBack()", window.webContents.canGoBack())
+    window.on('app-command', (e, cmd) => {
+        console.log('app-command', cmd);
+        console.log('app-window.webContents.canGoBack()', window.webContents.canGoBack());
         // Navigate the window back when the user hits their mouse back button
-        if (cmd === "browser-backward" && window.webContents.canGoBack()) {
-            window.webContents.goBack()
+        if (cmd === 'browser-backward' && window.webContents.canGoBack()) {
+            window.webContents.goBack();
         }
-    })
+    });
     // load entry html page in the renderer.
-    loadURL(window, appPath, "ui-renderer.html")
+    loadURL(window, appPath, 'ui-renderer.html');
 
-    const extensions = BrowserWindow.getDevToolsExtensions() // as DevToolsExtensions
-    console.log("extensions:", extensions)
+    const extensions = BrowserWindow.getDevToolsExtensions(); // as DevToolsExtensions
+    console.log('extensions:', extensions);
     const reactDevToolsPath = path.join(
         os.homedir(),
-        "AppData",
-        "Local",
-        "Google",
-        "Chrome",
-        "User Data",
-        "Default",
-        "Extensions",
-        "fmkadmapgofadopljbjfkapdkoienihi",
-        "3.6.0_0",
-    )
-    console.log("reactDevToolsPath:", reactDevToolsPath)
+        'AppData',
+        'Local',
+        'Google',
+        'Chrome',
+        'User Data',
+        'Default',
+        'Extensions',
+        'fmkadmapgofadopljbjfkapdkoienihi',
+        '3.6.0_0',
+    );
+    console.log('reactDevToolsPath:', reactDevToolsPath);
     // BrowserWindow.addDevToolsExtension(reactDevToolsPath);
 
     // installExtension(REACT_DEVELOPER_TOOLS.id); // Note the `.id`
-    installExtension(REACT_DEVELOPER_TOOLS)
+    installExtension(REACT_DEVELOPER_TOOLS);
     // installExtension(MOBX_DEVTOOLS)
 
     // only appear once we've loaded
-    window.webContents.on("did-finish-load", () => {
-        console.log("DID FINISH LOAD:")
+    window.webContents.on('did-finish-load', () => {
+        console.log('DID FINISH LOAD:');
 
         // installExtension(REACT_DEVELOPER_TOOLS)
         //     .then(name => console.log(`Added Extension:  ${name}`))
@@ -131,10 +134,10 @@ export function createUiWindow(appPath: string, showDelay: number = 100): Browse
         // console.log("extensions:", extensions)
         // BrowserWindow.addDevToolsExtension(reactDevToolsPath);
         setTimeout(() => {
-            window.show()
-            window.focus()
-        }, showDelay)
-    })
+            window.show();
+            window.focus();
+        }, showDelay);
+    });
 
-    return window
+    return window;
 }

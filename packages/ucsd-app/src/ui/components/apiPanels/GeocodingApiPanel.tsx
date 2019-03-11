@@ -103,7 +103,6 @@
 //     // Add copy for results and string
 //     // use formik debug as example
 
-
 //     render() {
 //         const mainQueryStyle = css({
 //             display: 'flex',
@@ -135,7 +134,6 @@
 //             display: 'flex',
 //             height: '440px',
 //         };
-
 
 //         return (
 //             <div style={pageStyle}>
@@ -178,7 +176,6 @@
 //     }
 // }
 
-
 // export const ApiResults = (json: any) => (
 //     <div
 //         style={{
@@ -215,4 +212,3 @@
 
 //     </div>
 // );
-

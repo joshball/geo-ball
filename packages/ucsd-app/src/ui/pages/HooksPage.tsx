@@ -1,7 +1,7 @@
-import * as React from 'react'
+import * as React from 'react';
 // tslint:disable-next-line:no-duplicate-imports
-import { useState, useContext, useEffect } from 'react'
-import { css } from 'glamor'
+import { useState, useContext, useEffect } from 'react';
+import { css } from 'glamor';
 
 const rowCss = css({
     display: 'block',
@@ -14,9 +14,11 @@ const rowCss = css({
 export function Row(props: any) {
     return (
         <div {...rowCss}>
-            <span>{props.label}: {props.children}</span>
+            <span>
+                {props.label}: {props.children}
+            </span>
         </div>
-    )
+    );
 }
 
 export interface IRowProp {
@@ -37,8 +39,8 @@ export class GreetingClass extends React.Component<IGreetingProp, IGreetingState
         super(props);
         this.state = {
             name: props.name,
-            surname: props.surname
-        }
+            surname: props.surname,
+        };
         this.handleNameChange = this.handleNameChange.bind(this);
     }
     handleNameChange(e: any) {
@@ -57,10 +59,14 @@ export class GreetingClass extends React.Component<IGreetingProp, IGreetingState
         return (
             <section>
                 <h3>GreetingClass</h3>
-                <Row label="GreetingClass.Name"><input value={this.state.name} onChange={this.handleNameChange} /></Row>
-                <Row label="GreetingClass.Surname"><input value={this.state.surname} onChange={this.handleSurNameChange} /></Row>
+                <Row label="GreetingClass.Name">
+                    <input value={this.state.name} onChange={this.handleNameChange} />
+                </Row>
+                <Row label="GreetingClass.Surname">
+                    <input value={this.state.surname} onChange={this.handleSurNameChange} />
+                </Row>
             </section>
-        )
+        );
     }
 }
 
@@ -75,8 +81,8 @@ export function GreetingHook(props: any) {
         setsSurname(e.target.value);
     }
     useEffect(() => {
-        document.title = name + " " + surname;
-    })
+        document.title = name + ' ' + surname;
+    });
     return (
         <section>
             <h3>GreetingHook</h3>
@@ -89,22 +95,20 @@ export function GreetingHook(props: any) {
                 <input value={surname} onChange={handleSurnameChange} />
             </Row>
         </section>
-    )
+    );
 }
 
 export function Greeting(props: any) {
     return (
         <section>
             <h3>Greeting</h3>
-            <Row label="Greeting.Name">
-                {props.name}
-            </Row>
+            <Row label="Greeting.Name">{props.name}</Row>
             <Row label="Greeting.Surname">
                 {props.surname}
                 {/* <input value={name} onChange={handleNameChange} /> */}
             </Row>
         </section>
-    )
+    );
 }
 function Example() {
     // Declare a new state variable, which we'll call "count"
@@ -114,9 +118,7 @@ function Example() {
         <div>
             <h2>Button Example</h2>
             <p>You clicked {count} times</p>
-            <button onClick={() => setCount(count + 1)}>
-                Click me
-            </button>
+            <button onClick={() => setCount(count + 1)}>Click me</button>
         </div>
     );
 }
@@ -128,7 +130,5 @@ export const HooksPage: React.SFC<any> = (props: any) => {
             {/* <Greeting name="Ernest" surname="Hemmingway" /> */}
             <Example />
         </div>
-    )
-}
-
-
+    );
+};

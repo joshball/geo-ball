@@ -1,15 +1,10 @@
-import { resolve, join } from "path";
-import { lstat } from "../utils/fsp";
-import { OsmRunError, OsmRunErrorTxt } from "./OsmRunError";
+import { resolve, join } from 'path';
+import { lstat } from '../utils/fsp';
+import { OsmRunError, OsmRunErrorTxt } from './OsmRunError';
 import parse from 'date-fns/parse';
-import { OsmRunFiles } from "./OsmRunFile";
+import { OsmRunFiles } from './OsmRunFile';
 
-
-export type OsmRunState =
-    'Invalid' |
-    'NotRun' |
-    'Valid';
-
+export type OsmRunState = 'Invalid' | 'NotRun' | 'Valid';
 
 export interface IOsmRunDir {
     name: string;
@@ -22,7 +17,6 @@ export interface IOsmRunDir {
     runFiles: OsmRunFiles | undefined;
 }
 
-
 export const createOsmRun = async (osmRunDirPath: string, dirName: any): Promise<IOsmRunDir> => {
     const fullPath = resolve(join(osmRunDirPath, dirName));
     const rds: IOsmRunDir = {
@@ -34,7 +28,7 @@ export const createOsmRun = async (osmRunDirPath: string, dirName: any): Promise
         filesValid: true,
         error: undefined,
         runFiles: undefined,
-    }
+    };
 
     const stats = await lstat(fullPath);
 
@@ -48,7 +42,7 @@ export const createOsmRun = async (osmRunDirPath: string, dirName: any): Promise
     rds.runFiles = await OsmRunFiles.GetOsmRunFiles(fullPath);
 
     return rds;
-}
+};
 
 const parseRunDir = (dirName: string): Date => {
     // YYYY-MM-DD_HHMMSS
@@ -60,5 +54,4 @@ const parseRunDir = (dirName: string): Date => {
         throw new OsmRunError('dirName is not properly formatted date', 'DirImproperlyNamed');
     }
     return date;
-}
-
+};
