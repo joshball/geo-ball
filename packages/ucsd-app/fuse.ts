@@ -1,39 +1,41 @@
 // import { FuseBox, CSSModules, CSSPlugin, SassPlugin, Sparky, CopyPlugin, ReplacePlugin } from "fuse-box"
-import { FuseBox, CSSPlugin, SassPlugin, Sparky, CopyPlugin, ReplacePlugin } from "fuse-box"
-import { spawn } from "child_process"
-import * as pjson from "./package.json"
+import { FuseBox, CSSPlugin, SassPlugin, Sparky, CopyPlugin, ReplacePlugin } from 'fuse-box';
+import { spawn } from 'child_process';
+import * as pjson from './package.json';
 
-const DEV_PORT = 4445
-const OUTPUT_DIR = "out"
-const ASSETS = ["*.jpg", "*.png", "*.jpeg", "*.gif", "*.svg"]
+const DEV_PORT = 4445;
+const OUTPUT_DIR = 'out';
+const ASSETS = ['*.jpg', '*.png', '*.jpeg', '*.gif', '*.svg'];
 const path = require('path');
-function srcPath(subdir:string) {
+function srcPath(subdir: string) {
     const p = path.join(__dirname, '../component-lib/src', subdir);
     console.log('p', p);
     return p;
 }
 
 // are we running in production mode?
-const isProduction = process.env.NODE_ENV === "production"
+const isProduction = process.env.NODE_ENV === 'production';
 
 // copy the renderer's html file into the right place
-Sparky.task("copy-html", () => {
+Sparky.task('copy-html', () => {
     // return Sparky.src("src/main/index.html").dest(`${OUTPUT_DIR}/$name`)
-    return Sparky.src("src/main/*.html").dest(`${OUTPUT_DIR}/$name`)
-})
+    return Sparky.src('src/main/*.html').dest(`${OUTPUT_DIR}/$name`);
+});
 
+const react = require.resolve('react');
 // the default task
-Sparky.task("default", ["copy-html"], () => {
+Sparky.task('default', ['copy-html'], () => {
     // setup the producer with common settings
     const fuse = FuseBox.init({
-        homeDir: "src",
+        homeDir: 'src',
         output: `${OUTPUT_DIR}/$name.js`,
-        target: "electron",
+        target: 'electron',
         log: isProduction,
         cache: !isProduction,
         sourceMaps: true,
-        tsConfig: "tsconfig.json",
+        tsConfig: 'tsconfig.json',
         alias: {
+            // react,
             // 'CL': srcPath('.'),
             // '@types': srcPath('types'),
             // '@components': srcPath('components'),
@@ -43,62 +45,63 @@ Sparky.task("default", ["copy-html"], () => {
             // '@panels': srcPath('components/panels'),
             // '@themes': srcPath('components/themes'),
         },
-    })
+    });
 
     // start the hot reload server
     if (!isProduction) {
-        fuse.dev({ port: DEV_PORT, httpServer: false })
+        fuse.dev({ port: DEV_PORT, httpServer: false });
     }
 
     // bundle the electron main code
     const mainBundle = fuse
-        .bundle("main")
-        .target("server")
-        .instructions("> [main/main.ts]")
+        .bundle('main')
+        .target('server')
+        .instructions('> [main/main.ts]')
         // inject in some configuration
         .plugin(
             ReplacePlugin({
-                "process.env.HOMEPAGE": pjson.homepage ? `"${pjson.homepage}"` : "null",
+                'process.env.HOMEPAGE': pjson.homepage ? `"${pjson.homepage}"` : 'null',
             }),
-        )
+        );
 
     // and watch unless we're bundling for production
     if (!isProduction) {
-        mainBundle.watch()
+        mainBundle.watch();
     }
 
     // bundle the electron renderer code
     const rendererBundle = fuse
-        .bundle("ui-renderer")
-        .instructions("> [ui/app/index.tsx] +fuse-box-css")
+        .bundle('ui-renderer')
+        .instructions('> [ui/app/index.tsx] +fuse-box-css')
         .plugin(SassPlugin())
         // .plugin(CSSResourcePlugin({ dist: "dist/css-resources" }))
         .plugin(CSSPlugin())
-        .plugin(CopyPlugin({ useDefault: false, files: ASSETS, dest: "assets", resolve: "assets/" }))
+        .plugin(
+            CopyPlugin({ useDefault: false, files: ASSETS, dest: 'assets', resolve: 'assets/' }),
+        );
 
     const backgroundBundle = fuse
-        .bundle("background-renderer")
-        .instructions("> [background/index.ts]");
-
+        .bundle('background-renderer')
+        .instructions('> [background/index.ts]');
 
     // and watch & hot reload unless we're bundling for production
     if (!isProduction) {
-        rendererBundle.watch()
-        rendererBundle.hmr()
-        backgroundBundle.watch()
-        backgroundBundle.hmr()
+        rendererBundle.watch();
+        rendererBundle.hmr();
+        backgroundBundle.watch();
+        backgroundBundle.hmr();
     }
 
     // when we are finished bundling...
     return fuse.run().then(() => {
         if (!isProduction) {
             // startup electron
-            spawn("node", [`${__dirname}/node_modules/electron/cli.js`, __dirname], {
-                stdio: "inherit",
-            }).on("exit", code => {
-                console.log(`electron process exited with code ${code}`)
-                process.exit(code || 0)
-            })
+            spawn('node', [`${__dirname}/node_modules/electron/cli.js`, __dirname], {
+                stdio: 'inherit',
+            }).on('exit', code => {
+                console.log(`electron process exited with code ${code}`);
+                process.exit(code || 0);
+            });
         }
-    })
-})
+    });
+});
