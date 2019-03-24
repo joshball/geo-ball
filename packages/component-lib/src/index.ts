@@ -9,5 +9,5 @@ export * from './molecules';
 // export * from './organisms';
 // export * from './panels';
 export * from './themes';
-// export * from './types';
+export * from './types';
 export * from './utils';

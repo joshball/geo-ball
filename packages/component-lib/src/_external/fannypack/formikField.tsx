@@ -19,7 +19,7 @@ const FIELDS_WITH_FIELD_WRAPPERS = [
 ];
 const SELECT_MENUS = ['SelectMenu', 'SelectMenuField'];
 
-const bindFns = (...fns: Array<Function>) => (...args: any) => {
+const bindFns = (...fns: Array<SpreadFunc>) => (...args: any) => {
     fns.forEach(fn => fn && fn(...args));
 };
 
