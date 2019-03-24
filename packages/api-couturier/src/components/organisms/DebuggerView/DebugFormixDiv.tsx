@@ -13,6 +13,8 @@ export const GenericFormWithDebug = (GenericForm: any, topProps: any) => {
     //     onChange: this.setLocalState,
     //     label: label,
     // };
+    return GenericForm;
+
     return (
         <Hidden.Container>
             {(_hidden: any) => {

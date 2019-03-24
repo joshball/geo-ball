@@ -1,6 +1,6 @@
 import { ActionFormikConfig, ActionFormikProps } from './FormikHelpers';
 // import { GenericFormWithDebug } from './GenericFormContainer';
-import { GenericFormWithDebug } from '../../components/organisms/DebugFormixDiv';
+import { GenericFormWithDebug } from '../../components/organisms/DebuggerView/DebugFormixDiv';
 
 export const BindAdditionalPropsToForm = <TFormValues>(
     formikConfig: ActionFormikConfig<TFormValues>,
@@ -13,9 +13,15 @@ export const BindAdditionalPropsToForm = <TFormValues>(
         showDebugForm: false,
     };
     // props.additionalProps = additionalProps
-    // console.log("GenericUrlParamsFormContainer ACTION PROPS:", props)
-    // console.log("GenericUrlParamsFormContainer additionalProps:", additionalProps)
+    console.log('GenericUrlParamsFormContainer ACTION PROPS:', props);
+    console.log('GenericUrlParamsFormContainer additionalProps:', additionalProps);
     if (additionalProps) {
+        console.log('GenericUrlParamsFormContainer additionalProps made it:', additionalProps);
+        console.log(
+            'GenericUrlParamsFormContainer.bindGetFormValues:',
+            additionalProps.bindGetFormValues,
+        );
+        console.log('GenericUrlParamsFormContainer additionalProps  props.values:', props.values);
         if (additionalProps.bindSubmitForm) {
             additionalProps.bindSubmitForm(props.submitForm);
         }

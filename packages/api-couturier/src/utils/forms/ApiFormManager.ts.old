@@ -25,20 +25,14 @@ export class ApiFormValuesTuple<TFormValues> implements IApiFormValuesTuple<TFor
 export class ApiFormSectionMgr<TFormValues> {
     initialValues: TFormValues;
     form: any;
-    _submitTheForm: Optional<SubmitFormFunctionType>;
-    _validateTheForm: Optional<ValidateFormFunctionType<TFormValues>>;
     config: ActionFormikConfig<TFormValues>;
-    _getFormValues: Optional<GetFormValuesFunctionType<TFormValues>>;
 
     constructor(fvTuple: ApiFormValuesTuple<TFormValues>) {
         this.initialValues = fvTuple.values;
-        this.form = GenericFormContainer(fvTuple.form);
+        this.form = fvTuple.form;
 
         this.config = this.getActionFormikConfig();
 
-        this.bindSubmitForm = this.bindSubmitForm.bind(this);
-        this.bindValidateForm = this.bindValidateForm.bind(this);
-        this.bindGetFormValues = this.bindGetFormValues.bind(this);
         this.submitTheForm = this.submitTheForm.bind(this);
         this.validateTheForm = this.validateTheForm.bind(this);
         this.getFormValues = this.getFormValues.bind(this);
@@ -52,19 +46,6 @@ export class ApiFormSectionMgr<TFormValues> {
 
     onSubmit(values: TFormValues, formikActions: FormikActions<TFormValues>) {
         console.log('ApiFormProps.onSubmit', values, formikActions);
-    }
-
-    bindSubmitForm(submitFormCallback: SubmitFormFunctionType) {
-        this._submitTheForm = submitFormCallback;
-    }
-
-    bindValidateForm(validateFormCallback: ValidateFormFunctionType<TFormValues>) {
-        this._validateTheForm = validateFormCallback;
-    }
-
-    bindGetFormValues(getFormValuesCallback: GetFormValuesFunctionType<TFormValues>) {
-        console.log('ApiFormProps.bindGetFormValues getFormValuesCallback', getFormValuesCallback);
-        this._getFormValues = getFormValuesCallback;
     }
 
     submitTheForm() {

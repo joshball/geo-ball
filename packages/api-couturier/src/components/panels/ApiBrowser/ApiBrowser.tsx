@@ -6,7 +6,6 @@ import { Switch, Card, styled, Hidden } from '@geo-ball/component-lib';
 
 import { ApiPanelLayoutContainer } from './Layout';
 import {
-    ApiUrlParametersView,
     IActionBarProps,
     ActionBar,
     ResultsContainer,
@@ -14,7 +13,11 @@ import {
     IHeaderContainerProps,
 } from '../../organisms';
 
-import { ApiFullFormManager, ActionFormikConfig, IApiCallbackData } from '../../../utils';
+import { ApiFormManager, ActionFormikConfig, ApiFormSectionMgr } from '../../../utils';
+
+import { IApiCallbackData, IApiCallDefinition } from '../../../types';
+import { ApiFormSectionView } from '../../organisms/ApiFormSection/ApiFormSectionView';
+import { UrlParamsSectionView } from '../../organisms/ApiFormSection';
 
 const SectionCard = styled(Card)`
     margin: 30px 0px 20px 0px;
@@ -35,13 +38,8 @@ export interface IApiBrowserPageState<TUrlParams, TBodyParams, THeaders> {
 }
 
 export interface IApiBrowserPageStateFormProps<TApiResponse, TUrlParams, TBodyParams, THeaders> {
-    header: IHeaderContainerProps;
-    apiFFM: ApiFullFormManager<TUrlParams, TBodyParams, THeaders>;
-    // forms: {
-    //     query?: (props: ActionFormikConfig<TUrlParams>) => ReactNode;
-    //     body?: (props: ActionFormikConfig<TBodyParams>) => ReactNode;
-    //     headers?: (props: ActionFormikConfig<any>) => ReactNode;
-    // };
+    apiDef: IApiCallDefinition<TApiResponse, TUrlParams, TBodyParams, THeaders>;
+    apiFormMgr: ApiFormManager<TUrlParams, TBodyParams, THeaders>;
     callTheApi: (
         data?: Optional<IApiCallbackData<TUrlParams, TBodyParams, THeaders>>,
     ) => Promise<TApiResponse | void>;
@@ -104,7 +102,7 @@ export class ApiBrowser<TApiResponse, TUrlParams, TBodyParams, THeaders> extends
             name,
             checked: this.state.local[name],
             onChange: this.setLocalState,
-            label: label,
+            label,
         };
     };
 
@@ -173,12 +171,12 @@ export class ApiBrowser<TApiResponse, TUrlParams, TBodyParams, THeaders> extends
 
     private getFormCalls() {
         return {
-            validateUrlForm: this.props.apiFFM.urlParams.validateTheForm,
-            validateBodyForm: this.props.apiFFM.bodyParams.validateTheForm,
-            validateHeadersForm: this.props.apiFFM.headers.validateTheForm,
-            getUrlFormValues: this.props.apiFFM.urlParams.getFormValues,
-            getBodyFormValues: this.props.apiFFM.bodyParams.getFormValues,
-            getHeadersFormValues: this.props.apiFFM.headers.getFormValues,
+            validateUrlForm: this.props.apiFormMgr.urlParams.validateTheForm,
+            validateBodyForm: this.props.apiFormMgr.bodyParams.validateTheForm,
+            validateHeadersForm: this.props.apiFormMgr.headers.validateTheForm,
+            getUrlFormValues: this.props.apiFormMgr.urlParams.getFormValues,
+            getBodyFormValues: this.props.apiFormMgr.bodyParams.getFormValues,
+            getHeadersFormValues: this.props.apiFormMgr.headers.getFormValues,
         };
     }
 
@@ -209,88 +207,32 @@ export class ApiBrowser<TApiResponse, TUrlParams, TBodyParams, THeaders> extends
         //     },
         // };
 
-        const getFormSection = (
-            form: any,
-            config: ActionFormikConfig<any>,
-            title: string,
-            _viewPanel: string,
-            _debugForm: string,
-        ) => {
-            // console.log('getFormSection form', form);
-            // console.log('getFormSection config', config);
-            // console.log('getFormSection title', title);
-            // console.log('getFormSection debugForm', debugForm);
-            // console.log('getFormSection local[debugForm]', local[debugForm]);
-            // console.log('getFormSection viewPanel', viewPanel);
-            // console.log('getFormSection local[viewPanel]', local[viewPanel]);
-            const debugSwitch = this.connectSwitch('debugQueryParams', 'Debug Query Params');
-            if (form) {
-                const fd = this.state.formData ? this.state.formData.url : {};
-                return (
-                    <SectionCard elevation="400" title={title}>
-                        {form(config)}
-                        <Switch {...debugSwitch} />
-                        <Hidden.Container>
-                            {_hidden => (
-                                <Hidden isVisible={false}>
-                                    <ApiUrlParametersView formData={fd} />
-                                </Hidden>
-                            )}
-                        </Hidden.Container>
-                    </SectionCard>
-                );
-            }
-            return null;
-        };
         console.log('local.queryParamDebugForm:', local.queryParamDebugForm);
-        console.log('local.urlParams.config:', this.props.apiFFM.urlParams.config);
+        console.log('local.urlParams.config:', this.props.apiFormMgr.urlParams.config);
         console.log(
             'local.urlParams.config.addProps:',
-            this.props.apiFFM.urlParams.config.additionalProps,
+            this.props.apiFormMgr.urlParams.config.additionalProps,
         );
-        if (this.props.apiFFM.urlParams.config.additionalProps) {
-            this.props.apiFFM.urlParams.config.additionalProps.showDebugForm =
+        if (this.props.apiFormMgr.urlParams.config.additionalProps) {
+            this.props.apiFormMgr.urlParams.config.additionalProps.showDebugForm =
                 local.queryParamDebugForm;
         }
-        if (this.props.apiFFM.bodyParams.config.additionalProps) {
-            this.props.apiFFM.bodyParams.config.additionalProps.showDebugForm =
+        if (this.props.apiFormMgr.bodyParams.config.additionalProps) {
+            this.props.apiFormMgr.bodyParams.config.additionalProps.showDebugForm =
                 local.bodyParamDebugForm;
         }
 
-        const QueryForm = getFormSection(
-            // this.props.forms.query,
-            this.props.apiFFM.urlParams.form,
-            this.props.apiFFM.urlParams.config,
-            'Query Params',
-            'queryParamViewPanel',
-            'queryParamDebugForm',
-        );
-        const BodyForm = getFormSection(
-            this.props.apiFFM.bodyParams.form,
-            this.props.apiFFM.bodyParams.config,
-            'Body Params',
-            'bodyParamViewPanel',
-            'bodyParamDebugForm',
-        );
-        const HeadersForm = getFormSection(
-            this.props.apiFFM.headers.form,
-            this.props.apiFFM.headers.config,
-            'Headers',
-            'headersViewPanel',
-            'headersDebugForm',
-        );
+        const { urlParams, bodyParams, headers } = this.props.apiFormMgr;
+        const { formHeaderProps } = this.props.apiDef;
+
         return (
             <ApiPanelLayoutContainer>
-                <HeaderContainer {...this.props.header} />
-                {QueryForm}
-                {BodyForm}
-                {HeadersForm}
-                {/* <SectionCard elevation="400">
-                    <h2>FormVals:</h2>
-                    <pre>{fvJson}</pre>
-                </SectionCard> */}
+                <HeaderContainer {...formHeaderProps} />
+                <UrlParamsSectionView urlParams={urlParams} />
+                {/* <ApiFormSectionView title="Query Params" form={urlParams.form(urlParams.config)} /> */}
+                {/* <ApiFormSectionView title="Body Params" form={bodyParams.form(bodyParams.config)} />
+                <ApiFormSectionView title="Headers Params" form={headers.form(headers.config)} /> */}
                 <ActionBar {...this.actionBarProps} />
-
                 <ResultsContainer>{this.state.apiResults}</ResultsContainer>
             </ApiPanelLayoutContainer>
         );

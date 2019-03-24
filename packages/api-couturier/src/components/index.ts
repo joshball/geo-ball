@@ -2,7 +2,7 @@
 // import "core-js/fn/array.find"
 // ...
 
-// export * from './molecules';
+export * from './molecules';
 // export * from './layouts';
 export * from './organisms';
 export * from './panels';

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { IHeaderContainerProps } from 'index';
 
 // const ContentType = {
 //     'multipart/form-data',
@@ -97,18 +98,26 @@ export class ApiParameters<TUrlParameterData = any, TBodyParameterData = any, TH
 export interface IApiCallDefinition<
     TApiResponse,
     TUrlParameterData = any,
-    TBodyParameterData = any
+    TBodyParameterData = any,
+    THeadersData = any
 > {
     name: string;
     method: HttpMethod;
     url: string;
-    apiParams: IApiParameters<TUrlParameterData, TBodyParameterData>;
-    apiCallback: ApiCallback<TApiResponse, TUrlParameterData, TBodyParameterData>;
-    mockCallback: ApiCallback<TApiResponse, TUrlParameterData, TBodyParameterData>;
+    helpUrl: string;
+    formHeaderProps: IHeaderContainerProps;
+    apiParams: IApiParameters<TUrlParameterData, TBodyParameterData, THeadersData>;
+    apiCallback: ApiCallback<TApiResponse, TUrlParameterData, TBodyParameterData, THeadersData>;
+    mockCallback: ApiCallback<TApiResponse, TUrlParameterData, TBodyParameterData, THeadersData>;
 }
 
-export type ApiCallback<TApiResponse, TUrlParameterData = any, TBodyParameterData = any> = (
-    apiParams: IApiParameters<TUrlParameterData, TBodyParameterData>,
+export type ApiCallback<
+    TApiResponse,
+    TUrlParameterData = any,
+    TBodyParameterData = any,
+    THeadersData = any
+> = (
+    apiParams: IApiParameters<TUrlParameterData, TBodyParameterData, THeadersData>,
 ) => Promise<TApiResponse>;
 
 export const ApiCallbackStub = <TApiResponse>(_p: any): Promise<TApiResponse> =>
@@ -119,19 +128,26 @@ export const ApiCallbackStub = <TApiResponse>(_p: any): Promise<TApiResponse> =>
     );
 // export const ApiCallbackStub = <TApiResponse>(_p: any) => Promise.resolve({} as TApiResponse);
 
-export class ApiCallDefinition<TApiResponse, TUrlParameterData = any, TBodyParameterData = any>
-    implements IApiCallDefinition<TApiResponse, TUrlParameterData, TBodyParameterData> {
+export class ApiCallDefinition<
+    TApiResponse,
+    TUrlParameterData = any,
+    TBodyParameterData = any,
+    THeadersData = any
+> implements IApiCallDefinition<TApiResponse, TUrlParameterData, TBodyParameterData, THeadersData> {
     name: string;
     method: HttpMethod;
     url: string;
-    apiParams: IApiParameters<TUrlParameterData, TBodyParameterData>;
-    apiCallback: ApiCallback<TApiResponse, TUrlParameterData, TBodyParameterData>;
-    mockCallback: ApiCallback<TApiResponse, TUrlParameterData, TBodyParameterData>;
+    helpUrl: string;
+    formHeaderProps: IHeaderContainerProps;
+    apiParams: IApiParameters<TUrlParameterData, TBodyParameterData, THeadersData>;
+    apiCallback: ApiCallback<TApiResponse, TUrlParameterData, TBodyParameterData, THeadersData>;
+    mockCallback: ApiCallback<TApiResponse, TUrlParameterData, TBodyParameterData, THeadersData>;
 
     constructor(
         name: string,
         method: HttpMethod,
         url: string,
+        helpUrl: string,
         apiParams: IApiParameters = new ApiParameters(),
         apiCallback: ApiCallback<TApiResponse>,
         mockCallback: ApiCallback<TApiResponse> = ApiCallbackStub,
@@ -139,8 +155,20 @@ export class ApiCallDefinition<TApiResponse, TUrlParameterData = any, TBodyParam
         this.name = name;
         this.method = method;
         this.url = url;
+        this.helpUrl = helpUrl;
+        this.formHeaderProps = {
+            name,
+            helpUrl,
+            openUrlCb: (_url: string) => undefined,
+        };
         this.apiParams = apiParams;
         this.apiCallback = apiCallback;
         this.mockCallback = mockCallback;
     }
+}
+
+export interface IApiCallbackData<TUrlParams, TBodyParams, THeaders> {
+    url: TUrlParams;
+    body: TBodyParams;
+    headers: THeaders;
 }
