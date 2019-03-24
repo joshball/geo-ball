@@ -43,28 +43,6 @@
   "parcel-plugin-typescript": {
     "transpileOnly": false
   },
-  "babel": {
-    "presets": [
-      "@babel/env",
-      "@babel/react",
-      "@babel/typescript"
-    ],
-    "sourceMaps": "inline",
-    "plugins": [
-      "@babel/proposal-class-properties",
-      [
-        "module-resolver",
-        {
-          "root": [
-            "./src"
-          ],
-          "alias": {
-            "CL": "./src"
-          }
-        }
-      ]
-    ]
-  },
   "_moduleAliases": {
     "CL": [
       "src"

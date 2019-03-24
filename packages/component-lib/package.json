@@ -22,6 +22,7 @@
     "test": "tests"
   },
   "scripts": {
+    "tsc": "tsc --version",
     "build": "tsc -p tsconfig.json",
     "build:watch": "tsc -p tsconfig.json --watch",
     "build:parcel:watch": "parcel watch ./src/index.ts --bundle-node-modules --target node --out-dir ./build",
@@ -42,28 +43,6 @@
   },
   "parcel-plugin-typescript": {
     "transpileOnly": false
-  },
-  "babel": {
-    "presets": [
-      "@babel/env",
-      "@babel/react",
-      "@babel/typescript"
-    ],
-    "sourceMaps": "inline",
-    "plugins": [
-      "@babel/proposal-class-properties",
-      [
-        "module-resolver",
-        {
-          "root": [
-            "./src"
-          ],
-          "alias": {
-            "CL": "./src"
-          }
-        }
-      ]
-    ]
   },
   "_moduleAliases": {
     "CL": [
@@ -137,6 +116,7 @@
   "dependencies": {
     "fannypack": "^4.x",
     "formik": "^1.x",
+    "informed": "^2.1.12",
     "json-stringify-safe": "^5.x",
     "prop-types": "^15.x",
     "reakit": "^0.x"
