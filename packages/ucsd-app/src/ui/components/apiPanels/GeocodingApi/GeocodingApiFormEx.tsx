@@ -1,24 +1,23 @@
 import * as React from 'react';
-import { Formik, Form, Field, FormikConsumer } from 'formik';
-import { Card, Elevation, Button, Intent, Switch } from '@blueprintjs/core';
+import { Form, FormikConsumer } from 'formik';
+import { Card, Elevation, Button, Intent } from '@blueprintjs/core';
 import { GetNomantimSearchAddressSection as GetNomantimSearchAddressForm } from '../nominatim/ApiAddressForm';
 import { SectionHeaderTwo, SectionHeaderThree } from '../../common/layout/SectionHeader';
 import { getOtherSettingsForm as GetNomantimSettingsForm } from '../nominatim/ApiSettingsForm';
 import { getSwitchesFormBox as GetNomantimTogglesForm } from '../nominatim/ApiTogglesForm';
 import { styles } from '../../../config/theme';
 import { css } from 'glamor';
-import { INominatimParams } from '@geo-ball/osm-data';
 
 const JDR = styles.justifyRight;
 
 // Some examples of wrapping here with Office stuff
 // https://github.com/vadistic/vats/blob/b7c9e08eb45d7fd94af477575adea04df5e06aca/packages/client/src/components/editable/formik.tsx
 
-export const xxx = (props: any) => {
-    console.log('feo props:', props);
+// export const xxx = (props: any) => {
+//     console.log('feo props:', props);
 
-    return <Formik initialValues={this.state.formData} onSubmit={this.props.onSubmit} />;
-};
+//     return <Formik initialValues={this.state.formData} onSubmit={this.props.onSubmit} />;
+// };
 
 // export const GeocodingApiFormParent = (props: any) => {
 

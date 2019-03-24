@@ -1,21 +1,19 @@
 import * as React from 'react';
 
-import {
-    SimpleTypescriptFormContainer,
-    ISimpleFormData,
-} from './Forms/SimpleTypescriptFormComponent';
-import { FormikConfig, FormikActions } from 'formik';
+import { Form, Text } from 'informed';
 
-export interface IGenericTestFormPanelState {}
+import { InformedFormContainer, ISimpleFormDataRedux } from './InformedFormComponent';
 
-export interface IGenericTestFormPanelProps {}
+export interface IInformedTestsPanelState {}
 
-export class GenericTestFormPanel extends React.Component<
-    IGenericTestFormPanelProps,
-    IGenericTestFormPanelState
+export interface IInformedTestsPanelProps {}
+
+export class InformedTestsPanel extends React.Component<
+    IInformedTestsPanelProps,
+    IInformedTestsPanelState
 > {
-    state: IGenericTestFormPanelState;
-    constructor(props: IGenericTestFormPanelProps) {
+    state: IInformedTestsPanelState;
+    constructor(props: IInformedTestsPanelProps) {
         super(props);
 
         this.state = {};
@@ -25,11 +23,11 @@ export class GenericTestFormPanel extends React.Component<
     }
 
     fetchIt(): Promise<void> {
-        console.log('GenericTestFormPanel.fetchIt()');
+        console.log('InformedTestsPanel.fetchIt()');
         return Promise.resolve();
     }
-    onSubmit(values: ISimpleFormData, actions: FormikActions<ISimpleFormData>) {
-        console.log('GenericTestFormPanel.onSubmit()', values, actions);
+    onSubmit(values: ISimpleFormDataRedux, actions: any) {
+        console.log('InformedTestsPanel.onSubmit()', values, actions);
         // console.log("GTFP.onSubmit().values", values)
         // console.log(JSON.stringify(values, null, 4))
         // console.log("GTFP.onSubmit().actions", actions)
@@ -53,13 +51,14 @@ export class GenericTestFormPanel extends React.Component<
         //         <button type="submit">Submit</button>
         //     </form>
         // )
-        const formikProps: FormikConfig<ISimpleFormData> = {
+        const informedProps: any = {
             initialValues: {
-                firstName: 'jared',
-                lastName: '',
-                username: '',
-                email: 'jared@foo.com',
-                age: 10,
+                firstName: 'Bill',
+                lastName: 'Nye',
+                username: 'scienceguy',
+                email: 'bill@nyelabs.com',
+                email2: 'sed@foo.com',
+                age: 60,
             },
             onSubmit: this.onSubmit,
         };
@@ -70,7 +69,7 @@ export class GenericTestFormPanel extends React.Component<
                 <BasicExampleWithRender {...formikProps} />
                 <BasicExampleAsComponent {...formikProps} />
                 <BasicExampleWithChildren {...formikProps} /> */}
-                <SimpleTypescriptFormContainer {...formikProps} />
+                <InformedFormContainer {...informedProps} />
             </div>
         );
     }

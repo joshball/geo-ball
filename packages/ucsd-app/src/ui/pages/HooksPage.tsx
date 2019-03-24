@@ -1,5 +1,7 @@
 import * as React from 'react';
-// tslint:disable-next-line:no-duplicate-imports
+// import { Form } from 'informed';
+// import Text from './IF/Text';
+import { Form, Text } from 'informed';
 import { useState, useContext, useEffect } from 'react';
 import { css } from 'glamor';
 
@@ -110,13 +112,28 @@ export function Greeting(props: any) {
         </section>
     );
 }
-function Example() {
-    // Declare a new state variable, which we'll call "count"
+export function Informed() {
+    return (
+        <section>
+            <h2>InformedNotWorking</h2>
+            <Form>
+                {() => (
+                    <div>
+                        <label>
+                            First name:
+                            <Text field="name" />
+                        </label>
+                    </div>
+                )}
+            </Form>{' '}
+        </section>
+    );
+}
+function ReactHooksWorking() {
     const [count, setCount] = useState(0);
-
     return (
         <div>
-            <h2>Button Example</h2>
+            <h2>ReactHooksWorking</h2>
             <p>You clicked {count} times</p>
             <button onClick={() => setCount(count + 1)}>Click me</button>
         </div>
@@ -125,10 +142,8 @@ function Example() {
 export const HooksPage: React.SFC<any> = (props: any) => {
     return (
         <div>
-            <GreetingClass name="Mary" surname="Poppins" />
-            <GreetingHook name="Bilbo" surname="Baggins" />
-            {/* <Greeting name="Ernest" surname="Hemmingway" /> */}
-            <Example />
+            <ReactHooksWorking />
+            <Informed />
         </div>
     );
 };

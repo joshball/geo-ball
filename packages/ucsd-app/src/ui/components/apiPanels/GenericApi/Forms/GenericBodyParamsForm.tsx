@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { FunctionComponent } from 'react';
+
 import { FormikInputField } from '@geo-ball/component-lib';
 
 import { Form, FormikProps, Field } from 'formik';
@@ -14,7 +16,9 @@ export class GenericBodyParamsFormValues implements IGenericBodyParamsFormValues
     }
 }
 
-export const GenericBodyParamsForm = (_props: FormikProps<IGenericBodyParamsFormValues>) => {
+export const GenericBodyParamsForm: FunctionComponent<FormikProps<IGenericBodyParamsFormValues>> = (
+    _props: FormikProps<IGenericBodyParamsFormValues>,
+) => {
     // console.log("GenericBodyParamsForm props", props)
     // const { isSubmitting } = props
     // props.values.name

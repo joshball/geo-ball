@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 export interface MediaProps {
     query: string;
     children: any;

@@ -7,14 +7,19 @@ import {
 } from '@geo-ball/api-couturier';
 
 import {
-    IGenericGetUrlParams,
-    IGenericGetApiResponse,
+    IGenericUrlParams,
+    IGenericBodyParams,
+    IGenericHeaders,
+    IGenericApiResponse,
     GenericApiService,
-    IGenericGetBodyParams,
 } from './GenericApiService';
 
-export type GenericGetApiParams = IApiParameters<IGenericGetUrlParams, IGenericGetBodyParams>;
-export type GenericGetApiCallback = ApiCallback<IGenericGetApiResponse, IGenericGetUrlParams>;
+export type GenericGetApiParams = IApiParameters<
+    IGenericUrlParams,
+    IGenericBodyParams,
+    IGenericHeaders
+>;
+export type GenericGetApiCallback = ApiCallback<IGenericApiResponse, IGenericUrlParams>;
 
 /**
  * This is a wrapper of the GenericApiService.FetchWithGet(urlParams) call.
@@ -25,13 +30,32 @@ export type GenericGetApiCallback = ApiCallback<IGenericGetApiResponse, IGeneric
  * If you had more control over the service, you could easily put this in the service
  * and even have your service use some of the typed parameter info.
  */
-export class GenericGetApiCallDefinition extends ApiCallDefinition<
-    IGenericGetApiResponse,
-    IGenericGetUrlParams,
-    IGenericGetBodyParams
+export class GenericApiDefinition extends ApiCallDefinition<
+    IGenericApiResponse,
+    IGenericUrlParams,
+    IGenericBodyParams,
+    IGenericHeaders
 > {
+    constructor() {
+        super(
+            GenericApiDefinition.Name,
+            GenericApiDefinition.Method,
+            GenericApiDefinition.Url,
+            GenericApiDefinition.HelpUrl,
+            new ApiParameters(),
+            GenericApiDefinition.ApiGetCallback,
+            GenericApiDefinition.MockApiGetCallback,
+        );
+    }
+
     /** This is just a name that the ApiBrowser will show */
     static Name: string = 'Generic GET API';
+    static HelpUrl: string = 'https://wiki.openstreetmap.org/wiki/Nominatim';
+    // const header: IHeaderContainerProps = {
+    //     name: 'Generic API',
+    //     helpUrl: ,
+    //     openUrlCb: (_url: string) => undefined,
+    // };
 
     /** The URL and HTTP Method being used (again, handy for the browser) */
     static Method: HttpMethod = 'get';
@@ -44,60 +68,44 @@ export class GenericGetApiCallDefinition extends ApiCallDefinition<
      * the body as well. And headers are in there.
      */
     static ApiGetCallback: GenericGetApiCallback = (apiParams: GenericGetApiParams) => {
-        console.log('ApiGetCallback.GenericGetApiCallback apiParams:', apiParams);
-        const urlParams: Optional<IGenericGetUrlParams> = apiParams.urlParams.getParams();
-        // If needed, these are available:
-        // const bodyParams: Optional<IGenericGetBodyParams> = apiParams.bodyParams.getParams()
-        // const headers:Array<IHttpHeader> = apiParams.headers;
-        if (!urlParams) {
-            throw new Error('no url params!');
-        }
-        return GenericApiService.FetchWithGet(urlParams);
+        const { urlParams, bodyParams, headers } = GenericApiDefinition.GetDestructuredParams(
+            apiParams,
+        );
+        return GenericApiService.FetchWithGet(urlParams, bodyParams, headers);
     };
 
     static MockApiGetCallback: GenericGetApiCallback = (apiParams: GenericGetApiParams) => {
-        const urlParams: Optional<IGenericGetUrlParams> = apiParams.urlParams.getParams();
-        // If needed, these are available:
-        // const bodyParams: Optional<IGenericGetBodyParams> = apiParams.bodyParams.getParams()
-        // const headers:Array<IHttpHeader> = apiParams.headers;
-        console.log(
-            'GenericApiService.FetchWithGet() delay:',
-            GenericApiService.DEFAULT_TIMEOUT_MS,
-            urlParams,
+        const { urlParams, bodyParams, headers } = GenericApiDefinition.GetDestructuredParams(
+            apiParams,
         );
+
         return new Promise(resolve =>
             setTimeout(() => {
-                const resp: IGenericGetApiResponse = {
+                const resp: IGenericApiResponse = {
                     date: new Date().toISOString(),
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    apiParams: urlParams!,
+                    urlParams,
+                    bodyParams,
+                    headers,
                 };
-                console.log('GenericApiService.FetchWithGet() RESP:', resp);
                 resolve(resp);
             }, GenericApiService.DEFAULT_TIMEOUT_MS),
         );
     };
 
-    constructor() {
-        super(
-            GenericGetApiCallDefinition.Name,
-            GenericGetApiCallDefinition.Method,
-            GenericGetApiCallDefinition.Url,
-            new ApiParameters(),
-            GenericGetApiCallDefinition.ApiGetCallback,
-            GenericGetApiCallDefinition.MockApiGetCallback,
-        );
-    }
-
-    // constructor(urlParamsData: IGenericGetUrlParams) {
-    //     const urlParams = new HttpUrlParameters<IGenericGetUrlParams>(urlParamsData)
-    //     const apiParams = new ApiParameters(urlParams)
-    //     super(
-    //         GenericGetApiCallDefinition.Name,
-    //         GenericGetApiCallDefinition.Method,
-    //         GenericGetApiCallDefinition.Url,
-    //         apiParams,
-    //         GenericGetApiCallDefinition.ApiGetCallback,
-    //     )
-    // }
+    static GetDestructuredParams = (apiParams: GenericGetApiParams) => {
+        console.log('ApiGetCallback.GetDestructuredParams apiParams:', apiParams);
+        const urlParams: Optional<IGenericUrlParams> = apiParams.urlParams.getParams();
+        const bodyParams: Optional<IGenericBodyParams> = apiParams.bodyParams.getParams();
+        const headers: Optional<IGenericHeaders> = apiParams.headers.getParams();
+        if (!urlParams) {
+            throw new Error('no urlParams!');
+        }
+        if (!bodyParams) {
+            throw new Error('no bodyParams!');
+        }
+        if (!headers) {
+            throw new Error('no headers!');
+        }
+        return { urlParams, bodyParams, headers };
+    };
 }

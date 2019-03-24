@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { FunctionComponent } from 'react';
+
 import { FormikInputField } from '@geo-ball/component-lib';
 
 import { Form, FormikProps, Field } from 'formik';
@@ -14,7 +16,9 @@ export class GenericHeadersFormValues implements IGenericHeadersFormValues {
     }
 }
 
-export const GenericHeadersForm = (_formikProps: FormikProps<IGenericHeadersFormValues>) => {
+export const GenericHeadersForm: FunctionComponent<FormikProps<IGenericHeadersFormValues>> = (
+    _formikProps: FormikProps<IGenericHeadersFormValues>,
+) => {
     // console.log("GenericHeadersForm formikProps", formikProps)
     // const { isSubmitting } = formikProps
     // props.submitForm

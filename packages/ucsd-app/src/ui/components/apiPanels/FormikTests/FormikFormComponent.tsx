@@ -1,5 +1,13 @@
 import * as React from 'react';
-import { FormikInputField } from '@geo-ball/component-lib';
+import {
+    FormikInputField,
+    Label,
+    Input,
+    FieldWrapper,
+    Divider,
+    FieldSet,
+    Button,
+} from '@geo-ball/component-lib';
 
 import { Formik, FormikProps, FormikConfig, Field, FieldProps } from 'formik';
 
@@ -8,42 +16,58 @@ export interface ISimpleFormData {
     lastName: string;
     username: string;
     email: string;
+    email2: string;
     age: number;
 }
 
-export const SimpleTypescriptFormComponent = (props: FormikProps<ISimpleFormData>) => {
-    console.log('SimpleTypescriptFormComponent props', props);
+export const FormikFormComponent = (props: FormikProps<ISimpleFormData>) => {
+    console.log('FormikFormComponent props', props);
     // props.values.name
     return (
         <form onSubmit={props.handleSubmit}>
-            <h4>SimpleTypescriptFormComponent</h4>
-            <input
-                type="text"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                value={props.values.lastName}
-                name="lastName"
-            />
-            <Field
-                name="firstName"
-                render={({ field, form }: FieldProps<ISimpleFormData>) => (
-                    <div>
-                        <input type="text" {...field} placeholder="First Name" />
-                        {form.touched.firstName && form.errors.firstName && form.errors.firstName}
-                    </div>
-                )}
-            />
-            <Field component={FormikInputField} name="username" label="Username" />
-            <Field type="email" name="email" />
-            {props.errors.email && <div id="feedback">{props.errors.email}</div>}
-            <button type="submit">Submit</button>
+            <h4>FormikFormComponent</h4>
+            <FieldSet>
+                <Field component={FormikInputField} type="number" name="age" label="Age" />
+                <Label htmlFor="lastName">Last Name</Label>
+                <Input
+                    type="text"
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.lastName}
+                    name="lastName"
+                />
+                <Field
+                    name="firstName"
+                    render={({ field, form }: FieldProps<ISimpleFormData>) => (
+                        <FieldWrapper
+                            a11yId="firstName"
+                            label="First Name"
+                            description="Required for your fannypack"
+                        >
+                            <Input
+                                name="firstName"
+                                type="text"
+                                {...field}
+                                placeholder="First Name"
+                            />
+                        </FieldWrapper>
+                    )}
+                />
+                <Field component={FormikInputField} name="username" label="Username" />
+                <Field component={FormikInputField} name="email" label="Email" type="email" />
+                <Label htmlFor="email">Email Two</Label>
+                <Field type="email" name="email2" />
+                {props.errors.email && <div id="feedback">{props.errors.email}</div>}
+                <Divider />
+                <Button type="submit">Submit</Button>
+            </FieldSet>
         </form>
     );
 };
 export const SimpleTypescriptFormContainer = (formikProps: FormikConfig<ISimpleFormData>) => (
     <div>
         <h1>SimpleTypescriptFormContainer</h1>
-        <Formik {...formikProps} component={SimpleTypescriptFormComponent} />
+        <Formik {...formikProps} component={FormikFormComponent} />
     </div>
 );
 
