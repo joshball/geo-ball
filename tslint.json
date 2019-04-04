@@ -19,11 +19,12 @@
         "no-implicit-dependencies": [true, "dev"],
         "no-internal-module": false,
         "no-namespace": false,
+        "no-unused-variable": false,
         "object-literal-sort-keys": false,
         "one-variable-per-declaration": false,
         "ordered-imports": false,
         "prefer-for-of": false,
         "prettier": true,
-        "variable-name": false
+        "variable-name": false,
     }
 }

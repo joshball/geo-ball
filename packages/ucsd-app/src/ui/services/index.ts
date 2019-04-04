@@ -9,5 +9,6 @@
 // }
 
 export interface IServices {
-    fss: IFileStorageService;
+    fss: any;
+    // fss: IFileStorageService;
 }

@@ -1,7 +1,11 @@
 // import { ThemeProvider } from '../atoms';
+import { ThemeProvider, defaultTheme } from '../_external/fannypack/fannypackExports';
 
 // https://fannypack.style/styling/theming
 // https://fannypack.style/styling/fonts
+import { faHome, faSearch, faClipboard } from '@fortawesome/free-solid-svg-icons';
+import { faAddressBook } from '@fortawesome/free-regular-svg-icons';
+
 const fonts = {
     systemUi: 'system-ui',
     appleSystem: '-apple-system',
@@ -27,6 +31,9 @@ const fonts = {
         'Fira Code, Operator Mono, -apple-system, Helvetica Neue, Segoe UI, Roboto, Liberation Sans',
 };
 
+export const fpDefaultTheme = defaultTheme;
+export const dumpTheme = () => console.log(JSON.stringify(fpDefaultTheme, null, 4));
+
 export const theme = {
     global: {
         fontFamily: fonts.default,
@@ -40,6 +47,20 @@ export const theme = {
         normal: 400,
         bold: 700,
     },
+    // Icon: {
+    //     icons: [
+    //         {
+    //             icons: [faHome, faSearch, faClipboard],
+    //             prefix: 'solid-',
+    //             type: 'font-awesome',
+    //         },
+    //         {
+    //             icons: [faAddressBook],
+    //             prefix: 'regular-',
+    //             type: 'font-awesome',
+    //         },
+    //     ],
+    // },
 };
 
 // https://fonts.adobe.com/collections/productivity-infographics-pack

@@ -13,15 +13,15 @@ import {
 } from './Forms';
 
 export const CreateApiFormManager = () => {
-    const query = new ApiFormValuesTuple<IGenericUrlParamsFormValues>(
+    const urlTuple = new ApiFormValuesTuple<IGenericUrlParamsFormValues>(
         new GenericUrlParamsFormValues(),
         (GenericUrlParamsForm as never) as JSX.Element,
     );
-    const body = new ApiFormValuesTuple<IGenericBodyParamsFormValues>(
+    const bodyTuple = new ApiFormValuesTuple<IGenericBodyParamsFormValues>(
         new GenericBodyParamsFormValues(),
         (GenericBodyParamsForm as never) as JSX.Element,
     );
-    const headers = new ApiFormValuesTuple<IGenericHeadersFormValues>(
+    const headersTuple = new ApiFormValuesTuple<IGenericHeadersFormValues>(
         new GenericHeadersFormValues(),
         (GenericHeadersForm as never) as JSX.Element,
     );
@@ -30,5 +30,5 @@ export const CreateApiFormManager = () => {
         IGenericUrlParamsFormValues,
         IGenericBodyParamsFormValues,
         IGenericHeadersFormValues
-    >(query, body, headers);
+    >({ urlTuple, bodyTuple, headersTuple });
 };

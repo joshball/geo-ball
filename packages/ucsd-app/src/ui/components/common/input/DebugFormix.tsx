@@ -29,7 +29,7 @@ export const DebugFormix = () => (
         {/* {({ validationSchema, validate, onSubmit, ...rest }) => ( */}
         <FormikConsumer>
             {({ validate, resetForm, ...rest }) => {
-                console.log('DEBUG:');
+                console.log('DEBUG:', rest);
                 // console.log('DEBUG:', validate, resetForm, rest)
                 // console.log('DEBUG rest...', rest)
                 // console.log('DEBUG.this:', this)

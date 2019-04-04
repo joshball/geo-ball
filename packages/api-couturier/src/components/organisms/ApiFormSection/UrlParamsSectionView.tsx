@@ -1,55 +1,53 @@
 import * as React from 'react';
-import { FunctionComponent } from 'react';
 import { Card } from '@geo-ball/component-lib';
 
 import { ApiFormSectionMgr } from '../../../utils';
 import { ApiFormSectionView } from './ApiFormSectionView';
 import { DebuggerColumnsView } from '../DebuggerView/DebuggerColumnsView';
-import { SimpleDebugFormixDiv } from '../DebuggerView/DebugFormixDiv';
+import { SimpleDebugInformedDiv } from '../DebuggerView/DebugInformedDiv';
+import { withFormState, FormState } from 'informed';
 
 export interface IUrlParamsDebuggerViewProps {
-    formMgr: ApiFormSectionMgr<any>;
+    formState: FormState<any>;
 }
-export const UrlParamsDebuggerView: FunctionComponent<IUrlParamsDebuggerViewProps> = ({
-    formMgr,
-}) => {
-    console.log('UrlParamsDebuggerView.formMgr', formMgr);
-    let formValues;
-    formMgr.getFormValues().then(fv => (formValues = fv));
-    console.log('UrlParamsDebuggerView.formValues', formValues);
+
+export const UrlParamsDebuggerView = withFormState(({ formState }: IUrlParamsDebuggerViewProps) => {
+    console.log('$$$$$$$$$$$$$$$$ UrlParamsDebuggerView $$$$$$$$$');
+    console.log('UrlParamsDebuggerView.formState', formState);
+    console.log('UrlParamsDebuggerView HEY QUERY', formState.values);
     return (
         <DebuggerColumnsView>
             <Card padding="0.5rem" title="Parameters" height="400px">
-                <pre>{JSON.stringify(formValues, undefined, 4)}</pre>
+                <pre>{JSON.stringify(formState.values, undefined, 4)}</pre>
             </Card>
             <Card padding="0.5rem" title="Parameter Encoded" height="400px">
                 <pre>STUFF</pre>
             </Card>
             <Card padding="0.5rem" title="Form State" height="400px">
-                <SimpleDebugFormixDiv />
+                <SimpleDebugInformedDiv {...formState} />
             </Card>
         </DebuggerColumnsView>
     );
-};
+});
 
-export interface IUrlParamsSectionViewProps {
-    urlParams: ApiFormSectionMgr<any>;
+export interface IUrlParamsSectionViewProps<TUrlParamsFormValues> {
+    urlParams?: Optional<ApiFormSectionMgr<TUrlParamsFormValues>>;
 }
+
 /**
  * This will render then URL Params FORM and Debbugger view
  */
-export const UrlParamsSectionView = ({ urlParams }: IUrlParamsSectionViewProps) => {
+export const UrlParamsSectionView = <TUrlParamsFormValues extends {}>({
+    urlParams: qpFormSectionMgr,
+}: IUrlParamsSectionViewProps<TUrlParamsFormValues>) => {
+    if (!qpFormSectionMgr) {
+        return null;
+    }
     const props = {
         title: 'Query Params',
-        formMgr: urlParams,
-        mainForm: urlParams.form(urlParams.config),
-        // debugForm: <div>Debug Form</div>,
-        debugForm: UrlParamsDebuggerView,
+        formMgr: qpFormSectionMgr,
+        MainForm: qpFormSectionMgr.form,
+        DebugForm: UrlParamsDebuggerView,
     };
-    // DebuggerColumnsView;
-    return (
-        <div>
-            <ApiFormSectionView {...props} />
-        </div>
-    );
+    return <ApiFormSectionView {...props} />;
 };

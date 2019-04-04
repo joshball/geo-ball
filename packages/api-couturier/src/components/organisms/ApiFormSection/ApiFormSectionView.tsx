@@ -3,6 +3,7 @@ import { Switch, Hidden, styled, Card, Box } from '@geo-ball/component-lib';
 import { HiddenDebuggerSection } from '../../molecules/HiddenDebuggerSection/HiddenDebuggerSection';
 import { DebuggerSwitch } from '../../molecules/DebuggerSwitch/DebuggerSwitch';
 import { ApiFormSectionMgr } from '../../../utils/forms/ApiFormManager';
+import { Form, FormApi } from 'informed';
 
 const SectionCard = styled(Card)`
     margin: 30px 0px 20px 0px;
@@ -11,8 +12,8 @@ const SectionCard = styled(Card)`
 export interface IApiFormSectionViewProps {
     title: string;
     formMgr: ApiFormSectionMgr<any>;
-    mainForm: any;
-    debugForm: any;
+    MainForm: any;
+    DebugForm: any;
     // config: ActionFormikConfig<any>;
 }
 
@@ -25,21 +26,26 @@ export class ApiFormSectionView extends React.Component<
     IApiFormSectionViewState
 > {
     props: IApiFormSectionViewProps;
-    state: IApiFormSectionViewState;
+    // state: IApiFormSectionViewState;
+    formApi?: FormApi<any>;
 
     constructor(props: IApiFormSectionViewProps) {
         super(props);
         this.props = props;
-        this.state = {
-            formState: {},
-        };
+        // this.state = {
+        //     formState: {},
+        // };
+        this.setFormApi = this.setFormApi.bind(this);
+    }
+
+    setFormApi(formApi: FormApi<any>) {
+        this.formApi = formApi;
     }
 
     render() {
         // const { title, mainForm, debugForm, ...rest } = this.props;
-        const { mainForm, debugForm } = this.props;
-        const { formState } = this.state;
-        if (!mainForm && !debugForm) {
+        const { MainForm, DebugForm } = this.props;
+        if (!MainForm && !DebugForm) {
             return null;
         }
         // const paramsDbgProps = createParameterDebuggerProps(formState);
@@ -47,19 +53,22 @@ export class ApiFormSectionView extends React.Component<
         // <HiddenDebuggerSection {...hidden} {...title} {...formToRender}>
         //     {debugForm}
         // </HiddenDebuggerSection>
+        console.log('ApiFormSectionView.render PROPS', this.props);
 
         return (
-            <Hidden.Container initialState={{ visible: true }}>
-                {(hidden: any) => {
-                    return (
-                        <HiddenDebuggerSection
-                            hidden={hidden}
-                            {...this.props}
-                            formState={formState}
-                        />
-                    );
-                }}
-            </Hidden.Container>
+            <Form getApi={this.setFormApi} initialValues={this.props.formMgr.initialValues}>
+                <Hidden.Container initialState={{ visible: true }}>
+                    {(hidden: any) => {
+                        return (
+                            <HiddenDebuggerSection
+                                hidden={hidden}
+                                {...this.props}
+                                // formState={formState}
+                            />
+                        );
+                    }}
+                </Hidden.Container>
+            </Form>
         );
     }
 }

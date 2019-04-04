@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { FunctionComponent } from 'react';
 
-import { FormikInputField } from '@geo-ball/component-lib';
+import { InformedInputField } from '@geo-ball/component-lib';
 
-import { Form, FormikProps, Field } from 'formik';
+import { Form, FormProps } from 'informed';
 
 export interface IGenericBodyParamsFormValues {
     query: string;
@@ -16,15 +16,19 @@ export class GenericBodyParamsFormValues implements IGenericBodyParamsFormValues
     }
 }
 
-export const GenericBodyParamsForm: FunctionComponent<FormikProps<IGenericBodyParamsFormValues>> = (
-    _props: FormikProps<IGenericBodyParamsFormValues>,
+export const GenericBodyParamsForm: FunctionComponent<FormProps<IGenericBodyParamsFormValues>> = (
+    props: any,
 ) => {
     // console.log("GenericBodyParamsForm props", props)
     // const { isSubmitting } = props
     // props.values.name
     return (
         <Form>
-            <Field component={FormikInputField} name="query" label="Query" />
+            {({ formState }) => {
+                return <InformedInputField label="Query" field="query" {...props} {...formState} />;
+            }}
+            {/* <InformedInputField label="Query" field="query" /> */}
+
             {/* <button type="submit" disabled={isSubmitting}>
                 Submit
             </button> */}

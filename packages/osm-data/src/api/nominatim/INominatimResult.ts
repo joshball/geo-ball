@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 export interface INominatimAddressDetail {
     house_number?: string;
     road?: string;
@@ -19,7 +20,7 @@ export interface INominatimResult {
     licence: string;
     osm_type: string;
     osm_id: string;
-    boundingbox?: string[];
+    boundingbox?: Array<string>;
     lat: string;
     lon: string;
     display_name: string;

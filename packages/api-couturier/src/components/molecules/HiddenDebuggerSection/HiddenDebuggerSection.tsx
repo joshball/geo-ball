@@ -8,33 +8,30 @@ const SectionCard = styled(Card)`
 
 export interface IHiddenDebuggerSectionProps {
     title: string;
-    formMgr: any;
-    mainForm: any;
-    debugForm: any;
+    MainForm: any;
+    DebugForm: any;
     hidden: any;
-    formState: any;
 }
 
 export const HiddenDebuggerSection = ({
     title,
-    formMgr,
-    mainForm,
-    debugForm,
+    MainForm,
+    DebugForm,
     hidden,
+    ...rest
 }: IHiddenDebuggerSectionProps) => {
-    // console.log('HiddenDebuggerSection.mainForm:', mainForm);
-    // console.log('HiddenDebuggerSection.debugForm:', debugForm);
-    // console.log('HiddenDebuggerSection.rest:', rest);
-    const debugProps = {
-        formMgr,
-    };
+    // console.log('HiddenDebuggerSection.MainForm:', MainForm);
+    // console.log('HiddenDebuggerSection.DebugForm:', DebugForm);
+    console.log('****** HiddenDebuggerSection.rest:', rest);
     return (
         <SectionCard elevation="400" title={title} headerActions={<DebuggerSwitch {...hidden} />}>
-            {mainForm}
+            <MainForm {...rest} />
+
             <Hidden {...hidden}>
                 <>
                     <Divider marginTop="major-4" />
-                    {debugForm(debugProps)}
+                    {/* {debugForm(debugProps)} */}
+                    <DebugForm {...rest} />
                 </>
             </Hidden>
         </SectionCard>

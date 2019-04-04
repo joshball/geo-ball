@@ -11,12 +11,12 @@ import {
     Alignment,
 } from '@blueprintjs/core';
 
-import { IDownloadOsmParams } from '../../../services/OsmService';
 import {
     reverseGeocodeLocation,
     IReverseGeocodeResponse,
 } from '../../../services/GeocodingService';
 import { LatLngBounds, LatLng, ILatLng } from '@geo-ball/geo-core';
+import { IDownloadOsmParams } from '../../../../background/bg-ucsd';
 
 export interface OsmDownloadQueryFormProps {
     downloadOsmFile: (osmParams: IDownloadOsmParams) => void;
@@ -102,14 +102,15 @@ export class OsmDownloadQueryForm extends React.Component<
             });
             return;
         }
-        this.props.downloadOsmFile({
-            name: this.state.name,
-            desc: this.state.desc,
-            area: this.props.area,
-            bounds: this.props.bounds,
-            center: this.props.center,
-            fake: this.state.fakeTheDownload,
-        });
+        console.log('THIS IS BROKEN COME HERE this.props.downloadOsmFile({');
+        // this.props.downloadOsmFile({
+        //     name: this.state.name,
+        //     desc: this.state.desc,
+        //     area: this.props.area,
+        //     bounds: this.props.bounds,
+        //     center: this.props.center,
+        //     fake: this.state.fakeTheDownload,
+        // });
     }
     render() {
         return (

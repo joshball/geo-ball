@@ -4,7 +4,7 @@ import * as isDev from 'electron-is-dev';
 
 export function createMacMenu(
     window: Electron.BrowserWindow,
-): Electron.MenuItemConstructorOptions[] {
+): Array<Electron.MenuItemConstructorOptions> {
     const shared = createSharedMenuItems(window);
     const name: string = app.getName();
 
@@ -38,7 +38,9 @@ export function createMacMenu(
 
     const helpMenu: Electron.MenuItemConstructorOptions = {
         label: 'Help',
-        submenu: [process.env.HOMEPAGE && shared.visit].filter(Boolean),
+        submenu: [process.env.HOMEPAGE && shared.visit].filter(Boolean) as Array<
+            Electron.MenuItemConstructorOptions
+        >,
     };
 
     return [appMenu, viewMenu, helpMenu];

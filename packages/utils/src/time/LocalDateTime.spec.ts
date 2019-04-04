@@ -2,7 +2,6 @@ import test from 'ava';
 import { LocalDateTime, ILocalDateTimeObject } from './LocalDateTime';
 import moment from 'moment-timezone';
 
-
 const PARSED_DATE: ILocalDateTimeObject = {
     years: 2013,
     months: 1,
@@ -24,8 +23,8 @@ const PARSED_DATE: ILocalDateTimeObject = {
     iso: '2013-02-08T16:30:26.123Z',
     isoSimple: '2013-02-08 16:30:26.123',
     // isoLocal: '2013-02-08T16:30:26.123+00:00'
-    isoLocal: '2013-02-08T09:30:26.123-07:00'
-}
+    isoLocal: '2013-02-08T09:30:26.123-07:00',
+};
 
 test.beforeEach(_t => {
     (moment as any).suppressDeprecationWarnings = true;
@@ -33,7 +32,6 @@ test.beforeEach(_t => {
 test.afterEach(_t => {
     (moment as any).suppressDeprecationWarnings = true;
 });
-
 
 test('LocalDateTime constructs correct time (brittle)', t => {
     const ldt = new LocalDateTime();
@@ -56,7 +54,6 @@ test('LocalDateTime constructs correct time (brittle)', t => {
     t.is(ldt.timezoneOffsetMin, date.getTimezoneOffset());
 });
 
-
 test('LocalDateTime.Parse() differentiates milliseconds', t => {
     const ldtOne = LocalDateTime.Parse('2013-02-08T16:30:26.123Z');
     const ldtTwo = LocalDateTime.Parse('2013-02-08T16:30:26.124Z');
@@ -66,8 +63,6 @@ test('LocalDateTime.Parse() differentiates milliseconds', t => {
     t.is(ldtTwo.unixUtcEpochMs, 1360341026124);
     t.is(ldtTwo.unixSec, 1360341026);
 });
-
-
 
 test('LocalDateTime.Parse() can parse ISO local string', t => {
     const tsOne = '2013-02-08T09:30:26.123-07:00';
@@ -93,7 +88,6 @@ test('LocalDateTime.Parse() parses ISO simple string as LOCAL not UTC', t => {
     t.deepEqual(ldtOne.object, PARSED_DATE);
 });
 
-
 test('LocalDateTime.toFilenameTimestamp() creates correct name', t => {
     const ts = '2013-02-08 09:30:26.123';
     const ldt = LocalDateTime.Parse(ts);
@@ -113,13 +107,12 @@ test('LocalDateTime.Parse() throws with bad input', t => {
     t.is(error.message, 'Invalid Date string: [arggggg]');
 });
 
-
 test('LocalDateTime.toFilenameTimestamp() creates correct filename timestamp', t => {
     const ts = '2013-02-08 09:30:26.123';
     const ldt = LocalDateTime.Parse(ts);
     t.is(ldt.toFilenameTimestamp(), '2013-02-08 0930-26');
     const yag = ldt.fromNow();
-    const hasYearag = yag.indexOf('years ago')
+    const hasYearag = yag.indexOf('years ago');
     t.true(hasYearag > 0);
 });
 
@@ -177,4 +170,3 @@ test('LocalDateTime ParseFilenameFormatWithRegex throws when bad input and stric
     const error = t.throws(() => LocalDateTime.ParseFilenameFormatWithRegex(ts, true));
     t.is(error.message, 'Strict mode on and Invalid Date string [xxxx2013-02-08 0930-26xxxxx]');
 });
-

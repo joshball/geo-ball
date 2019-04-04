@@ -6,9 +6,9 @@ import * as pjson from './package.json';
 const DEV_PORT = 4445;
 const OUTPUT_DIR = 'out';
 const ASSETS = ['*.jpg', '*.png', '*.jpeg', '*.gif', '*.svg'];
-const path = require('path');
+import { join } from 'path';
 function srcPath(subdir: string) {
-    const p = path.join(__dirname, '../component-lib/src', subdir);
+    const p = join(__dirname, '../component-lib/src', subdir);
     console.log('p', p);
     return p;
 }
@@ -22,7 +22,7 @@ Sparky.task('copy-html', () => {
     return Sparky.src('src/main/*.html').dest(`${OUTPUT_DIR}/$name`);
 });
 
-const react = require.resolve('react');
+// const react = require.resolve('react');
 // the default task
 Sparky.task('default', ['copy-html'], () => {
     // setup the producer with common settings

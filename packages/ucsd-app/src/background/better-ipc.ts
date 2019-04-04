@@ -1,14 +1,10 @@
 // console.log('BACKGROUND!');
 import { BrowserWindow, ipcRenderer, remote } from 'electron';
 // tslint:disable-next-line:no-duplicate-imports
-import * as electron from 'electron';
-import * as ipc from 'electron-better-ipc';
-import {
-    getRendererResponseChannels,
-    getResponseChannels,
-    getRendererId,
-    getListenerChannel,
-} from './utils';
+// import * as electron from 'electron';
+import * as betterIpc from 'electron-better-ipc';
+const ipc: any = betterIpc;
+import { getRendererResponseChannels, getRendererId, getListenerChannel } from './utils';
 import { v4 as uuid } from 'uuid';
 
 ipc.callRender = (window: BrowserWindow, channel: string, data: any) =>

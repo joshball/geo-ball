@@ -42,13 +42,16 @@
     ]
   },
   "devDependencies": {
-    "@types/leaflet": "^1.4.2",
-    "ava": "^1.1.0",
-    "ava-ts": "^0.25.2",
-    "nyc": "^13.1.0"
+    "@types/leaflet": "^1.x",
+    "@types/semver": "^5.5.0",
+    "ava": "^1.x",
+    "ava-ts": "^0.x",
+    "nyc": "^13.x"
   },
   "dependencies": {
-    "@turf/turf": "^5.1.6",
-    "leaflet": "^1.4.0"
+    "@turf/nearest-point-to-line": "^6.0.0",
+    "@turf/point-to-line-distance": "^6.0.0",
+    "@turf/turf": "^5.x",
+    "leaflet": "^1.x"
   }
 }

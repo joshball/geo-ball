@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 // Themes
-export { ThemeProvider } from 'fannypack';
+export { defaultTheme, ThemeProvider } from 'fannypack';
 
 // Utils
 export { Set, Group, Modal, Overlay, Backdrop, Hidden, Portal } from 'fannypack';

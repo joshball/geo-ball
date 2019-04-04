@@ -50,6 +50,7 @@ const DebugColumn = (columnTitle: string, index: number, child: any) => {
 };
 
 export const DebuggerColumnsView: FunctionComponent<ReactNode> = (props: any) => {
+    console.log('DebuggerColumnsView.props', props);
     // console.log('DebuggerColumnsView.children', props.children);
     // console.log('DebuggerColumnsView.children count', React.Children.count(props.children));
     // console.log('DebuggerColumnsView.DebugColumn', DebugColumn);

@@ -4,7 +4,7 @@ import { cssProps, styles } from '../../../config/theme';
 
 export interface CenteredContentProps {
     children: React.ReactNode;
-    style?: React.CSSProperties | React.CSSProperties[] | false | null;
+    style?: React.CSSProperties | Array<React.CSSProperties> | false | null;
 }
 
 const BASE = compose(

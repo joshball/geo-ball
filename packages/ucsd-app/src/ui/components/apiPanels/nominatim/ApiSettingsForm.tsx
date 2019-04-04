@@ -8,7 +8,8 @@ import {
     FormikRadioButtonGroup,
     FormikNumericInput,
 } from '../../common/input/FormikWrapped';
-import { RadioButton } from '../../common/input/RadioButtonGroup';
+import { RadioButton } from '@geo-ball/component-lib';
+// import { RadioButton } from '../../common/input/RadioButtonGroup';
 
 const JDR = styles.justifyRight;
 

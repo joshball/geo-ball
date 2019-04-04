@@ -19,6 +19,9 @@
         // "baseUrl": ".",
         "baseUrl": "src",
         // "rootDir": "src",
+        "module": "commonjs",
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
         "typeRoots": [
             "./node_modules/@types",
             "../../node_modules/@types",
@@ -30,7 +33,6 @@
             // "CL/*": ["../component-lib/src/*"],
             // "@types/*": ["../component-lib/src/types/*"],
             // "@components/*": ["../component-lib/src/components/*"],
-
             // "@root": ["../component-lib/src/."],
             // "@types": ["../component-lib/src/types"],
             // "@components": ["../component-lib/src/components"],
@@ -39,7 +41,6 @@
             // "@organisms": ["../component-lib/src/components/organisms"],
             // "@panels": ["../component-lib/src/components/panels"],
             // "@themes": ["../component-lib/src/components/themes"],
-
             // "@atoms/*": ["../component-lib/src/components/atoms/*"],
             // "@molecules/*": ["../component-lib/src/components/molecules/*"],
             // "@organisms/*": ["../component-lib/src/components/organisms/*"],
@@ -50,12 +51,12 @@
     "include": [
         "./src",
         "./ext-stub-types",
-        "../../ext-stub-types",
+        "../../ext-stub-types"
         // "./fuse.ts",
         // ".storybook/views"
     ],
     // "include": ["src/**/*", "ext-stub-types/**/*", "fuse.ts", ".storybook/views"],
-    "exclude": ["node_modules", "build", "scripts"]
+    "exclude": ["node_modules", "build", "scripts", ".storybook", "../../node_modules"]
 
     // "compilerOptions": {
     //     "baseUrl": ".",

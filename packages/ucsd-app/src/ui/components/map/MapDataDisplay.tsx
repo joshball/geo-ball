@@ -4,8 +4,10 @@ import { css } from 'glamor';
 import { LatLngTxt } from '../common/geo/LatLngTxt';
 import { observer, inject } from 'mobx-react';
 import { RootStore } from '../../stores/RootStore';
-import { downloadOsmFile, IDownloadOsmParams } from '../../services/OsmService';
+import { downloadOsmFile } from '../../services/OsmService';
+// import { downloadOsmFile, IDownloadOsmParams } from '../../services/OsmService';
 import { DownloadLatLngBoundsBox } from './download/DownloadLatLngBoundsBox';
+import { IDownloadOsmParams } from '../../../background/bg-ucsd';
 
 const outerBoxCss = css({
     flex: '0 0 auto',

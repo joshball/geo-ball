@@ -1,124 +1,128 @@
 {
-  "private": true,
-  "name": "@geo-ball/component-lib",
-  "description": "Library for React Components",
-  "license": "ISC",
-  "author": "Joshua Ball <joshua.g.s.ball@gmail.com>",
-  "homepage": "https://github.com/joshball/geo-ball#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/joshball/geo-ball.git"
-  },
-  "bugs": {
-    "url": "https://github.com/joshball/geo-ball/issues"
-  },
-  "version": "1.0.0",
-  "main": "build/index.js",
-  "files": [
-    "build"
-  ],
-  "directories": {
-    "lib": "build",
-    "test": "tests"
-  },
-  "scripts": {
-    "tsc": "tsc --version",
-    "build": "tsc -p tsconfig.json",
-    "build:watch": "tsc -p tsconfig.json --watch",
-    "build:parcel:watch": "parcel watch ./src/index.ts --bundle-node-modules --target node --out-dir ./build",
-    "build:parcel": "parcel build ./src/index.ts --no-minify --out-dir ./build",
-    "build:parcel:nocache": "parcel build ./src/index.ts --no-cache --out-dir ./build",
-    "build:tsc:types": "tsc -p tsconfig.json --emitDeclarationOnly",
-    "build:tsc:types:watch": "tsc -p tsconfig.json --emitDeclarationOnly --watch",
-    "build:tsc:clean": "tsc --build tsconfig.json --clean",
-    "build:tsc:watch": "tsc -p tsconfig.json --watch",
-    "clean": "rimraf build .nyc_output",
-    "clean:node_modules": "rimraf node_modules",
-    "cleanup:packages": "yarn run prettier-package-json --write",
-    "eslint:lint": "eslint './src/**/*.{js,jsx,ts,tsx}'",
-    "eslint:check-config": "eslint --print-config . | eslint-config-prettier-check",
-    "sg": "styleguidist server",
-    "test": "yarn run build && yarn run nyc ava --verbose",
-    "test:watch": "yarn run build && yarn run ava --watch"
-  },
-  "parcel-plugin-typescript": {
-    "transpileOnly": false
-  },
-  "_moduleAliases": {
-    "CL": [
-      "src"
-    ]
-  },
-  "ava": {
-    "snapshotDir": "./snapshots",
-    "failFast": true,
+    "private": true,
+    "name": "@geo-ball/component-lib",
+    "description": "Library for React Components",
+    "license": "ISC",
+    "author": "Joshua Ball <joshua.g.s.ball@gmail.com>",
+    "homepage": "https://github.com/joshball/geo-ball#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/joshball/geo-ball.git"
+    },
+    "bugs": {
+        "url": "https://github.com/joshball/geo-ball/issues"
+    },
+    "version": "1.0.0",
+    "main": "build/index.js",
     "files": [
-      "build/**/*.spec.js"
+        "build"
     ],
-    "sources": [
-      "build/**/*.js"
-    ]
-  },
-  "devDependencies": {
-    "@types/jest": "^23.x",
-    "@types/json-stringify-safe": "^5.0.0",
-    "@types/lodash.camelcase": "^4.x",
-    "@types/node": "^10.x",
-    "@types/react": "^16.x",
-    "@types/react-dom": "^16.x",
-    "@types/rollup-plugin-commonjs": "^9.x",
-    "@types/rollup-plugin-json": "^3.x",
-    "@types/rollup-plugin-node-resolve": "^4.x",
-    "@types/rollup-plugin-sourcemaps": "^0.x",
-    "@types/styled-components": "4.1.8",
-    "@typescript-eslint/eslint-plugin": "^1.x",
-    "@typescript-eslint/parser": "^1.x",
-    "eslint": "^5.x",
-    "eslint-config-airbnb": "^17.x",
-    "eslint-config-prettier": "^4.x",
-    "eslint-plugin-eslint-plugin": "^2.x",
-    "eslint-plugin-import": "^2.x",
-    "eslint-plugin-jest": "^22.x",
-    "eslint-plugin-jsx-a11y": "^6.x",
-    "eslint-plugin-markdown": "^1.x",
-    "eslint-plugin-prettier": "^3.x",
-    "eslint-plugin-react": "^7.x",
-    "eslint-plugin-unicorn": "^7.x",
-    "jest": "^23.x",
-    "jest-expect-contain-deep": "^1.x",
-    "lodash.camelcase": "^4.x",
-    "prettier": "^1.x",
-    "prettier-package-json": "^2.x",
-    "react": "^16.x",
-    "react-docgen-typescript": "^1.12.3",
-    "react-dom": "^16.x",
-    "react-styleguidist": "^9.0.1",
-    "rimraf": "^2.x",
-    "rollup": "^1.x",
-    "rollup-plugin-commonjs": "^9.x",
-    "rollup-plugin-json": "^3.x",
-    "rollup-plugin-node-resolve": "^4.0.1",
-    "rollup-plugin-peer-deps-external": "^2.2.0",
-    "rollup-plugin-sourcemaps": "^0.x",
-    "rollup-plugin-typescript2": "^0.x",
-    "source-map-loader": "^0.2.4",
-    "ts-jest": "^23.x",
-    "ts-node": "^7.x",
-    "tsconfig-paths": "^3.x",
-    "tslint": "^5.x",
-    "tslint-config-prettier": "^1.x",
-    "tslint-microsoft-contrib": "^5.x",
-    "tslint-plugin-prettier": "^2.x",
-    "tslint-sane": "^1.x",
-    "typedoc": "^0.x",
-    "typescript": "^3.x"
-  },
-  "dependencies": {
-    "fannypack": "^4.x",
-    "formik": "^1.x",
-    "informed": "^2.1.12",
-    "json-stringify-safe": "^5.x",
-    "prop-types": "^15.x",
-    "reakit": "^0.x"
-  }
+    "directories": {
+        "lib": "build",
+        "test": "tests"
+    },
+    "scripts": {
+        "tsc": "tsc --version",
+        "build": "tsc -p tsconfig.json",
+        "build:watch": "tsc -p tsconfig.json --watch",
+        "build:parcel:watch": "parcel watch ./src/index.ts --bundle-node-modules --target node --out-dir ./build",
+        "build:parcel": "parcel build ./src/index.ts --no-minify --out-dir ./build",
+        "build:parcel:nocache": "parcel build ./src/index.ts --no-cache --out-dir ./build",
+        "build:tsc:types": "tsc -p tsconfig.json --emitDeclarationOnly",
+        "build:tsc:types:watch": "tsc -p tsconfig.json --emitDeclarationOnly --watch",
+        "build:tsc:clean": "tsc --build tsconfig.json --clean",
+        "build:tsc:watch": "tsc -p tsconfig.json --watch",
+        "clean": "rimraf build .nyc_output",
+        "clean:node_modules": "rimraf node_modules",
+        "cleanup:packages": "yarn run prettier-package-json --write",
+        "eslint:lint": "eslint './src/**/*.{js,jsx,ts,tsx}'",
+        "eslint:check-config": "eslint --print-config . | eslint-config-prettier-check",
+        "sg": "styleguidist server",
+        "test": "yarn run build && yarn run nyc ava --verbose",
+        "test:watch": "yarn run build && yarn run ava --watch"
+    },
+    "parcel-plugin-typescript": {
+        "transpileOnly": false
+    },
+    "_moduleAliases": {
+        "CL": [
+            "src"
+        ]
+    },
+    "ava": {
+        "snapshotDir": "./snapshots",
+        "failFast": true,
+        "files": [
+            "build/**/*.spec.js"
+        ],
+        "sources": [
+            "build/**/*.js"
+        ]
+    },
+    "peerDependencies": {
+        "react": "^16.x",
+        "react-dom": "^16.x"
+    },
+    "devDependencies": {
+        "@types/jest": "^23.x",
+        "@types/json-stringify-safe": "^5.0.0",
+        "@types/lodash.camelcase": "^4.x",
+        "@types/node": "^10.x",
+        "@types/react": "^16.x",
+        "@types/react-dom": "^16.x",
+        "@types/rollup-plugin-commonjs": "^9.x",
+        "@types/rollup-plugin-json": "^3.x",
+        "@types/rollup-plugin-node-resolve": "^4.x",
+        "@types/rollup-plugin-sourcemaps": "^0.x",
+        "@types/styled-components": "4.1.8",
+        "@typescript-eslint/eslint-plugin": "^1.x",
+        "@typescript-eslint/parser": "^1.x",
+        "eslint": "^5.x",
+        "eslint-config-airbnb": "^17.x",
+        "eslint-config-prettier": "^4.x",
+        "eslint-plugin-eslint-plugin": "^2.x",
+        "eslint-plugin-import": "^2.x",
+        "eslint-plugin-jest": "^22.x",
+        "eslint-plugin-jsx-a11y": "^6.x",
+        "eslint-plugin-markdown": "^1.x",
+        "eslint-plugin-prettier": "^3.x",
+        "eslint-plugin-react": "^7.x",
+        "eslint-plugin-unicorn": "^7.x",
+        "jest": "^23.x",
+        "jest-expect-contain-deep": "^1.x",
+        "lodash.camelcase": "^4.x",
+        "prettier": "^1.x",
+        "prettier-package-json": "^2.x",
+        "react-docgen-typescript": "^1.12.3",
+        "react-styleguidist": "^9.0.1",
+        "rimraf": "^2.x",
+        "rollup": "^1.x",
+        "rollup-plugin-commonjs": "^9.x",
+        "rollup-plugin-json": "^3.x",
+        "rollup-plugin-node-resolve": "^4.0.1",
+        "rollup-plugin-peer-deps-external": "^2.2.0",
+        "rollup-plugin-sourcemaps": "^0.x",
+        "rollup-plugin-typescript2": "^0.x",
+        "source-map-loader": "^0.2.4",
+        "ts-jest": "^23.x",
+        "ts-node": "^7.x",
+        "tsconfig-paths": "^3.x",
+        "tslint": "^5.x",
+        "tslint-config-prettier": "^1.x",
+        "tslint-microsoft-contrib": "^5.x",
+        "tslint-plugin-prettier": "^2.x",
+        "tslint-sane": "^1.x",
+        "typedoc": "^0.x",
+        "typescript": "^3.x"
+    },
+    "dependencies": {
+        "@fortawesome/free-regular-svg-icons": "^5.8.1",
+        "@fortawesome/free-solid-svg-icons": "^5.8.1",
+        "fannypack": "^4.x",
+        "formik": "^1.x",
+        "informed": "^2.1.12",
+        "json-stringify-safe": "^5.x",
+        "prop-types": "^15.x",
+        "reakit": "^0.x"
+    }
 }

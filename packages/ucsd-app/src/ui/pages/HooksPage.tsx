@@ -139,7 +139,7 @@ function ReactHooksWorking() {
         </div>
     );
 }
-export const HooksPage: React.SFC<any> = (props: any) => {
+export const HooksPage: React.SFC<any> = (_props: any) => {
     return (
         <div>
             <ReactHooksWorking />

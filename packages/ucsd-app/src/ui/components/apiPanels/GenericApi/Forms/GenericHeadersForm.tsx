@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { FunctionComponent } from 'react';
 
-import { FormikInputField } from '@geo-ball/component-lib';
+import { InformedInputField } from '@geo-ball/component-lib';
 
-import { Form, FormikProps, Field } from 'formik';
+import { Form, FormProps } from 'informed';
 
 export interface IGenericHeadersFormValues {
     secret: string;
@@ -16,8 +16,8 @@ export class GenericHeadersFormValues implements IGenericHeadersFormValues {
     }
 }
 
-export const GenericHeadersForm: FunctionComponent<FormikProps<IGenericHeadersFormValues>> = (
-    _formikProps: FormikProps<IGenericHeadersFormValues>,
+export const GenericHeadersForm: FunctionComponent<FormProps<IGenericHeadersFormValues>> = (
+    props: any,
 ) => {
     // console.log("GenericHeadersForm formikProps", formikProps)
     // const { isSubmitting } = formikProps
@@ -25,10 +25,9 @@ export const GenericHeadersForm: FunctionComponent<FormikProps<IGenericHeadersFo
     // props.values.name
     return (
         <Form>
-            <Field component={FormikInputField} name="secret" label="Secret" />
-            {/* <button type="submit" disabled={isSubmitting}>
-                Submit
-            </button> */}
+            {({ formState }) => (
+                <InformedInputField label="Secret" field="secret" {...props} {...formState} />
+            )}
         </Form>
     );
 };

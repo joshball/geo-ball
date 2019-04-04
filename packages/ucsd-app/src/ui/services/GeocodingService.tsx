@@ -101,7 +101,7 @@ export const geocodeAddress = async (
 ): Promise<Array<INominatimResult>> => {
     console.log('geocodeAddress');
 
-    return NominatimApi.search(params).then((json: Array<INominatimResult>) => {
+    return NominatimApi.Geocode(params).then((json: Array<INominatimResult>) => {
         console.log('Array<INominatimResult>:', json);
         return json;
     });

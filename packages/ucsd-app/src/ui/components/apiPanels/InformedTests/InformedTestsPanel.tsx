@@ -2,7 +2,8 @@ import * as React from 'react';
 
 import { Form, Text } from 'informed';
 
-import { InformedFormContainer, ISimpleFormDataRedux } from './InformedFormComponent';
+import { InformedFormContainer } from './InformedFormComponent';
+import { TestFormData, ITestFormData } from './TestFormData';
 
 export interface IInformedTestsPanelState {}
 
@@ -26,7 +27,7 @@ export class InformedTestsPanel extends React.Component<
         console.log('InformedTestsPanel.fetchIt()');
         return Promise.resolve();
     }
-    onSubmit(values: ISimpleFormDataRedux, actions: any) {
+    onSubmit(values: ITestFormData, actions: any) {
         console.log('InformedTestsPanel.onSubmit()', values, actions);
         // console.log("GTFP.onSubmit().values", values)
         // console.log(JSON.stringify(values, null, 4))
@@ -52,14 +53,7 @@ export class InformedTestsPanel extends React.Component<
         //     </form>
         // )
         const informedProps: any = {
-            initialValues: {
-                firstName: 'Bill',
-                lastName: 'Nye',
-                username: 'scienceguy',
-                email: 'bill@nyelabs.com',
-                email2: 'sed@foo.com',
-                age: 60,
-            },
+            initialValues: new TestFormData(),
             onSubmit: this.onSubmit,
         };
         return (

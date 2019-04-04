@@ -17,7 +17,8 @@ export const getIntersectionsEx = (): Promise<Array<MapLocation>> => {
 //     // const osmRsdFiles = dataFiles.resolveOsmAndRsdFiles();
 //     return Promise.resolve(obfp.map(f => f.rsdJsonFilePath.path));
 // }
-export const getRoadSegmentsFiles = (): Promise<Array<RoadSegmentsFile>> => {
+export const getRoadSegmentsFiles = (): Promise<any> => {
+    // export const getRoadSegmentsFiles = (): Promise<Array<RoadSegmentsFile>> => {
     console.log('getRoadSegmentsFiles');
     const dataFiles = new UcsdDataFiles();
     const obfp = dataFiles.getOsmBasedFilePaths('sugarhouse.2019-01-13_1552.18.osm-data.json');
@@ -26,7 +27,8 @@ export const getRoadSegmentsFiles = (): Promise<Array<RoadSegmentsFile>> => {
     return Promise.resolve(obfp.map((f: any) => RoadSegmentsFile.Load(f.rsdJsonFilePath.path)));
 };
 
-export const getIntersectionFiles = (): Promise<Array<IntersectionsFile>> => {
+export const getIntersectionFiles = (): Promise<any> => {
+    // export const getIntersectionFiles = (): Promise<Array<IntersectionsFile>> => {
     console.log('getIntersectionFiles');
     const dataFiles = new UcsdDataFiles();
     const obfp = dataFiles.getOsmBasedFilePaths('sugarhouse.2019-01-13_1552.18.osm-data.json');

@@ -3,7 +3,7 @@ import * as isDev from 'electron-is-dev';
 
 export function createLinuxMenu(
     window: Electron.BrowserWindow,
-): Electron.MenuItemConstructorOptions[] {
+): Array<Electron.MenuItemConstructorOptions> {
     const shared = createSharedMenuItems(window);
 
     const fileMenu: Electron.MenuItemConstructorOptions = {
@@ -24,7 +24,9 @@ export function createLinuxMenu(
 
     const helpMenu: Electron.MenuItemConstructorOptions = {
         label: 'Help',
-        submenu: [process.env.HOMEPAGE && shared.visit].filter(Boolean),
+        submenu: [process.env.HOMEPAGE && shared.visit].filter(Boolean) as Array<
+            Electron.MenuItemConstructorOptions
+        >,
     };
 
     return [fileMenu, viewMenu, helpMenu];

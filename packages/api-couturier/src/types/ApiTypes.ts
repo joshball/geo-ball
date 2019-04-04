@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IHeaderContainerProps } from 'index';
+import { IHeaderContainerProps } from '../components/organisms/Header';
 
 // const ContentType = {
 //     'multipart/form-data',
@@ -167,7 +167,7 @@ export class ApiCallDefinition<
     }
 }
 
-export interface IApiCallbackData<TUrlParams, TBodyParams, THeaders> {
+export interface IApiCallbackData<TUrlParams = {}, TBodyParams = {}, THeaders = {}> {
     url: TUrlParams;
     body: TBodyParams;
     headers: THeaders;

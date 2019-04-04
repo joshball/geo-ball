@@ -5,7 +5,7 @@ import { Button, Intent } from '@blueprintjs/core';
 import { MapExplorerPage } from './MapExplorerPage';
 import { CenteredContent } from '../components/common/layout/CenteredContent';
 import { Text } from '../components/common/layout/Text';
-import { WelcomeScreen } from '../OLD/views/example/welcome-screen/welcome-screen';
+// import { WelcomeScreen } from '../OLD/views/example/welcome-screen/welcome-screen';
 import { MapDataFilesComponent } from '../components/files/MapDataFilesComponent';
 import { Redirect } from 'react-router';
 import { OsmFetchManagerComponent } from '../components/files/OsmFetchManagerComponent';
@@ -43,7 +43,7 @@ const buttonBarCss = cssProps({
     margin: '20px',
 });
 
-export const MapDataFilesPage: React.SFC<any> = (props: any) => {
+export const MapDataFilesPage: React.SFC<any> = (_props: any) => {
     console.log('MapDataFilesPage');
     return (
         <div style={mainLayout}>

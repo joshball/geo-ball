@@ -5,7 +5,7 @@ import { RootStore } from '../../stores/RootStore';
 import { FileListComponent } from './FileListComponent';
 import { FileStorageService } from '../../services/FileStorageService';
 
-import { OsmFetchManager, IOsmFetchManager } from '@geo-ball/ucsd-core';
+import { OsmFetchManager, IOsmFetchManager, IOsmFetchDir } from '@geo-ball/ucsd-core';
 import { OsmFetchesListComponent } from './OsmFetchesListComponent';
 import { SelectedFetchComponent } from './SelectedFetchComponent';
 import { H5 } from '@blueprintjs/core';
@@ -134,11 +134,13 @@ export class MapDataFilesComponent extends React.Component<
         e.preventDefault();
     };
 
-    handleFetchClicked = (selectedFetch: OsmFetchDir) => {
+    handleFetchClicked = (selectedFetch: IOsmFetchDir) => {
         console.log('selectedFetch:', selectedFetch);
-        this.setState({
-            selectedFetchDir: selectedFetch,
-        });
+        console.log('THIS IS BROKEN  :', selectedFetch);
+        throw new Error();
+        // this.setState({
+        //     selectedFetchDir: selectedFetch,
+        // });
     };
 
     render() {

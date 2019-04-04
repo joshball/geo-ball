@@ -10,9 +10,9 @@
 // automatically mean that you *can* import them. Ensure you've
 // got the proper plugins loaded in the `fuse.ts` configuration.
 
-declare module "*.jpeg"
-declare module "*.jpg"
-declare module "*.gif"
-declare module "*.png"
-declare module "*.svg"
-declare module "*.json"
+declare module '*.jpeg';
+declare module '*.jpg';
+declare module '*.gif';
+declare module '*.png';
+declare module '*.svg';
+declare module '*.json';

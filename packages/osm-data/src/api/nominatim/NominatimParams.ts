@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { NominatimFormat, INominatimQueryParamObj } from './INominatimQueryParamObj';
 
 export interface INominatimStringQuery {
     q: string;
     [key: string]: string;
 }
+
 export interface INominatimStructuredQuery {
     street: string;
     city: string;

@@ -15,7 +15,7 @@ const STYLE = cssProps({
 export interface ISectionHeaderProps {
     text?: string;
     children?: React.ReactNode;
-    style?: CSSProperties | CSSProperties[];
+    style?: CSSProperties | Array<CSSProperties>;
 }
 
 export function SectionHeaderOne(props: ISectionHeaderProps) {

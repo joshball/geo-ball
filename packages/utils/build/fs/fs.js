@@ -23,6 +23,7 @@ exports.access = util_1.promisify(fs.access);
 exports.mkdir = util_1.promisify(fs.mkdir);
 exports.readFile = util_1.promisify(fs.readFile);
 exports.writeFile = util_1.promisify(fs.writeFile);
+exports.CONSTANTS = fs.constants;
 exports.exists = (path) => __awaiter(this, void 0, void 0, function* () {
     try {
         yield exports.access(path, exports.CONSTANTS.F_OK);
@@ -32,5 +33,4 @@ exports.exists = (path) => __awaiter(this, void 0, void 0, function* () {
         return false;
     }
 });
-exports.CONSTANTS = fs.constants;
 //# sourceMappingURL=fs.js.map

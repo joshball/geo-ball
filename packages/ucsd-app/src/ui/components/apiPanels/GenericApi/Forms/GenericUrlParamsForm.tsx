@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { FunctionComponent } from 'react';
 
-import { FormikInputField } from '@geo-ball/component-lib';
+import { InformedInputField } from '@geo-ball/component-lib';
 import { ActionFormikProps } from '@geo-ball/api-couturier';
 
-import { Form, Field } from 'formik';
+import { Form, FormProps, FormState } from 'informed';
 
 export interface IGenericUrlParamsFormValues {
     id: string;
@@ -20,29 +20,61 @@ export class GenericUrlParamsFormValues implements IGenericUrlParamsFormValues {
     }
 }
 
-export const GenericUrlParamsForm: FunctionComponent<
-    ActionFormikProps<IGenericUrlParamsFormValues>
-> = (_props: ActionFormikProps<IGenericUrlParamsFormValues>) => {
-    // console.log("GenericUrlParamsForm props", props)
-    // const { isSubmitting, additionalProps } = props
-    // props.formikActions.bindSubmitForm
-    // props.values.name
-    // const DebugFormComponent =
-    //     additionalProps && additionalProps.DebugFormComponent
-    //         ? additionalProps.DebugFormComponent
-    //         : () => <React.Fragment />
-    // console.log("GenericUrlParamsFormContainer DebugFormComponent:", DebugFormComponent)
-    // formikConfig.formikActions.bindSubmitForm;
+// export interface InformedComponentParams {
+//     formState: FormState<IGenericUrlParamsFormValues>;
+//     label: string;
+//     props:any;
+// }
 
-    return (
-        <React.Fragment>
-            <Form>
-                <Field component={FormikInputField} name="id" label="ID" />
-                <Field component={FormikInputField} name="count" label="Count" type="number" />
-                {/* <button type="submit" disabled={isSubmitting}>
-                Submit
-            </button> */}
-            </Form>
-        </React.Fragment>
-    );
-};
+// export const GenericUrlParamsForm: React.FunctionComponent<InformedComponentParams> = ({
+export const GenericUrlParamsForm: React.FunctionComponent<any> = ({ formState, ...props }) => (
+    <React.Fragment>
+        <InformedInputField label="IDDD" field="id" {...props} {...formState} />
+        <InformedInputField label="Count" field="count" type="number" {...props} {...formState} />
+    </React.Fragment>
+);
+
+// Type '{
+// const {
+// values: IGenericUrlParamsFormValues;
+//  touched: { id: boolean; count: boolean; };
+//   errors: { id: string | undefined; count: string | undefined; };
+//   asyncErrors: { id: string | undefined; count: string | undefined; };
+//   field: string; }
+//   ' is missing the following properties from type 'IAsFieldContext<any>': fieldState, fieldApi
+
+// export const GenericUrlParamsFormEx: FunctionComponent<FormProps<IGenericUrlParamsFormValues>> = (
+//     props: any,
+// ) => {
+// console.log("GenericUrlParamsForm props", props)
+// const { isSubmitting, additionalProps } = props
+// props.formikActions.bindSubmitForm
+// props.values.name
+// const DebugFormComponent =
+//     additionalProps && additionalProps.DebugFormComponent
+//         ? additionalProps.DebugFormComponent
+//         : () => <React.Fragment />
+// console.log("GenericUrlParamsFormContainer DebugFormComponent:", DebugFormComponent)
+// formikConfig.formikActions.bindSubmitForm;
+
+//     return (
+//         <React.Fragment>
+//             <Form>
+//                 {({ formState }) => {
+//                     return (
+//                         <React.Fragment>
+//                             <InformedInputField label="IDDD" field="id" {...props} {...formState} />
+//                             <InformedInputField
+//                                 label="Count"
+//                                 field="count"
+//                                 type="number"
+//                                 {...props}
+//                                 {...formState}
+//                             />
+//                         </React.Fragment>
+//                     );
+//                 }}
+//             </Form>
+//         </React.Fragment>
+//     );
+// };

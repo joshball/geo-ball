@@ -34,10 +34,10 @@ export const MapComponent: React.SFC<MapProps> = (props: MapProps) => {
     const { position, intersections } = props;
 
     const markers = intersections.map((latLng: LatLng, index: number) => {
-        const p = new LatLng(latLng.lat, latLng.lon);
+        const p = new LatLng(latLng.lat, latLng.lng);
         // console.log('g/p', index, p.toString());
         return (
-            <Marker key={index} position={[p.lat, p.lon] as LatLngTuple}>
+            <Marker key={index} position={[p.lat, p.lng] as LeafLatLngTuple}>
                 <Popup>{p.toString()}</Popup>
             </Marker>
         );

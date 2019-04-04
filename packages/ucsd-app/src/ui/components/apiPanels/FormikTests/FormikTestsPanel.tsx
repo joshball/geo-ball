@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { ThemeProvider, fpTheme } from '@geo-ball/component-lib';
 
-import { SimpleTypescriptFormContainer, ISimpleFormData } from './FormikFormComponent';
+import { SimpleTypescriptFormContainer } from './FormikFormComponent';
 import { FormikConfig, FormikActions } from 'formik';
 
 export interface IFormikTestsPanelState {}
 
 export interface IFormikTestsPanelProps {}
+import { TestFormData, ITestFormData } from '../InformedTests/TestFormData';
 
 export class FormikTestsPanel extends React.Component<
     IFormikTestsPanelProps,
@@ -26,7 +27,7 @@ export class FormikTestsPanel extends React.Component<
         console.log('FormikTestsPanel.fetchIt()');
         return Promise.resolve();
     }
-    onSubmit(values: ISimpleFormData, actions: FormikActions<ISimpleFormData>) {
+    onSubmit(values: ITestFormData, actions: FormikActions<ITestFormData>) {
         console.log('FormikTestsPanel.onSubmit()', values, actions);
         // console.log("GTFP.onSubmit().values", values)
         // console.log(JSON.stringify(values, null, 4))
@@ -51,15 +52,8 @@ export class FormikTestsPanel extends React.Component<
         //         <button type="submit">Submit</button>
         //     </form>
         // )
-        const formikProps: FormikConfig<ISimpleFormData> = {
-            initialValues: {
-                firstName: 'jared',
-                lastName: '',
-                username: '',
-                email: 'jared@foo.com',
-                email2: 's@foo.com',
-                age: 10,
-            },
+        const formikProps: FormikConfig<ITestFormData> = {
+            initialValues: new TestFormData(),
             onSubmit: this.onSubmit,
         };
         const panelStyle = {

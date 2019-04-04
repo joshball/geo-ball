@@ -18,21 +18,32 @@ const FIELDS_WITH_FIELD_WRAPPERS = [
     'TextareaField',
 ];
 const SELECT_MENUS = ['SelectMenu', 'SelectMenuField'];
+const CHECKBOXES = ['Checkbox', 'CheckboxField', 'Switch', 'SwitchField', 'Radio', 'RadioField'];
 
-const bindFns = (...fns: Array<SpreadFunc>) => (...args: any) => {
-    fns.forEach(fn => fn && fn(...args));
+const bindFunctions = (...functions: Array<SpreadFunc>) => {
+    console.log('***** BF.functions:', functions);
+    return (...funcArgs: any) => {
+        console.log('***** BF.functions:', functions);
+        console.log('***** BF....funcArgs:', ...funcArgs);
+        functions.forEach(func => {
+            console.log('***** BF.func:', func, ...funcArgs);
+            return func && func(...funcArgs);
+        });
+    };
 };
 
 export const formikField = (Component: any) => {
+    // console.log('formikField', Component);
     return ({ field, form, ...props }: any) => {
-        let overrideProps = {};
+        let overrideProps: any = {};
 
         // console.log('HERE I AM ', field.value, typeof field.value);
         // console.log('formikField typeof value', field.value);
         // console.log('formikField typeof value', typeof field.value);
-        // console.log('formikField field', field);
-        // console.log('formikField form', form);
-        // console.log('formikField props', props);
+        console.log('formikField field', field);
+        console.log('formikField field.value', field.value);
+        console.log('formikField form', form);
+        console.log('formikField props', props);
         if (FIELDS_WITH_FIELD_WRAPPERS.includes(Component.name)) {
             let state = form.touched[field.name] && form.errors[field.name] ? 'danger' : undefined;
             if (props.state) {
@@ -62,16 +73,32 @@ export const formikField = (Component: any) => {
             onChange = (value: any, option: any, newValues: any) =>
                 form.setFieldValue(field.name, newValues);
         }
+        if (CHECKBOXES.includes(Component.name)) {
+            overrideProps.checked = field.value;
+            onChange = (event: any) => {
+                form.setFieldValue(field.name, event.target.checked);
+            };
+        }
         if (props.type === 'number') {
             onChange = (event: any) => {
                 form.setFieldValue(field.name, event.target.value);
             };
         }
+        // console.log('overrideProps.onChange', onChange);
+        // console.log('overrideProps.props.onChange', props.onChange);
+        // console.log('overrideProps.bindFunctions', bindFunctions);
         overrideProps = {
             ...overrideProps,
-            onBlur: bindFns(onBlur, props.onBlur),
-            onChange: bindFns(onChange, props.onChange),
+            onBlur: bindFunctions(onBlur, props.onBlur),
+            onChange: bindFunctions(onChange, props.onChange),
         };
+        console.log('================================== ');
+        console.log('Component props ', props);
+        // console.log('Component ...props ', ...props);
+        console.log('Component field ', field);
+        // console.log('Component ...field ', ...field);
+        console.log('Component overrideProps', overrideProps);
+        // console.log('Component ...overrideProps', ...overrideProps);
         return <Component {...props} {...field} {...overrideProps} />;
     };
 };

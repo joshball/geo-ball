@@ -5,12 +5,13 @@ import { colors, fontSizes, fonts } from '../../config/theme';
 import { RootStore } from '../../stores/RootStore';
 import { FileComponent } from './FileComponent';
 import { H3 } from '@blueprintjs/core';
-import { OsmFetchGraphFilesSet } from '@geo-ball/ucsd-core';
 import { basename } from 'path';
+// import { OsmFetchGraphFilesSet } from '@geo-ball/ucsd-core';
 
 export interface SelectedFetchComponentProps {
     stores?: RootStore;
-    fetch?: OsmFetchGraphFilesSet;
+    // fetch?: OsmFetchGraphFilesSet;
+    fetch?: any;
 }
 
 export interface SelectedFetchComponentState {

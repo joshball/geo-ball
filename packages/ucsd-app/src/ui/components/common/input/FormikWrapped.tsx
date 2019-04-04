@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FieldProps } from 'formik';
-import { IRadioButtonGroupProps } from '@geo-ball/component-lib/src';
+import { IRadioButtonGroupProps, RadioButtonGroup } from '@geo-ball/component-lib';
 import {
     InputGroup,
     ITextAreaProps,

@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
+import { Link, NavLink } from 'react-router-dom';
+import { Button, styled } from '@geo-ball/component-lib';
 
 import { HomePage } from '../pages/HomePage';
 import { HooksPage } from '../pages/HooksPage';
@@ -8,8 +10,7 @@ import { MapDataFilesPage } from '../pages/MapDataFilesPage';
 import { RoutingPage } from '../pages/RoutingPage';
 import { SettingsPage } from '../pages/SettingsPage';
 import { ApiTesterPage } from '../pages/ApiTesterPage';
-import { IconName, MaybeElement, Button, Intent } from '@blueprintjs/core';
-import { Link, NavLink } from 'react-router-dom';
+// import { IconName, MaybeElement, Button, Intent } from '@blueprintjs/core';
 
 export interface IRouteCoreData {
     path: string;
@@ -28,9 +29,29 @@ export interface IRouteCoreData {
 export interface IRouteExtraData {
     linkLabel?: string;
     navLabel?: string;
-    icon?: IconName | MaybeElement;
+    icon?: string;
     exact?: boolean;
 }
+const TabListItem = styled.li`
+    text-align: center;
+    flex: 1;
+    list-style-type: none;
+    padding: 15px;
+`;
+// const TabListItem = styled.li`
+//     color: black;
+//     font-family: sans-serif;
+// `;
+
+const linkStyle = {
+    color: 'black',
+    fontFamily: 'sans-serif',
+};
+
+// const TabLink = styled(Box)`
+//     color: black;
+//     font-family: sans-serif;
+// `;
 // export const getRouteDataEx = (path: string, component: any, linkName: string, navName?: string): IRouteDataEx => {
 export const createRouteCoreData = (
     path: string,
@@ -46,12 +67,12 @@ export const createRouteCoreData = (
 
     const getListItemNavLink = (
         i: number,
-        liStyle?: any,
-        linkStyle?: any,
+        // liStyle?: any,
+        // linkStyle?: any,
         ln?: string | undefined,
     ) => {
         return (
-            <li key={i} style={liStyle}>
+            <TabListItem key={i}>
                 <NavLink
                     key={i}
                     to={path}
@@ -67,18 +88,19 @@ export const createRouteCoreData = (
                 >
                     {ln || exData.linkLabel || '********-YOU FORGOT TO GIVE ME A NAME ********'}
                 </NavLink>
-            </li>
+            </TabListItem>
         );
     };
 
     const getNavbarLinkButtons = (i: number, linkStyle?: any) => (
         <NavLink key={i} to={path} style={linkStyle} replace={path === location.pathname}>
-            <Button icon={exData.icon} text={exData.linkLabel} />
+            {/* iconAfter={exData.icon} */}
+            <Button>{exData.linkLabel}</Button>
         </NavLink>
     );
     const getLinkButtons = (i: number, linkStyle?: any) => (
         <Link key={i} to={path} style={linkStyle} replace={path === location.pathname}>
-            <Button intent={Intent.PRIMARY} text={exData.linkLabel} />
+            <Button>{exData.linkLabel}</Button>
         </Link>
     );
     return {
@@ -86,7 +108,7 @@ export const createRouteCoreData = (
         component,
         exData,
         getRoute,
-        getListItemNavLink: getListItemNavLink,
+        getListItemNavLink,
         getNavbarLinkButtons,
         getLinkButtons,
     };

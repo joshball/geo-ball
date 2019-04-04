@@ -7,38 +7,24 @@ import {
     Divider,
     FieldSet,
     Button,
+    FormikCheckboxField,
+    FormikCheckbox,
+    Checkbox,
 } from '@geo-ball/component-lib';
 
 import { Formik, FormikProps, FormikConfig, Field, FieldProps } from 'formik';
+import { ITestFormData } from '../InformedTests/TestFormData';
 
-export interface ISimpleFormData {
-    firstName: string;
-    lastName: string;
-    username: string;
-    email: string;
-    email2: string;
-    age: number;
-}
-
-export const FormikFormComponent = (props: FormikProps<ISimpleFormData>) => {
+export const FormikFormComponent = (props: FormikProps<ITestFormData>) => {
     console.log('FormikFormComponent props', props);
     // props.values.name
     return (
         <form onSubmit={props.handleSubmit}>
             <h4>FormikFormComponent</h4>
             <FieldSet>
-                <Field component={FormikInputField} type="number" name="age" label="Age" />
-                <Label htmlFor="lastName">Last Name</Label>
-                <Input
-                    type="text"
-                    onChange={props.handleChange}
-                    onBlur={props.handleBlur}
-                    value={props.values.lastName}
-                    name="lastName"
-                />
                 <Field
                     name="firstName"
-                    render={({ field, form }: FieldProps<ISimpleFormData>) => (
+                    render={({ field, form }: FieldProps<ITestFormData>) => (
                         <FieldWrapper
                             a11yId="firstName"
                             label="First Name"
@@ -53,18 +39,37 @@ export const FormikFormComponent = (props: FormikProps<ISimpleFormData>) => {
                         </FieldWrapper>
                     )}
                 />
+                <Label htmlFor="lastName">Last Name</Label>
+                <Input
+                    type="text"
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.lastName}
+                    name="lastName"
+                />
                 <Field component={FormikInputField} name="username" label="Username" />
+                {/* <Field component={FormikInputField} type="number" name="age" label="Age" /> */}
+                {/* <Field component={FormikInputField} type="number" name="age" label="Age" /> */}
                 <Field component={FormikInputField} name="email" label="Email" type="email" />
                 <Label htmlFor="email">Email Two</Label>
                 <Field type="email" name="email2" />
                 {props.errors.email && <div id="feedback">{props.errors.email}</div>}
+                <Field component={FormikCheckbox} name="checkbox" label="checkbox" />
+                <Field component={FormikCheckboxField} name="checkboxField" label="checkboxField" />
+                {/* <Checkbox
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    checked={props.values.checkbox}
+                    name="checkbox"
+                /> */}
+
                 <Divider />
                 <Button type="submit">Submit</Button>
             </FieldSet>
         </form>
     );
 };
-export const SimpleTypescriptFormContainer = (formikProps: FormikConfig<ISimpleFormData>) => (
+export const SimpleTypescriptFormContainer = (formikProps: FormikConfig<ITestFormData>) => (
     <div>
         <h1>SimpleTypescriptFormContainer</h1>
         <Formik {...formikProps} component={FormikFormComponent} />

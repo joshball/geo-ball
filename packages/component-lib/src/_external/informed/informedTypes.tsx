@@ -1,4 +1,4 @@
-export type FormFieldValue = any;
+export type FormFieldValue<T = string> = T;
 
 export type FormError = string;
 
@@ -81,3 +81,38 @@ export interface IAsFieldContext<TFieldType> extends IFieldProps<TFieldType> {
 
 // const x:React.InputHTMLAttributes<HTMLInputElement> = {};
 // x.onChange
+
+export interface IFormState {
+    values: IFormValues;
+    touched: IBooleanValues;
+    errors: IErrorValues;
+    asyncErrors: IErrorValues;
+    error?: Optional<string>;
+    invalid: boolean;
+    pristine: boolean;
+    dirty: boolean;
+    submits: number;
+}
+
+export interface IFormApi {
+    setValue: (field: string, value: FormFieldValue) => void;
+    getValue: (field: string) => FormFieldValue;
+
+    setTouched: (field: string, touched: boolean) => void;
+    getTouched: (field: string) => boolean;
+
+    setError: (field: string, error: FormError) => void;
+    getError: (field: string) => FormError;
+
+    getValues: () => IFormValues;
+    setValues: (values: IFormValues) => void;
+
+    getInitialValue: (field: string) => FormFieldValue;
+    getState: () => IFormState;
+
+    fieldExists: (field: string) => boolean;
+    getFullField: (field: string) => string;
+
+    reset: () => void;
+    submitForm: (event: React.FormEvent<HTMLFormElement>) => void;
+}

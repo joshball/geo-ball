@@ -5,7 +5,7 @@ import { OsmDownloadQueryForm } from './OsmDownloadQueryForm';
 import { ILatLngFmt, LatLngQuickFmt, LatLngBounds, LatLng, ILatLng } from '@geo-ball/geo-core';
 import { LatLngBoundsTxt } from '../../common/geo/LatLngBoundsTxt';
 import { LatLngBoundsAreaTxt } from '../../common/geo/LatLngBoundsAreaTxt';
-import { IDownloadOsmParams } from '../../../services/OsmService';
+import { IDownloadOsmParams } from '../../../../background/bg-ucsd';
 
 export interface DownloadLatLngBoundsBoxProps {
     bounds: LatLngBounds | null;
