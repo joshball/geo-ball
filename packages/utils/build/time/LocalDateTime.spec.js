@@ -27,7 +27,7 @@ const PARSED_DATE = {
     iso: '2013-02-08T16:30:26.123Z',
     isoSimple: '2013-02-08 16:30:26.123',
     // isoLocal: '2013-02-08T16:30:26.123+00:00'
-    isoLocal: '2013-02-08T09:30:26.123-07:00'
+    isoLocal: '2013-02-08T09:30:26.123-07:00',
 };
 ava_1.default.beforeEach(_t => {
     moment_timezone_1.default.suppressDeprecationWarnings = true;

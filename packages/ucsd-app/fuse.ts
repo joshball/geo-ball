@@ -3,7 +3,7 @@ import { FuseBox, CSSPlugin, SassPlugin, Sparky, CopyPlugin, ReplacePlugin } fro
 import { spawn } from 'child_process';
 import * as pjson from './package.json';
 
-const DEV_PORT = 4445;
+const DEV_PORT = 4448;
 const OUTPUT_DIR = 'out';
 const ASSETS = ['*.jpg', '*.png', '*.jpeg', '*.gif', '*.svg'];
 import { join } from 'path';

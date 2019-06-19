@@ -1,18 +1,15 @@
 {
     "extends": "../../tsconfig.common.json",
     "references": [
-        // { "path": "../component-lib" },
-        { "path": "../geo-core" },
-        // { "path": "../graph-core" },
-        // { "path": "../osm-cli" },
-        // { "path": "../osm-data" },
-        // { "path": "../ucsd-app" },
-        // { "path": "../ucsd-cli" },
-        // { "path": "../ucsd-core" },
-        { "path": "../utils" },
+        {
+            "path": "../geo-core"
+        },
+        {
+            "path": "../utils"
+        },
     ],
     "compilerOptions": {
-        "rootDir": "src",
+        // "rootDir": "src",
         "outDir": "./build"
     },
     "include": [

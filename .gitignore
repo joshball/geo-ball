@@ -35,6 +35,7 @@ tmp/
 config/**/lib/
 .lerna_backup/
 
+*.tsbuildinfo
 
 # Logs
 logs/

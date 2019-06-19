@@ -53,7 +53,8 @@ class Download extends Command {
         };
         const geoBounds = new GeographicBoundsDescription(geoBoundsData);
         const osmMeta: IOpenStreetmapFileMetaData = {
-            osmServer: osmArgs.osmEndpoint || OpenStreetmapDownloader.DEFAULT_ENDPOINT,
+            osmServer:
+                osmArgs.osmEndpoint || OpenStreetmapDownloader.DEFAULT_ENDPOINT,
             osmQuery: new OpenStreetmapQuery(osmArgs.osmQuery),
             queryDate: LocalDateTime.Now(),
             geoBounds,
@@ -61,21 +62,31 @@ class Download extends Command {
         };
 
         // osmArgs.osmEndpoint
-        OpenStreetmapDownloader.FetchAndSave(osmMeta, osmArgs.resultsFileName, osmArgs.overwrite)
+        OpenStreetmapDownloader.FetchAndSave(
+            osmMeta,
+            osmArgs.resultsFileName,
+            osmArgs.overwrite
+        )
             .then((results: IFetchAndSaveResult) => {
                 console.log('Download Complete:');
-                console.log('  SERVER:', results.osmDataFile.osmMetaData.osmServer);
-                console.log('    DATE:', results.osmDataFile.osmMetaData.queryDate);
+                console.log(
+                    '  SERVER:',
+                    results.osmDataFile.osmMetaData.osmServer
+                );
+                console.log(
+                    '    DATE:',
+                    results.osmDataFile.osmMetaData.queryDate
+                );
                 console.log('    FILE:', results.osmDataFilePath);
             })
             .catch(error => {
                 console.error(
-                    '###################################################################################',
+                    '###################################################################################'
                 );
                 console.error('DOWNLOAD FAILED:');
                 console.error(error);
                 console.error(
-                    '###################################################################################',
+                    '###################################################################################'
                 );
                 throw error;
             });

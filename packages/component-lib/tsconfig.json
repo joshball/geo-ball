@@ -3,26 +3,39 @@
     "references": [
         // { "path": "../api-couturier" },
         // { "path": "../component-lib" },
-        { "path": "../geo-core" },
+        {
+            "path": "../geo-core"
+        },
         // { "path": "../graph-core" },
+        // { "path": "../osm-app" },
         // { "path": "../osm-cli" },
-        { "path": "../osm-data" },
-        { "path": "../ucsd-app" },
+        {
+            "path": "../osm-data"
+        },
+        // { "path": "../ucsd-app" },
         // { "path": "../ucsd-cli" },
-        { "path": "../ucsd-core" },
-        { "path": "../utils" }
+        {
+            "path": "../ucsd-core"
+        },
+        {
+            "path": "../utils"
+        }
     ],
     "compilerOptions": {
         "baseUrl": "./src",
-        "rootDir": "./src",
+        // "rootDir": "./src",
         "outDir": "./build",
-        "typeRoots": ["./node_modules/@types", "../../node_modules/@types", "./ext-stub-types", "../../ext-stub-types"],
+        "typeRoots": [
+            "./node_modules/@types",
+            "../../node_modules/@types",
+            "./ext-stub-types",
+            "../../ext-stub-types"
+        ],
         "paths": {
             /* Make sure webpack/fuse know about these too! */
             // "CL/*": ["*"]
             // "@types/*": ["types/*"],
             // "@components/*": ["components/*"],
-
             // "@root": ["."],
             // "@types": ["types"],
             // "@components": ["components"],
@@ -31,7 +44,6 @@
             // "@organisms": ["components/organisms"],
             // "@panels": ["components/panels"],
             // "@themes": ["components/themes"],
-
             // "@atoms/*": ["components/atoms/*"],
             // "@molecules/*": ["components/molecules/*"],
             // "@organisms/*": ["components/organisms/*"],
@@ -43,10 +55,15 @@
         // If true type-checking is disabled
         "transpileOnly": false
     },
-    "include": ["src/**/*", "ext-stub-types/**/*", "../../ext-stub-types/**/*"],
-    "exclude": ["node_modules/**"]
+    "include": [
+        "src/**/*",
+        "ext-stub-types/**/*",
+        "../../ext-stub-types/**/*"
+    ],
+    "exclude": [
+        "node_modules/**"
+    ]
 }
-
 // "@root": ["build/."],
 // "@types": ["build/types"],
 // "@components": ["build/components"],

@@ -9,7 +9,7 @@
   "license": "MIT",
   "private": true,
   "build": {
-    "appId": "com.joshuaball.geo-ball",
+    "appId": "com.joshuaball.geo-ball.ucsd-app",
     "files": [
       "!src",
       "!docs",

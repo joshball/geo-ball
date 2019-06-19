@@ -1,15 +1,56 @@
 {
+    "extends": "./tsconfig.common.json",
+    "compilerOptions": {
+        "baseUrl": "./packages",
+        "paths": {
+            "@geo-ball/*": [
+                "./*/src"
+            ]
+        }
+    },
+    "include": [
+        "src/**/*",
+        "ext-stub-types/**/*",
+        "../../ext-stub-types/**/*",
+    ],
+    "exclude": [
+        "node_modules/**"
+    ],
+    "compileOnSave": true,
     "files": [],
     "references": [
-        { "path": "packages/api-couturier" },
-        { "path": "packages/component-lib" },
-        { "path": "packages/geo-core" },
-        { "path": "packages/graph-core" },
-        { "path": "packages/osm-cli" },
-        { "path": "packages/osm-data" },
-        { "path": "packages/ucsd-app" },
-        { "path": "packages/ucsd-cli" },
-        { "path": "packages/ucsd-core" },
-        { "path": "packages/utils" },
+        {
+            "path": "packages/api-couturier"
+        },
+        {
+            "path": "packages/component-lib"
+        },
+        {
+            "path": "packages/geo-core"
+        },
+        {
+            "path": "packages/graph-core"
+        },
+        {
+            "path": "packages/osm-app"
+        },
+        {
+            "path": "packages/osm-cli"
+        },
+        {
+            "path": "packages/osm-data"
+        },
+        {
+            "path": "packages/ucsd-app"
+        },
+        {
+            "path": "packages/ucsd-cli"
+        },
+        {
+            "path": "packages/ucsd-core"
+        },
+        {
+            "path": "packages/utils"
+        },
     ]
 }

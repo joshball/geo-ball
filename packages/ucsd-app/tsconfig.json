@@ -1,19 +1,30 @@
 {
     "extends": "../../tsconfig.common.json",
     "references": [
-        { "path": "../api-couturier" },
-        { "path": "../component-lib" },
-        { "path": "../geo-core" },
-        { "path": "../graph-core" },
-        // { "path": "../osm-cli" },
-        { "path": "../osm-data" },
-        // { "path": "../ucsd-app" },
-        // { "path": "../ucsd-cli" },
-        { "path": "../ucsd-core" },
-        { "path": "../utils" }
+        {
+            "path": "../api-couturier"
+        },
+        {
+            "path": "../component-lib"
+        },
+        {
+            "path": "../geo-core"
+        },
+        {
+            "path": "../graph-core"
+        },
+        {
+            "path": "../osm-data"
+        },
+        {
+            "path": "../ucsd-core"
+        },
+        {
+            "path": "../utils"
+        }
     ],
     "compilerOptions": {
-        "rootDir": "src",
+        // "rootDir": "src",
         // "rootDirs": ["src", ".storybook/views"],
         "outDir": "build/lib",
         // "baseUrl": ".",
@@ -56,8 +67,13 @@
         // ".storybook/views"
     ],
     // "include": ["src/**/*", "ext-stub-types/**/*", "fuse.ts", ".storybook/views"],
-    "exclude": ["node_modules", "build", "scripts", ".storybook", "../../node_modules"]
-
+    "exclude": [
+        "node_modules",
+        "build",
+        "scripts",
+        ".storybook",
+        "../../node_modules"
+    ]
     // "compilerOptions": {
     //     "baseUrl": ".",
     //     "paths": {
