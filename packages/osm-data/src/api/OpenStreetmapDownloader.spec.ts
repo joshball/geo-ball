@@ -3,9 +3,13 @@ import test from 'ava';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
+import {
+    createNewBounds,
+    createOsmFileMetaData,
+    osmJsonResp,
+} from '../test/TestData';
 import { OpenStreetmapDownloader } from './OpenStreetmapDownloader';
-import { OpenStreetmapQuery, IOpenStreetmapQuery } from './OpenStreetmapQuery';
-import { createNewBounds, createOsmFileMetaData, osmJsonResp, IOsmQuery } from '../test/TestData';
+import { IOverpassQuery, OverpassQuery } from './OverpassApi';
 
 // test.beforeEach(_t => {
 // 	mockAxios.reset();
@@ -26,14 +30,17 @@ test('OpenStreetmapDownloader is instantiable', t => {
 test('OpenStreetmapDownloader should throw if missing bounds in query', async t => {
     // const { latLngBounds } = createNewBounds();
     const { objBounds } = createNewBounds();
-    const osmQuery: IOpenStreetmapQuery = { latLngBounds: objBounds };
-    const missingBoundsQuery = new OpenStreetmapQuery(osmQuery);
+    const osmQuery: IOverpassQuery = { latLngBounds: objBounds };
+    const missingBoundsQuery = new OverpassQuery(osmQuery);
     delete missingBoundsQuery.latLngBounds;
     t.plan(1);
     try {
         await OpenStreetmapDownloader.Fetch(missingBoundsQuery);
     } catch (e) {
-        t.is(e.message, 'OpenStreetmapDownloader.fetch() query requires valid latLngBounds');
+        t.is(
+            e.message,
+            'OpenStreetmapDownloader.fetch() query requires valid latLngBounds'
+        );
     }
 });
 
@@ -42,14 +49,17 @@ test('OpenStreetmapDownloader should throw if bad bounds in query', async t => {
     // latLngBounds.ne.lat = 200;
     const { objBounds } = createNewBounds();
     objBounds.northEast.lat = 200;
-    const osmQuery: IOpenStreetmapQuery = { latLngBounds: objBounds };
+    const osmQuery: IOverpassQuery = { latLngBounds: objBounds };
     // set lat to out of bounds (can't be bigger than 180)
-    const badBoundsQuery = new OpenStreetmapQuery(osmQuery);
+    const badBoundsQuery = new OverpassQuery(osmQuery);
     t.plan(1);
     try {
         await OpenStreetmapDownloader.Fetch(badBoundsQuery);
     } catch (e) {
-        t.is(e.message, 'OpenStreetmapDownloader.fetch() query requires valid latLngBounds');
+        t.is(
+            e.message,
+            'OpenStreetmapDownloader.fetch() query requires valid latLngBounds'
+        );
     }
 });
 

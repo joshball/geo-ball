@@ -1,4 +1,4 @@
-import { IOpenStreetmapQueryResponse } from '../api/IOpenStreetmapQueryResponse';
+import { IOverpassQueryResponse } from '../api/OverpassApi/IOverpassQueryResponse';
 import { IOpenStreetmapFileMetaData } from '..';
 
 // export const osmFileMetaData: IOpenStreetmapFileMetaData = {
@@ -51,7 +51,7 @@ import { IOpenStreetmapFileMetaData } from '..';
 //     "queryDate": "2019-02-08T00:36:41.126Z"
 // };
 
-export const osmQueryResp: IOpenStreetmapQueryResponse = {
+export const osmQueryResp: IOverpassQueryResponse = {
     version: 0.6,
     generator: 'Overpass API 0.7.55.5 2ca3f387',
     osm3s: {
@@ -63,7 +63,15 @@ export const osmQueryResp: IOpenStreetmapQueryResponse = {
         {
             type: 'way',
             id: 10132609,
-            nodes: [83589715, 83589724, 1611744260, 83589725, 83589728, 83589730, 83589732],
+            nodes: [
+                83589715,
+                83589724,
+                1611744260,
+                83589725,
+                83589728,
+                83589730,
+                83589732,
+            ],
             tags: {
                 highway: 'residential',
                 name: 'Beverly Street',
@@ -77,7 +85,14 @@ export const osmQueryResp: IOpenStreetmapQueryResponse = {
         {
             type: 'way',
             id: 10144453,
-            nodes: [83679752, 83679719, 1611744261, 83679755, 83679756, 83627794],
+            nodes: [
+                83679752,
+                83679719,
+                1611744261,
+                83679755,
+                83679756,
+                83627794,
+            ],
             tags: {
                 highway: 'residential',
                 name: 'Chadwick Street',

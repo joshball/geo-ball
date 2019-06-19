@@ -1,0 +1,32 @@
+import {
+    IFileContentsWrapper,
+    FileContentsType,
+} from 'react-data-file-manager';
+
+import {
+    OverpassQueryFileContents,
+    IOverpassQueryFileContents,
+} from './OverpassQueryFileContents';
+
+export interface IOverpassQueryFile
+    extends IFileContentsWrapper<IOverpassQueryFileContents> {}
+
+export class OverpassQueryFile implements IOverpassQueryFile {
+    id: string;
+    type: FileContentsType;
+    filename: string;
+    path: string;
+    contents: IOverpassQueryFileContents;
+
+    constructor(
+        filename: string,
+        path: string,
+        contents: IOverpassQueryFileContents = OverpassQueryFileContents.CreateDefault()
+    ) {
+        this.id = filename.toLowerCase();
+        this.type = 'json';
+        this.filename = filename;
+        this.path = path;
+        this.contents = contents;
+    }
+}

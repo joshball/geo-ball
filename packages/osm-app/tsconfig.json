@@ -1,0 +1,95 @@
+{
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "allowUnreachableCode": true,
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "downlevelIteration": true,
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "forceConsistentCasingInFileNames": true,
+        "inlineSourceMap": false,
+        "inlineSources": false,
+        "jsx": "react",
+        "listEmittedFiles": false,
+        "listFiles": false,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": false,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "pretty": true,
+        "resolveJsonModule": true,
+        "sourceMap": true,
+        "strict": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": false,
+        "suppressImplicitAnyIndexErrors": true,
+        "target": "esnext",
+        "traceResolution": false,
+        // "outDir": "./build",
+        "lib": [
+            "es6",
+            "es2015",
+            "es2018",
+            "es2018.promise",
+            "dom"
+        ],
+        "rootDir": "src",
+        // "rootDirs": [
+        //     "src",
+        //     "../osm-data/src"
+        // ],
+        "outDir": "build/lib",
+        "baseUrl": "src",
+        "typeRoots": [
+            "./node_modules/@types",
+            "../../node_modules/@types",
+            "./ext-stub-types",
+            "../../ext-stub-types"
+        ],
+        "paths": {
+            /* Make sure webpack/fuse know about these too! */
+            "@ui/*": [
+                "ui/*"
+            ],
+            "@store/*": [
+                "store/*"
+            ],
+        }
+    },
+    "include": [
+        "./src",
+        "./ext-stub-types",
+        "../../ext-stub-types"
+        // "./fuse.ts",
+        // ".storybook/views"
+    ],
+    // "include": ["src/**/*", "ext-stub-types/**/*", "fuse.ts", ".storybook/views"],
+    "exclude": [
+        "node_modules",
+        "build",
+        "scripts",
+        "example-data-dir",
+        ".storybook",
+        "../../node_modules"
+    ],
+    "references": [
+        {
+            "path": "../geo-core"
+        },
+        {
+            "path": "../graph-core"
+        },
+        {
+            "path": "../osm-data"
+        },
+        {
+            "path": "../utils"
+        }
+    ],
+}

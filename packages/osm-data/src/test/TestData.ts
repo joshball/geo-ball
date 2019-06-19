@@ -1,6 +1,6 @@
 import {
-    OpenStreetmapQuery,
-    IOpenStreetmapQuery,
+    OverpassQuery,
+    IOverpassQuery,
     OpenStreetmapFileMetaData,
     IOpenStreetmapFileMetaData,
     GeographicBoundsDescription,
@@ -8,7 +8,7 @@ import {
 } from '..';
 import { LatLngBounds, LatLng, ILatLngBounds } from '@geo-ball/geo-core';
 
-import { IOpenStreetmapQueryResponse } from '../api/IOpenStreetmapQueryResponse';
+import { IOverpassQueryResponse } from '../api/OverpassApi/IOverpassQueryResponse';
 import { LocalDateTime } from '@geo-ball/utils';
 
 export interface ILatLngBoundsTestData {
@@ -19,7 +19,7 @@ export interface ILatLngBoundsTestData {
 }
 
 export interface IOsmQuery {
-    query: OpenStreetmapQuery;
+    query: OverpassQuery;
     latLngBoundsTestData: ILatLngBoundsTestData;
 }
 
@@ -46,13 +46,15 @@ export const createNewBounds = (): ILatLngBoundsTestData => {
 };
 
 export const createOsmFileMetaData = (
-    latLngBoundsTestData?: ILatLngBoundsTestData,
+    latLngBoundsTestData?: ILatLngBoundsTestData
 ): IOpenStreetmapFileMetaData => {
     latLngBoundsTestData = latLngBoundsTestData || createNewBounds();
     const latLngBounds = latLngBoundsTestData.latLngBounds;
 
-    const iOsmQuery: IOpenStreetmapQuery = { latLngBounds: latLngBoundsTestData.latLngBounds };
-    const osmQuery = new OpenStreetmapQuery(iOsmQuery);
+    const iOsmQuery: IOverpassQuery = {
+        latLngBounds: latLngBoundsTestData.latLngBounds,
+    };
+    const osmQuery = new OverpassQuery(iOsmQuery);
     const queryName = 'queryName';
     const queryDesc = 'queryDesc';
     const originalFilePath = 'originalFilePath';
@@ -78,7 +80,7 @@ export const createOsmFileMetaData = (
 
 export const dataDir = '.';
 
-export const osmJsonResp: IOpenStreetmapQueryResponse = {
+export const osmJsonResp: IOverpassQueryResponse = {
     version: 0.6,
     generator: 'Overpass API 0.7.55.4 3079d8ea',
     osm3s: {
